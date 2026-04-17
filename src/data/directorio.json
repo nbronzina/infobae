@@ -1,11 +1,159 @@
 [
-  { "key": "mondini", "nombre": "Lucía Mondini", "rol": "Corresponsal — cobertura transnacional", "base": "Buenos Aires", "contacto": "mondini.l@infobae.interna", "aliases": ["mondini.l", "l. mondini", "mondini"] },
-  { "key": "fiorella", "nombre": "Javier Fiorella", "rol": "Seguridad digital — lead", "base": "Buenos Aires", "contacto": "fiorella.j@infobae.interna", "aliases": ["j. fiorella", "fiorella.j", "fiorella"] },
-  { "key": "villafane", "nombre": "Marina Villafañe", "rol": "Operaciones de campo — coordinación logística y despliegues", "base": "Buenos Aires", "contacto": "villafane.m@infobae.interna", "aliases": ["m. villafañe", "villafañe.m", "villafañe"] },
-  { "key": "pollastri", "nombre": "Lucas Pollastri", "rol": "Legales — despliegue internacional, contratos, regulación", "base": "Buenos Aires", "contacto": "pollastri.l@infobae.interna", "aliases": ["l. pollastri", "pollastri.l", "pollastri"] },
-  { "key": "roca", "nombre": "Daniela Roca", "rol": "Verificación y OSINT — lead pipeline", "base": "Bogotá", "contacto": "roca.d@infobae.interna", "aliases": ["d. roca", "roca.d", "roca"] },
-  { "key": "zelaya", "nombre": "Felipe Zelaya", "rol": "Editor guardia — turno noche, enlace con redacciones", "base": "Madrid", "contacto": "zelaya.f@infobae.interna", "aliases": ["f. zelaya", "zelaya.f", "zelaya"] },
-  { "key": "peralta", "nombre": "Sofía Peralta", "rol": "Formación y capacitación — HEFAT, seguridad digital, onboarding", "base": "Buenos Aires", "contacto": "peralta.s@infobae.interna", "aliases": ["s. peralta", "peralta.s", "peralta"] },
-  { "key": "quiroga", "nombre": "Tomás Quiroga", "rol": "Freelancer liaison — contratos, seguros, cobertura ACOS", "base": "Lima", "contacto": "quiroga.t@infobae.interna", "aliases": ["t. quiroga", "quiroga.t", "quiroga"] },
-  { "key": "velasquez", "nombre": "R. Velásquez (ext.)", "rol": "Fixer designado — frontera COL/VEN (Arauca/Apure)", "base": "Arauca", "contacto": "vía Signal · canal seguro", "aliases": ["r. velásquez", "velásquez", "velasquez"] }
+  {
+    "key": "mondini",
+    "nombre": "Lucía Mondini",
+    "rol": "Corresponsal — cobertura transnacional",
+    "base": "Buenos Aires",
+    "contacto": "mondini.l@infobae.interna",
+    "aliases": ["mondini.l", "l. mondini", "mondini"],
+    "libreta": {
+      "ingreso": "2024-08-12",
+      "idiomas": ["es-AR (nativo)", "en (C1)", "pt-BR (B2)", "fr (B1)"],
+      "certificaciones": ["HEFAT (RISC Training, 2024-11; renovación pendiente sept 2029)", "Primeros auxilios psicológicos (Dart Center, 2025)", "Berkeley Protocol — taller 2026 (UNHCHR)"],
+      "autorizaciones": ["CLU ANMaC vigente (chaleco NIJ IIIA · OP-LEG-2028-007)", "Acreditación FOPEA 2025-2027", "Pase de prensa Cancillería AR", "Visa de prensa COL B-2 (vigente hasta 2030)"],
+      "despliegues": [
+        { "codigo": "ARQ-042", "rol": "corresponsal", "periodo": "2029-04-04 → 2029-04-17", "estado": "cerrado" },
+        { "codigo": "ROS-038", "rol": "investigación", "periodo": "2028-09 → en curso", "estado": "activo_intermitente" },
+        { "codigo": "ARQ-031", "rol": "corresponsal", "periodo": "2028-02 → 2028-03", "estado": "cerrado" }
+      ],
+      "entrenamientos_recientes": ["Sesión JTSN post-ARQ-042 — agendada 2029-04-23", "Onboarding Reality Defender (2029-04, mesa de verificación)"]
+    }
+  },
+  {
+    "key": "fiorella",
+    "nombre": "Javier Fiorella",
+    "rol": "Seguridad digital — lead",
+    "base": "Buenos Aires",
+    "contacto": "fiorella.j@infobae.interna",
+    "aliases": ["j. fiorella", "fiorella.j", "fiorella"],
+    "libreta": {
+      "ingreso": "2022-03-15",
+      "idiomas": ["es-AR (nativo)", "en (C2)", "fr (B1)"],
+      "certificaciones": ["OSCP — OffSec Certified Professional (2023)", "GrapheneOS instructor certificado (2024)", "Signal advanced operator (Open Whisper Systems, 2025)", "C2PA implementer (Adobe / IPTC, 2026)"],
+      "autorizaciones": ["Custodia de claves criptográficas Infobae (rotación bianual)", "Acceso administrativo a OP-SEC-LOG"],
+      "despliegues": [
+        { "codigo": "—", "rol": "soporte remoto · seg digital", "periodo": "2022-03 → en curso", "estado": "permanente" }
+      ],
+      "entrenamientos_recientes": ["Workshop Citizen Lab sobre Pegasus IOCs (2029-02)", "Auditoría externa de pipeline C2PA (2029-03, IPTC)"]
+    }
+  },
+  {
+    "key": "villafane",
+    "nombre": "Marina Villafañe",
+    "rol": "Operaciones de campo — coordinación logística y despliegues",
+    "base": "Buenos Aires",
+    "contacto": "villafane.m@infobae.interna",
+    "aliases": ["m. villafañe", "villafañe.m", "villafañe"],
+    "libreta": {
+      "ingreso": "2021-09-01",
+      "idiomas": ["es-AR (nativo)", "en (B2)", "pt-BR (B2)"],
+      "certificaciones": ["HEFAT instructor adjunto (RISC Training, 2027)", "Logística humanitaria — Federación Internacional Cruz Roja (2024)"],
+      "autorizaciones": ["Firma autorizada para procurement de equipamiento operativo", "Coordinación CLU ANMaC institucional"],
+      "despliegues": [
+        { "codigo": "ARQ-042", "rol": "operaciones · cierre", "periodo": "2029-04-15 → 2029-04-17", "estado": "cerrado" }
+      ],
+      "entrenamientos_recientes": ["HEFAT institucional Infobae — co-coordinación (2029-04)"]
+    }
+  },
+  {
+    "key": "pollastri",
+    "nombre": "Lucas Pollastri",
+    "rol": "Legales — despliegue internacional, contratos, regulación",
+    "base": "Buenos Aires",
+    "contacto": "pollastri.l@infobae.interna",
+    "aliases": ["l. pollastri", "pollastri.l", "pollastri"],
+    "libreta": {
+      "ingreso": "2020-04-22",
+      "idiomas": ["es-AR (nativo)", "en (C1)", "it (B2)"],
+      "certificaciones": ["Matrícula CPACF (Colegio Público de Abogados de la Capital Federal)", "Especialización en derecho de medios (UBA, 2018)"],
+      "autorizaciones": ["Firma legal corporativa Infobae", "Litigante autorizado en causas de medios"],
+      "despliegues": [],
+      "entrenamientos_recientes": ["Seminario CELE sobre regulación satelital (2029-02)", "Encuentro RSF Argentina — protección de fuentes (2029-03)"]
+    }
+  },
+  {
+    "key": "roca",
+    "nombre": "Daniela Roca",
+    "rol": "Verificación y OSINT — lead pipeline",
+    "base": "Bogotá",
+    "contacto": "roca.d@infobae.interna",
+    "aliases": ["d. roca", "roca.d", "roca"],
+    "libreta": {
+      "ingreso": "2023-06-01",
+      "idiomas": ["es-CO (nativo)", "en (C1)", "fr (B2)"],
+      "certificaciones": ["Bellingcat OSINT methods (2024)", "Berkeley Protocol — taller intensivo (2025)", "C2PA verifier ops (2026)", "Reality Defender admin (2029)"],
+      "autorizaciones": ["Lectura completa de OP-SEC-LOG", "Firma editorial de verificación pre-publicación"],
+      "despliegues": [
+        { "codigo": "ARQ-042", "rol": "verificación remota desde Bogotá", "periodo": "2029-04-04 → 2029-04-17", "estado": "cerrado" }
+      ],
+      "entrenamientos_recientes": ["GIJN Conference 2028 (panel sobre verificación de material satelital)"]
+    }
+  },
+  {
+    "key": "zelaya",
+    "nombre": "Felipe Zelaya",
+    "rol": "Editor guardia — turno noche, enlace con redacciones",
+    "base": "Madrid",
+    "contacto": "zelaya.f@infobae.interna",
+    "aliases": ["f. zelaya", "zelaya.f", "zelaya"],
+    "libreta": {
+      "ingreso": "2019-11-10",
+      "idiomas": ["es-AR (nativo)", "en (C2)", "ca (B2)"],
+      "certificaciones": ["Reuters editor training (2018)", "Manual de estilo Infobae — co-autor v10 (2025)"],
+      "autorizaciones": ["Firma editorial de turno noche", "Decisión de publicar / reservar / no publicar"],
+      "despliegues": [],
+      "entrenamientos_recientes": ["Seminario IPI sobre coordinación entre redacciones LATAM-EU (2028-11)"]
+    }
+  },
+  {
+    "key": "peralta",
+    "nombre": "Sofía Peralta",
+    "rol": "Formación y capacitación — HEFAT, seguridad digital, onboarding",
+    "base": "Buenos Aires",
+    "contacto": "peralta.s@infobae.interna",
+    "aliases": ["s. peralta", "peralta.s", "peralta"],
+    "libreta": {
+      "ingreso": "2024-02-19",
+      "idiomas": ["es-AR (nativo)", "en (C1)", "de (B1)"],
+      "certificaciones": ["HEFAT instructor titular (RISC Training, 2025)", "Dart Center facilitator (2026)", "Adult learning design — Coursera/U.Penn (2024)"],
+      "autorizaciones": ["Coordinación de programa HEFAT institucional", "Firma de certificaciones internas"],
+      "despliegues": [],
+      "entrenamientos_recientes": ["Visita a centro RISC Training (Hereford, UK, 2029-01)"]
+    }
+  },
+  {
+    "key": "quiroga",
+    "nombre": "Tomás Quiroga",
+    "rol": "Freelancer liaison — contratos, seguros, cobertura ACOS",
+    "base": "Lima",
+    "contacto": "quiroga.t@infobae.interna",
+    "aliases": ["t. quiroga", "quiroga.t", "quiroga"],
+    "libreta": {
+      "ingreso": "2025-05-04",
+      "idiomas": ["es-PE (nativo)", "en (B2)", "qu (A2)"],
+      "certificaciones": ["ACOS Alliance liaison (2025)", "Rory Peck Trust freelance support training (2026)"],
+      "autorizaciones": ["Firma de contratos freelance bajo monto institucional", "Coordinación de cobertura ACOS regional"],
+      "despliegues": [],
+      "entrenamientos_recientes": ["Encuentro IWMF Lima 2028 — protección de freelancers en zonas calientes"]
+    }
+  },
+  {
+    "key": "velasquez",
+    "nombre": "R. Velásquez (ext.)",
+    "rol": "Fixer designado — frontera COL/VEN (Arauca/Apure)",
+    "base": "Arauca",
+    "contacto": "vía Signal · canal seguro",
+    "aliases": ["r. velásquez", "velásquez", "velasquez"],
+    "libreta": {
+      "ingreso": "vinculación externa por contrato · primera operación 2026-08",
+      "idiomas": ["es-CO (nativo)", "es-VE (operativo)", "en (A2)"],
+      "certificaciones": ["FLIP Colombia — taller de fixers (2024)", "Curso de primeros auxilios en zona armada (CICR, 2025)"],
+      "autorizaciones": ["Acceso a canal Signal interno limitado a operaciones · sin acceso a sistemas Infobae"],
+      "despliegues": [
+        { "codigo": "ARQ-042", "rol": "fixer designado", "periodo": "2029-04-04 → 2029-04-17", "estado": "cerrado" },
+        { "codigo": "ARQ-031", "rol": "fixer designado", "periodo": "2028-02 → 2028-03", "estado": "cerrado" }
+      ],
+      "entrenamientos_recientes": ["Sesión OP-SEC-2029-004-FX — revisión de versión fixer del manual RF (2029-04-15)"]
+    }
+  }
 ]

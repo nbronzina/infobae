@@ -220,6 +220,7 @@ export default function IntranetInfobae({ scenario = 'vigente' }) {
     sistemas_estado: { titulo: 'Estado de sistemas', subtitulo: 'Monitoreo de infraestructura crítica y canales operativos', items: sistemasData },
     senales_seguimiento: { titulo: 'Señales en seguimiento', subtitulo: 'Horizon scanning — fuentes primarias y secundarias asociadas al glosario de amenazas', items: senalesData },
     diario_turno: { titulo: 'Diario de turno', subtitulo: 'Registro abierto del equipo — una entrada por turno, firmada por el responsable', items: diarioData },
+    radar_tecnologico: { titulo: 'Radar tecnológico', subtitulo: 'Mapa de adopción — sistemas, equipamiento y señales cruzados por estado y dominio operativo' },
     noticias: {
       titulo: 'Noticias internas',
       subtitulo: 'Organización, entrenamiento, herramientas y operaciones del equipo de Infobae',
@@ -728,7 +729,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
-  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno'];
+  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'radar_tecnologico'];
   const folderKeys = ['folder_redaccion', 'folder_segdigital', 'folder_legales', 'folder_rrhh', 'folder_investigacion', 'folder_herramientas'];
 
   const goToLanding = () => { setActiveView(null); setShowLanding(true); };
@@ -1411,6 +1412,132 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
               )}
 
+              {/* Radar tecnológico */}
+              {activeView === 'radar_tecnologico' && (() => {
+                const QUADRANTS = [
+                  { id: 'conectividad', nombre: 'Conectividad', start: -Math.PI / 2 },
+                  { id: 'verificacion', nombre: 'Verificación', start: 0 },
+                  { id: 'opsec', nombre: 'OPSEC', start: Math.PI / 2 },
+                  { id: 'señales', nombre: 'Señales', start: Math.PI }
+                ];
+                const RINGS = [
+                  { id: 'adoptado', nombre: 'Adoptado', radius: 60, color: '#5a6e3c' },
+                  { id: 'evaluacion', nombre: 'En evaluación', radius: 130, color: '#8a6d2b' },
+                  { id: 'hold', nombre: 'Hold', radius: 200, color: '#5a544c' },
+                  { id: 'depreciado', nombre: 'Depreciado', radius: 270, color: '#bd2828' }
+                ];
+
+                const sisQuadrant = (s) => {
+                  const n = s.sistema.toLowerCase();
+                  if (n.includes('starlink') || n.includes('iridium') || n.includes('cms')) return 'conectividad';
+                  if (n.includes('pipeline') || n.includes('reality')) return 'verificacion';
+                  return 'opsec';
+                };
+                const sisRing = (s) => ({
+                  'operativo': 'adoptado', 'degradado': 'hold', 'standby': 'hold',
+                  'off-line': 'depreciado', 'evaluación': 'evaluacion'
+                })[s.estado] || 'evaluacion';
+                const gabQuadrant = (k) => {
+                  const c = k.categoria.toLowerCase();
+                  if (c.includes('conectividad') || c.includes('router')) return 'conectividad';
+                  if (c.includes('verificable') || c.includes('verificación')) return 'verificacion';
+                  return 'opsec';
+                };
+                const gabRing = (k) => ({
+                  'aprobado': 'adoptado', 'aprobado_con_configuracion': 'adoptado',
+                  'aprobado_condicional': 'evaluacion', 'restringido_anmac': 'hold'
+                })[k.estado] || 'evaluacion';
+
+                const items = [
+                  ...sistemasData.map((s, i) => ({ id: `sis-${i}`, nombre: s.sistema, quadrant: sisQuadrant(s), ring: sisRing(s), fuente: 'sistema', detalle: s.nota })),
+                  ...gabineteData.map((k, i) => ({ id: `kit-${i}`, nombre: k.nombre, quadrant: gabQuadrant(k), ring: gabRing(k), fuente: 'gabinete', detalle: k.especificacion })),
+                  ...senalesData.map((s, i) => ({ id: `sen-${i}`, nombre: `${s.codigo} · ${s.fuente}`, quadrant: 'señales', ring: 'evaluacion', fuente: 'señal', detalle: s.resumen }))
+                ];
+
+                items.forEach((item, idx) => { item.numero = idx + 1; });
+
+                items.forEach(item => {
+                  const q = QUADRANTS.find(x => x.id === item.quadrant);
+                  const ring = RINGS.find(x => x.id === item.ring);
+                  const sib = items.filter(i => i.quadrant === item.quadrant && i.ring === item.ring);
+                  const sibIdx = sib.indexOf(item);
+                  const fraction = (sibIdx + 1) / (sib.length + 1);
+                  const angle = q.start + fraction * (Math.PI / 2);
+                  item.cx = 400 + ring.radius * Math.cos(angle);
+                  item.cy = 400 + ring.radius * Math.sin(angle);
+                });
+
+                return (
+                  <div>
+                    <div style={{ padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c', marginBottom: '20px' }}>
+                      <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                        Cruce de tres fuentes en una sola vista: estado de sistemas + gabinete de campo + señales en seguimiento. Cada item se ubica en un cuadrante (dominio operativo) y un anillo (estado de adopción). El radar refleja el escenario activo — cambia con la línea.
+                      </div>
+                    </div>
+
+                    <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px', display: 'flex', justifyContent: 'center' }}>
+                      <svg viewBox="0 0 800 800" style={{ width: '100%', maxWidth: '720px', height: 'auto' }}>
+                        {RINGS.slice().reverse().map(r => (
+                          <circle key={r.id} cx="400" cy="400" r={r.radius} fill="none" stroke="#d9d4c2" strokeWidth="1" strokeDasharray={r.id === 'adoptado' ? '0' : '3 3'} />
+                        ))}
+                        <line x1="400" y1="120" x2="400" y2="680" stroke="#d9d4c2" strokeWidth="1" />
+                        <line x1="120" y1="400" x2="680" y2="400" stroke="#d9d4c2" strokeWidth="1" />
+
+                        {QUADRANTS.map(q => {
+                          const labelAngle = q.start + Math.PI / 4;
+                          const lx = 400 + 295 * Math.cos(labelAngle);
+                          const ly = 400 + 295 * Math.sin(labelAngle);
+                          return <text key={q.id} x={lx} y={ly} textAnchor="middle" dominantBaseline="middle" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#1f1f1f" fontWeight="500" style={{ letterSpacing: '0.04em', textTransform: 'uppercase' }}>{q.nombre}</text>;
+                        })}
+
+                        {RINGS.map(r => (
+                          <text key={r.id} x="408" y={400 - r.radius + 14} fontFamily="JetBrains Mono, monospace" fontSize="9.5" fill="#5a544c" style={{ letterSpacing: '0.04em', textTransform: 'uppercase' }}>{r.nombre}</text>
+                        ))}
+
+                        {items.map(item => {
+                          const ring = RINGS.find(x => x.id === item.ring);
+                          return (
+                            <g key={item.id}>
+                              <circle cx={item.cx} cy={item.cy} r="9" fill={ring.color} stroke="#f8f5ec" strokeWidth="2" />
+                              <text x={item.cx} y={item.cy + 3.5} textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="9.5" fill="#f0ede4" fontWeight="600">{item.numero}</text>
+                            </g>
+                          );
+                        })}
+                      </svg>
+                    </div>
+
+                    <div style={{ marginTop: '24px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                      {QUADRANTS.map(q => {
+                        const itemsInQ = items.filter(i => i.quadrant === q.id);
+                        return (
+                          <div key={q.id}>
+                            <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>{q.nombre} ({itemsInQ.length})</div>
+                            {RINGS.map(r => {
+                              const itemsInR = itemsInQ.filter(i => i.ring === r.id);
+                              if (itemsInR.length === 0) return null;
+                              return (
+                                <div key={r.id} style={{ marginBottom: '10px' }}>
+                                  <div className="mono" style={{ fontSize: '10px', color: r.color, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '4px' }}>{r.nombre}</div>
+                                  {itemsInR.map(item => (
+                                    <div key={item.id} className="mono" style={{ fontSize: '11px', color: '#1f1f1f', marginBottom: '2px', lineHeight: 1.4 }}>
+                                      <span style={{ color: '#5a544c' }}>{item.numero}.</span> {item.nombre}
+                                    </div>
+                                  ))}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginTop: '20px', fontStyle: 'italic' }}>
+                      Adoptado: en uso operativo · En evaluación: prueba activa · Hold: pausado o restringido · Depreciado: fuera de uso. Datos derivados del estado actual de la línea {scenario}.
+                    </div>
+                  </div>
+                );
+              })()}
+
               {/* Señales en seguimiento */}
               {activeView === 'senales_seguimiento' && (
                 <div>
@@ -1602,6 +1729,69 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                         ))
                       )}
                     </div>
+
+                    {p.libreta && (
+                      <div style={{ marginBottom: '32px' }}>
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '12px' }}>Libreta operativa</div>
+                        <div style={{ border: '1px solid #d9d4c2', backgroundColor: '#f8f5ec', padding: '20px 22px' }}>
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '20px' }}>
+                            <div>
+                              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Ingreso</div>
+                              <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f' }}>{p.libreta.ingreso}</div>
+                            </div>
+                            {p.libreta.idiomas && (
+                              <div>
+                                <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Idiomas</div>
+                                <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.5 }}>{p.libreta.idiomas.join(' · ')}</div>
+                              </div>
+                            )}
+                          </div>
+
+                          {p.libreta.certificaciones?.length > 0 && (
+                            <div style={{ marginBottom: '16px' }}>
+                              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Certificaciones ({p.libreta.certificaciones.length})</div>
+                              <ul className="serif" style={{ margin: 0, paddingLeft: '18px', fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f' }}>
+                                {p.libreta.certificaciones.map((c, i) => <li key={i} style={{ marginBottom: '3px' }}>{c}</li>)}
+                              </ul>
+                            </div>
+                          )}
+
+                          {p.libreta.autorizaciones?.length > 0 && (
+                            <div style={{ marginBottom: '16px' }}>
+                              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Autorizaciones</div>
+                              <ul className="serif" style={{ margin: 0, paddingLeft: '18px', fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f' }}>
+                                {p.libreta.autorizaciones.map((a, i) => <li key={i} style={{ marginBottom: '3px' }}>{a}</li>)}
+                              </ul>
+                            </div>
+                          )}
+
+                          {p.libreta.despliegues?.length > 0 && (
+                            <div style={{ marginBottom: '16px' }}>
+                              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Despliegues registrados</div>
+                              <div style={{ border: '1px solid #d9d4c2' }}>
+                                {p.libreta.despliegues.map((d, i) => (
+                                  <div key={i} className="mono" style={{ display: 'grid', gridTemplateColumns: '0.6fr 1.4fr 1fr 0.6fr', padding: '8px 12px', fontSize: '11.5px', borderBottom: i < p.libreta.despliegues.length - 1 ? '1px solid #d9d4c2' : 'none', alignItems: 'center', backgroundColor: '#f0ecde' }}>
+                                    <div style={{ color: '#bd2828', fontWeight: 500 }}>{d.codigo}</div>
+                                    <div style={{ color: '#1f1f1f' }}>{d.rol}</div>
+                                    <div style={{ color: '#5a544c' }}>{d.periodo}</div>
+                                    <div style={{ color: d.estado === 'cerrado' ? '#5a544c' : '#5a6e3c', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: '10px' }}>{d.estado.replace(/_/g, ' ')}</div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {p.libreta.entrenamientos_recientes?.length > 0 && (
+                            <div>
+                              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Entrenamientos recientes</div>
+                              <ul className="serif" style={{ margin: 0, paddingLeft: '18px', fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f' }}>
+                                {p.libreta.entrenamientos_recientes.map((e, i) => <li key={i} style={{ marginBottom: '3px' }}>{e}</li>)}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })()}
@@ -1635,7 +1825,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
               {/* Soporte */}
               {activeView === 'soporte' && (<>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px', marginBottom: '24px' }}>
                   <div role="button" tabIndex={0} onClick={() => setActiveView('sistemas_estado')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', cursor: 'pointer' }}>
                     <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Monitoreo técnico</div>
                     <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Estado de sistemas →</div>
@@ -1645,6 +1835,11 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Horizon scanning</div>
                     <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Señales en seguimiento →</div>
                     <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '4px' }}>CPJ, ANMaC, ENACOM, FOPEA, C2PA, Dart Center.</div>
+                  </div>
+                  <div role="button" tabIndex={0} onClick={() => setActiveView('radar_tecnologico')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', cursor: 'pointer' }}>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Mapa cruzado</div>
+                    <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Radar tecnológico →</div>
+                    <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '4px' }}>Sistemas, gabinete y señales por estado de adopción.</div>
                   </div>
                 </div>
                 {VISTAS.soporte.items.map((s, i) => (
@@ -2587,6 +2782,26 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 <li>¿Puede una redacción civil asumir la carga de OPSEC militar sin perder su función periodística?</li>
                 <li>¿La vigilancia estatal doméstica sobre periodistas de investigación es un riesgo ocupacional asumible, o una condición que exige respuesta colectiva de la profesión?</li>
               </ul>
+            </div>
+
+            <div style={{ marginBottom: '18px', paddingTop: '14px', borderTop: '1px solid #d9d4c2' }}>
+              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Colofón metodológico</div>
+
+              <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '12px' }}>
+                <strong>Método.</strong> Diegetic prototype en la tradición de Near Future Laboratory (Bleecker, Girardin, Nova) y la noción de <em>Future Mundane</em> de Nick Foster. Horizon scanning sobre fuentes primarias y secundarias asociadas a un glosario propio de amenazas. Tres líneas contrafactuales para estresar el artefacto desde ángulos divergentes. Apoyo metodológico en armasuisse Deftech (Q. Ladetto) y su trabajo con NFL — particularmente <em>E-Soldat</em> como referencia de objeto institucional ficticio.
+              </div>
+
+              <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '12px' }}>
+                <strong>Fuentes técnicas verificadas.</strong> Rye &amp; Levin (IEEE S&amp;P 2024 · arXiv:2405.14975); Ley 20.429, Decreto 395/75, Disp. RENAR 883/11, Res. ANMaC 83/2023, Res. ENACOM 955/2025; Berkeley Protocol on Digital Open Source Investigations (UNHCHR, 2022); C2PA spec (IPTC, 2024–); Citizen Lab (Pegasus); Dart Center / JTSN; FOPEA; CPJ; RSF; ACOS Alliance; ICIJ; OCCRP; Bellingcat; FLIP Colombia; SNTP Venezuela.
+              </div>
+
+              <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '12px' }}>
+                <strong>Qué queda intencionalmente fuera.</strong> Métricas de tráfico y engagement. Gamificación. Reactions y likes. Reconocimientos públicos tipo kudos. Mensajería social abierta. Banners motivacionales y misión/visión. Anuncios y publicidad. Cualquier copy que le hable al usuario en lugar de registrar condiciones.
+              </div>
+
+              <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f' }}>
+                <strong>Tecnología.</strong> React + Vite. Datos en JSON local. Function serverless en Vercel para el horizon scanning semanal con la API de Claude (web search → generación → validación → consolidación → commit vía GitHub Data API). Tres líneas de planificación servidas como rutas distintas (<em>/vigente</em>, <em>/starlink-restringido</em>, <em>/transicion-estable</em>) sobre la misma codebase.
+              </div>
             </div>
 
             <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f', paddingTop: '14px', borderTop: '1px solid #d9d4c2', lineHeight: 1.7 }}>
