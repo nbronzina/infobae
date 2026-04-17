@@ -7,3 +7,5 @@ dist
 *.log
 .vite
 .vercel
+__pycache__/
+*.pyc
