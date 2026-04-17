@@ -59,6 +59,7 @@ Tokens funcionales:
 - #e5e1d3 — hover/active en sidebar
 - #e8f0de — chip de fondo workflow vigente
 - #f5edd5 — chip de fondo workflow revisión
+- #f5d5d5 — chip de fondo estado off-line / alerta
 - #f7f5ee — breadcrumb bar
 
 Tipografía:
