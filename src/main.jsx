@@ -84,8 +84,21 @@ function ScenarioIndex() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px', marginBottom: '48px' }}>
           {escenariosData.map(esc => (
             <a key={esc.id} href={'/' + esc.slug} className="esc-card">
-              <div className="mono" style={{ fontSize: '10.5px', letterSpacing: '0.06em', textTransform: 'uppercase', color: esc.id === 'vigente' ? '#f18b1e' : '#8a8472', marginBottom: '10px' }}>
-                {esc.estado.replace(/_/g, ' ')}
+              <div style={{ marginBottom: '12px' }}>
+                <span
+                  className="mono"
+                  style={{
+                    fontSize: '9.5px',
+                    letterSpacing: '0.06em',
+                    textTransform: 'uppercase',
+                    padding: '3px 8px',
+                    border: '1px solid ' + (esc.congelado ? '#3d3931' : '#f18b1e'),
+                    color: esc.congelado ? '#8a8472' : '#f18b1e',
+                    backgroundColor: esc.congelado ? 'transparent' : 'rgba(241,139,30,0.08)'
+                  }}
+                >
+                  {esc.estado}
+                </span>
               </div>
               <div className="serif" style={{ fontSize: '20px', fontWeight: 500, color: '#f0ede4', marginBottom: '8px', letterSpacing: '-0.01em' }}>
                 {esc.nombre}

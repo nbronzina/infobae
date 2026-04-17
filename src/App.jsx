@@ -941,6 +941,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
         <div style={{ backgroundColor: '#1f1f1f', color: '#d9d4c2', padding: '8px 24px', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
           <span className="mono" style={{ letterSpacing: '0.06em', textTransform: 'uppercase', color: '#f18b1e' }}>Línea contrafactual</span>
           <span className="mono" style={{ flex: 1, textAlign: 'left' }}>{escenarioActivo.nombre} — {escenarioActivo.subtitulo}</span>
+          {escenarioActivo.congelado && (
+            <span className="mono" style={{ fontSize: '9.5px', padding: '2px 7px', border: '1px solid #3d3931', color: '#8a8472', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{escenarioActivo.estado}</span>
+          )}
           <a href="/" className="mono no-hover" style={{ color: '#d9d4c2', padding: '4px 10px', border: '1px solid #3d3931', letterSpacing: '0.04em', textTransform: 'uppercase', fontSize: '10px', textDecoration: 'none' }}>Cambiar línea</a>
         </div>
       )}
