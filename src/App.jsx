@@ -548,6 +548,37 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     return folderChildren[key]?.includes(activeView) || false;
   };
 
+  const docFolders = {
+    manual_estilo: ['Redacción', 'folder_redaccion'], fuentes_anonimas: ['Redacción', 'folder_redaccion'], verificacion_prepub: ['Redacción', 'folder_redaccion'],
+    comunicacion_cifrada: ['Seguridad Digital', 'folder_segdigital'], verificacion_c2pa: ['Seguridad Digital', 'folder_segdigital'], compromiso_dispositivo: ['Seguridad Digital', 'folder_segdigital'], vigilancia_destino: ['Seguridad Digital', 'folder_segdigital'], version_fixer: ['Seguridad Digital', 'folder_segdigital'],
+    anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
+    jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'],
+    docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'],
+    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'],
+    fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
+  };
+  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte'];
+  const folderKeys = ['folder_redaccion', 'folder_segdigital', 'folder_legales', 'folder_rrhh', 'folder_investigacion', 'folder_herramientas'];
+
+  const goToLanding = () => { setActiveView(null); setShowLanding(true); };
+  const goToFolder = (key) => { setActiveView(key); setShowLanding(false); };
+
+  const getBackLink = () => {
+    if (!activeView && showLanding) return null;
+    if (!activeView && !showLanding) {
+      return { label: 'Seguridad Digital', onClick: () => goToFolder('folder_segdigital') };
+    }
+    if (pageKeys.includes(activeView) || folderKeys.includes(activeView)) {
+      return { label: 'Inicio', onClick: goToLanding };
+    }
+    const mapping = docFolders[activeView];
+    if (mapping && mapping[1]) {
+      const [label, folderKey] = mapping;
+      return { label, onClick: () => goToFolder(folderKey) };
+    }
+    return { label: 'Inicio', onClick: goToLanding };
+  };
+
   // Auto-expandir carpeta padre al navegar a un hijo
   useEffect(() => {
     if (!activeView && !showLanding) {
@@ -737,17 +768,6 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
       <div style={{ backgroundColor: '#f7f5ee', borderBottom: '1px solid #d9d4c2', padding: '10px 24px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', color: '#5a544c' }}>
         <Home size={12} style={{ cursor: 'pointer' }} onClick={() => { setActiveView(null); setShowLanding(true); }} />
         {(() => {
-          const docFolders = {
-            manual_estilo: ['Redacción', 'folder_redaccion'], fuentes_anonimas: ['Redacción', 'folder_redaccion'], verificacion_prepub: ['Redacción', 'folder_redaccion'],
-            comunicacion_cifrada: ['Seguridad Digital', 'folder_segdigital'], verificacion_c2pa: ['Seguridad Digital', 'folder_segdigital'], compromiso_dispositivo: ['Seguridad Digital', 'folder_segdigital'], vigilancia_destino: ['Seguridad Digital', 'folder_segdigital'], version_fixer: ['Seguridad Digital', 'folder_segdigital'],
-            anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
-            jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'],
-            docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'],
-            pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'],
-            fopea_protocolo: ['Ext.', null]
-          };
-          const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte'];
-          const folderKeys = ['folder_redaccion', 'folder_segdigital', 'folder_legales', 'folder_rrhh', 'folder_investigacion', 'folder_herramientas'];
           const sep = <ChevronRight size={12} />;
           const link = (label, fn) => <span className="doc-link" style={{ cursor: 'pointer' }} onClick={fn}>{label}</span>;
 
@@ -1055,9 +1075,11 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           <div style={{ gridColumn: (activeView && (VISTAS[activeView]?.doc || VISTAS[activeView]?.contenido)) ? '2 / 3' : '2 / 4', backgroundColor: '#eceae4', padding: '32px 48px' }}>
             <div style={{ maxWidth: '780px' }}>
               <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span className="mono" style={{ fontSize: '11px', color: '#6b6454', cursor: 'pointer' }} onClick={() => { setActiveView('folder_segdigital'); setShowLanding(false); }}>
-                  ← Seguridad Digital
-                </span>
+                {(() => { const back = getBackLink(); return back ? (
+                  <span className="mono" style={{ fontSize: '11px', color: '#6b6454', cursor: 'pointer' }} onClick={back.onClick}>
+                    ← {back.label}
+                  </span>
+                ) : <span />; })()}
                 {(VISTAS[activeView]?.doc || VISTAS[activeView]?.contenido || VISTAS[activeView]?.tool || VISTAS[activeView]?.form) && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '12.5px', color: '#5a544c' }}>
                     <div onClick={handlePDF} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
@@ -1854,9 +1876,11 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               </div>
               <div style={{ marginBottom: '28px' }}>
                 <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Navegación</div>
-                <div onClick={() => { setActiveView('folder_segdigital'); setShowLanding(false); }} className="doc-link" style={{ cursor: 'pointer', fontSize: '12px', padding: '6px 0', borderBottom: '1px solid #d9d4c2' }}>
-                  ← Seguridad Digital
-                </div>
+                {(() => { const back = getBackLink(); return back ? (
+                  <div onClick={back.onClick} className="doc-link" style={{ cursor: 'pointer', fontSize: '12px', padding: '6px 0', borderBottom: '1px solid #d9d4c2' }}>
+                    ← {back.label}
+                  </div>
+                ) : null; })()}
                 {d.fuentes && (
                   <div style={{ marginTop: '16px' }}>
                     <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>Fuentes</div>
@@ -1893,9 +1917,11 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               </div>
               <div>
                 <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Navegación</div>
-                <div onClick={() => { setActiveView('folder_segdigital'); setShowLanding(false); }} className="doc-link" style={{ cursor: 'pointer', fontSize: '12px' }}>
-                  ← Seguridad Digital
-                </div>
+                {(() => { const back = getBackLink(); return back ? (
+                  <div onClick={back.onClick} className="doc-link" style={{ cursor: 'pointer', fontSize: '12px' }}>
+                    ← {back.label}
+                  </div>
+                ) : null; })()}
               </div>
             </div>
           )}
