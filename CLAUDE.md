@@ -9,7 +9,7 @@ Intranet ficticia de Infobae (2029) — design fiction / diegetic prototype.
 - Google Fonts (IBM Plex Sans, Fraunces, JetBrains Mono)
 - Lucide React para íconos
 - Anthropic API para widget de análisis IA (Claudeception)
-- Deploy: Netlify
+- Deploy: Vercel
 
 ## Archivos
 - `src/App.jsx` — componente principal (renombrado de infobae-interna.jsx)
