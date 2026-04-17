@@ -10,13 +10,23 @@
     "estado": "en_seguimiento"
   },
   {
-    "codigo": "S-2029-028",
-    "fuente": "CPJ · informe trimestral",
+    "codigo": "S-2029-017",
+    "fuente": "ENACOM",
+    "tipo": "regulatorio",
+    "asociado_a": "T-WPS",
+    "confianza": "primaria",
+    "detectado": "2029-04-15",
+    "resumen": "Consulta pública sobre actualización de RAMATEL para terminales satelitales no homologados que ingresan por vía aduanera. Impacto potencial en procedimiento de importación de kits Starlink Mini adquiridos en exterior.",
+    "estado": "en_seguimiento"
+  },
+  {
+    "codigo": "S-2029-018",
+    "fuente": "CPJ",
     "tipo": "incidente",
     "asociado_a": "T-DOM",
     "confianza": "primaria",
     "detectado": "2029-04-14",
-    "resumen": "Aumento del 40% en casos documentados de vigilancia doméstica contra periodistas de investigación argentinos en primer trimestre 2029, en ausencia de foco externo regional.",
+    "resumen": "Registro de tres casos de vigilancia doméstica documentada contra periodistas de investigación en Argentina en primer trimestre 2029. Informe trimestral CPJ pendiente de publicación oficial.",
     "estado": "en_seguimiento"
   },
   {
@@ -30,14 +40,24 @@
     "estado": "en_seguimiento"
   },
   {
-    "codigo": "S-2029-029",
-    "fuente": "ICIJ · circular interna",
+    "codigo": "S-2029-020",
+    "fuente": "IEEE · peer-reviewed",
     "tipo": "investigación",
-    "asociado_a": "T-DOM",
+    "asociado_a": "T-RF",
     "confianza": "primaria",
     "detectado": "2029-04-08",
-    "resumen": "Convocatoria a colaboración internacional sobre presunto financiamiento estatal a organizaciones criminales de Rosario. Tres medios argentinos invitados, Infobae entre ellos.",
-    "estado": "evaluación_editorial"
+    "resumen": "Paper bajo embargo en IEEE S&P 2029 sobre detección RF pasiva de constelaciones LEO. Preprint en arXiv señala reducción del costo de hardware de detección a rango USD 4k–6k.",
+    "estado": "bajo_evaluación"
+  },
+  {
+    "codigo": "S-2029-021",
+    "fuente": "RSF · LATAM",
+    "tipo": "reporte",
+    "asociado_a": "T-CKP",
+    "confianza": "secundaria",
+    "detectado": "2029-04-06",
+    "resumen": "Reporte preliminar sobre despliegue de reconocimiento facial en checkpoints fronterizos colombo-venezolanos. Tecnología no atribuida explícitamente; verificación cruzada pendiente.",
+    "estado": "en_seguimiento"
   },
   {
     "codigo": "S-2029-022",
@@ -56,7 +76,7 @@
     "asociado_a": "T-SPY",
     "confianza": "secundaria",
     "detectado": "2029-04-03",
-    "resumen": "Campaña activa de spyware comercial dirigida a periodistas en Argentina y Colombia. Vector probable: WhatsApp con adjunto PDF.",
+    "resumen": "Campaña activa de spyware comercial dirigida a periodistas en Colombia. Vector probable: mensajes con adjunto PDF vía WhatsApp. Indicadores de compromiso compartidos por canal privado.",
     "estado": "mitigación_en_curso"
   },
   {
@@ -66,7 +86,7 @@
     "asociado_a": "JTSN",
     "confianza": "primaria",
     "detectado": "2029-03-28",
-    "resumen": "Actualización de protocolos de apoyo psicológico post-despliegue. Énfasis en primera sesión obligatoria dentro de 72h posteriores al retorno.",
+    "resumen": "Actualización de protocolos de apoyo psicológico post-despliegue en zona activa. Énfasis en primera sesión obligatoria dentro de 72h posteriores al retorno.",
     "estado": "incorporado"
   }
 ]

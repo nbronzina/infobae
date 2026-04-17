@@ -4,11 +4,10 @@
   { "fecha": "2029-04-02", "hecho": "Activación protocolo FOPEA por amenaza a colega en Rosario", "tipo": "diegetico" },
   { "fecha": "2029-04-08", "hecho": "Reality Defender integrado al pipeline de verificación", "tipo": "diegetico" },
   { "fecha": "2029-04-11", "hecho": "Nueva póliza de seguro para fixers activa desde mayo, alineada ACOS", "tipo": "diegetico" },
-  { "fecha": "2029-04-12", "hecho": "ENACOM revoca Res. 955/2025 — Starlink Mini fuera de RAMATEL · despliegues internacionales con conectividad satelital interrumpidos", "tipo": "diegetico" },
+  { "fecha": "2029-04-12", "hecho": "Res. ENACOM 1184/2029 revoca la 955/2025 · Starlink Mini fuera de RAMATEL", "tipo": "diegetico" },
   { "fecha": "2029-04-13", "hecho": "Primer HEFAT institucional Infobae con RISC Training, 8 certificados", "tipo": "diegetico" },
-  { "fecha": "2029-04-14", "hecho": "Apertura de litigio judicial sobre revocación 955/2025 · l. pollastri en representación de Infobae junto a CELE y RSF Argentina", "tipo": "diegetico" },
+  { "fecha": "2029-04-14", "hecho": "Apertura de expediente judicial contra la Res. 1184/2029 · l. pollastri con CELE y RSF Argentina como amicus curiae", "tipo": "diegetico" },
   { "fecha": "2029-04-15", "hecho": "Versión fixer OP-SEC-2029-004-FX revisada por Velásquez", "tipo": "diegetico" },
-  { "fecha": "2029-04-16", "hecho": "Inicio de procurement de Iridium GO! exec como kit alternativo de conectividad sat", "tipo": "diegetico" },
   { "fecha": "2029-04-17", "hecho": "Cierre despliegue ARQ-042, 13 días, sesión JTSN pendiente", "tipo": "diegetico" },
   { "fecha": "2029-04-17", "hecho": "Agregados T-PHYS y T-DOM al glosario de amenazas, sección 08", "tipo": "diegetico" }
 ]

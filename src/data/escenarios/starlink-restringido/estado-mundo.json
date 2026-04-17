@@ -1,15 +1,15 @@
 {
   "ultima_auditoria_humana": "2025-04-17",
   "personajes": {
-    "mondini": { "ubicacion": "Buenos Aires", "estado": "descanso post-ARQ-042 hasta 2029-05-01 · próximo despliegue internacional pendiente de definir kit alternativo", "activo_en": ["ROS-038"] },
-    "fiorella": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["evaluación de Iridium GO! exec", "manual RF v4.3 (en revisión post-revocación)", "ROS-038 seg digital"] },
-    "villafane": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["procurement kit alternativo", "cierre ARQ-042"] },
-    "pollastri": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["litigio sobre revocación 955/2025", "seguros fixers", "ROS-038 legales"] },
-    "roca": { "ubicacion": "Bogotá", "estado": "operativo", "activo_en": ["pipeline verificación bajo estrés", "Reality Defender"] },
+    "mondini": { "ubicacion": "Buenos Aires", "estado": "descanso post-ARQ-042 hasta 2029-05-01", "activo_en": ["ROS-038"] },
+    "fiorella": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["manual RF", "ROS-038 seg digital"] },
+    "villafane": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["cierre ARQ-042", "procurement conectividad alternativa"] },
+    "pollastri": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["seguros fixers", "ROS-038 legales", "expediente Res. 1184/2029"] },
+    "roca": { "ubicacion": "Bogotá", "estado": "operativo", "activo_en": ["pipeline verificación", "Reality Defender"] },
     "zelaya": { "ubicacion": "Madrid", "estado": "operativo", "activo_en": ["editor guardia noche"] },
-    "peralta": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["HEFAT", "onboarding freelancers", "actualización módulo de conectividad sat alternativa"] },
+    "peralta": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["HEFAT", "onboarding freelancers"] },
     "quiroga": { "ubicacion": "Lima", "estado": "operativo", "activo_en": ["contratos freelance ACOS"] },
-    "velasquez": { "ubicacion": "Arauca", "estado": "standby_extendido", "activo_en": [] }
+    "velasquez": { "ubicacion": "Arauca", "estado": "standby", "activo_en": [] }
   },
   "despliegues": {
     "ARQ-042": { "estado": "cerrado", "cierre": "2029-04-17" },

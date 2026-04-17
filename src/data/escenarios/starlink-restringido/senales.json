@@ -6,18 +6,8 @@
     "asociado_a": "T-WPS",
     "confianza": "primaria",
     "detectado": "2029-04-12",
-    "resumen": "Resolución ENACOM 1184/2029: revocación de Res. 955/2025 por incumplimiento de criterios de soberanía espectral. Starlink Mini fuera de RAMATEL con efecto inmediato.",
+    "resumen": "Res. ENACOM 1184/2029 revoca la 955/2025 · Starlink Mini fuera de RAMATEL con efecto inmediato. Seguimiento por legales.",
     "estado": "acción_pendiente"
-  },
-  {
-    "codigo": "S-2029-026",
-    "fuente": "Iridium · documentación técnica",
-    "tipo": "investigación",
-    "asociado_a": "T-RF",
-    "confianza": "primaria",
-    "detectado": "2029-04-15",
-    "resumen": "Especificación técnica de Iridium GO! exec — perfil RF distinto a Starlink (TDMA + canales L-band). Detección pasiva requiere sensores especializados, no aplica StarLock-class.",
-    "estado": "bajo_evaluación"
   },
   {
     "codigo": "S-2029-018",
@@ -26,7 +16,7 @@
     "asociado_a": "T-DOM",
     "confianza": "primaria",
     "detectado": "2029-04-14",
-    "resumen": "Registro de tres casos de vigilancia doméstica documentada contra periodistas de investigación en Argentina en primer trimestre 2029.",
+    "resumen": "Registro de tres casos de vigilancia doméstica documentada contra periodistas de investigación en Argentina en primer trimestre 2029. Informe trimestral CPJ pendiente de publicación oficial.",
     "estado": "en_seguimiento"
   },
   {
@@ -37,6 +27,26 @@
     "confianza": "primaria",
     "detectado": "2029-04-11",
     "resumen": "Segunda activación del protocolo de aviso mutuo en Rosario en un mes. Patrón de amenazas contra periodistas cubriendo causas relacionadas con estructuras sucesoras Los Monos.",
+    "estado": "en_seguimiento"
+  },
+  {
+    "codigo": "S-2029-020",
+    "fuente": "IEEE · peer-reviewed",
+    "tipo": "investigación",
+    "asociado_a": "T-RF",
+    "confianza": "primaria",
+    "detectado": "2029-04-08",
+    "resumen": "Paper bajo embargo en IEEE S&P 2029 sobre detección RF pasiva de constelaciones LEO. Preprint en arXiv señala reducción del costo de hardware de detección a rango USD 4k–6k.",
+    "estado": "bajo_evaluación"
+  },
+  {
+    "codigo": "S-2029-021",
+    "fuente": "RSF · LATAM",
+    "tipo": "reporte",
+    "asociado_a": "T-CKP",
+    "confianza": "secundaria",
+    "detectado": "2029-04-06",
+    "resumen": "Reporte preliminar sobre despliegue de reconocimiento facial en checkpoints fronterizos colombo-venezolanos. Tecnología no atribuida explícitamente; verificación cruzada pendiente.",
     "estado": "en_seguimiento"
   },
   {
@@ -56,7 +66,7 @@
     "asociado_a": "T-SPY",
     "confianza": "secundaria",
     "detectado": "2029-04-03",
-    "resumen": "Campaña activa de spyware comercial dirigida a periodistas en Colombia. IOCs compartidos por canal privado.",
+    "resumen": "Campaña activa de spyware comercial dirigida a periodistas en Colombia. Vector probable: mensajes con adjunto PDF vía WhatsApp. Indicadores de compromiso compartidos por canal privado.",
     "estado": "mitigación_en_curso"
   },
   {
