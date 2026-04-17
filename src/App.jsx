@@ -163,6 +163,7 @@ export default function IntranetInfobae() {
   });
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [activeView, setActiveView] = useState(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showLanding, setShowLanding] = useState(true);
@@ -2352,14 +2353,64 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
       {/* ======================= FOOTER CORPORATIVO ======================= */}
       <footer style={{ backgroundColor: '#1f1f1f', color: '#d9d4c2', padding: '20px 24px', fontSize: '11.5px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-          <div className="sans">
-            © Infobae · Bitácora · acceso restringido a personal autorizado
+          <div className="sans" style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+            <span>© Infobae · Bitácora · acceso restringido a personal autorizado</span>
+            <span
+              role="button"
+              tabIndex={0}
+              className="mono"
+              onClick={() => setAboutOpen(true)}
+              style={{ fontSize: '10.5px', color: '#d9d4c2', borderBottom: '1px dotted #5a544c', cursor: 'pointer', paddingBottom: '1px' }}
+            >
+              sobre este artefacto
+            </span>
           </div>
           <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>
             sesión: mondini.l · nodo BsAs · {formatUTC(now)}
           </div>
         </div>
       </footer>
+
+      {/* ======================= NOTA DE PROYECTO (rompe diegesis) ======================= */}
+      {aboutOpen && (
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => setAboutOpen(false)}
+          style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(31,31,31,0.78)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '24px' }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', maxWidth: '560px', width: '100%', padding: '36px 40px', fontFamily: "'IBM Plex Sans', system-ui, sans-serif", cursor: 'default' }}
+          >
+            <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '14px' }}>
+              Nota del proyecto · rompe diegesis
+            </div>
+            <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 14px', letterSpacing: '-0.01em' }}>
+              Sobre este artefacto
+            </h2>
+            <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
+              <strong>Infobae · Bitácora</strong> es un <em>diegetic prototype</em>: la ficción está en que el sistema existe, no en lo que dice. Ambientado en 2029, pregunta cómo podría organizarse una redacción argentina para cubrir investigación doméstica y corresponsalía internacional en un contexto donde la vigilancia, la autenticidad del contenido y la seguridad operativa de periodistas se volvieron condiciones cotidianas del trabajo.
+            </div>
+            <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
+              Cada protocolo, norma y herramienta es extensión plausible de algo que existe hoy. Los personajes y los despliegues son ficticios. Las fuentes externas, las regulaciones y los papers citados son reales.
+            </div>
+            <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f', marginTop: '22px', paddingTop: '18px', borderTop: '1px solid #d9d4c2', lineHeight: 1.7 }}>
+              Ideado, diseñado y codificado por <strong>Nicolás Bronzina</strong>.<br/>
+              En la tradición de Near Future Laboratory y Nick Foster (<em>Future Mundane</em>, 2015).
+            </div>
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => setAboutOpen(false)}
+              className="mono"
+              style={{ marginTop: '24px', display: 'inline-block', fontSize: '11px', letterSpacing: '0.06em', textTransform: 'uppercase', padding: '8px 14px', border: '1px solid #d9d4c2', cursor: 'pointer', color: '#1f1f1f', backgroundColor: '#f0ecde' }}
+            >
+              Cerrar
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ======================= TOAST ======================= */}
       {toast && (
