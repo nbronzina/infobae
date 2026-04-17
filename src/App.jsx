@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Bell, ChevronRight, ChevronDown, FileText, Folder, FolderOpen, Lock, Download, Printer, Share2, Home, Calendar, BookOpen, Users, Shield, Settings, Loader2 } from 'lucide-react';
+import { Search, Bell, ChevronRight, ChevronDown, FileText, Folder, FolderOpen, Lock, Download, Printer, Share2, Home, Calendar, BookOpen, Users, Shield, Settings, Loader2, Star, Clock } from 'lucide-react';
 import noticiasData from './data/noticias.json';
 import actividadData from './data/actividad.json';
 import notificacionesData from './data/notificaciones.json';
 import agendaData from './data/agenda.json';
 import directorioData from './data/directorio.json';
+import alertasData from './data/alertas.json';
+import sistemasData from './data/sistemas.json';
+import correccionesData from './data/correcciones.json';
 
 // ============================================================================
 // CONTENIDO DEL MANUAL — OP-SEC-2029-004
@@ -22,7 +25,12 @@ const DOC_META = {
   autor: 'j. fiorella',
   revisores: ['m. villafañe (operaciones)', 'l. pollastri (legales)'],
   proximaRevision: '2029-09-15',
-  idiomas: ['ES (original)', 'EN (traducción auxiliar)']
+  idiomas: ['ES (original)', 'EN (traducción auxiliar)'],
+  historial: [
+    { fecha: '2029-03-14', autor: 'j. fiorella', cambio: 'Edición 4.2: sección 08 (vacío ecosistémico) y amenazas T-PHYS, T-DOM.' },
+    { fecha: '2028-09-10', autor: 'j. fiorella', cambio: 'Edición 4.1: actualización de T-WPS tras Rye & Levin (IEEE S&P 2024).' },
+    { fecha: '2028-02-15', autor: 'j. fiorella', cambio: 'Edición 4.0: reescritura completa post-despliegue ARQ-032.' }
+  ]
 };
 
 const CHECKLIST_PREDESPLIEGUE = [
@@ -141,6 +149,18 @@ export default function IntranetInfobae() {
   const [toast, setToast] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [favoritos, setFavoritos] = useState(() => {
+    if (typeof localStorage === 'undefined') return [];
+    try { return JSON.parse(localStorage.getItem('infobae:favoritos') || '[]'); } catch { return []; }
+  });
+  const [recent, setRecent] = useState(() => {
+    if (typeof localStorage === 'undefined') return [];
+    try { return JSON.parse(localStorage.getItem('infobae:recent') || '[]'); } catch { return []; }
+  });
+  const [suscripciones, setSuscripciones] = useState(() => {
+    if (typeof localStorage === 'undefined') return [];
+    try { return JSON.parse(localStorage.getItem('infobae:suscripciones') || '[]'); } catch { return []; }
+  });
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
   const [activeView, setActiveView] = useState(null);
@@ -149,7 +169,14 @@ export default function IntranetInfobae() {
 
   const NOTIFICACIONES = notificacionesData;
 
+  const PERFILES = Object.fromEntries(
+    directorioData.map(p => [`perfil_${p.key}`, { perfil: true, persona: p, titulo: p.nombre, subtitulo: p.rol + ' · ' + p.base }])
+  );
+
   const VISTAS = {
+    ...PERFILES,
+    search_results: { titulo: 'Resultados de búsqueda', subtitulo: 'Coincidencias en documentos, personas, noticias y secciones' },
+    sistemas_estado: { titulo: 'Estado de sistemas', subtitulo: 'Monitoreo de infraestructura crítica y canales operativos', items: sistemasData },
     noticias: {
       titulo: 'Noticias internas',
       subtitulo: 'Organización, entrenamiento, herramientas y operaciones del equipo de Infobae',
@@ -300,6 +327,39 @@ export default function IntranetInfobae() {
         { titulo: 'Organizaciones externas — LATAM', items: ['FLIP Colombia (Fundación para la Libertad de Prensa): flip.org.co', 'SNTP Venezuela (Sindicato Nal. Trabajadores de la Prensa): sntp.org.ve', 'FOPEA Argentina: fopea.org', 'CPJ Emergencias: cpj.org/campaigns/assistance', 'RSF (Reporteros Sin Fronteras): rsf.org/es'] },
         { titulo: 'Organizaciones externas — Internacional', items: ['Access Now Digital Security Helpline: accessnow.org/help (respuesta 24-72h)', 'Dart Center / JTSN: dartcenter.org', 'IWMF (Int. Women\'s Media Foundation): iwmf.org', 'Rory Peck Trust (freelancers): rorypecktrust.org'] }
       ], fuentes: 'Verificación de vigencia: enero 2029. Próxima actualización: abril 2029. Reportar cambios a operaciones@infobae.interna.' }},
+    onboarding: { doc: {
+      area: 'INFOBAE · RECURSOS HUMANOS', codigo: 'OP-HR-2029-002', version: '1.0', fecha: '2029-03-15', responsable: 's. peralta (formación) + rrhh',
+      titulo: 'Onboarding de personal', subtitulo: 'Checklist de incorporación para corresponsales, freelancers y personal de soporte',
+      secciones: [
+        { titulo: 'Pre-ingreso · documentación', items: [
+          '☐ Firma de contrato y convenio de confidencialidad (legales · l. pollastri).',
+          '☐ Verificación de identidad y acreditación profesional vigente.',
+          '☐ Alta en directorio interno (rrhh).',
+          '☐ Asignación de usuario y acceso a sistemas (it@infobae.interna).',
+          '☐ Registro de contactos de emergencia y persona designada (formulario RRHH).'
+        ] },
+        { titulo: 'Primera semana · inducción', items: [
+          '☐ Sesión de orientación con s. peralta: estructura editorial, mesas, flujos de trabajo.',
+          '☐ Lectura obligatoria: OP-RED-2027-001 (Manual de estilo) y OP-RED-2028-003 (Fuentes anónimas).',
+          '☐ Lectura obligatoria: OP-SEC-2029-004 (Higiene RF) — sin excepciones para personal con potencial despliegue.',
+          '☐ Onboarding de seguridad digital con j. fiorella: Signal, GrapheneOS, gestor de contraseñas, 2FA.',
+          '☐ Alta en canal Signal interno y verificación de safety numbers.'
+        ] },
+        { titulo: 'Primer mes · operaciones', items: [
+          '☐ HEFAT: inscripción al próximo taller institucional (RISC Training). Certificación obligatoria para personal con despliegue proyectado.',
+          '☐ Sesión de familiarización con Pipeline de verificación (d. roca).',
+          '☐ Revisión del protocolo FOPEA (EXT-FOPEA-2028) y establecimiento de 3 contactos de aviso mutuo.',
+          '☐ Lectura de OP-INV-2028-004 (Contra-vigilancia doméstica) para personal asignado a investigación.',
+          '☐ Revisión de seguros (OP-LEG-2028-014) y confirmación de cobertura según rol.'
+        ] },
+        { titulo: 'Continuo · renovaciones', items: [
+          '☐ HEFAT: renovación cada 3 años o tras incidente operativo relevante.',
+          '☐ Actualización anual de contactos de emergencia.',
+          '☐ Revisión trimestral de manuales operativos con cambios post-ed.',
+          '☐ Sesión JTSN post-despliegue en zona activa (automática, no opt-in).'
+        ] }
+      ], fuentes: 'Diseño del programa: s. peralta y rrhh. Coordinación operativa con seg. digital (j. fiorella) y formación externa (RISC Training, Dart Center, FOPEA).'
+    }},
     analista_auto: { tool: true,
       titulo: 'Analista automatizado',
       subtitulo: 'Consulta al modelo de IA para evaluación de material, amenazas y decisiones operativas',
@@ -361,8 +421,15 @@ export default function IntranetInfobae() {
     folder_redaccion: { folder: true, titulo: 'Redacción', subtitulo: 'Documentos operativos del área editorial', docs: [
       { key: 'manual_estilo', codigo: 'OP-RED-2027-001', titulo: 'Manual de estilo editorial', version: '12.3', estado: 'vigente' },
       { key: 'fuentes_anonimas', codigo: 'OP-RED-2028-003', titulo: 'Protocolo de fuentes anónimas', version: '3.0', estado: 'en_revision' },
-      { key: 'verificacion_prepub', codigo: 'OP-RED-2029-005', titulo: 'Guía de verificación pre-publicación', version: '5.1', estado: 'vigente' }
+      { key: 'verificacion_prepub', codigo: 'OP-RED-2029-005', titulo: 'Guía de verificación pre-publicación', version: '5.1', estado: 'vigente' },
+      { key: 'correcciones_log', codigo: 'OP-RED-2029-006', titulo: 'Registro de correcciones públicas', version: '—', estado: 'vigente' }
     ]},
+    correcciones_log: {
+      contenido: true,
+      titulo: 'Registro de correcciones públicas',
+      subtitulo: 'Log de correcciones aplicadas a notas publicadas por Infobae',
+      meta: { codigo: 'OP-RED-2029-006', version: '—', fecha: '2029-04-17', responsable: 'dirección editorial' }
+    },
     folder_segdigital: { folder: true, titulo: 'Seguridad digital', subtitulo: 'Manuales operativos y protocolos de seguridad', docs: [
       { key: 'comunicacion_cifrada', codigo: 'OP-SEC-2028-011', titulo: 'Comunicación cifrada en campo', version: '3.1', estado: 'vigente' },
       { key: 'verificacion_c2pa', codigo: 'OP-SEC-2029-001', titulo: 'Verificación C2PA en redacción', version: '2.0', estado: 'en_revision' },
@@ -379,7 +446,8 @@ export default function IntranetInfobae() {
     folder_rrhh: { folder: true, titulo: 'Recursos humanos', subtitulo: 'Políticas de personal y apoyo', docs: [
       { key: 'jtsn_apoyo', codigo: 'OP-HR-2027-012', titulo: 'Apoyo psicológico (JTSN)', version: '2.2', estado: 'vigente' },
       { key: 'politica_despliegue', codigo: 'OP-HR-2028-003', titulo: 'Política de despliegue y descanso', version: '1.5', estado: 'vigente' },
-      { key: 'contactos_emergencia', codigo: 'OP-HR-2029-001', titulo: 'Contactos de emergencia por región', version: '1.0', estado: 'vigente' }
+      { key: 'contactos_emergencia', codigo: 'OP-HR-2029-001', titulo: 'Contactos de emergencia por región', version: '1.0', estado: 'vigente' },
+      { key: 'onboarding', codigo: 'OP-HR-2029-002', titulo: 'Onboarding de personal', version: '1.0', estado: 'vigente' }
     ]},
     // ============ DOCUMENTOS DE INVESTIGACIÓN ============
     docs_filtrados: { doc: {
@@ -463,16 +531,53 @@ export default function IntranetInfobae() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function executeSearch(query) {
-    setSearchQuery(query);
-    if (!query.trim() || !articleRef.current) return;
-    // Usar la API nativa del browser para encontrar y resaltar
-    if (window.find) {
-      articleRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setTimeout(() => {
-        window.find(query, false, false, true, false, true, false);
-      }, 300);
+  useEffect(() => {
+    try { localStorage.setItem('infobae:favoritos', JSON.stringify(favoritos)); } catch {}
+  }, [favoritos]);
+
+  useEffect(() => {
+    try { localStorage.setItem('infobae:recent', JSON.stringify(recent)); } catch {}
+  }, [recent]);
+
+  useEffect(() => {
+    try { localStorage.setItem('infobae:suscripciones', JSON.stringify(suscripciones)); } catch {}
+  }, [suscripciones]);
+
+  function toggleSuscripcion(key) {
+    setSuscripciones(prev => prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]);
+  }
+
+  useEffect(() => {
+    if (activeView && VISTAS[activeView] && (VISTAS[activeView].doc || VISTAS[activeView].contenido)) {
+      setRecent(prev => {
+        const filtered = prev.filter(k => k !== activeView);
+        return [activeView, ...filtered].slice(0, 8);
+      });
     }
+  }, [activeView]);
+
+  function toggleFavorito(key) {
+    setFavoritos(prev => prev.includes(key) ? prev.filter(k => k !== key) : [key, ...prev]);
+  }
+
+  function titleOf(key) {
+    const v = VISTAS[key];
+    if (!v) return key;
+    return v.doc?.titulo || v.titulo || key;
+  }
+
+  function codigoOf(key) {
+    const v = VISTAS[key];
+    return v?.doc?.codigo || v?.meta?.codigo || null;
+  }
+
+  function executeSearch(query) {
+    const q = query.trim();
+    setSearchQuery(q);
+    if (!q) return;
+    setActiveView('search_results');
+    setShowLanding(false);
+    setSearchOpen(false);
   }
 
   useEffect(() => {
@@ -539,10 +644,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
   }
 
   const folderChildren = {
-    'redaccion': ['manual_estilo', 'fuentes_anonimas', 'verificacion_prepub', 'folder_redaccion'],
+    'redaccion': ['manual_estilo', 'fuentes_anonimas', 'verificacion_prepub', 'correcciones_log', 'folder_redaccion'],
     'seg-digital': ['comunicacion_cifrada', 'verificacion_c2pa', 'compromiso_dispositivo', 'vigilancia_destino', 'version_fixer', 'folder_segdigital'],
     'legales': ['anmac_enacom', 'exportacion_equip', 'seguros_riesgo', 'folder_legales'],
-    'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'folder_rrhh'],
+    'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'onboarding', 'folder_rrhh'],
     'investigacion': ['docs_filtrados', 'osint_investigacion', 'redes_internacionales', 'contravigilancia', 'folder_investigacion'],
     'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'folder_herramientas']
   };
@@ -552,15 +657,15 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
   };
 
   const docFolders = {
-    manual_estilo: ['Redacción', 'folder_redaccion'], fuentes_anonimas: ['Redacción', 'folder_redaccion'], verificacion_prepub: ['Redacción', 'folder_redaccion'],
+    manual_estilo: ['Redacción', 'folder_redaccion'], fuentes_anonimas: ['Redacción', 'folder_redaccion'], verificacion_prepub: ['Redacción', 'folder_redaccion'], correcciones_log: ['Redacción', 'folder_redaccion'],
     comunicacion_cifrada: ['Seguridad Digital', 'folder_segdigital'], verificacion_c2pa: ['Seguridad Digital', 'folder_segdigital'], compromiso_dispositivo: ['Seguridad Digital', 'folder_segdigital'], vigilancia_destino: ['Seguridad Digital', 'folder_segdigital'], version_fixer: ['Seguridad Digital', 'folder_segdigital'],
     anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
-    jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'],
+    jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'], onboarding: ['RRHH', 'folder_rrhh'],
     docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'],
     pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
-  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte'];
+  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte', 'sistemas_estado'];
   const folderKeys = ['folder_redaccion', 'folder_segdigital', 'folder_legales', 'folder_rrhh', 'folder_investigacion', 'folder_herramientas'];
 
   const goToLanding = () => { setActiveView(null); setShowLanding(true); };
@@ -570,6 +675,12 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     if (!activeView && showLanding) return null;
     if (!activeView && !showLanding) {
       return { label: 'Seguridad Digital', onClick: () => goToFolder('folder_segdigital') };
+    }
+    if (activeView?.startsWith('perfil_')) {
+      return { label: 'Directorio', onClick: () => goToFolder('directorio') };
+    }
+    if (activeView === 'search_results') {
+      return { label: 'Inicio', onClick: goToLanding };
     }
     if (pageKeys.includes(activeView) || folderKeys.includes(activeView)) {
       return { label: 'Inicio', onClick: goToLanding };
@@ -747,7 +858,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter') executeSearch(searchQuery); if (e.key === 'Escape') { setSearchOpen(false); setSearchQuery(''); } }}
-            placeholder="Buscar en este documento..."
+            placeholder="Buscar en la intranet..."
             className="mono"
             style={{ flex: 1, border: 'none', backgroundColor: 'transparent', fontSize: '12.5px', color: '#1f1f1f', outline: 'none', fontFamily: "'JetBrains Mono', monospace" }}
           />
@@ -756,6 +867,17 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           </div>
         </div>
       )}
+
+      {/* ======================= BANNER DE ALERTA OPERATIVA ======================= */}
+      {alertasData.length > 0 && alertasData.map(a => (
+        <div key={a.id} style={{ backgroundColor: '#f0ecde', borderTop: '1px solid #d9d4c2', borderBottom: '1px solid #d9d4c2', borderLeft: '2px solid #bd2828', padding: '10px 24px', display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px' }}>
+          <span className="mono" style={{ color: '#bd2828', fontWeight: 500, fontSize: '10.5px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            Alerta · {a.teatro}
+          </span>
+          <span className="mono" style={{ color: '#1f1f1f', flex: 1 }}>{a.mensaje}</span>
+          <span className="mono" style={{ color: '#6b6454', fontSize: '10.5px' }}>activa desde {a.desde} · {a.emisor}</span>
+        </div>
+      ))}
 
       {/* ======================= BREADCRUMB DINÁMICO ======================= */}
       <div style={{ backgroundColor: '#f7f5ee', borderBottom: '1px solid #d9d4c2', padding: '10px 24px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', color: '#5a544c' }}>
@@ -766,6 +888,8 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
           if (showLanding && !activeView) return <>{sep}<span className="mono" style={{ color: '#1f1f1f' }}>Inicio</span></>;
           if (!showLanding && !activeView) return <>{sep}{link('Documentos', () => { setActiveView('folder_segdigital'); setShowLanding(false); })}{sep}{link('Seguridad Digital', () => { setActiveView('folder_segdigital'); setShowLanding(false); })}{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{DOC_META.codigo}</span></>;
+          if (activeView?.startsWith('perfil_')) return <>{sep}{link('Directorio', () => { setActiveView('directorio'); setShowLanding(false); })}{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{VISTAS[activeView]?.titulo}</span></>;
+          if (activeView === 'search_results') return <>{sep}<span className="mono" style={{ color: '#1f1f1f' }}>Búsqueda: {searchQuery}</span></>;
           if (pageKeys.includes(activeView)) return <>{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{VISTAS[activeView]?.titulo}</span></>;
           if (folderKeys.includes(activeView)) return <>{sep}{link('Documentos', () => { setActiveView('folder_segdigital'); setShowLanding(false); })}{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{VISTAS[activeView]?.titulo}</span></>;
           if (docFolders[activeView]) {
@@ -821,6 +945,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
                 <div onClick={() => setActiveView('verificacion_prepub')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'verificacion_prepub' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'verificacion_prepub' ? 500 : 400, backgroundColor: activeView === 'verificacion_prepub' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'verificacion_prepub' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Verificación pre-pub
+                </div>
+                <div onClick={() => setActiveView('correcciones_log')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'correcciones_log' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'correcciones_log' ? 500 : 400, backgroundColor: activeView === 'correcciones_log' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'correcciones_log' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Correcciones públicas
                 </div>
               </div>
             )}
@@ -881,6 +1008,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
                 <div onClick={() => setActiveView('contactos_emergencia')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'contactos_emergencia' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'contactos_emergencia' ? 500 : 400, backgroundColor: activeView === 'contactos_emergencia' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'contactos_emergencia' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Contactos emergencia
+                </div>
+                <div onClick={() => setActiveView('onboarding')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'onboarding' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'onboarding' ? 500 : 400, backgroundColor: activeView === 'onboarding' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'onboarding' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Onboarding
                 </div>
               </div>
             )}
@@ -1042,6 +1172,23 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 ))}
               </div>
 
+              {/* Áreas seguidas */}
+              {suscripciones.length > 0 && (
+                <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px', marginBottom: '20px' }}>
+                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Áreas seguidas ({suscripciones.length})</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {suscripciones.map(k => (
+                      <div key={k} onClick={() => { setActiveView(k); setShowLanding(false); }} className="mono" style={{ fontSize: '11px', padding: '6px 12px', backgroundColor: '#f0ecde', border: '1px solid #d9d4c2', cursor: 'pointer' }}>
+                        {VISTAS[k]?.titulo || k}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginTop: '10px', fontStyle: 'italic' }}>
+                    Recibirás aviso cuando haya cambios en estas áreas. Editar desde cada carpeta.
+                  </div>
+                </div>
+              )}
+
               {/* Noticias recientes (preview) */}
               <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '12px' }}>
@@ -1075,6 +1222,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 ) : <span />; })()}
                 {(VISTAS[activeView]?.doc || VISTAS[activeView]?.contenido || VISTAS[activeView]?.tool || VISTAS[activeView]?.form) && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '12.5px', color: '#5a544c' }}>
+                    <div onClick={() => toggleFavorito(activeView)} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', color: favoritos.includes(activeView) ? '#1f1f1f' : '#5a544c' }}>
+                      <Star size={13} fill={favoritos.includes(activeView) ? '#1f1f1f' : 'none'} />
+                      <span>{favoritos.includes(activeView) ? 'En favoritos' : 'Guardar'}</span>
+                    </div>
                     <div onClick={handlePDF} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
                       <Download size={13} /><span>PDF</span>
                     </div>
@@ -1113,15 +1264,202 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     <div>Nombre</div><div>Rol</div><div>Base</div><div>Contacto</div>
                   </div>
                   {VISTAS.directorio.items.map((p, i) => (
-                    <div key={i} className="mono" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.5fr 0.8fr 1.2fr', padding: '12px 14px', fontSize: '12px', borderTop: '1px solid #d9d4c2', lineHeight: 1.4 }}>
+                    <div key={i} onClick={() => setActiveView(`perfil_${p.key}`)} className="mono" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.5fr 0.8fr 1.2fr', padding: '12px 14px', fontSize: '12px', borderTop: '1px solid #d9d4c2', lineHeight: 1.4, cursor: 'pointer', backgroundColor: 'transparent', transition: 'background-color 0.1s' }} onMouseEnter={e => e.currentTarget.style.backgroundColor = '#e5e1d3'} onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}>
                       <div style={{ fontWeight: 500 }}>{p.nombre}</div>
                       <div style={{ color: '#3d3931' }}>{p.rol}</div>
                       <div style={{ color: '#5a544c' }}>{p.base}</div>
-                      <div><a href={'mailto:' + p.contacto} style={{ color: '#bd2828', fontSize: '11.5px' }}>{p.contacto}</a></div>
+                      <div><a href={'mailto:' + p.contacto} onClick={e => e.stopPropagation()} style={{ color: '#bd2828', fontSize: '11.5px' }}>{p.contacto}</a></div>
                     </div>
                   ))}
                 </div>
               )}
+
+              {/* Estado de sistemas */}
+              {activeView === 'sistemas_estado' && (
+                <div>
+                  <div style={{ border: '1px solid #d9d4c2' }}>
+                    <div className="mono" style={{ display: 'grid', gridTemplateColumns: '2fr 0.8fr 3fr', padding: '10px 14px', fontSize: '10.5px', color: '#5a544c', textTransform: 'uppercase', letterSpacing: '0.04em', backgroundColor: '#f0ecde' }}>
+                      <div>Sistema</div><div>Estado</div><div>Nota</div>
+                    </div>
+                    {sistemasData.map((s, i) => {
+                      const color = s.estado === 'operativo' ? '#5a6e3c' : s.estado === 'degradado' ? '#8a6d2b' : s.estado === 'off-line' ? '#bd2828' : '#6b6454';
+                      const bg = s.estado === 'operativo' ? '#e8f0de' : s.estado === 'degradado' ? '#f5edd5' : s.estado === 'off-line' ? '#f5d5d5' : '#eceae4';
+                      return (
+                        <div key={i} className="mono" style={{ display: 'grid', gridTemplateColumns: '2fr 0.8fr 3fr', padding: '12px 14px', fontSize: '12px', borderTop: '1px solid #d9d4c2', lineHeight: 1.4, alignItems: 'center' }}>
+                          <div style={{ fontWeight: 500 }}>{s.sistema}</div>
+                          <div>
+                            <span style={{ fontSize: '9.5px', padding: '2px 7px', borderRadius: '2px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: bg, color }}>{s.estado}</span>
+                          </div>
+                          <div style={{ color: '#3d3931', fontSize: '11.5px' }}>{s.nota}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginTop: '16px', fontStyle: 'italic' }}>
+                    Registro actualizado automáticamente. Para reportar un incidente: seg.digital@infobae.interna.
+                  </div>
+                </div>
+              )}
+
+              {/* Resultados de búsqueda global */}
+              {activeView === 'search_results' && (() => {
+                const q = searchQuery.trim().toLowerCase();
+                if (!q) return <div className="serif" style={{ fontSize: '14px', color: '#6b6454', fontStyle: 'italic' }}>Ingresá un término en la barra de búsqueda.</div>;
+
+                const match = (...fields) => fields.some(f => (f || '').toLowerCase().includes(q));
+
+                const docs = Object.entries(VISTAS)
+                  .filter(([, v]) => v.doc)
+                  .filter(([, v]) => {
+                    const d = v.doc;
+                    const seccionesTexto = (d.secciones || []).map(s => `${s.titulo} ${s.texto}`).join(' ');
+                    return match(d.codigo, d.titulo, d.subtitulo, d.area, d.responsable, seccionesTexto, d.fuentes);
+                  })
+                  .map(([key, v]) => ({ key, ...v.doc }));
+
+                const personas = directorioData.filter(p => match(p.nombre, p.rol, p.base, p.contacto));
+                const noticias = VISTAS.noticias.items.filter(n => match(n.titulo, n.texto, n.tag));
+                const paginasCandidatas = [
+                  { key: 'noticias', titulo: 'Noticias internas' },
+                  { key: 'directorio', titulo: 'Directorio' },
+                  { key: 'agenda', titulo: 'Agenda editorial' },
+                  { key: 'redaccion', titulo: 'Redacción' },
+                  { key: 'herramientas', titulo: 'Herramientas' },
+                  { key: 'soporte', titulo: 'Soporte' }
+                ];
+                const paginas = paginasCandidatas.filter(p => match(p.titulo));
+
+                const total = docs.length + personas.length + noticias.length + paginas.length;
+
+                return (
+                  <div>
+                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>INFOBAE · BÚSQUEDA</div>
+                    <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Resultados para "{searchQuery}"</h1>
+                    <div className="mono" style={{ fontSize: '12px', color: '#6b6454', marginBottom: '32px' }}>{total} coincidencias</div>
+
+                    {docs.length > 0 && (
+                      <div style={{ marginBottom: '28px' }}>
+                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Documentos ({docs.length})</div>
+                        <div style={{ border: '1px solid #d9d4c2' }}>
+                          {docs.map(d => (
+                            <div key={d.key} onClick={() => setActiveView(d.key)} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
+                              <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginBottom: '2px' }}>{d.codigo} · v{d.version} · {d.area}</div>
+                              <div className="serif" style={{ fontSize: '14px' }}>{d.titulo}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {personas.length > 0 && (
+                      <div style={{ marginBottom: '28px' }}>
+                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Personas ({personas.length})</div>
+                        <div style={{ border: '1px solid #d9d4c2' }}>
+                          {personas.map(p => (
+                            <div key={p.key} onClick={() => setActiveView(`perfil_${p.key}`)} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
+                              <div className="serif" style={{ fontSize: '14px', fontWeight: 500 }}>{p.nombre}</div>
+                              <div className="mono" style={{ fontSize: '11px', color: '#6b6454', marginTop: '2px' }}>{p.rol} · {p.base}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {noticias.length > 0 && (
+                      <div style={{ marginBottom: '28px' }}>
+                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Noticias ({noticias.length})</div>
+                        <div style={{ border: '1px solid #d9d4c2' }}>
+                          {noticias.map((n, i) => (
+                            <div key={i} onClick={() => setActiveView('noticias')} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
+                              <div className="mono" style={{ fontSize: '10.5px', color: '#bd2828', marginBottom: '2px' }}>{n.tag} · {n.fecha}</div>
+                              <div className="serif" style={{ fontSize: '14px' }}>{n.titulo}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {paginas.length > 0 && (
+                      <div style={{ marginBottom: '28px' }}>
+                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Secciones ({paginas.length})</div>
+                        <div style={{ border: '1px solid #d9d4c2' }}>
+                          {paginas.map(p => (
+                            <div key={p.key} onClick={() => setActiveView(p.key)} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
+                              <div className="serif" style={{ fontSize: '14px' }}>{p.titulo}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {total === 0 && (
+                      <div className="serif" style={{ fontSize: '14px', color: '#6b6454', fontStyle: 'italic', padding: '20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #bd2828' }}>
+                        Sin coincidencias para "{searchQuery}".
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
+              {/* Perfil individual */}
+              {activeView && VISTAS[activeView]?.perfil && (() => {
+                const p = VISTAS[activeView].persona;
+                const aliases = (p.aliases || []).map(a => a.toLowerCase());
+                const matches = (field) => aliases.some(a => (field || '').toLowerCase().includes(a));
+                const docsFirmados = Object.entries(VISTAS)
+                  .filter(([, val]) => val.doc && matches(val.doc.responsable))
+                  .map(([key, val]) => ({ viewKey: key, ...val.doc }));
+                const actividadPropia = ACTIVIDAD_RECIENTE.filter(a => matches(a.usuario));
+                return (
+                  <div>
+                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>INFOBAE · DIRECTORIO</div>
+                    <h1 className="serif" style={{ fontSize: '32px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>{p.nombre}</h1>
+                    <div className="serif" style={{ fontSize: '15px', color: '#5a544c', fontStyle: 'italic', marginBottom: '32px' }}>{p.rol}</div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', padding: '16px 20px', backgroundColor: '#f0ecde', marginBottom: '32px', fontSize: '12.5px' }}>
+                      <div>
+                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '4px' }}>Base</div>
+                        <div className="mono">{p.base}</div>
+                      </div>
+                      <div>
+                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '4px' }}>Contacto</div>
+                        <div className="mono" style={{ color: '#bd2828' }}>{p.contacto.includes('@') ? <a href={'mailto:' + p.contacto}>{p.contacto}</a> : p.contacto}</div>
+                      </div>
+                    </div>
+
+                    <div style={{ marginBottom: '32px' }}>
+                      <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Documentos firmados ({docsFirmados.length})</div>
+                      {docsFirmados.length === 0 ? (
+                        <div className="serif" style={{ fontSize: '13px', color: '#6b6454', fontStyle: 'italic' }}>No figura como responsable en documentos vigentes.</div>
+                      ) : (
+                        <div style={{ border: '1px solid #d9d4c2' }}>
+                          {docsFirmados.map(d => (
+                            <div key={d.viewKey} onClick={() => setActiveView(d.viewKey)} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
+                              <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginBottom: '2px' }}>{d.codigo} · v{d.version} · {d.fecha}</div>
+                              <div className="serif" style={{ fontSize: '14px' }}>{d.titulo}</div>
+                              <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginTop: '3px' }}>{d.responsable}</div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div style={{ marginBottom: '32px' }}>
+                      <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Actividad reciente ({actividadPropia.length})</div>
+                      {actividadPropia.length === 0 ? (
+                        <div className="serif" style={{ fontSize: '13px', color: '#6b6454', fontStyle: 'italic' }}>Sin actividad registrada en el ciclo actual.</div>
+                      ) : (
+                        actividadPropia.map((a, i) => (
+                          <div key={i} style={{ marginBottom: '10px', fontSize: '13px', lineHeight: 1.5 }}>
+                            <div className="mono" style={{ color: '#6b6454', fontSize: '11px' }}>{a.fecha}</div>
+                            <div style={{ color: '#1f1f1f' }}>{a.accion}</div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                );
+              })()}
 
               {/* Agenda */}
               {activeView === 'agenda' && VISTAS.agenda.items.map((dia, i) => (
@@ -1151,15 +1489,60 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               ))}
 
               {/* Soporte */}
-              {activeView === 'soporte' && VISTAS.soporte.items.map((s, i) => (
-                <div key={i} style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid #d9d4c2' }}>
-                  <div className="serif" style={{ fontSize: '16px', fontWeight: 500, marginBottom: '4px' }}>{s.area}</div>
-                  <div className="mono" style={{ fontSize: '12px', color: '#bd2828', marginBottom: '6px' }}><a href={'mailto:' + s.contacto}>{s.contacto}</a></div>
-                  <div className="sans" style={{ fontSize: '13px', lineHeight: 1.5, color: '#3d3931' }}>{s.desc}</div>
+              {activeView === 'soporte' && (<>
+                <div onClick={() => setActiveView('sistemas_estado')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', marginBottom: '24px', cursor: 'pointer' }}>
+                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '4px' }}>Monitoreo</div>
+                  <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Estado de sistemas internos →</div>
+                  <div className="mono" style={{ fontSize: '11px', color: '#6b6454', marginTop: '4px' }}>Signal, Starlink, VPN, pipeline de verificación, canal fixer.</div>
                 </div>
-              ))}
+                {VISTAS.soporte.items.map((s, i) => (
+                  <div key={i} style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid #d9d4c2' }}>
+                    <div className="serif" style={{ fontSize: '16px', fontWeight: 500, marginBottom: '4px' }}>{s.area}</div>
+                    <div className="mono" style={{ fontSize: '12px', color: '#bd2828', marginBottom: '6px' }}><a href={'mailto:' + s.contacto}>{s.contacto}</a></div>
+                    <div className="sans" style={{ fontSize: '13px', lineHeight: 1.5, color: '#3d3931' }}>{s.desc}</div>
+                  </div>
+                ))}
+              </>)}
 
               {/* ANMaC / ENACOM — documento completo */}
+              {/* Registro de correcciones */}
+              {activeView === 'correcciones_log' && (
+                <div>
+                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>INFOBAE · REDACCIÓN · OP-RED-2029-006</div>
+                  <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Registro de correcciones públicas</h1>
+                  <div className="serif" style={{ fontSize: '14.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '20px' }}>Correcciones aplicadas a notas publicadas. Actualización continua. Criterio: Manual de estilo OP-RED-2027-001, §12.</div>
+
+                  <div style={{ padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #bd2828', marginBottom: '24px' }}>
+                    <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f' }}>
+                      Toda corrección mayor se comunica en la misma nota (nota al pie) y se registra acá. Las correcciones menores (ortografía, tipografía) se registran sin nota al pie.
+                    </div>
+                  </div>
+
+                  {correccionesData.map((c, i) => (
+                    <div key={i} style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '16px 20px', marginBottom: '14px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }}>
+                        <div className="mono" style={{ fontSize: '11px', color: '#6b6454' }}>{c.fecha}</div>
+                        <div className="mono" style={{ fontSize: '9.5px', padding: '2px 7px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: c.tipo === 'retiro' ? '#f5d5d5' : c.tipo === 'dato' || c.tipo === 'atribución' ? '#f5edd5' : '#eceae4', color: c.tipo === 'retiro' ? '#bd2828' : c.tipo === 'dato' || c.tipo === 'atribución' ? '#8a6d2b' : '#6b6454' }}>{c.tipo}</div>
+                      </div>
+                      <div className="serif" style={{ fontSize: '15px', fontWeight: 500, marginBottom: '10px' }}>{c.nota}</div>
+                      <div style={{ fontSize: '12.5px', lineHeight: 1.55, color: '#3d3931', marginBottom: '6px' }}>
+                        <span className="mono" style={{ fontSize: '10.5px', color: '#6b6454', textTransform: 'uppercase', letterSpacing: '0.04em', marginRight: '6px' }}>Original:</span>
+                        {c.original}
+                      </div>
+                      <div style={{ fontSize: '12.5px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '8px' }}>
+                        <span className="mono" style={{ fontSize: '10.5px', color: '#6b6454', textTransform: 'uppercase', letterSpacing: '0.04em', marginRight: '6px' }}>Corrección:</span>
+                        {c.correccion}
+                      </div>
+                      <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', fontStyle: 'italic' }}>firmado: {c.firma}</div>
+                    </div>
+                  ))}
+
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginTop: '20px', fontStyle: 'italic' }}>
+                    Reportar un error en una nota publicada: correcciones@infobae.interna.
+                  </div>
+                </div>
+              )}
+
               {activeView === 'anmac_enacom' && (
                 <article style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '40px 48px' }}>
                   <header style={{ borderBottom: '1px solid #d9d4c2', paddingBottom: '20px', marginBottom: '28px' }}>
@@ -1333,6 +1716,11 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {/* Renderizador de folders */}
               {activeView && VISTAS[activeView]?.folder && (
                 <div>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '12px' }}>
+                    <div onClick={() => toggleSuscripcion(activeView)} className="mono" style={{ cursor: 'pointer', fontSize: '11px', padding: '5px 10px', border: '1px solid #d9d4c2', backgroundColor: suscripciones.includes(activeView) ? '#e8f0de' : '#f8f5ec', color: suscripciones.includes(activeView) ? '#5a6e3c' : '#5a544c' }}>
+                      {suscripciones.includes(activeView) ? '☑ Suscripto · dejar de seguir' : '☐ Suscribirse al área'}
+                    </div>
+                  </div>
                   {VISTAS[activeView].docs.map((d, i) => (
                     <div key={i} onClick={() => { if (d.actual) { setActiveView(null); setShowLanding(false); } else if (d.key) { setActiveView(d.key); } else { showToast(d.titulo + ' — sin vista disponible'); }}} className="sidebar-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', padding: '16px 20px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
                       <FileText size={16} color="#5a544c" style={{ marginTop: '2px', flexShrink: 0 }} />
@@ -1801,6 +2189,18 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             </div>
           </div>
 
+          {DOC_META.historial && (
+            <div style={{ marginBottom: '28px' }}>
+              <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Historial de revisiones</div>
+              {DOC_META.historial.map((h, i) => (
+                <div key={i} style={{ marginBottom: '10px', fontSize: '11.5px', lineHeight: 1.5, paddingLeft: '10px', borderLeft: '2px solid #d9d4c2' }}>
+                  <div className="mono" style={{ color: '#6b6454', fontSize: '10.5px' }}>{h.fecha} · {h.autor}</div>
+                  <div style={{ color: '#1f1f1f' }}>{h.cambio}</div>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div style={{ marginBottom: '28px' }}>
             <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Actividad reciente</div>
             {ACTIVIDAD_RECIENTE.map((a, i) => (
@@ -1867,6 +2267,26 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   </div>
                 </div>
               </div>
+              {(() => {
+                const historial = d.historial || (d.fecha && d.version ? [{ fecha: d.fecha, autor: d.responsable, cambio: `Edición ${d.version} (vigente).` }] : []);
+                if (historial.length === 0) return null;
+                return (
+                  <div style={{ marginBottom: '28px' }}>
+                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Historial de revisiones</div>
+                    {historial.map((h, i) => (
+                      <div key={i} style={{ marginBottom: '10px', fontSize: '11.5px', lineHeight: 1.5, paddingLeft: '10px', borderLeft: '2px solid #d9d4c2' }}>
+                        <div className="mono" style={{ color: '#6b6454', fontSize: '10.5px' }}>{h.fecha || '—'} · {h.autor || '—'}</div>
+                        <div style={{ color: '#1f1f1f' }}>{h.cambio}</div>
+                      </div>
+                    ))}
+                    {!d.historial && historial.length === 1 && (
+                      <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', fontStyle: 'italic', marginTop: '4px' }}>
+                        Versiones anteriores archivadas en OP-SEC-LOG.
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
               <div style={{ marginBottom: '28px' }}>
                 <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Navegación</div>
                 {(() => { const back = getBackLink(); return back ? (
@@ -1881,6 +2301,32 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   </div>
                 )}
               </div>
+              {favoritos.length > 0 && (
+                <div style={{ marginBottom: '28px' }}>
+                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Star size={10} /> Favoritos ({favoritos.length})
+                  </div>
+                  {favoritos.map(k => (
+                    <div key={k} onClick={() => setActiveView(k)} className="doc-link" style={{ cursor: 'pointer', fontSize: '11.5px', padding: '5px 0', borderBottom: '1px solid #d9d4c2' }}>
+                      <div className="mono" style={{ fontSize: '10px', color: '#6b6454' }}>{codigoOf(k) || ''}</div>
+                      <div>{titleOf(k)}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {recent.filter(k => k !== activeView).length > 0 && (
+                <div style={{ marginBottom: '28px' }}>
+                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Clock size={10} /> Últimos consultados
+                  </div>
+                  {recent.filter(k => k !== activeView).slice(0, 5).map(k => (
+                    <div key={k} onClick={() => setActiveView(k)} className="doc-link" style={{ cursor: 'pointer', fontSize: '11.5px', padding: '5px 0', borderBottom: '1px solid #d9d4c2' }}>
+                      <div className="mono" style={{ fontSize: '10px', color: '#6b6454' }}>{codigoOf(k) || ''}</div>
+                      <div>{titleOf(k)}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </>);
           })()}
 
