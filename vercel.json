@@ -5,5 +5,8 @@
   "framework": "vite",
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/" }
+  ],
+  "crons": [
+    { "path": "/api/actualizar", "schedule": "0 9 * * 1" }
   ]
 }
