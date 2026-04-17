@@ -156,6 +156,10 @@ export default function IntranetInfobae() {
     if (typeof localStorage === 'undefined') return [];
     try { return JSON.parse(localStorage.getItem('infobae:recent') || '[]'); } catch { return []; }
   });
+  const [suscripciones, setSuscripciones] = useState(() => {
+    if (typeof localStorage === 'undefined') return [];
+    try { return JSON.parse(localStorage.getItem('infobae:suscripciones') || '[]'); } catch { return []; }
+  });
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
   const [activeView, setActiveView] = useState(null);
@@ -526,6 +530,14 @@ export default function IntranetInfobae() {
   useEffect(() => {
     try { localStorage.setItem('infobae:recent', JSON.stringify(recent)); } catch {}
   }, [recent]);
+
+  useEffect(() => {
+    try { localStorage.setItem('infobae:suscripciones', JSON.stringify(suscripciones)); } catch {}
+  }, [suscripciones]);
+
+  function toggleSuscripcion(key) {
+    setSuscripciones(prev => prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]);
+  }
 
   useEffect(() => {
     if (activeView && VISTAS[activeView] && (VISTAS[activeView].doc || VISTAS[activeView].contenido)) {
@@ -1149,6 +1161,23 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 ))}
               </div>
 
+              {/* Áreas seguidas */}
+              {suscripciones.length > 0 && (
+                <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px', marginBottom: '20px' }}>
+                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Áreas seguidas ({suscripciones.length})</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {suscripciones.map(k => (
+                      <div key={k} onClick={() => { setActiveView(k); setShowLanding(false); }} className="mono" style={{ fontSize: '11px', padding: '6px 12px', backgroundColor: '#f0ecde', border: '1px solid #d9d4c2', cursor: 'pointer' }}>
+                        {VISTAS[k]?.titulo || k}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginTop: '10px', fontStyle: 'italic' }}>
+                    Recibirás aviso cuando haya cambios en estas áreas. Editar desde cada carpeta.
+                  </div>
+                </div>
+              )}
+
               {/* Noticias recientes (preview) */}
               <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '12px' }}>
@@ -1638,6 +1667,11 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {/* Renderizador de folders */}
               {activeView && VISTAS[activeView]?.folder && (
                 <div>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '12px' }}>
+                    <div onClick={() => toggleSuscripcion(activeView)} className="mono" style={{ cursor: 'pointer', fontSize: '11px', padding: '5px 10px', border: '1px solid #d9d4c2', backgroundColor: suscripciones.includes(activeView) ? '#e8f0de' : '#f8f5ec', color: suscripciones.includes(activeView) ? '#5a6e3c' : '#5a544c' }}>
+                      {suscripciones.includes(activeView) ? '☑ Suscripto · dejar de seguir' : '☐ Suscribirse al área'}
+                    </div>
+                  </div>
                   {VISTAS[activeView].docs.map((d, i) => (
                     <div key={i} onClick={() => { if (d.actual) { setActiveView(null); setShowLanding(false); } else if (d.key) { setActiveView(d.key); } else { showToast(d.titulo + ' — sin vista disponible'); }}} className="sidebar-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', padding: '16px 20px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
                       <FileText size={16} color="#5a544c" style={{ marginTop: '2px', flexShrink: 0 }} />
