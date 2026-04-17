@@ -314,6 +314,39 @@ export default function IntranetInfobae() {
         { titulo: 'Organizaciones externas — LATAM', items: ['FLIP Colombia (Fundación para la Libertad de Prensa): flip.org.co', 'SNTP Venezuela (Sindicato Nal. Trabajadores de la Prensa): sntp.org.ve', 'FOPEA Argentina: fopea.org', 'CPJ Emergencias: cpj.org/campaigns/assistance', 'RSF (Reporteros Sin Fronteras): rsf.org/es'] },
         { titulo: 'Organizaciones externas — Internacional', items: ['Access Now Digital Security Helpline: accessnow.org/help (respuesta 24-72h)', 'Dart Center / JTSN: dartcenter.org', 'IWMF (Int. Women\'s Media Foundation): iwmf.org', 'Rory Peck Trust (freelancers): rorypecktrust.org'] }
       ], fuentes: 'Verificación de vigencia: enero 2029. Próxima actualización: abril 2029. Reportar cambios a operaciones@infobae.interna.' }},
+    onboarding: { doc: {
+      area: 'INFOBAE · RECURSOS HUMANOS', codigo: 'OP-HR-2029-002', version: '1.0', fecha: '2029-03-15', responsable: 's. peralta (formación) + rrhh',
+      titulo: 'Onboarding de personal', subtitulo: 'Checklist de incorporación para corresponsales, freelancers y personal de soporte',
+      secciones: [
+        { titulo: 'Pre-ingreso · documentación', items: [
+          '☐ Firma de contrato y convenio de confidencialidad (legales · l. pollastri).',
+          '☐ Verificación de identidad y acreditación profesional vigente.',
+          '☐ Alta en directorio interno (rrhh).',
+          '☐ Asignación de usuario y acceso a sistemas (it@infobae.interna).',
+          '☐ Registro de contactos de emergencia y persona designada (formulario RRHH).'
+        ] },
+        { titulo: 'Primera semana · inducción', items: [
+          '☐ Sesión de orientación con s. peralta: estructura editorial, mesas, flujos de trabajo.',
+          '☐ Lectura obligatoria: OP-RED-2027-001 (Manual de estilo) y OP-RED-2028-003 (Fuentes anónimas).',
+          '☐ Lectura obligatoria: OP-SEC-2029-004 (Higiene RF) — sin excepciones para personal con potencial despliegue.',
+          '☐ Onboarding de seguridad digital con j. fiorella: Signal, GrapheneOS, gestor de contraseñas, 2FA.',
+          '☐ Alta en canal Signal interno y verificación de safety numbers.'
+        ] },
+        { titulo: 'Primer mes · operaciones', items: [
+          '☐ HEFAT: inscripción al próximo taller institucional (RISC Training). Certificación obligatoria para personal con despliegue proyectado.',
+          '☐ Sesión de familiarización con Pipeline de verificación (d. roca).',
+          '☐ Revisión del protocolo FOPEA (EXT-FOPEA-2028) y establecimiento de 3 contactos de aviso mutuo.',
+          '☐ Lectura de OP-INV-2028-004 (Contra-vigilancia doméstica) para personal asignado a investigación.',
+          '☐ Revisión de seguros (OP-LEG-2028-014) y confirmación de cobertura según rol.'
+        ] },
+        { titulo: 'Continuo · renovaciones', items: [
+          '☐ HEFAT: renovación cada 3 años o tras incidente operativo relevante.',
+          '☐ Actualización anual de contactos de emergencia.',
+          '☐ Revisión trimestral de manuales operativos con cambios post-ed.',
+          '☐ Sesión JTSN post-despliegue en zona activa (automática, no opt-in).'
+        ] }
+      ], fuentes: 'Diseño del programa: s. peralta y rrhh. Coordinación operativa con seg. digital (j. fiorella) y formación externa (RISC Training, Dart Center, FOPEA).'
+    }},
     analista_auto: { tool: true,
       titulo: 'Analista automatizado',
       subtitulo: 'Consulta al modelo de IA para evaluación de material, amenazas y decisiones operativas',
@@ -393,7 +426,8 @@ export default function IntranetInfobae() {
     folder_rrhh: { folder: true, titulo: 'Recursos humanos', subtitulo: 'Políticas de personal y apoyo', docs: [
       { key: 'jtsn_apoyo', codigo: 'OP-HR-2027-012', titulo: 'Apoyo psicológico (JTSN)', version: '2.2', estado: 'vigente' },
       { key: 'politica_despliegue', codigo: 'OP-HR-2028-003', titulo: 'Política de despliegue y descanso', version: '1.5', estado: 'vigente' },
-      { key: 'contactos_emergencia', codigo: 'OP-HR-2029-001', titulo: 'Contactos de emergencia por región', version: '1.0', estado: 'vigente' }
+      { key: 'contactos_emergencia', codigo: 'OP-HR-2029-001', titulo: 'Contactos de emergencia por región', version: '1.0', estado: 'vigente' },
+      { key: 'onboarding', codigo: 'OP-HR-2029-002', titulo: 'Onboarding de personal', version: '1.0', estado: 'vigente' }
     ]},
     // ============ DOCUMENTOS DE INVESTIGACIÓN ============
     docs_filtrados: { doc: {
@@ -553,7 +587,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     'redaccion': ['manual_estilo', 'fuentes_anonimas', 'verificacion_prepub', 'folder_redaccion'],
     'seg-digital': ['comunicacion_cifrada', 'verificacion_c2pa', 'compromiso_dispositivo', 'vigilancia_destino', 'version_fixer', 'folder_segdigital'],
     'legales': ['anmac_enacom', 'exportacion_equip', 'seguros_riesgo', 'folder_legales'],
-    'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'folder_rrhh'],
+    'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'onboarding', 'folder_rrhh'],
     'investigacion': ['docs_filtrados', 'osint_investigacion', 'redes_internacionales', 'contravigilancia', 'folder_investigacion'],
     'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'folder_herramientas']
   };
@@ -566,7 +600,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     manual_estilo: ['Redacción', 'folder_redaccion'], fuentes_anonimas: ['Redacción', 'folder_redaccion'], verificacion_prepub: ['Redacción', 'folder_redaccion'],
     comunicacion_cifrada: ['Seguridad Digital', 'folder_segdigital'], verificacion_c2pa: ['Seguridad Digital', 'folder_segdigital'], compromiso_dispositivo: ['Seguridad Digital', 'folder_segdigital'], vigilancia_destino: ['Seguridad Digital', 'folder_segdigital'], version_fixer: ['Seguridad Digital', 'folder_segdigital'],
     anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
-    jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'],
+    jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'], onboarding: ['RRHH', 'folder_rrhh'],
     docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'],
     pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
@@ -911,6 +945,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
                 <div onClick={() => setActiveView('contactos_emergencia')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'contactos_emergencia' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'contactos_emergencia' ? 500 : 400, backgroundColor: activeView === 'contactos_emergencia' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'contactos_emergencia' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Contactos emergencia
+                </div>
+                <div onClick={() => setActiveView('onboarding')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'onboarding' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'onboarding' ? 500 : 400, backgroundColor: activeView === 'onboarding' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'onboarding' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Onboarding
                 </div>
               </div>
             )}
