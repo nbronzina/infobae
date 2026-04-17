@@ -200,7 +200,8 @@ export default function IntranetInfobae() {
     anmac_enacom: {
       titulo: 'Requisitos ANMaC / ENACOM para material de despliegue',
       subtitulo: 'OP-LEG-2028-007 · v4.0 · Legales — despliegue internacional',
-      contenido: true
+      contenido: true,
+      meta: { codigo: 'OP-LEG-2028-007', version: '4.0', fecha: '2029-01-15', responsable: 'l. pollastri (legales)' }
     },
     // ============ DOCUMENTOS GENÉRICOS ============
     manual_estilo: { doc: {
@@ -303,11 +304,13 @@ export default function IntranetInfobae() {
       titulo: 'Analista automatizado',
       subtitulo: 'Consulta al modelo de IA para evaluación de material, amenazas y decisiones operativas',
       descripcion: 'Herramienta complementaria a los manuales operativos para casos no cubiertos explícitamente. Cada consulta se registra en OP-SEC-LOG con timestamp, usuario y contenido. No sustituye consulta a Seguridad Digital ni decisión editorial humana.',
-      contexto: 'El modelo tiene acceso al contenido del manual OP-SEC-2029-004 (Higiene RF), el glosario de amenazas vigentes (T-WPS, T-RF, T-SPY, T-SYNTH, T-CKP, T-PHYS, T-DOM), y los protocolos operativos asociados. Respuestas orientativas — no vinculantes.'
+      contexto: 'El modelo tiene acceso al contenido del manual OP-SEC-2029-004 (Higiene RF), el glosario de amenazas vigentes (T-WPS, T-RF, T-SPY, T-SYNTH, T-CKP, T-PHYS, T-DOM), y los protocolos operativos asociados. Respuestas orientativas — no vinculantes.',
+      meta: { codigo: 'OP-TOOL-2029-003', version: '1.0', fecha: '2029-03-01', responsable: 'j. fiorella + d. roca' }
     },
     parte_despliegue: { form: true,
       titulo: 'Parte de despliegue',
       subtitulo: 'Formulario de registro para salidas de campo — completar antes de cada despliegue',
+      meta: { codigo: 'OP-TOOL-2029-004', version: '1.0', fecha: '2029-03-01', responsable: 'm. villafañe (operaciones)' },
       campos: [
         { label: 'Corresponsal', tipo: 'text', placeholder: 'apellido.inicial' },
         { label: 'Destino', tipo: 'text', placeholder: 'ej: Arauca, COL / Apure, VEN' },
@@ -814,7 +817,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           </div>
           <div>
             <div onClick={() => { if (sidebarExpanded['redaccion']) { setActiveView('folder_redaccion'); setShowLanding(false); } else { toggleSidebar('redaccion'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('redaccion') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('redaccion') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-              <span className="sb-chevron">{sidebarExpanded['redaccion'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
+              <span className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('redaccion'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['redaccion'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
               {sidebarExpanded['redaccion'] ? <FolderOpen size={13} color="#5a544c" /> : <Folder size={13} color="#5a544c" />}
               <span className="sb-text">Redacción</span>
             </div>
@@ -832,7 +835,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               </div>
             )}
             <div onClick={() => { if (sidebarExpanded['seg-digital']) { setActiveView('folder_segdigital'); setShowLanding(false); } else { toggleSidebar('seg-digital'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('seg-digital') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('seg-digital') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-              <span className="sb-chevron">{sidebarExpanded['seg-digital'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
+              <span className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('seg-digital'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['seg-digital'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
               {sidebarExpanded['seg-digital'] ? <FolderOpen size={13} color="#5a544c" /> : <Folder size={13} color="#5a544c" />}
               <span className="sb-text" style={{ fontWeight: isFolderActive('seg-digital') ? 500 : 400 }}>Seguridad digital</span>
             </div>
@@ -856,7 +859,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               </div>
             )}
             <div onClick={() => { if (sidebarExpanded['legales']) { setActiveView('folder_legales'); setShowLanding(false); } else { toggleSidebar('legales'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('legales') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('legales') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-              <span className="sb-chevron">{sidebarExpanded['legales'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
+              <span className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('legales'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['legales'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
               {sidebarExpanded['legales'] ? <FolderOpen size={13} color="#5a544c" /> : <Folder size={13} color="#5a544c" />}
               <span className="sb-text">Legales y regulatorio</span>
             </div>
@@ -874,7 +877,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               </div>
             )}
             <div onClick={() => { if (sidebarExpanded['rrhh']) { setActiveView('folder_rrhh'); setShowLanding(false); } else { toggleSidebar('rrhh'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('rrhh') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('rrhh') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-              <span className="sb-chevron">{sidebarExpanded['rrhh'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
+              <span className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('rrhh'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['rrhh'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
               {sidebarExpanded['rrhh'] ? <FolderOpen size={13} color="#5a544c" /> : <Folder size={13} color="#5a544c" />}
               <span className="sb-text">Recursos humanos</span>
             </div>
@@ -892,7 +895,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               </div>
             )}
             <div onClick={() => { if (sidebarExpanded['investigacion']) { setActiveView('folder_investigacion'); setShowLanding(false); } else { toggleSidebar('investigacion'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('investigacion') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('investigacion') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-              <span className="sb-chevron">{sidebarExpanded['investigacion'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
+              <span className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('investigacion'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['investigacion'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
               {sidebarExpanded['investigacion'] ? <FolderOpen size={13} color="#5a544c" /> : <Folder size={13} color="#5a544c" />}
               <span className="sb-text" style={{ fontWeight: isFolderActive('investigacion') ? 500 : 400 }}>Investigación</span>
             </div>
@@ -916,7 +919,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
           <div>
             <div onClick={() => { if (sidebarExpanded['herramientas']) { setActiveView('folder_herramientas'); setShowLanding(false); } else { toggleSidebar('herramientas'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('herramientas') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('herramientas') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-              <span className="sb-chevron">{sidebarExpanded['herramientas'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
+              <span className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('herramientas'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['herramientas'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
               {sidebarExpanded['herramientas'] ? <FolderOpen size={13} color="#5a544c" /> : <Folder size={13} color="#5a544c" />}
               <span className="sb-text" style={{ fontWeight: isFolderActive('herramientas') ? 500 : 400 }}>Herramientas</span>
             </div>
@@ -1072,7 +1075,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
         {/* ======================= VISTA ACTIVA (reemplaza documento) ======================= */}
         {activeView && VISTAS[activeView] && (
-          <div style={{ gridColumn: (activeView && (VISTAS[activeView]?.doc || VISTAS[activeView]?.contenido)) ? '2 / 3' : '2 / 4', backgroundColor: '#eceae4', padding: '32px 48px' }}>
+          <div style={{ gridColumn: (activeView && (VISTAS[activeView]?.doc || VISTAS[activeView]?.contenido || VISTAS[activeView]?.meta)) ? '2 / 3' : '2 / 4', backgroundColor: '#eceae4', padding: '32px 48px' }}>
             <div style={{ maxWidth: '780px' }}>
               <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 {(() => { const back = getBackLink(); return back ? (
@@ -1774,7 +1777,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
         </main>
 
         {/* RIGHT SIDEBAR — Metadata dinámico */}
-        <aside style={{ backgroundColor: '#f0ede4', borderLeft: '1px solid #d9d4c2', padding: '32px 24px', fontSize: '12.5px', display: (showLanding || (activeView && !VISTAS[activeView]?.doc && !VISTAS[activeView]?.contenido)) ? 'none' : 'block' }}>
+        <aside style={{ backgroundColor: '#f0ede4', borderLeft: '1px solid #d9d4c2', padding: '32px 24px', fontSize: '12.5px', display: (showLanding || (activeView && !VISTAS[activeView]?.doc && !VISTAS[activeView]?.contenido && !VISTAS[activeView]?.meta)) ? 'none' : 'block' }}>
 
           {/* Metadatos de Higiene RF (documento principal) */}
           {!activeView && !showLanding && (<>
@@ -1845,9 +1848,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           </div>
           </>)}
 
-          {/* Metadatos de documentos genéricos */}
-          {activeView && VISTAS[activeView]?.doc && (() => {
-            const d = VISTAS[activeView].doc;
+          {/* Metadatos de documentos genéricos (doc o meta) */}
+          {activeView && (VISTAS[activeView]?.doc || VISTAS[activeView]?.meta) && (() => {
+            const d = VISTAS[activeView].doc || VISTAS[activeView].meta;
             return (<>
               <div style={{ marginBottom: '28px' }}>
                 <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Metadatos</div>
@@ -1890,41 +1893,6 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               </div>
             </>);
           })()}
-
-          {/* Metadatos de ANMaC/ENACOM (contenido custom) */}
-          {activeView === 'anmac_enacom' && (
-            <div>
-              <div style={{ marginBottom: '28px' }}>
-                <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Metadatos</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px' }}>
-                  <div>
-                    <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Código</div>
-                    <div className="mono" style={{ color: '#1f1f1f' }}>OP-LEG-2028-007</div>
-                  </div>
-                  <div>
-                    <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Versión</div>
-                    <div className="mono" style={{ color: '#1f1f1f' }}>4.0</div>
-                  </div>
-                  <div>
-                    <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Clasificación</div>
-                    <div className="mono" style={{ color: '#bd2828' }}>USO INTERNO · distribución controlada</div>
-                  </div>
-                  <div>
-                    <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Responsable</div>
-                    <div style={{ color: '#1f1f1f' }}>l. pollastri (legales)</div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Navegación</div>
-                {(() => { const back = getBackLink(); return back ? (
-                  <div onClick={back.onClick} className="doc-link" style={{ cursor: 'pointer', fontSize: '12px' }}>
-                    ← {back.label}
-                  </div>
-                ) : null; })()}
-              </div>
-            </div>
-          )}
 
         </aside>
       </div>
