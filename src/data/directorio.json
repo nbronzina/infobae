@@ -1,0 +1,11 @@
+[
+  { "nombre": "Lucía Mondini", "rol": "Corresponsal — cobertura transnacional", "base": "Buenos Aires", "contacto": "mondini.l@infobae.interna" },
+  { "nombre": "Javier Fiorella", "rol": "Seguridad digital — lead", "base": "Buenos Aires", "contacto": "fiorella.j@infobae.interna" },
+  { "nombre": "Marina Villafañe", "rol": "Operaciones de campo — coordinación logística y despliegues", "base": "Buenos Aires", "contacto": "villafane.m@infobae.interna" },
+  { "nombre": "Lucas Pollastri", "rol": "Legales — despliegue internacional, contratos, regulación", "base": "Buenos Aires", "contacto": "pollastri.l@infobae.interna" },
+  { "nombre": "Daniela Roca", "rol": "Verificación y OSINT — lead pipeline", "base": "Bogotá", "contacto": "roca.d@infobae.interna" },
+  { "nombre": "Felipe Zelaya", "rol": "Editor guardia — turno noche, enlace con redacciones", "base": "Madrid", "contacto": "zelaya.f@infobae.interna" },
+  { "nombre": "Sofía Peralta", "rol": "Formación y capacitación — HEFAT, seguridad digital, onboarding", "base": "Buenos Aires", "contacto": "peralta.s@infobae.interna" },
+  { "nombre": "Tomás Quiroga", "rol": "Freelancer liaison — contratos, seguros, cobertura ACOS", "base": "Lima", "contacto": "quiroga.t@infobae.interna" },
+  { "nombre": "R. Velásquez (ext.)", "rol": "Fixer designado — frontera COL/VEN (Arauca/Apure)", "base": "Arauca", "contacto": "vía Signal · canal seguro" }
+]

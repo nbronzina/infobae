@@ -1,0 +1,7 @@
+[
+  { "dia": "LUN 14", "entradas": ["09:00 — Reunión editorial semanal (remoto, todas las mesas)", "11:00 — Debrief HEFAT con S. Peralta: lecciones del primer taller institucional", "14:00 — Revisión pipeline verificación con D. Roca: estado Reality Defender"] },
+  { "dia": "MAR 15", "entradas": ["10:30 — Check-in post-despliegue ARQ-042 con Villafañe y Mondini", "14:00 — Sesión de onboarding seguridad digital para freelancers (Fiorella)", "16:00 — Llamada con fixer Velásquez: revisión OP-SEC-2029-004-FX"] },
+  { "dia": "MIÉ 16", "entradas": ["10:00 — Coordinación legales: nueva póliza de seguro para fixers (Pollastri)", "11:00 — Sesión Dart Center / JTSN — protocolo automático post-ARQ-042", "15:00 — Entrega material verificado Arauca a mesa de edición"] },
+  { "dia": "JUE 17", "entradas": ["08:00 — Cola de verificación: 5 items pendientes", "10:00 — Reunión Quiroga (Lima): estado de contratos freelance ACOS", "20:00 — Emisión en vivo: análisis transición Venezuela, frontera Arauca/Apure"] },
+  { "dia": "VIE 18", "entradas": ["10:00 — Revisión trimestral de manuales operativos (seg. digital + legales)", "12:00 — ROS-038: reunión con fuente judicial Rosario (Signal, protocolo contra-vigilancia activo)", "13:00 — Cierre de semana editorial", "15:00 — Evaluación de amenazas para próximo despliegue: definir teatro y equipo"] }
+]
