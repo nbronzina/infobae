@@ -1,0 +1,92 @@
+[
+  {
+    "codigo": "KIT-SAT-001",
+    "nombre": "Starlink Mini",
+    "categoria": "Conectividad satelital",
+    "especificacion": "Terminal satelital LEO, portátil, 1.15 kg. Firmware 2024.12+ con randomización BSSID. Homologado RAMATEL / ENACOM Res. 955/2025.",
+    "notas_operativas": "Emite mientras transmite. Ventanas 2–5 min · silencio RF 60 min · no transmitir en movimiento · bagging Faraday en traslado.",
+    "estado": "aprobado_condicional",
+    "asociado_a": "T-WPS, T-RF"
+  },
+  {
+    "codigo": "KIT-NET-001",
+    "nombre": "GL.iNet MT3000",
+    "categoria": "Router de viaje",
+    "especificacion": "Router travel-grade, Wi-Fi 6, 2 LAN + 1 WAN. Firmware post-advisory 2024-05. VPN WireGuard cliente + servidor.",
+    "notas_operativas": "Activar randomización MAC manualmente (Advanced > Network > Wi-Fi). SSID con sufijo _nomap para evitar WPS harvesting. Kill-switch VPN siempre activo.",
+    "estado": "aprobado_con_configuracion",
+    "asociado_a": "T-WPS, T-SPY"
+  },
+  {
+    "codigo": "KIT-DEV-001",
+    "nombre": "Pixel secundario · GrapheneOS",
+    "categoria": "Dispositivo de campo",
+    "especificacion": "Pixel 8 con GrapheneOS. Sin cuenta Google. Signal + Briar preinstalados. Sin apps de redes sociales. Storage cifrado.",
+    "notas_operativas": "Dispositivo exclusivo de despliegue — queda en base al retorno. No compartir con dispositivo personal. Rotar cada 12 meses o tras incidente.",
+    "estado": "aprobado",
+    "asociado_a": "T-SPY"
+  },
+  {
+    "codigo": "KIT-RF-001",
+    "nombre": "Bolsa Faraday · router",
+    "categoria": "Blindaje RF",
+    "especificacion": "Bolsa Faraday certificada MIL-STD-188-125. Capacidad: router + 2 smartphones + GPS. Atenuación > 80 dB.",
+    "notas_operativas": "Uso obligatorio en traslados fuera de ventana operativa. Verificación trimestral de integridad de costuras. Reemplazo inmediato ante perforación.",
+    "estado": "aprobado",
+    "asociado_a": "T-WPS, T-RF"
+  },
+  {
+    "codigo": "KIT-PROT-001",
+    "nombre": "Chaleco balístico NIJ IIIA",
+    "categoria": "Protección personal",
+    "especificacion": "Chaleco NIJ IIIA (protección hasta .44 Magnum). Insignia PRESS retirable. Peso aprox. 2.8 kg. Incluye placa blanda.",
+    "notas_operativas": "Material de usos especiales — Ley 20.429, Decreto 395/75. CLU vigente ante ANMaC. Egreso limitado a 1 chaleco / año calendario (Disp. RENAR 883/11).",
+    "estado": "restringido_anmac",
+    "asociado_a": "T-PHYS"
+  },
+  {
+    "codigo": "KIT-PROT-002",
+    "nombre": "Casco balístico",
+    "categoria": "Protección personal",
+    "especificacion": "Casco nivel IIIA, 1.3 kg. Suspensión ajustable. Compatible con audífonos de comunicación.",
+    "notas_operativas": "Opcional según evaluación de riesgo del teatro. Alternativa: préstamo RSF España (fianza 300€ reembolsable).",
+    "estado": "aprobado",
+    "asociado_a": "T-PHYS"
+  },
+  {
+    "codigo": "KIT-CAM-001",
+    "nombre": "Cámara con firma C2PA",
+    "categoria": "Captura verificable",
+    "especificacion": "Cámara mirrorless compatible con C2PA spec 2.0 (Canon, Nikon, Sony). Firma criptográfica activada por defecto. Origen verificable en IPTC Origin Verifier.",
+    "notas_operativas": "Verificar firma post-captura en sesión de verificación. Material sin firma C2PA no descartable — solo señal de alerta. Backup de clave privada en seg. digital.",
+    "estado": "aprobado",
+    "asociado_a": "T-SYNTH"
+  },
+  {
+    "codigo": "KIT-TOK-001",
+    "nombre": "YubiKey 5C NFC",
+    "categoria": "Autenticación",
+    "especificacion": "Token hardware FIDO2 / U2F / OTP. Usado como segundo factor para cuentas corporativas, repositorios, VPN.",
+    "notas_operativas": "Dos tokens por corresponsal — uno en operación, uno en base. Rotación ante incidente de pérdida o compromiso.",
+    "estado": "aprobado",
+    "asociado_a": "T-SPY, T-DOM"
+  },
+  {
+    "codigo": "KIT-GPS-001",
+    "nombre": "Detector de GPS / RF",
+    "categoria": "Contra-vigilancia",
+    "especificacion": "Barredor de frecuencias 1 MHz – 8 GHz. Sensibilidad ajustable. Detección de GPS trackers en vehículos, dispositivos de escucha.",
+    "notas_operativas": "Uso en inspección periódica del vehículo (bajo chasis, ruedas, parachoques). Protocolo documentado en OP-INV-2028-004 (contra-vigilancia doméstica).",
+    "estado": "aprobado",
+    "asociado_a": "T-DOM"
+  },
+  {
+    "codigo": "KIT-PRINT-001",
+    "nombre": "Cuaderno de campo",
+    "categoria": "Registro no digital",
+    "especificacion": "Cuaderno Moleskine tapa dura. Código de corresponsal en cubierta interior. Sin identificación externa de Infobae.",
+    "notas_operativas": "Registro manuscrito para material sensible en zonas sin conectividad confiable. Digitalización y destrucción al retorno. Custodia en caja fuerte de redacción hasta ese momento.",
+    "estado": "aprobado",
+    "asociado_a": "T-SPY, T-DOM"
+  }
+]

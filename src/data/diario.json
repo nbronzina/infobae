@@ -1,0 +1,50 @@
+[
+  {
+    "fecha": "2029-04-17 22:40 UTC",
+    "autor": "f. zelaya",
+    "rol": "editor guardia · Madrid",
+    "nota": "Cierre de turno sin incidentes. Mesa de verificación cerró cola con 2 items pendientes que pasaron a turno siguiente. Material entrante de Caracas archivado en pipeline con clasificación estándar. Dos pedidos de legales sobre citación judicial de una nota de Rosario — derivados a Pollastri para primera hora."
+  },
+  {
+    "fecha": "2029-04-17 14:12 ART",
+    "autor": "d. roca",
+    "rol": "verificación · Bogotá",
+    "nota": "Reality Defender en shadow mode sigue produciendo falsos positivos en material de baja resolución. Voy a ajustar umbral de confianza para la próxima ventana de evaluación. Go-live del 01.05 sigue en pie si reduzco el ratio esta semana."
+  },
+  {
+    "fecha": "2029-04-17 09:30 ART",
+    "autor": "j. fiorella",
+    "rol": "seguridad digital · Buenos Aires",
+    "nota": "Incorporé T-PHYS y T-DOM al glosario. Las secciones 08 del manual RF quedan asociadas. Revisión obligatoria comunicada a todo personal con despliegue activo. Aproveché para rotar claves de VPN corporativa — próxima rotación 2029-07."
+  },
+  {
+    "fecha": "2029-04-16 18:20 ART",
+    "autor": "m. villafañe",
+    "rol": "operaciones de campo · Buenos Aires",
+    "nota": "Cerré formalmente ARQ-042. Kit B de Starlink Mini retornó con comportamiento RF anómalo — en cuarentena técnica hasta diagnóstico de Fiorella. Sesión JTSN de Mondini agendada 2029-04-23. No abrir próximo teatro antes del debrief."
+  },
+  {
+    "fecha": "2029-04-16 11:05 ART",
+    "autor": "l. pollastri",
+    "rol": "legales · Buenos Aires",
+    "nota": "Póliza de seguro para fixers firmada. Cobertura efectiva desde 2029-05-01. OP-LEG-2028-014 actualizado y distribuido a operaciones y RRHH. Pendiente: consulta de ANMaC sobre egreso de segundo chaleco dentro del mismo año calendario — respuesta no antes de 2029-05."
+  },
+  {
+    "fecha": "2029-04-15 20:15 ART",
+    "autor": "s. peralta",
+    "rol": "formación · Buenos Aires",
+    "nota": "HEFAT institucional cerrado con 8 certificados. RISC Training confirmó segunda edición en septiembre con cupo ampliado (12 participantes). Incorporé feedback de esta edición: más tiempo en módulo de contra-vigilancia, menos en primeros auxilios."
+  },
+  {
+    "fecha": "2029-04-15 16:40 COT",
+    "autor": "d. roca",
+    "rol": "verificación · Bogotá",
+    "nota": "Material de Arauca verificado y archivado. Cadena completa registrada en OP-SEC-LOG. Tres items fueron retirados a pedido del fixer por riesgo residual post-publicación — decisión editorial confirmada por Zelaya en turno noche."
+  },
+  {
+    "fecha": "2029-04-14 10:30 ART",
+    "autor": "t. quiroga",
+    "rol": "freelancer liaison · Lima",
+    "nota": "Dos freelancers peruanos en proceso de onboarding para cobertura regional. Pendiente de RRHH: firma de convenios ACOS Alliance. Una solicitud de acreditación institucional vía IWMF rechazada por falta de HEFAT — redirigida a inscripción en próxima edición."
+  }
+]
