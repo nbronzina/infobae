@@ -40,18 +40,27 @@ Formato: OP-[ÁREA]-[AÑO]-[NNN]
 T-WPS, T-RF, T-SPY, T-SYNTH, T-CKP, T-PHYS, T-DOM
 
 ## SISTEMA DE DISEÑO
-Colores:
+Colores primarios:
 - #f18b1e — naranja marca (SOLO logo)
-- #bd2828 — rojo alertas y clasificación
-- #1f1f1f — negro corporativo
+- #bd2828 — rojo alertas y clasificación (callouts, tags, badges, "USO INTERNO", enlaces mailto)
+- #1f1f1f — negro corporativo (texto primario, borde activo de sidebar)
 - #f8f5ec — paper (fondo documentos)
 - #f0ede4 — sidebar
 - #eceae4 — fondo base
-- #f0ecde — bloques destacados
+- #f0ecde — bloques destacados / callouts
 - #d9d4c2 — separadores
-- #5a6e3c — verde aprobación/vigente
-- #8a6d2b — ámbar revisión
-- #8a8472 — gris metadata
+- #5a6e3c — verde vigente (sobre #e8f0de)
+- #8a6d2b — ámbar revisión (sobre #f5edd5)
+- #8a8472 — gris metadata (uso decorativo; para texto legible preferir #6b6454)
+
+Tokens funcionales:
+- #2a2a2a, #3d3931 — panel de login (fondo oscuro corporativo)
+- #5a544c — texto secundario
+- #6b6454 — gris metadata accesible (AA sobre #f0ede4)
+- #e5e1d3 — hover/active en sidebar
+- #e8f0de — chip de fondo workflow vigente
+- #f5edd5 — chip de fondo workflow revisión
+- #f7f5ee — breadcrumb bar
 
 Tipografía:
 - IBM Plex Sans — chrome corporativo, UI
