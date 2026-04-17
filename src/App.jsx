@@ -22,7 +22,12 @@ const DOC_META = {
   autor: 'j. fiorella',
   revisores: ['m. villafañe (operaciones)', 'l. pollastri (legales)'],
   proximaRevision: '2029-09-15',
-  idiomas: ['ES (original)', 'EN (traducción auxiliar)']
+  idiomas: ['ES (original)', 'EN (traducción auxiliar)'],
+  historial: [
+    { fecha: '2029-03-14', autor: 'j. fiorella', cambio: 'Edición 4.2: sección 08 (vacío ecosistémico) y amenazas T-PHYS, T-DOM.' },
+    { fecha: '2028-09-10', autor: 'j. fiorella', cambio: 'Edición 4.1: actualización de T-WPS tras Rye & Levin (IEEE S&P 2024).' },
+    { fecha: '2028-02-15', autor: 'j. fiorella', cambio: 'Edición 4.0: reescritura completa post-despliegue ARQ-032.' }
+  ]
 };
 
 const CHECKLIST_PREDESPLIEGUE = [
@@ -1972,6 +1977,18 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             </div>
           </div>
 
+          {DOC_META.historial && (
+            <div style={{ marginBottom: '28px' }}>
+              <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Historial de revisiones</div>
+              {DOC_META.historial.map((h, i) => (
+                <div key={i} style={{ marginBottom: '10px', fontSize: '11.5px', lineHeight: 1.5, paddingLeft: '10px', borderLeft: '2px solid #d9d4c2' }}>
+                  <div className="mono" style={{ color: '#6b6454', fontSize: '10.5px' }}>{h.fecha} · {h.autor}</div>
+                  <div style={{ color: '#1f1f1f' }}>{h.cambio}</div>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div style={{ marginBottom: '28px' }}>
             <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Actividad reciente</div>
             {ACTIVIDAD_RECIENTE.map((a, i) => (
@@ -2038,6 +2055,26 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   </div>
                 </div>
               </div>
+              {(() => {
+                const historial = d.historial || (d.fecha && d.version ? [{ fecha: d.fecha, autor: d.responsable, cambio: `Edición ${d.version} (vigente).` }] : []);
+                if (historial.length === 0) return null;
+                return (
+                  <div style={{ marginBottom: '28px' }}>
+                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Historial de revisiones</div>
+                    {historial.map((h, i) => (
+                      <div key={i} style={{ marginBottom: '10px', fontSize: '11.5px', lineHeight: 1.5, paddingLeft: '10px', borderLeft: '2px solid #d9d4c2' }}>
+                        <div className="mono" style={{ color: '#6b6454', fontSize: '10.5px' }}>{h.fecha || '—'} · {h.autor || '—'}</div>
+                        <div style={{ color: '#1f1f1f' }}>{h.cambio}</div>
+                      </div>
+                    ))}
+                    {!d.historial && historial.length === 1 && (
+                      <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', fontStyle: 'italic', marginTop: '4px' }}>
+                        Versiones anteriores archivadas en OP-SEC-LOG.
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
               <div style={{ marginBottom: '28px' }}>
                 <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Navegación</div>
                 {(() => { const back = getBackLink(); return back ? (
