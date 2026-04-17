@@ -7,6 +7,7 @@ import agendaData from './data/agenda.json';
 import directorioData from './data/directorio.json';
 import alertasData from './data/alertas.json';
 import sistemasData from './data/sistemas.json';
+import correccionesData from './data/correcciones.json';
 
 // ============================================================================
 // CONTENIDO DEL MANUAL — OP-SEC-2029-004
@@ -420,8 +421,15 @@ export default function IntranetInfobae() {
     folder_redaccion: { folder: true, titulo: 'Redacción', subtitulo: 'Documentos operativos del área editorial', docs: [
       { key: 'manual_estilo', codigo: 'OP-RED-2027-001', titulo: 'Manual de estilo editorial', version: '12.3', estado: 'vigente' },
       { key: 'fuentes_anonimas', codigo: 'OP-RED-2028-003', titulo: 'Protocolo de fuentes anónimas', version: '3.0', estado: 'en_revision' },
-      { key: 'verificacion_prepub', codigo: 'OP-RED-2029-005', titulo: 'Guía de verificación pre-publicación', version: '5.1', estado: 'vigente' }
+      { key: 'verificacion_prepub', codigo: 'OP-RED-2029-005', titulo: 'Guía de verificación pre-publicación', version: '5.1', estado: 'vigente' },
+      { key: 'correcciones_log', codigo: 'OP-RED-2029-006', titulo: 'Registro de correcciones públicas', version: '—', estado: 'vigente' }
     ]},
+    correcciones_log: {
+      contenido: true,
+      titulo: 'Registro de correcciones públicas',
+      subtitulo: 'Log de correcciones aplicadas a notas publicadas por Infobae',
+      meta: { codigo: 'OP-RED-2029-006', version: '—', fecha: '2029-04-17', responsable: 'dirección editorial' }
+    },
     folder_segdigital: { folder: true, titulo: 'Seguridad digital', subtitulo: 'Manuales operativos y protocolos de seguridad', docs: [
       { key: 'comunicacion_cifrada', codigo: 'OP-SEC-2028-011', titulo: 'Comunicación cifrada en campo', version: '3.1', estado: 'vigente' },
       { key: 'verificacion_c2pa', codigo: 'OP-SEC-2029-001', titulo: 'Verificación C2PA en redacción', version: '2.0', estado: 'en_revision' },
@@ -636,7 +644,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
   }
 
   const folderChildren = {
-    'redaccion': ['manual_estilo', 'fuentes_anonimas', 'verificacion_prepub', 'folder_redaccion'],
+    'redaccion': ['manual_estilo', 'fuentes_anonimas', 'verificacion_prepub', 'correcciones_log', 'folder_redaccion'],
     'seg-digital': ['comunicacion_cifrada', 'verificacion_c2pa', 'compromiso_dispositivo', 'vigilancia_destino', 'version_fixer', 'folder_segdigital'],
     'legales': ['anmac_enacom', 'exportacion_equip', 'seguros_riesgo', 'folder_legales'],
     'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'onboarding', 'folder_rrhh'],
@@ -649,7 +657,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
   };
 
   const docFolders = {
-    manual_estilo: ['Redacción', 'folder_redaccion'], fuentes_anonimas: ['Redacción', 'folder_redaccion'], verificacion_prepub: ['Redacción', 'folder_redaccion'],
+    manual_estilo: ['Redacción', 'folder_redaccion'], fuentes_anonimas: ['Redacción', 'folder_redaccion'], verificacion_prepub: ['Redacción', 'folder_redaccion'], correcciones_log: ['Redacción', 'folder_redaccion'],
     comunicacion_cifrada: ['Seguridad Digital', 'folder_segdigital'], verificacion_c2pa: ['Seguridad Digital', 'folder_segdigital'], compromiso_dispositivo: ['Seguridad Digital', 'folder_segdigital'], vigilancia_destino: ['Seguridad Digital', 'folder_segdigital'], version_fixer: ['Seguridad Digital', 'folder_segdigital'],
     anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
     jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'], onboarding: ['RRHH', 'folder_rrhh'],
@@ -937,6 +945,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
                 <div onClick={() => setActiveView('verificacion_prepub')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'verificacion_prepub' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'verificacion_prepub' ? 500 : 400, backgroundColor: activeView === 'verificacion_prepub' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'verificacion_prepub' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Verificación pre-pub
+                </div>
+                <div onClick={() => setActiveView('correcciones_log')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'correcciones_log' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'correcciones_log' ? 500 : 400, backgroundColor: activeView === 'correcciones_log' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'correcciones_log' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Correcciones públicas
                 </div>
               </div>
             )}
@@ -1494,6 +1505,44 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               </>)}
 
               {/* ANMaC / ENACOM — documento completo */}
+              {/* Registro de correcciones */}
+              {activeView === 'correcciones_log' && (
+                <div>
+                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>INFOBAE · REDACCIÓN · OP-RED-2029-006</div>
+                  <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Registro de correcciones públicas</h1>
+                  <div className="serif" style={{ fontSize: '14.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '20px' }}>Correcciones aplicadas a notas publicadas. Actualización continua. Criterio: Manual de estilo OP-RED-2027-001, §12.</div>
+
+                  <div style={{ padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #bd2828', marginBottom: '24px' }}>
+                    <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f' }}>
+                      Toda corrección mayor se comunica en la misma nota (nota al pie) y se registra acá. Las correcciones menores (ortografía, tipografía) se registran sin nota al pie.
+                    </div>
+                  </div>
+
+                  {correccionesData.map((c, i) => (
+                    <div key={i} style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '16px 20px', marginBottom: '14px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }}>
+                        <div className="mono" style={{ fontSize: '11px', color: '#6b6454' }}>{c.fecha}</div>
+                        <div className="mono" style={{ fontSize: '9.5px', padding: '2px 7px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: c.tipo === 'retiro' ? '#f5d5d5' : c.tipo === 'dato' || c.tipo === 'atribución' ? '#f5edd5' : '#eceae4', color: c.tipo === 'retiro' ? '#bd2828' : c.tipo === 'dato' || c.tipo === 'atribución' ? '#8a6d2b' : '#6b6454' }}>{c.tipo}</div>
+                      </div>
+                      <div className="serif" style={{ fontSize: '15px', fontWeight: 500, marginBottom: '10px' }}>{c.nota}</div>
+                      <div style={{ fontSize: '12.5px', lineHeight: 1.55, color: '#3d3931', marginBottom: '6px' }}>
+                        <span className="mono" style={{ fontSize: '10.5px', color: '#6b6454', textTransform: 'uppercase', letterSpacing: '0.04em', marginRight: '6px' }}>Original:</span>
+                        {c.original}
+                      </div>
+                      <div style={{ fontSize: '12.5px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '8px' }}>
+                        <span className="mono" style={{ fontSize: '10.5px', color: '#6b6454', textTransform: 'uppercase', letterSpacing: '0.04em', marginRight: '6px' }}>Corrección:</span>
+                        {c.correccion}
+                      </div>
+                      <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', fontStyle: 'italic' }}>firmado: {c.firma}</div>
+                    </div>
+                  ))}
+
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginTop: '20px', fontStyle: 'italic' }}>
+                    Reportar un error en una nota publicada: correcciones@infobae.interna.
+                  </div>
+                </div>
+              )}
+
               {activeView === 'anmac_enacom' && (
                 <article style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '40px 48px' }}>
                   <header style={{ borderBottom: '1px solid #d9d4c2', paddingBottom: '20px', marginBottom: '28px' }}>

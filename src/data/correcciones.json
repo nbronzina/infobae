@@ -1,0 +1,42 @@
+[
+  {
+    "fecha": "2029-04-16",
+    "nota": "Bandas sucesoras del clan Cantero en Rosario (informe especial)",
+    "tipo": "atribución",
+    "original": "Atribución a \"fuentes de la investigación judicial\".",
+    "correccion": "La fuente pidió retiro de la atribución genérica. Reemplazado por \"fuentes con acceso al expediente, que pidieron reserva de identidad\".",
+    "firma": "dirección editorial + l. pollastri"
+  },
+  {
+    "fecha": "2029-04-10",
+    "nota": "Transición venezolana: claves del primer trimestre 2029",
+    "tipo": "dato",
+    "original": "Referencia a \"la captura de Nicolás Maduro en diciembre de 2025\".",
+    "correccion": "La captura fue en enero de 2026. Corregido en la versión web y en las ediciones sindicadas. Emitido aviso a medios que replicaron la versión original.",
+    "firma": "mondini.l + mesa de verificación (d. roca)"
+  },
+  {
+    "fecha": "2029-04-04",
+    "nota": "Regulación de terminales satelitales en Argentina",
+    "tipo": "dato",
+    "original": "Mención a \"Starlink Mini homologado desde 2024\".",
+    "correccion": "La homologación es desde 2025 (Res. ENACOM 955/2025). La versión 2024 del terminal existía pero sin homologación local.",
+    "firma": "l. pollastri + j. fiorella"
+  },
+  {
+    "fecha": "2029-03-22",
+    "nota": "Perfil de fixers en zona fronteriza COL/VEN",
+    "tipo": "retiro",
+    "original": "Foto del equipo de campo junto a fixer local.",
+    "correccion": "Imagen retirada a pedido del fixer tras evaluación de riesgo. Reemplazada por plano general sin personas identificables.",
+    "firma": "operaciones (m. villafañe) + seg. digital (j. fiorella)"
+  },
+  {
+    "fecha": "2029-03-14",
+    "nota": "Análisis: el mapa del narcotráfico en el interior argentino",
+    "tipo": "ortografía",
+    "original": "Referencias erróneas a \"clan Cantelo\" en tres párrafos.",
+    "correccion": "Clan Cantero. Corregido en versión web; edición impresa no circulada.",
+    "firma": "dirección editorial"
+  }
+]
