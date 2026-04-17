@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 ## Proyecto
-Intranet ficticia de Infobae (2029) — design fiction / diegetic prototype.
+Infobae · Bitácora — intranet ficticia de Infobae (2029). Design fiction / diegetic prototype. La marca interna "Bitácora" aparece en el title, en el encabezado del login y en el footer; el wordmark queda sin subtítulo.
 
 ## Stack
 - React (single component, ~1945 líneas)

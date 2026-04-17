@@ -738,7 +738,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
         <div style={{ backgroundColor: '#2a2a2a', border: '1px solid #3d3931', padding: '32px', textAlign: 'left' }}>
           <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '20px' }}>
-            Acceso restringido a personal autorizado
+            Bitácora · acceso restringido a personal autorizado
           </div>
 
           <div style={{ marginBottom: '16px' }}>
@@ -2353,7 +2353,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
       <footer style={{ backgroundColor: '#1f1f1f', color: '#d9d4c2', padding: '20px 24px', fontSize: '11.5px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
           <div className="sans">
-            © Infobae · Interna corporativa · acceso restringido a personal autorizado
+            © Infobae · Bitácora · acceso restringido a personal autorizado
           </div>
           <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>
             sesión: mondini.l · nodo BsAs · {formatUTC(now)}
