@@ -73,7 +73,7 @@ cerrado) e investigación doméstica (ROS-038, Rosario, Los Monos, en curso).
 2. Resolver fonts via Google Fonts (ya están como CDN en useEffect)
 3. La llamada a la API de Claude en el analista automatizado necesita 
    proxy o variable de entorno para la API key
-4. Deploy a Netlify — URL limpia, sin subpath
+4. Deploy a Vercel — URL limpia, sin subpath
 5. El archivo se llama infobae-interna.jsx — renombrar a App.jsx en src/
 
 ## Restricciones de voz
@@ -115,6 +115,6 @@ Velásquez (fixer externo, Arauca).
 ## Primera instrucción para Claude Code
 
 "Leé BRIEF.md y el archivo infobae-interna.jsx. Migrá a Vite + React. 
-Configurá deploy a Netlify. La API key de Anthropic va como variable 
+Configurá deploy a Vercel. La API key de Anthropic va como variable 
 de entorno VITE_ANTHROPIC_API_KEY. No cambies contenido ni diseño, 
 solo infraestructura."
