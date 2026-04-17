@@ -1,0 +1,72 @@
+[
+  {
+    "codigo": "S-2029-027",
+    "fuente": "Gobierno interino VEN · comunicado oficial",
+    "tipo": "regulatorio",
+    "asociado_a": "T-CKP",
+    "confianza": "primaria",
+    "detectado": "2029-04-09",
+    "resumen": "Anuncio de desmantelamiento gradual de checkpoints fronterizos heredados. Cronograma 90 días. Sistemas de reconocimiento facial pendientes de auditoría independiente.",
+    "estado": "en_seguimiento"
+  },
+  {
+    "codigo": "S-2029-028",
+    "fuente": "CPJ · informe trimestral",
+    "tipo": "incidente",
+    "asociado_a": "T-DOM",
+    "confianza": "primaria",
+    "detectado": "2029-04-14",
+    "resumen": "Aumento del 40% en casos documentados de vigilancia doméstica contra periodistas de investigación argentinos en primer trimestre 2029, en ausencia de foco externo regional.",
+    "estado": "en_seguimiento"
+  },
+  {
+    "codigo": "S-2029-019",
+    "fuente": "FOPEA",
+    "tipo": "activación",
+    "asociado_a": "T-PHYS",
+    "confianza": "primaria",
+    "detectado": "2029-04-11",
+    "resumen": "Segunda activación del protocolo de aviso mutuo en Rosario en un mes. Patrón de amenazas contra periodistas cubriendo causas relacionadas con estructuras sucesoras Los Monos.",
+    "estado": "en_seguimiento"
+  },
+  {
+    "codigo": "S-2029-029",
+    "fuente": "ICIJ · circular interna",
+    "tipo": "investigación",
+    "asociado_a": "T-DOM",
+    "confianza": "primaria",
+    "detectado": "2029-04-08",
+    "resumen": "Convocatoria a colaboración internacional sobre presunto financiamiento estatal a organizaciones criminales de Rosario. Tres medios argentinos invitados, Infobae entre ellos.",
+    "estado": "evaluación_editorial"
+  },
+  {
+    "codigo": "S-2029-022",
+    "fuente": "C2PA consortium",
+    "tipo": "estándar",
+    "asociado_a": "T-SYNTH",
+    "confianza": "primaria",
+    "detectado": "2029-04-05",
+    "resumen": "Publicación de C2PA spec 2.1 con soporte nativo para cámaras de acción y drones. Actualización de pipeline de verificación interna requerida antes del 2029-06.",
+    "estado": "acción_pendiente"
+  },
+  {
+    "codigo": "S-2029-023",
+    "fuente": "Access Now · Digital Security Helpline",
+    "tipo": "alerta",
+    "asociado_a": "T-SPY",
+    "confianza": "secundaria",
+    "detectado": "2029-04-03",
+    "resumen": "Campaña activa de spyware comercial dirigida a periodistas en Argentina y Colombia. Vector probable: WhatsApp con adjunto PDF.",
+    "estado": "mitigación_en_curso"
+  },
+  {
+    "codigo": "S-2029-024",
+    "fuente": "Dart Center",
+    "tipo": "guía",
+    "asociado_a": "JTSN",
+    "confianza": "primaria",
+    "detectado": "2029-03-28",
+    "resumen": "Actualización de protocolos de apoyo psicológico post-despliegue. Énfasis en primera sesión obligatoria dentro de 72h posteriores al retorno.",
+    "estado": "incorporado"
+  }
+]

@@ -1,0 +1,12 @@
+[
+  { "sistema": "Signal (canal oficial)", "estado": "operativo", "nota": "Último handshake: 2029-04-18 06:12 UTC. Todas las mesas reportan conectividad." },
+  { "sistema": "Starlink Mini (kit despliegue A)", "estado": "operativo", "nota": "Firmware 2024.11. En depósito, próximo despliegue: evaluación ARQ-042 reapertura." },
+  { "sistema": "Starlink Mini (kit despliegue B)", "estado": "operativo", "nota": "Retornó de ARQ-042, diagnóstico técnico completado sin hallazgos. Listo para próximo despliegue." },
+  { "sistema": "VPN corporativa (Buenos Aires)", "estado": "operativo", "nota": "Sesiones activas: 7. Última rotación: 2029-04-01." },
+  { "sistema": "Pipeline verificación C2PA (IPTC Origin Verifier)", "estado": "operativo", "nota": "Cola: 5 items pendientes. Tiempo promedio: 3.2 min." },
+  { "sistema": "Reality Defender (detector de síntesis)", "estado": "operativo", "nota": "Go-live 2029-05-01. Modo shadow — resultados no vinculantes." },
+  { "sistema": "Canal fixer (Velásquez · Signal)", "estado": "standby", "nota": "Último check-in: 2029-04-17 18:40 UTC. Consulta en curso sobre disponibilidad para reapertura ARQ-042." },
+  { "sistema": "Dart Center / JTSN (bridge)", "estado": "operativo", "nota": "Sesión post-ARQ-042 agendada 2029-04-23." },
+  { "sistema": "Infobae CMS (interno)", "estado": "operativo", "nota": "Sin incidentes en últimos 30 días." },
+  { "sistema": "FOPEA (canal de aviso mutuo)", "estado": "operativo", "nota": "3 contactos activos por corresponsal. Última activación: 2029-04-02. Aumento de activaciones vinculadas a ROS-038." }
+]

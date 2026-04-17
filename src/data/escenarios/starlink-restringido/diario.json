@@ -1,0 +1,50 @@
+[
+  {
+    "fecha": "2029-04-17 22:40 UTC",
+    "autor": "f. zelaya",
+    "rol": "editor guardia · Madrid",
+    "nota": "Cierre de turno con tensión regulatoria activa. Mesa de verificación cerró cola con 2 items pendientes. El expediente Pollastri vs ENACOM espera primera audiencia. Material entrante de Caracas archivado en pipeline."
+  },
+  {
+    "fecha": "2029-04-17 16:00 ART",
+    "autor": "l. pollastri",
+    "rol": "legales · Buenos Aires",
+    "nota": "Presentación judicial completa contra Res. 1184/2029. CELE y RSF Argentina como amicus curiae. Audiencia preliminar 2029-04-30. Mientras tanto, despliegues internacionales sin Starlink están técnicamente posibles vía Iridium pero costosos y limitados."
+  },
+  {
+    "fecha": "2029-04-17 14:12 ART",
+    "autor": "d. roca",
+    "rol": "verificación · Bogotá",
+    "nota": "Cola de verificación creció a 12 items. Sin canal sat redundante para verificación remota desde campo, todo se resuelve en Bogotá o Buenos Aires. Reality Defender en shadow mode sin cambios."
+  },
+  {
+    "fecha": "2029-04-16 18:20 ART",
+    "autor": "m. villafañe",
+    "rol": "operaciones de campo · Buenos Aires",
+    "nota": "Iridium GO! exec en evaluación técnica. Latencia ~300ms vs ~50ms de Starlink. Ancho de banda alcanza para texto y audio comprimido — no video en vivo. Decisión de procurement en próximas dos semanas."
+  },
+  {
+    "fecha": "2029-04-16 11:30 ART",
+    "autor": "j. fiorella",
+    "rol": "seguridad digital · Buenos Aires",
+    "nota": "Manual RF v4.3 en revisión: agregar capítulo sobre conectividad satelital alternativa (Iridium L-band, perfil RF distinto). Reescribir checklist pre-despliegue eliminando referencias a Starlink Mini hasta resolución del litigio."
+  },
+  {
+    "fecha": "2029-04-15 20:15 ART",
+    "autor": "s. peralta",
+    "rol": "formación · Buenos Aires",
+    "nota": "HEFAT institucional cerrado con 8 certificados. Próxima edición septiembre incorporará módulo nuevo: operación con conectividad satelital alternativa (Iridium, BGAN). Coordinando con RISC Training y un técnico externo de seguridad sat."
+  },
+  {
+    "fecha": "2029-04-15 16:40 COT",
+    "autor": "d. roca",
+    "rol": "verificación · Bogotá",
+    "nota": "Tres items retirados a pedido del fixer. Decisión editorial confirmada por Zelaya. Nota pendiente: si los próximos despliegues son sin Starlink, redefinir SLA del pipeline de verificación con la mesa editorial."
+  },
+  {
+    "fecha": "2029-04-14 10:30 ART",
+    "autor": "t. quiroga",
+    "rol": "freelancer liaison · Lima",
+    "nota": "Dos freelancers peruanos en proceso de onboarding. La revocación argentina afecta procurement regional — varios freelancers consultaron sobre conectividad alternativa. Coordinando con Fiorella para guidance."
+  }
+]

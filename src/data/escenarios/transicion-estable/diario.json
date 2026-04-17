@@ -1,0 +1,50 @@
+[
+  {
+    "fecha": "2029-04-17 22:40 UTC",
+    "autor": "f. zelaya",
+    "rol": "editor guardia · Madrid",
+    "nota": "Cierre de turno con foco en el frente doméstico. Mesa de verificación cerró cola con 2 items pendientes. ICIJ confirmó recepción de la candidatura de Infobae para el proyecto Rosario · respuesta esperada en 10 días."
+  },
+  {
+    "fecha": "2029-04-17 14:12 ART",
+    "autor": "d. roca",
+    "rol": "verificación · Bogotá",
+    "nota": "Reality Defender en shadow mode sin cambios. Material entrante de fuentes en gobierno interino venezolano requiere protocolo nuevo de verificación — fuentes oficiales por primera vez en años. Coordinando con Zelaya criterios."
+  },
+  {
+    "fecha": "2029-04-17 09:30 ART",
+    "autor": "j. fiorella",
+    "rol": "seguridad digital · Buenos Aires",
+    "nota": "Incorporé T-PHYS y T-DOM al glosario. Sección 08 vinculada. T-CKP queda atenuado en el escenario actual pero no se retira — capacidad técnica heredada permanece operativa hasta auditoría. Rotación de claves VPN completada."
+  },
+  {
+    "fecha": "2029-04-16 18:20 ART",
+    "autor": "m. villafane",
+    "rol": "operaciones de campo · Buenos Aires",
+    "nota": "Cerré formalmente ARQ-042 v1. Kit B retornó sin hallazgos en diagnóstico. Velásquez consultado sobre disponibilidad para reapertura del teatro: confirmó disponibilidad para próxima ventana. Decisión editorial pendiente."
+  },
+  {
+    "fecha": "2029-04-16 11:05 ART",
+    "autor": "l. pollastri",
+    "rol": "legales · Buenos Aires",
+    "nota": "Póliza de seguro para fixers firmada. Cobertura efectiva desde 2029-05-01. Adicional: análisis preliminar del marco legal venezolano para acceso de medios extranjeros bajo el gobierno interino — primera lectura indica condiciones más permisivas que las heredadas, pendiente confirmación."
+  },
+  {
+    "fecha": "2029-04-15 20:15 ART",
+    "autor": "s. peralta",
+    "rol": "formación · Buenos Aires",
+    "nota": "HEFAT institucional cerrado con 8 certificados. Propuesta para próxima edición: módulo nuevo sobre cobertura en transiciones políticas (acceso a fuentes oficiales recientemente disponibles, riesgos de manipulación informativa). Coordinando con Roca como referente."
+  },
+  {
+    "fecha": "2029-04-15 16:40 COT",
+    "autor": "d. roca",
+    "rol": "verificación · Bogotá",
+    "nota": "Material de Arauca verificado y archivado. Cadena completa registrada. Tres items retirados a pedido del fixer. Si reapertura ARQ-042 procede, se podría re-evaluar la decisión sobre dos de esos items con nuevas condiciones de seguridad."
+  },
+  {
+    "fecha": "2029-04-14 10:30 ART",
+    "autor": "t. quiroga",
+    "rol": "freelancer liaison · Lima",
+    "nota": "Dos freelancers peruanos en proceso de onboarding. Aumento de consultas regionales sobre cobertura de la transición venezolana — varios medios LATAM evaluando despliegues. Coordinando con Villafañe protocolo para cooperación liviana entre redacciones."
+  }
+]

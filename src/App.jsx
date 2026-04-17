@@ -5,13 +5,36 @@ import actividadData from './data/actividad.json';
 import notificacionesData from './data/notificaciones.json';
 import agendaData from './data/agenda.json';
 import directorioData from './data/directorio.json';
-import alertasData from './data/alertas.json';
-import sistemasData from './data/sistemas.json';
 import correccionesData from './data/correcciones.json';
-import senalesData from './data/senales.json';
-import escenariosData from './data/escenarios.json';
 import gabineteData from './data/gabinete.json';
-import diarioData from './data/diario.json';
+import escenariosData from './data/escenarios.json';
+
+import vigAlertas from './data/escenarios/vigente/alertas.json';
+import vigSistemas from './data/escenarios/vigente/sistemas.json';
+import vigEstadoMundo from './data/escenarios/vigente/estado-mundo.json';
+import vigHechos from './data/escenarios/vigente/hechos.json';
+import vigSenales from './data/escenarios/vigente/senales.json';
+import vigDiario from './data/escenarios/vigente/diario.json';
+
+import starAlertas from './data/escenarios/starlink-restringido/alertas.json';
+import starSistemas from './data/escenarios/starlink-restringido/sistemas.json';
+import starEstadoMundo from './data/escenarios/starlink-restringido/estado-mundo.json';
+import starHechos from './data/escenarios/starlink-restringido/hechos.json';
+import starSenales from './data/escenarios/starlink-restringido/senales.json';
+import starDiario from './data/escenarios/starlink-restringido/diario.json';
+
+import transAlertas from './data/escenarios/transicion-estable/alertas.json';
+import transSistemas from './data/escenarios/transicion-estable/sistemas.json';
+import transEstadoMundo from './data/escenarios/transicion-estable/estado-mundo.json';
+import transHechos from './data/escenarios/transicion-estable/hechos.json';
+import transSenales from './data/escenarios/transicion-estable/senales.json';
+import transDiario from './data/escenarios/transicion-estable/diario.json';
+
+const ESCENARIO_DATA = {
+  'vigente': { alertas: vigAlertas, sistemas: vigSistemas, estadoMundo: vigEstadoMundo, hechos: vigHechos, senales: vigSenales, diario: vigDiario },
+  'starlink-restringido': { alertas: starAlertas, sistemas: starSistemas, estadoMundo: starEstadoMundo, hechos: starHechos, senales: starSenales, diario: starDiario },
+  'transicion-estable': { alertas: transAlertas, sistemas: transSistemas, estadoMundo: transEstadoMundo, hechos: transHechos, senales: transSenales, diario: transDiario }
+};
 
 // ============================================================================
 // CONTENIDO DEL MANUAL — OP-SEC-2029-004
@@ -148,7 +171,12 @@ function formatUTC(date) {
 // MAIN
 // ============================================================================
 
-export default function IntranetInfobae() {
+export default function IntranetInfobae({ scenario = 'vigente' }) {
+  const escData = ESCENARIO_DATA[scenario] || ESCENARIO_DATA.vigente;
+  const alertasData = escData.alertas;
+  const sistemasData = escData.sistemas;
+  const senalesData = escData.senales;
+  const diarioData = escData.diario;
   const [loggedIn, setLoggedIn] = useState(false);
   const [loginUser, setLoginUser] = useState('mondini.l');
   const [loginPass, setLoginPass] = useState('••••••••••');
@@ -172,10 +200,7 @@ export default function IntranetInfobae() {
     if (typeof localStorage === 'undefined') return [];
     try { return JSON.parse(localStorage.getItem('infobae:suscripciones') || '[]'); } catch { return []; }
   });
-  const [escenario, setEscenario] = useState(() => {
-    if (typeof localStorage === 'undefined') return 'vigente';
-    try { return localStorage.getItem('infobae:escenario') || 'vigente'; } catch { return 'vigente'; }
-  });
+  const escenarioActivo = escenariosData.find(s => s.slug === scenario) || escenariosData[0];
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -581,13 +606,6 @@ export default function IntranetInfobae() {
     try { localStorage.setItem('infobae:suscripciones', JSON.stringify(suscripciones)); } catch {}
   }, [suscripciones]);
 
-  useEffect(() => {
-    try { localStorage.setItem('infobae:escenario', escenario); } catch {}
-  }, [escenario]);
-
-  const escenarioActivo = escenariosData.find(s => s.id === escenario) || escenariosData[0];
-  const alertasActivas = escenarioActivo.alertas || [];
-
   function toggleSuscripcion(key) {
     setSuscripciones(prev => prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]);
   }
@@ -918,16 +936,16 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
       )}
 
       {/* ======================= BANNER DE ESCENARIO CONTRAFACTUAL ======================= */}
-      {escenario !== 'vigente' && (
+      {scenario !== 'vigente' && (
         <div style={{ backgroundColor: '#1f1f1f', color: '#d9d4c2', padding: '8px 24px', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
-          <span className="mono" style={{ letterSpacing: '0.06em', textTransform: 'uppercase', color: '#f18b1e' }}>Escenario contrafactual activo</span>
+          <span className="mono" style={{ letterSpacing: '0.06em', textTransform: 'uppercase', color: '#f18b1e' }}>Línea contrafactual</span>
           <span className="mono" style={{ flex: 1, textAlign: 'left' }}>{escenarioActivo.nombre} — {escenarioActivo.subtitulo}</span>
-          <span role="button" tabIndex={0} onClick={() => setEscenario('vigente')} className="mono" style={{ cursor: 'pointer', padding: '4px 10px', border: '1px solid #3d3931', letterSpacing: '0.04em', textTransform: 'uppercase', fontSize: '10px' }}>Volver a línea vigente</span>
+          <a href="/" className="mono no-hover" style={{ color: '#d9d4c2', padding: '4px 10px', border: '1px solid #3d3931', letterSpacing: '0.04em', textTransform: 'uppercase', fontSize: '10px', textDecoration: 'none' }}>Cambiar línea</a>
         </div>
       )}
 
       {/* ======================= BANNER DE ALERTA OPERATIVA ======================= */}
-      {alertasActivas.length > 0 && alertasActivas.map(a => (
+      {alertasData.length > 0 && alertasData.map(a => (
         <div key={a.id} style={{ backgroundColor: a.nivel === 'crítico' ? '#f5d5d5' : '#f0ecde', borderTop: '1px solid #d9d4c2', borderBottom: '1px solid #d9d4c2', borderLeft: '2px solid #bd2828', padding: '10px 24px', display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px' }}>
           <span className="mono" style={{ color: '#bd2828', fontWeight: 500, fontSize: '10.5px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
             {a.nivel === 'crítico' ? 'Crítico' : 'Alerta'} · {a.teatro}
@@ -1219,32 +1237,6 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                       <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{d.sub}</div>
                     </div>
                   ))}
-                </div>
-              </div>
-
-              {/* Escenarios de planificación */}
-              <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '16px 20px', marginBottom: '20px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '10px' }}>
-                  <div className="mono micro" style={{ color: '#5a544c' }}>Escenario de planificación</div>
-                  <div className="mono" style={{ fontSize: '10px', color: '#5a544c', fontStyle: 'italic' }}>ejercicio de foresight · no afecta contenido real</div>
-                </div>
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  {escenariosData.map(s => {
-                    const activo = escenario === s.id;
-                    return (
-                      <div
-                        key={s.id}
-                        role="button"
-                        tabIndex={0}
-                        onClick={() => setEscenario(s.id)}
-                        className="mono"
-                        style={{ cursor: 'pointer', padding: '8px 12px', fontSize: '11px', border: activo ? '1px solid #1f1f1f' : '1px solid #d9d4c2', backgroundColor: activo ? '#1f1f1f' : 'transparent', color: activo ? '#f0ede4' : '#1f1f1f', flex: '1 1 30%', minWidth: '160px' }}
-                      >
-                        <div style={{ fontWeight: 500, marginBottom: '2px' }}>{s.nombre}</div>
-                        <div style={{ fontSize: '10px', color: activo ? '#d9d4c2' : '#5a544c', lineHeight: 1.4, fontWeight: 400 }}>{s.subtitulo}</div>
-                      </div>
-                    );
-                  })}
                 </div>
               </div>
 
@@ -2542,6 +2534,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
           <div className="sans" style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
             <span>© Infobae · Bitácora · acceso restringido a personal autorizado</span>
+            <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>
+              línea: {escenarioActivo.nombre.toLowerCase()} · <a href="/" className="no-hover" style={{ color: '#d9d4c2', borderBottom: '1px dotted #5a544c', textDecoration: 'none', paddingBottom: '1px' }}>cambiar</a>
+            </span>
             <span
               role="button"
               tabIndex={0}

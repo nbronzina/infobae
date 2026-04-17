@@ -1,63 +1,26 @@
 [
   {
     "id": "vigente",
+    "slug": "vigente",
     "nombre": "Línea vigente",
-    "subtitulo": "Escenario operativo actual. Post-captura Maduro (ene 2026), transición venezolana inestable, ROS-038 en curso.",
-    "alertas": [
-      {
-        "id": "ros-038-contravig",
-        "teatro": "ROS-038",
-        "nivel": "atención",
-        "mensaje": "contra-vigilancia activa · no hablar de avances de la investigación en canales no cifrados · última verificación técnica 2029-04-17",
-        "desde": "2029-04-02",
-        "emisor": "j. fiorella (seg. digital)"
-      }
-    ]
+    "subtitulo": "Post-captura Maduro (ene 2026), transición venezolana inestable, ROS-038 en curso",
+    "descripcion": "Escenario operativo actual del universo. Mondini en descanso post-ARQ-042, ROS-038 activo bajo contra-vigilancia, Reality Defender en shadow mode pre-go-live. La intranet se actualiza semanalmente vía monitor automatizado.",
+    "estado": "actualización_continua"
   },
   {
-    "id": "starlink_restringido",
+    "id": "starlink-restringido",
+    "slug": "starlink-restringido",
     "nombre": "Contrafactual A · Starlink restringido",
-    "subtitulo": "ENACOM revoca homologación de terminales Starlink Mini tras presión regulatoria. Despliegues internacionales sin conectividad satelital redundante.",
-    "alertas": [
-      {
-        "id": "enacom-starlink-revoc",
-        "teatro": "Regulatorio",
-        "nivel": "crítico",
-        "mensaje": "Res. ENACOM 955/2025 revocada · Starlink Mini fuera de RAMATEL · despliegues en pausa hasta confirmar kit alternativo",
-        "desde": "2029-04-12",
-        "emisor": "l. pollastri (legales)"
-      },
-      {
-        "id": "ros-038-contravig",
-        "teatro": "ROS-038",
-        "nivel": "atención",
-        "mensaje": "contra-vigilancia activa · no hablar de avances de la investigación en canales no cifrados",
-        "desde": "2029-04-02",
-        "emisor": "j. fiorella (seg. digital)"
-      }
-    ]
+    "subtitulo": "ENACOM revoca homologación Starlink Mini · despliegues internacionales sin conectividad satelital redundante",
+    "descripcion": "Tras consulta pública, ENACOM revoca Res. 955/2025. Pollastri litiga la revocación junto a CELE y RSF Argentina. Operaciones evalúa Iridium GO! exec como kit alternativo. Pipeline de verificación bajo presión por dependencia residual de canales sat.",
+    "estado": "frozen · 2029-04-17"
   },
   {
-    "id": "transicion_estable",
+    "id": "transicion-estable",
+    "slug": "transicion-estable",
     "nombre": "Contrafactual B · Transición venezolana estable",
-    "subtitulo": "Gobierno venezolano interino consolida control territorial. Frontera Arauca/Apure reduce intensidad. ROS-038 pasa a foco principal.",
-    "alertas": [
-      {
-        "id": "ros-038-contravig",
-        "teatro": "ROS-038",
-        "nivel": "atención",
-        "mensaje": "contra-vigilancia activa · ROS-038 consolidado como frente principal post-normalización frontera · vigilancia doméstica intensificada",
-        "desde": "2029-04-02",
-        "emisor": "j. fiorella (seg. digital)"
-      },
-      {
-        "id": "arq-042-revisado",
-        "teatro": "ARQ-042",
-        "nivel": "baja",
-        "mensaje": "condiciones de acceso normalizadas · reapertura de teatro evaluada por mesa editorial para próxima ventana",
-        "desde": "2029-04-10",
-        "emisor": "m. villafañe (operaciones)"
-      }
-    ]
+    "subtitulo": "Gobierno interino consolidado · frontera Arauca/Apure normalizada · ROS-038 escalado",
+    "descripcion": "El gobierno interino venezolano consolida control territorial. ARQ-042 evaluado para reapertura. La presión doméstica sobre periodistas de investigación argentinos se intensifica en ausencia del frente externo. ICIJ convoca a Infobae a colaboración internacional sobre Rosario.",
+    "estado": "frozen · 2029-04-17"
   }
 ]
