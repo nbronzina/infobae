@@ -610,9 +610,6 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
       <div style={{ width: '380px', textAlign: 'center' }}>
         <div style={{ marginBottom: '40px' }}>
           <img src="/infobae-logo.png" alt="infobae" style={{ height: '36px', width: 'auto', display: 'inline-block' }} />
-          <div className="mono" style={{ fontSize: '12px', color: '#5a544c', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: '8px' }}>
-            / interna
-          </div>
         </div>
 
         <div style={{ backgroundColor: '#2a2a2a', border: '1px solid #3d3931', padding: '32px', textAlign: 'left' }}>
@@ -694,11 +691,8 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
       {/* ======================= TOP BAR — CROMA CORPORATIVO ======================= */}
       <div style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #d9d4c2', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '56px', fontSize: '13px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <img src="/infobae-logo.png" alt="infobae" style={{ height: '22px', width: 'auto', display: 'block' }} />
-            <span className="mono" style={{ fontSize: '11px', color: '#5a544c', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-              / interna
-            </span>
           </div>
           <nav style={{ display: 'flex', gap: '22px' }}>
             <span className="sans" style={{ fontSize: '13px', color: (!activeView && showLanding) ? '#1f1f1f' : '#5a544c', fontWeight: (!activeView && showLanding) ? 500 : 400, cursor: 'pointer' }} onClick={() => { setActiveView(null); setShowLanding(true); }}>Inicio</span>
