@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 const MODEL = 'claude-sonnet-4-5';
 const MAX_NOTICIAS = 12;
@@ -285,6 +285,8 @@ export default async function handler(req, res) {
       ? await readFromGitHub(ghToken, repo, branch)
       : readFromDisk();
 
+    await new Promise(r => setTimeout(r, 65000));
+
     diag.phase = 'generacion';
     const generated = await faseGeneracion(apiKey, findings, current);
     diag.generated = {
@@ -292,6 +294,8 @@ export default async function handler(req, res) {
       actividad: generated.actividad?.length || 0,
       notificacion: generated.notificacion ? 1 : 0
     };
+
+    await new Promise(r => setTimeout(r, 65000));
 
     diag.phase = 'validacion';
     const validated = await faseValidacion(apiKey, generated, current);
