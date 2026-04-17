@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Bell, ChevronRight, ChevronDown, FileText, Folder, FolderOpen, Lock, Download, Printer, Share2, Home, Calendar, BookOpen, Users, Shield, Settings, Loader2 } from 'lucide-react';
+import { Search, Bell, ChevronRight, ChevronDown, FileText, Folder, FolderOpen, Lock, Download, Printer, Share2, Home, Calendar, BookOpen, Users, Shield, Settings, Loader2, Star, Clock } from 'lucide-react';
 import noticiasData from './data/noticias.json';
 import actividadData from './data/actividad.json';
 import notificacionesData from './data/notificaciones.json';
@@ -148,6 +148,14 @@ export default function IntranetInfobae() {
   const [toast, setToast] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [favoritos, setFavoritos] = useState(() => {
+    if (typeof localStorage === 'undefined') return [];
+    try { return JSON.parse(localStorage.getItem('infobae:favoritos') || '[]'); } catch { return []; }
+  });
+  const [recent, setRecent] = useState(() => {
+    if (typeof localStorage === 'undefined') return [];
+    try { return JSON.parse(localStorage.getItem('infobae:recent') || '[]'); } catch { return []; }
+  });
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
   const [activeView, setActiveView] = useState(null);
@@ -509,6 +517,38 @@ export default function IntranetInfobae() {
 
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  useEffect(() => {
+    try { localStorage.setItem('infobae:favoritos', JSON.stringify(favoritos)); } catch {}
+  }, [favoritos]);
+
+  useEffect(() => {
+    try { localStorage.setItem('infobae:recent', JSON.stringify(recent)); } catch {}
+  }, [recent]);
+
+  useEffect(() => {
+    if (activeView && VISTAS[activeView] && (VISTAS[activeView].doc || VISTAS[activeView].contenido)) {
+      setRecent(prev => {
+        const filtered = prev.filter(k => k !== activeView);
+        return [activeView, ...filtered].slice(0, 8);
+      });
+    }
+  }, [activeView]);
+
+  function toggleFavorito(key) {
+    setFavoritos(prev => prev.includes(key) ? prev.filter(k => k !== key) : [key, ...prev]);
+  }
+
+  function titleOf(key) {
+    const v = VISTAS[key];
+    if (!v) return key;
+    return v.doc?.titulo || v.titulo || key;
+  }
+
+  function codigoOf(key) {
+    const v = VISTAS[key];
+    return v?.doc?.codigo || v?.meta?.codigo || null;
   }
 
   function executeSearch(query) {
@@ -1142,6 +1182,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 ) : <span />; })()}
                 {(VISTAS[activeView]?.doc || VISTAS[activeView]?.contenido || VISTAS[activeView]?.tool || VISTAS[activeView]?.form) && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '12.5px', color: '#5a544c' }}>
+                    <div onClick={() => toggleFavorito(activeView)} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', color: favoritos.includes(activeView) ? '#1f1f1f' : '#5a544c' }}>
+                      <Star size={13} fill={favoritos.includes(activeView) ? '#1f1f1f' : 'none'} />
+                      <span>{favoritos.includes(activeView) ? 'En favoritos' : 'Guardar'}</span>
+                    </div>
                     <div onClick={handlePDF} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
                       <Download size={13} /><span>PDF</span>
                     </div>
@@ -2174,6 +2218,32 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   </div>
                 )}
               </div>
+              {favoritos.length > 0 && (
+                <div style={{ marginBottom: '28px' }}>
+                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Star size={10} /> Favoritos ({favoritos.length})
+                  </div>
+                  {favoritos.map(k => (
+                    <div key={k} onClick={() => setActiveView(k)} className="doc-link" style={{ cursor: 'pointer', fontSize: '11.5px', padding: '5px 0', borderBottom: '1px solid #d9d4c2' }}>
+                      <div className="mono" style={{ fontSize: '10px', color: '#6b6454' }}>{codigoOf(k) || ''}</div>
+                      <div>{titleOf(k)}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {recent.filter(k => k !== activeView).length > 0 && (
+                <div style={{ marginBottom: '28px' }}>
+                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Clock size={10} /> Últimos consultados
+                  </div>
+                  {recent.filter(k => k !== activeView).slice(0, 5).map(k => (
+                    <div key={k} onClick={() => setActiveView(k)} className="doc-link" style={{ cursor: 'pointer', fontSize: '11.5px', padding: '5px 0', borderBottom: '1px solid #d9d4c2' }}>
+                      <div className="mono" style={{ fontSize: '10px', color: '#6b6454' }}>{codigoOf(k) || ''}</div>
+                      <div>{titleOf(k)}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </>);
           })()}
 
