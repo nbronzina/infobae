@@ -2767,7 +2767,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               Sobre este artefacto
             </h2>
             <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
-              <strong>Infobae · Bitácora</strong> es un <em>diegetic prototype</em>: la ficción está en que el sistema existe, no en lo que dice. Ambientado en 2029, pregunta cómo podría organizarse una redacción argentina para cubrir investigación doméstica y corresponsalía internacional en un contexto donde la vigilancia, la autenticidad del contenido y la seguridad operativa de periodistas se volvieron condiciones cotidianas del trabajo.
+              <strong>Infobae · Bitácora</strong> es una obra de ficción que explora el futuro cercano del periodismo de investigación y la corresponsalía internacional argentina a través de la intranet operativa de uno de sus medios icónicos —Infobae— en 2029. Un trabajo liderado por Nicolás Bronzina.
+            </div>
+            <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
+              Es un <em>diegetic prototype</em>: la ficción está en que el sistema existe, no en lo que dice. Pregunta cómo podría organizarse una redacción argentina para cubrir investigación doméstica y corresponsalía internacional en un contexto donde la vigilancia, la autenticidad del contenido y la seguridad operativa de periodistas se volvieron condiciones cotidianas del trabajo.
             </div>
             <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '18px' }}>
               Cada protocolo, norma y herramienta es extensión plausible de algo que existe hoy. Los personajes y los despliegues son ficticios. Las fuentes externas, las regulaciones y los papers citados son reales.
