@@ -2396,8 +2396,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               Cada protocolo, norma y herramienta es extensión plausible de algo que existe hoy. Los personajes y los despliegues son ficticios. Las fuentes externas, las regulaciones y los papers citados son reales.
             </div>
             <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f', marginTop: '22px', paddingTop: '18px', borderTop: '1px solid #d9d4c2', lineHeight: 1.7 }}>
-              Ideado, diseñado y codificado por <strong>Nicolás Bronzina</strong>.<br/>
-              En la tradición de Near Future Laboratory y Nick Foster (<em>Future Mundane</em>, 2015).
+              Ideado, diseñado y codificado por <strong><a href="https://www.nicolasbronzina.com/" target="_blank" rel="noreferrer" style={{ color: '#1f1f1f', borderBottom: '1px solid #1f1f1f' }}>Nicolás Bronzina</a></strong>.
             </div>
             <div
               role="button"
