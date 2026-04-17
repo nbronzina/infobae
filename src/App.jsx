@@ -29,7 +29,7 @@ const DOC_META = {
   historial: [
     { fecha: '2029-03-14', autor: 'j. fiorella', cambio: 'Edición 4.2: sección 08 (vacío ecosistémico) y amenazas T-PHYS, T-DOM.' },
     { fecha: '2028-09-10', autor: 'j. fiorella', cambio: 'Edición 4.1: actualización de T-WPS tras Rye & Levin (IEEE S&P 2024).' },
-    { fecha: '2028-02-15', autor: 'j. fiorella', cambio: 'Edición 4.0: reescritura completa post-despliegue ARQ-032.' }
+    { fecha: '2028-02-15', autor: 'j. fiorella', cambio: 'Edición 4.0: reescritura completa tras revisión trimestral de amenazas 2028.' }
   ]
 };
 
@@ -293,7 +293,7 @@ export default function IntranetInfobae() {
       secciones: [
         { titulo: 'Alcance', texto: 'Este documento complementa OP-LEG-2028-007 con detalle procedimental para el egreso de materiales de usos especiales clasificados bajo Ley 20.429. Aplica a chalecos antibalas, cascos balísticos y placas de blindaje. No aplica a equipos de telecomunicaciones (ver sección ENACOM de OP-LEG-2028-007).' },
         { titulo: 'Procedimiento de egreso', texto: 'Según Disposición RENAR 883/11, Anexo II: máximo 1 chaleco por año calendario. Requiere Formularios Leyes 23.283 y 23.412, credencial de tenencia vigente, y declaración de destino. El trámite se realiza ante ANMaC. No se encontró plazo publicado para resolución del trámite de egreso. Recomendación: iniciar con al menos 45 días de anticipación.' },
-        { titulo: 'Alternativa operativa', texto: 'Para despliegues urgentes donde el trámite de egreso no es viable: préstamo de chaleco y casco vía RSF España (rsf-es.org/seguridad-para-periodistas). Fianza reembolsable: 300€. Devolución: máximo 1 mes. Esta alternativa es la opción práctica estándar para la mayoría de los despliegues internacionales.' }
+        { titulo: 'Alternativa operativa', texto: 'Para despliegues urgentes donde el trámite de egreso no es viable: préstamo de chaleco y casco vía RSF España (rsf-es.org/seguridad-para-periodistas). Fianza reembolsable: 300€. Devolución: máximo 1 mes. Esta alternativa es la vía utilizada en los despliegues recientes de Infobae con ventana menor a 30 días.' }
       ], fuentes: 'Ley 20.429 (1973). Decreto 395/75. Disposición RENAR 883/11. RSF España, programa de préstamo de equipamiento.' }},
     seguros_riesgo: { doc: {
       area: 'INFOBAE · LEGALES', codigo: 'OP-LEG-2028-014', version: '2.0', fecha: '2028-08-30', responsable: 'l. pollastri + operaciones',
@@ -390,7 +390,7 @@ export default function IntranetInfobae() {
       titulo: 'Pipeline de verificación', subtitulo: 'Flujo de trabajo para material entrante de zona activa',
       secciones: [
         { titulo: 'Flujo estándar', texto: 'Material entrante → registro en cola (timestamp, fixer, tipo, tamaño) → verificación de origen (¿quién envió, desde dónde?) → verificación de contenido (geolocalización, análisis visual, detector de síntesis) → evaluación de riesgo (impacto sobre fuentes) → decisión editorial (publicar / condiciones / reserva / no publicar) → registro en OP-SEC-LOG con cadena completa.' },
-        { titulo: 'Herramientas integradas', texto: 'Detector de síntesis automatizado (Reality Defender API, activo desde 05.2029). Verificador C2PA (IPTC Origin Verifier). Analista automatizado (IA, sección 07 de OP-SEC-2029-004). Imágenes satelitales: Sentinel Hub, Planet Labs (sujeto a disponibilidad regional). Geolocalización: Google Earth Pro, QGIS para análisis avanzado.' },
+        { titulo: 'Herramientas integradas', texto: 'Detector de síntesis automatizado (Reality Defender API, activo desde 05.2029). Verificador C2PA (IPTC Origin Verifier). Analista automatizado (IA, sección 07 de OP-SEC-2029-004). Imágenes satelitales: Sentinel Hub, Planet Labs (sujeto a disponibilidad regional). Geolocalización: Google Earth Pro, QGIS.' },
         { titulo: 'Tiempos', texto: 'Material urgente (breaking): verificación mínima en < 30 minutos. Material estándar: verificación completa en < 4 horas. Material de investigación: sin límite temporal, verificación exhaustiva. El nivel de verificación se define al ingreso y se registra en el log.' }
       ], fuentes: 'Documento interno. Referencia: Bellingcat Online Investigation Toolkit, BBC Verify workflow, First Draft Verification Handbook.' }},
     opsec_log: { doc: {
@@ -466,7 +466,7 @@ export default function IntranetInfobae() {
         { titulo: 'Principio general', texto: 'OSINT (Open Source Intelligence) usa información públicamente accesible: registros oficiales, redes sociales, imágenes satelitales, bases de datos abiertas, registros corporativos y judiciales. No es hacking. No implica acceso no autorizado a sistemas. Si requiere una contraseña, no es OSINT.' },
         { titulo: 'Herramientas estándar', texto: 'Geolocalización: Google Earth Pro, Sentinel Hub, Mapillary. Verificación de imagen/video: TinEye, búsqueda inversa Google/Yandex, InVID/WeVerify. Registros corporativos: boletines oficiales, AFIP (Argentina), Registro Público de Comercio, OpenCorporates. Redes sociales: CrowdTangle (Meta), Wayback Machine, captura con Hunchly o ArchiveBox. Vuelos: FlightRadar24, ADS-B Exchange. Embarcaciones: MarineTraffic, VesselFinder.' },
         { titulo: 'Documentación del proceso', texto: 'Toda investigación OSINT se documenta paso a paso: qué se buscó, cuándo, en qué plataforma, qué se encontró, y capturas de pantalla con timestamp. Esta documentación se archiva en OP-SEC-LOG y sirve como evidencia del proceso en caso de cuestionamiento legal o editorial.' },
-        { titulo: 'Límites éticos', texto: 'No se crean perfiles falsos para obtener información de fuentes sin su conocimiento (catfishing). No se accede a información eliminada por la fuente si fue claramente retirada intencionalmente. No se publican datos personales de civiles no involucrados. Doxing está prohibido. Ante duda sobre el límite ético de una técnica, consultar con editor en jefe.' }
+        { titulo: 'Límites éticos', texto: 'No se crean perfiles falsos para obtener información de fuentes sin su conocimiento (catfishing). No se accede a información que la fuente retiró del dominio público. No se publican datos personales de civiles no involucrados. Doxing está prohibido. Ante duda sobre el límite ético de una técnica, consultar con editor en jefe.' }
       ], fuentes: 'Bellingcat, Online Investigation Toolkit (2024). First Draft, Verification Handbook. Berkeley Protocol on Digital Open Source Investigations (ONU/ACNUDH, 2022). Henk van Ess, OSINT training methodology.' }},
     redes_internacionales: { doc: {
       area: 'INFOBAE · INVESTIGACIÓN', codigo: 'OP-INV-2029-003', version: '1.0', fecha: '2029-03-10', responsable: 'dirección editorial',
@@ -530,6 +530,19 @@ export default function IntranetInfobae() {
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  useEffect(() => {
+    const handler = (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target && e.target.getAttribute && e.target.getAttribute('role') === 'button') {
+        const tag = e.target.tagName;
+        if (tag === 'BUTTON' || tag === 'A' || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+        e.preventDefault();
+        e.target.click();
+      }
+    };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, []);
 
   useEffect(() => {
     try { localStorage.setItem('infobae:favoritos', JSON.stringify(favoritos)); } catch {}
@@ -724,12 +737,12 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
         </div>
 
         <div style={{ backgroundColor: '#2a2a2a', border: '1px solid #3d3931', padding: '32px', textAlign: 'left' }}>
-          <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '20px' }}>
+          <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '20px' }}>
             Acceso restringido a personal autorizado
           </div>
 
           <div style={{ marginBottom: '16px' }}>
-            <label className="mono" style={{ fontSize: '10.5px', color: '#6b6454', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Usuario</label>
+            <label className="mono" style={{ fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Usuario</label>
             <input
               type="text"
               value={loginUser}
@@ -741,7 +754,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           </div>
 
           <div style={{ marginBottom: '20px' }}>
-            <label className="mono" style={{ fontSize: '10.5px', color: '#6b6454', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Contraseña</label>
+            <label className="mono" style={{ fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Contraseña</label>
             <input
               type="password"
               value={loginPass}
@@ -796,6 +809,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
         .sb-collapsed .sidebar-item svg { transform: scale(1.35); }
         .sb-collapsed .sb-chevron { display: none; }
         .sb-collapsed .sb-divider { display: none; }
+        :focus-visible { outline: 2px solid #1f1f1f; outline-offset: 2px; }
+        a:focus-visible { outline-offset: 1px; }
+        input:focus-visible, select:focus-visible, textarea:focus-visible { outline-offset: 0; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       `}</style>
 
@@ -806,12 +822,12 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             <img src="/infobae-logo.png" alt="infobae" style={{ height: '22px', width: 'auto', display: 'block' }} />
           </div>
           <nav style={{ display: 'flex', gap: '22px' }}>
-            <span className="sans" style={{ fontSize: '13px', color: (!activeView && showLanding) ? '#1f1f1f' : '#5a544c', fontWeight: (!activeView && showLanding) ? 500 : 400, cursor: 'pointer' }} onClick={() => { setActiveView(null); setShowLanding(true); }}>Inicio</span>
-            <span className="sans" style={{ fontSize: '13px', color: activeView === 'redaccion' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'redaccion' ? 500 : 400, cursor: 'pointer' }} onClick={() => setActiveView('redaccion')}>Redacción</span>
-            <span className="sans" style={{ fontSize: '13px', color: (activeView === 'folder_segdigital' || (!activeView && !showLanding)) ? '#1f1f1f' : '#5a544c', fontWeight: (activeView === 'folder_segdigital' || (!activeView && !showLanding)) ? 500 : 400, cursor: 'pointer' }} onClick={() => { setActiveView('folder_segdigital'); setShowLanding(false); }}>Documentos</span>
-            <span className="sans" style={{ fontSize: '13px', color: activeView === 'directorio' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'directorio' ? 500 : 400, cursor: 'pointer' }} onClick={() => setActiveView('directorio')}>Directorio</span>
-            <span className="sans" style={{ fontSize: '13px', color: activeView === 'herramientas' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'herramientas' ? 500 : 400, cursor: 'pointer' }} onClick={() => setActiveView('herramientas')}>Herramientas</span>
-            <span className="sans" style={{ fontSize: '13px', color: activeView === 'soporte' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'soporte' ? 500 : 400, cursor: 'pointer' }} onClick={() => setActiveView('soporte')}>Soporte</span>
+            <span role="button" tabIndex={0} className="sans" style={{ fontSize: '13px', color: (!activeView && showLanding) ? '#1f1f1f' : '#5a544c', fontWeight: (!activeView && showLanding) ? 500 : 400, cursor: 'pointer' }} onClick={() => { setActiveView(null); setShowLanding(true); }}>Inicio</span>
+            <span role="button" tabIndex={0} className="sans" style={{ fontSize: '13px', color: activeView === 'redaccion' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'redaccion' ? 500 : 400, cursor: 'pointer' }} onClick={() => setActiveView('redaccion')}>Redacción</span>
+            <span role="button" tabIndex={0} className="sans" style={{ fontSize: '13px', color: (activeView === 'folder_segdigital' || (!activeView && !showLanding)) ? '#1f1f1f' : '#5a544c', fontWeight: (activeView === 'folder_segdigital' || (!activeView && !showLanding)) ? 500 : 400, cursor: 'pointer' }} onClick={() => { setActiveView('folder_segdigital'); setShowLanding(false); }}>Documentos</span>
+            <span role="button" tabIndex={0} className="sans" style={{ fontSize: '13px', color: activeView === 'directorio' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'directorio' ? 500 : 400, cursor: 'pointer' }} onClick={() => setActiveView('directorio')}>Directorio</span>
+            <span role="button" tabIndex={0} className="sans" style={{ fontSize: '13px', color: activeView === 'herramientas' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'herramientas' ? 500 : 400, cursor: 'pointer' }} onClick={() => setActiveView('herramientas')}>Herramientas</span>
+            <span role="button" tabIndex={0} className="sans" style={{ fontSize: '13px', color: activeView === 'soporte' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'soporte' ? 500 : 400, cursor: 'pointer' }} onClick={() => setActiveView('soporte')}>Soporte</span>
           </nav>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', position: 'relative' }}>
@@ -822,17 +838,17 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               <div style={{ position: 'absolute', top: -2, right: -2, width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#bd2828' }}></div>
             )}
             {notifOpen && (<>
-              <div onClick={() => setNotifOpen(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99 }}></div>
+              <div role="button" tabIndex={0} onClick={() => setNotifOpen(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99 }}></div>
               <div style={{ position: 'absolute', top: '28px', right: 0, width: '380px', backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', boxShadow: '0 4px 16px rgba(31,31,31,0.1)', zIndex: 100 }}>
                 <div style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                  <div className="mono micro" style={{ color: '#6b6454' }}>Notificaciones</div>
+                  <div className="mono micro" style={{ color: '#5a544c' }}>Notificaciones</div>
                   <div className="mono" style={{ fontSize: '10px', color: '#5a544c', cursor: 'pointer' }} onClick={() => setNotifOpen(false)}>cerrar</div>
                 </div>
                 {NOTIFICACIONES.map(n => (
                   <div key={n.id} style={{ padding: '10px 16px', borderBottom: '1px solid #eceae4', backgroundColor: n.leida ? 'transparent' : '#f0ecde' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '3px' }}>
                       <div className="mono" style={{ fontSize: '10.5px', fontWeight: 500, color: '#1f1f1f' }}>{n.usuario}</div>
-                      <div className="mono" style={{ fontSize: '10px', color: '#6b6454' }}>{n.tiempo}</div>
+                      <div className="mono" style={{ fontSize: '10px', color: '#5a544c' }}>{n.tiempo}</div>
                     </div>
                     <div className="sans" style={{ fontSize: '12px', lineHeight: 1.4, color: '#3d3931' }}>{n.texto}</div>
                   </div>
@@ -851,7 +867,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
       {/* ======================= SEARCH BAR ======================= */}
       {searchOpen && (
         <div style={{ backgroundColor: '#f7f5ee', borderBottom: '1px solid #d9d4c2', padding: '10px 24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Search size={14} color="#6b6454" />
+          <Search size={14} color="#5a544c" />
           <input
             autoFocus
             type="text"
@@ -862,7 +878,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             className="mono"
             style={{ flex: 1, border: 'none', backgroundColor: 'transparent', fontSize: '12.5px', color: '#1f1f1f', outline: 'none', fontFamily: "'JetBrains Mono', monospace" }}
           />
-          <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454' }}>
+          <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>
             Enter para buscar · Esc para cerrar
           </div>
         </div>
@@ -875,7 +891,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             Alerta · {a.teatro}
           </span>
           <span className="mono" style={{ color: '#1f1f1f', flex: 1 }}>{a.mensaje}</span>
-          <span className="mono" style={{ color: '#6b6454', fontSize: '10.5px' }}>activa desde {a.desde} · {a.emisor}</span>
+          <span className="mono" style={{ color: '#5a544c', fontSize: '10.5px' }}>activa desde {a.desde} · {a.emisor}</span>
         </div>
       ))}
 
@@ -884,7 +900,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
         <Home size={12} style={{ cursor: 'pointer' }} onClick={() => { setActiveView(null); setShowLanding(true); }} />
         {(() => {
           const sep = <ChevronRight size={12} />;
-          const link = (label, fn) => <span className="doc-link" style={{ cursor: 'pointer' }} onClick={fn}>{label}</span>;
+          const link = (label, fn) => <span role="button" tabIndex={0} className="doc-link" style={{ cursor: 'pointer' }} onClick={fn}>{label}</span>;
 
           if (showLanding && !activeView) return <>{sep}<span className="mono" style={{ color: '#1f1f1f' }}>Inicio</span></>;
           if (!showLanding && !activeView) return <>{sep}{link('Documentos', () => { setActiveView('folder_segdigital'); setShowLanding(false); })}{sep}{link('Seguridad Digital', () => { setActiveView('folder_segdigital'); setShowLanding(false); })}{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{DOC_META.codigo}</span></>;
@@ -907,130 +923,130 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
         {/* LEFT SIDEBAR — Árbol de documentos */}
         <aside className={sidebarCollapsed ? 'sb-collapsed' : ''} style={{ backgroundColor: '#f0ede4', borderRight: '1px solid #d9d4c2', padding: '20px 0', fontSize: '13px', overflow: 'hidden' }}>
           <div style={{ padding: '0 20px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span className="micro sb-label" style={{ color: '#6b6454' }}>Explorar</span>
-            <ChevronRight size={14} color="#6b6454" style={{ cursor: 'pointer', transform: sidebarCollapsed ? 'rotate(0deg)' : 'rotate(180deg)', transition: 'transform 0.15s' }} onClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
+            <span className="micro sb-label" style={{ color: '#5a544c' }}>Explorar</span>
+            <ChevronRight size={14} color="#5a544c" style={{ cursor: 'pointer', transform: sidebarCollapsed ? 'rotate(0deg)' : 'rotate(180deg)', transition: 'transform 0.15s' }} onClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
           </div>
 
           <div style={{ padding: '4px 0' }}>
-            <div onClick={() => setActiveView('noticias')} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: activeView === 'noticias' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'noticias' ? '2px solid #1f1f1f' : '2px solid transparent', fontWeight: activeView === 'noticias' ? 500 : 400 }}>
+            <div role="button" tabIndex={0} onClick={() => setActiveView('noticias')} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: activeView === 'noticias' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'noticias' ? '2px solid #1f1f1f' : '2px solid transparent', fontWeight: activeView === 'noticias' ? 500 : 400 }}>
               <BookOpen size={13} color={activeView === 'noticias' ? '#1f1f1f' : '#5a544c'} />
               <span className="sb-text">Noticias internas</span>
             </div>
-            <div onClick={() => setActiveView('directorio')} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: activeView === 'directorio' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'directorio' ? '2px solid #1f1f1f' : '2px solid transparent', fontWeight: activeView === 'directorio' ? 500 : 400 }}>
+            <div role="button" tabIndex={0} onClick={() => setActiveView('directorio')} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: activeView === 'directorio' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'directorio' ? '2px solid #1f1f1f' : '2px solid transparent', fontWeight: activeView === 'directorio' ? 500 : 400 }}>
               <Users size={13} color={activeView === 'directorio' ? '#1f1f1f' : '#5a544c'} />
               <span className="sb-text">Directorio</span>
             </div>
-            <div onClick={() => setActiveView('agenda')} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: activeView === 'agenda' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'agenda' ? '2px solid #1f1f1f' : '2px solid transparent', fontWeight: activeView === 'agenda' ? 500 : 400 }}>
+            <div role="button" tabIndex={0} onClick={() => setActiveView('agenda')} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: activeView === 'agenda' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'agenda' ? '2px solid #1f1f1f' : '2px solid transparent', fontWeight: activeView === 'agenda' ? 500 : 400 }}>
               <Calendar size={13} color={activeView === 'agenda' ? '#1f1f1f' : '#5a544c'} />
               <span className="sb-text">Agenda editorial</span>
             </div>
           </div>
 
-          <div className="micro sb-label" style={{ padding: '16px 20px 10px', color: '#6b6454' }}>
+          <div className="micro sb-label" style={{ padding: '16px 20px 10px', color: '#5a544c' }}>
             Documentos operativos
           </div>
           <div>
-            <div onClick={() => { if (sidebarExpanded['redaccion']) { setActiveView('folder_redaccion'); setShowLanding(false); } else { toggleSidebar('redaccion'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('redaccion') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('redaccion') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-              <span className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('redaccion'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['redaccion'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
+            <div role="button" tabIndex={0} onClick={() => { if (sidebarExpanded['redaccion']) { setActiveView('folder_redaccion'); setShowLanding(false); } else { toggleSidebar('redaccion'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('redaccion') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('redaccion') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+              <span role="button" tabIndex={0} className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('redaccion'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['redaccion'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
               {sidebarExpanded['redaccion'] ? <FolderOpen size={13} color="#5a544c" /> : <Folder size={13} color="#5a544c" />}
               <span className="sb-text">Redacción</span>
             </div>
             {!sidebarCollapsed && sidebarExpanded['redaccion'] && (
               <div style={{ paddingLeft: '28px' }}>
-                <div onClick={() => setActiveView('manual_estilo')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'manual_estilo' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'manual_estilo' ? 500 : 400, backgroundColor: activeView === 'manual_estilo' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'manual_estilo' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('manual_estilo')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'manual_estilo' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'manual_estilo' ? 500 : 400, backgroundColor: activeView === 'manual_estilo' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'manual_estilo' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Manual de estilo
                 </div>
-                <div onClick={() => setActiveView('fuentes_anonimas')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'fuentes_anonimas' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'fuentes_anonimas' ? 500 : 400, backgroundColor: activeView === 'fuentes_anonimas' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'fuentes_anonimas' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('fuentes_anonimas')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'fuentes_anonimas' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'fuentes_anonimas' ? 500 : 400, backgroundColor: activeView === 'fuentes_anonimas' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'fuentes_anonimas' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Fuentes anónimas
                 </div>
-                <div onClick={() => setActiveView('verificacion_prepub')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'verificacion_prepub' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'verificacion_prepub' ? 500 : 400, backgroundColor: activeView === 'verificacion_prepub' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'verificacion_prepub' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('verificacion_prepub')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'verificacion_prepub' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'verificacion_prepub' ? 500 : 400, backgroundColor: activeView === 'verificacion_prepub' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'verificacion_prepub' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Verificación pre-pub
                 </div>
-                <div onClick={() => setActiveView('correcciones_log')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'correcciones_log' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'correcciones_log' ? 500 : 400, backgroundColor: activeView === 'correcciones_log' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'correcciones_log' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('correcciones_log')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'correcciones_log' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'correcciones_log' ? 500 : 400, backgroundColor: activeView === 'correcciones_log' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'correcciones_log' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Correcciones públicas
                 </div>
               </div>
             )}
-            <div onClick={() => { if (sidebarExpanded['seg-digital']) { setActiveView('folder_segdigital'); setShowLanding(false); } else { toggleSidebar('seg-digital'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('seg-digital') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('seg-digital') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-              <span className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('seg-digital'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['seg-digital'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
+            <div role="button" tabIndex={0} onClick={() => { if (sidebarExpanded['seg-digital']) { setActiveView('folder_segdigital'); setShowLanding(false); } else { toggleSidebar('seg-digital'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('seg-digital') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('seg-digital') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+              <span role="button" tabIndex={0} className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('seg-digital'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['seg-digital'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
               {sidebarExpanded['seg-digital'] ? <FolderOpen size={13} color="#5a544c" /> : <Folder size={13} color="#5a544c" />}
               <span className="sb-text" style={{ fontWeight: isFolderActive('seg-digital') ? 500 : 400 }}>Seguridad digital</span>
             </div>
             {!sidebarCollapsed && sidebarExpanded['seg-digital'] && (
               <div style={{ paddingLeft: '28px' }}>
-                <div onClick={() => setActiveView('comunicacion_cifrada')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'comunicacion_cifrada' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'comunicacion_cifrada' ? 500 : 400, backgroundColor: activeView === 'comunicacion_cifrada' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'comunicacion_cifrada' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('comunicacion_cifrada')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'comunicacion_cifrada' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'comunicacion_cifrada' ? 500 : 400, backgroundColor: activeView === 'comunicacion_cifrada' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'comunicacion_cifrada' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Comunicación cifrada
                 </div>
-                <div onClick={() => setActiveView('verificacion_c2pa')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'verificacion_c2pa' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'verificacion_c2pa' ? 500 : 400, backgroundColor: activeView === 'verificacion_c2pa' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'verificacion_c2pa' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('verificacion_c2pa')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'verificacion_c2pa' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'verificacion_c2pa' ? 500 : 400, backgroundColor: activeView === 'verificacion_c2pa' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'verificacion_c2pa' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Verificación C2PA
                 </div>
-                <div onClick={() => { setActiveView(null); setShowLanding(false); setTimeout(scrollToTop, 100); }} className="sidebar-item" style={{ padding: '5px 20px', backgroundColor: (!activeView && !showLanding) ? '#e5e1d3' : 'transparent', borderLeft: (!activeView && !showLanding) ? '2px solid #1f1f1f' : '2px solid transparent', cursor: 'pointer', fontSize: '12.5px', fontWeight: (!activeView && !showLanding) ? 500 : 400 }}>
+                <div role="button" tabIndex={0} onClick={() => { setActiveView(null); setShowLanding(false); setTimeout(scrollToTop, 100); }} className="sidebar-item" style={{ padding: '5px 20px', backgroundColor: (!activeView && !showLanding) ? '#e5e1d3' : 'transparent', borderLeft: (!activeView && !showLanding) ? '2px solid #1f1f1f' : '2px solid transparent', cursor: 'pointer', fontSize: '12.5px', fontWeight: (!activeView && !showLanding) ? 500 : 400 }}>
                   <span className="sb-text">Higiene RF</span>
                 </div>
-                <div onClick={() => setActiveView('compromiso_dispositivo')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'compromiso_dispositivo' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'compromiso_dispositivo' ? 500 : 400, backgroundColor: activeView === 'compromiso_dispositivo' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'compromiso_dispositivo' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('compromiso_dispositivo')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'compromiso_dispositivo' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'compromiso_dispositivo' ? 500 : 400, backgroundColor: activeView === 'compromiso_dispositivo' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'compromiso_dispositivo' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Compromiso de dispositivo
                 </div>
-                <div onClick={() => setActiveView('vigilancia_destino')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'vigilancia_destino' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'vigilancia_destino' ? 500 : 400, backgroundColor: activeView === 'vigilancia_destino' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'vigilancia_destino' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('vigilancia_destino')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'vigilancia_destino' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'vigilancia_destino' ? 500 : 400, backgroundColor: activeView === 'vigilancia_destino' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'vigilancia_destino' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Vigilancia en destino
                 </div>
               </div>
             )}
-            <div onClick={() => { if (sidebarExpanded['legales']) { setActiveView('folder_legales'); setShowLanding(false); } else { toggleSidebar('legales'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('legales') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('legales') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-              <span className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('legales'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['legales'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
+            <div role="button" tabIndex={0} onClick={() => { if (sidebarExpanded['legales']) { setActiveView('folder_legales'); setShowLanding(false); } else { toggleSidebar('legales'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('legales') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('legales') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+              <span role="button" tabIndex={0} className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('legales'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['legales'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
               {sidebarExpanded['legales'] ? <FolderOpen size={13} color="#5a544c" /> : <Folder size={13} color="#5a544c" />}
               <span className="sb-text">Legales y regulatorio</span>
             </div>
             {!sidebarCollapsed && sidebarExpanded['legales'] && (
               <div style={{ paddingLeft: '28px' }}>
-                <div onClick={() => setActiveView('anmac_enacom')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'anmac_enacom' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'anmac_enacom' ? 500 : 400, backgroundColor: activeView === 'anmac_enacom' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'anmac_enacom' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('anmac_enacom')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'anmac_enacom' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'anmac_enacom' ? 500 : 400, backgroundColor: activeView === 'anmac_enacom' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'anmac_enacom' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   ANMaC / ENACOM
                 </div>
-                <div onClick={() => setActiveView('exportacion_equip')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'exportacion_equip' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'exportacion_equip' ? 500 : 400, backgroundColor: activeView === 'exportacion_equip' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'exportacion_equip' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('exportacion_equip')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'exportacion_equip' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'exportacion_equip' ? 500 : 400, backgroundColor: activeView === 'exportacion_equip' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'exportacion_equip' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Exportación equipamiento
                 </div>
-                <div onClick={() => setActiveView('seguros_riesgo')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'seguros_riesgo' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'seguros_riesgo' ? 500 : 400, backgroundColor: activeView === 'seguros_riesgo' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'seguros_riesgo' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('seguros_riesgo')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'seguros_riesgo' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'seguros_riesgo' ? 500 : 400, backgroundColor: activeView === 'seguros_riesgo' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'seguros_riesgo' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Seguros alto riesgo
                 </div>
               </div>
             )}
-            <div onClick={() => { if (sidebarExpanded['rrhh']) { setActiveView('folder_rrhh'); setShowLanding(false); } else { toggleSidebar('rrhh'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('rrhh') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('rrhh') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-              <span className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('rrhh'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['rrhh'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
+            <div role="button" tabIndex={0} onClick={() => { if (sidebarExpanded['rrhh']) { setActiveView('folder_rrhh'); setShowLanding(false); } else { toggleSidebar('rrhh'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('rrhh') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('rrhh') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+              <span role="button" tabIndex={0} className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('rrhh'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['rrhh'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
               {sidebarExpanded['rrhh'] ? <FolderOpen size={13} color="#5a544c" /> : <Folder size={13} color="#5a544c" />}
               <span className="sb-text">Recursos humanos</span>
             </div>
             {!sidebarCollapsed && sidebarExpanded['rrhh'] && (
               <div style={{ paddingLeft: '28px' }}>
-                <div onClick={() => setActiveView('jtsn_apoyo')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'jtsn_apoyo' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'jtsn_apoyo' ? 500 : 400, backgroundColor: activeView === 'jtsn_apoyo' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'jtsn_apoyo' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('jtsn_apoyo')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'jtsn_apoyo' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'jtsn_apoyo' ? 500 : 400, backgroundColor: activeView === 'jtsn_apoyo' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'jtsn_apoyo' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Apoyo psicológico (JTSN)
                 </div>
-                <div onClick={() => setActiveView('politica_despliegue')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'politica_despliegue' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'politica_despliegue' ? 500 : 400, backgroundColor: activeView === 'politica_despliegue' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'politica_despliegue' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('politica_despliegue')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'politica_despliegue' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'politica_despliegue' ? 500 : 400, backgroundColor: activeView === 'politica_despliegue' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'politica_despliegue' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Política de despliegue
                 </div>
-                <div onClick={() => setActiveView('contactos_emergencia')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'contactos_emergencia' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'contactos_emergencia' ? 500 : 400, backgroundColor: activeView === 'contactos_emergencia' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'contactos_emergencia' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('contactos_emergencia')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'contactos_emergencia' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'contactos_emergencia' ? 500 : 400, backgroundColor: activeView === 'contactos_emergencia' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'contactos_emergencia' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Contactos emergencia
                 </div>
-                <div onClick={() => setActiveView('onboarding')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'onboarding' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'onboarding' ? 500 : 400, backgroundColor: activeView === 'onboarding' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'onboarding' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('onboarding')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'onboarding' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'onboarding' ? 500 : 400, backgroundColor: activeView === 'onboarding' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'onboarding' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Onboarding
                 </div>
               </div>
             )}
-            <div onClick={() => { if (sidebarExpanded['investigacion']) { setActiveView('folder_investigacion'); setShowLanding(false); } else { toggleSidebar('investigacion'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('investigacion') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('investigacion') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-              <span className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('investigacion'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['investigacion'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
+            <div role="button" tabIndex={0} onClick={() => { if (sidebarExpanded['investigacion']) { setActiveView('folder_investigacion'); setShowLanding(false); } else { toggleSidebar('investigacion'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('investigacion') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('investigacion') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+              <span role="button" tabIndex={0} className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('investigacion'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['investigacion'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
               {sidebarExpanded['investigacion'] ? <FolderOpen size={13} color="#5a544c" /> : <Folder size={13} color="#5a544c" />}
               <span className="sb-text" style={{ fontWeight: isFolderActive('investigacion') ? 500 : 400 }}>Investigación</span>
             </div>
             {!sidebarCollapsed && sidebarExpanded['investigacion'] && (
               <div style={{ paddingLeft: '28px' }}>
-                <div onClick={() => setActiveView('docs_filtrados')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'docs_filtrados' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'docs_filtrados' ? 500 : 400, backgroundColor: activeView === 'docs_filtrados' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'docs_filtrados' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('docs_filtrados')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'docs_filtrados' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'docs_filtrados' ? 500 : 400, backgroundColor: activeView === 'docs_filtrados' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'docs_filtrados' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Documentos filtrados
                 </div>
-                <div onClick={() => setActiveView('osint_investigacion')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'osint_investigacion' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'osint_investigacion' ? 500 : 400, backgroundColor: activeView === 'osint_investigacion' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'osint_investigacion' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('osint_investigacion')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'osint_investigacion' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'osint_investigacion' ? 500 : 400, backgroundColor: activeView === 'osint_investigacion' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'osint_investigacion' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Metodología OSINT
                 </div>
-                <div onClick={() => setActiveView('redes_internacionales')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'redes_internacionales' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'redes_internacionales' ? 500 : 400, backgroundColor: activeView === 'redes_internacionales' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'redes_internacionales' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('redes_internacionales')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'redes_internacionales' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'redes_internacionales' ? 500 : 400, backgroundColor: activeView === 'redes_internacionales' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'redes_internacionales' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Redes internacionales
                 </div>
-                <div onClick={() => setActiveView('contravigilancia')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'contravigilancia' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'contravigilancia' ? 500 : 400, backgroundColor: activeView === 'contravigilancia' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'contravigilancia' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('contravigilancia')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'contravigilancia' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'contravigilancia' ? 500 : 400, backgroundColor: activeView === 'contravigilancia' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'contravigilancia' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Contra-vigilancia doméstica
                 </div>
               </div>
@@ -1038,23 +1054,23 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           </div>
 
           <div>
-            <div onClick={() => { if (sidebarExpanded['herramientas']) { setActiveView('folder_herramientas'); setShowLanding(false); } else { toggleSidebar('herramientas'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('herramientas') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('herramientas') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-              <span className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('herramientas'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['herramientas'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
+            <div role="button" tabIndex={0} onClick={() => { if (sidebarExpanded['herramientas']) { setActiveView('folder_herramientas'); setShowLanding(false); } else { toggleSidebar('herramientas'); } }} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: isFolderActive('herramientas') ? '#e5e1d3' : 'transparent', borderLeft: isFolderActive('herramientas') ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+              <span role="button" tabIndex={0} className="sb-chevron" onClick={e => { e.stopPropagation(); toggleSidebar('herramientas'); }} style={{ cursor: 'pointer' }}>{sidebarExpanded['herramientas'] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
               {sidebarExpanded['herramientas'] ? <FolderOpen size={13} color="#5a544c" /> : <Folder size={13} color="#5a544c" />}
               <span className="sb-text" style={{ fontWeight: isFolderActive('herramientas') ? 500 : 400 }}>Herramientas</span>
             </div>
             {!sidebarCollapsed && sidebarExpanded['herramientas'] && (
               <div style={{ paddingLeft: '28px' }}>
-                <div onClick={() => setActiveView('pipeline_verificacion')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'pipeline_verificacion' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'pipeline_verificacion' ? 500 : 400, backgroundColor: activeView === 'pipeline_verificacion' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'pipeline_verificacion' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('pipeline_verificacion')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'pipeline_verificacion' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'pipeline_verificacion' ? 500 : 400, backgroundColor: activeView === 'pipeline_verificacion' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'pipeline_verificacion' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Pipeline de verificación
                 </div>
-                <div onClick={() => setActiveView('opsec_log')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'opsec_log' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'opsec_log' ? 500 : 400, backgroundColor: activeView === 'opsec_log' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'opsec_log' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('opsec_log')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'opsec_log' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'opsec_log' ? 500 : 400, backgroundColor: activeView === 'opsec_log' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'opsec_log' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   OP-SEC-LOG
                 </div>
-                <div onClick={() => setActiveView('analista_auto')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'analista_auto' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'analista_auto' ? 500 : 400, backgroundColor: activeView === 'analista_auto' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'analista_auto' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('analista_auto')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'analista_auto' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'analista_auto' ? 500 : 400, backgroundColor: activeView === 'analista_auto' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'analista_auto' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Analista automatizado
                 </div>
-                <div onClick={() => setActiveView('parte_despliegue')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'parte_despliegue' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'parte_despliegue' ? 500 : 400, backgroundColor: activeView === 'parte_despliegue' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'parte_despliegue' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('parte_despliegue')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'parte_despliegue' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'parte_despliegue' ? 500 : 400, backgroundColor: activeView === 'parte_despliegue' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'parte_despliegue' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Parte de despliegue
                 </div>
               </div>
@@ -1070,7 +1086,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>
                   Buenos días, Mondini
                 </h1>
-                <div className="mono" style={{ fontSize: '12px', color: '#6b6454' }}>
+                <div className="mono" style={{ fontSize: '12px', color: '#5a544c' }}>
                   {formatUTC(now)} · nodo Buenos Aires
                 </div>
               </div>
@@ -1091,7 +1107,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
               {/* Investigación doméstica previa */}
               <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px', marginBottom: '20px' }}>
-                <div className="mono micro" style={{ color: '#6b6454', marginBottom: '8px' }}>Investigación doméstica · en curso</div>
+                <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>Investigación doméstica · en curso</div>
                 <div className="serif" style={{ fontSize: '16px', fontWeight: 500, marginBottom: '4px' }}>ROS-038 · Rosario, Santa Fe · narcotráfico y nexo estatal</div>
                 <div className="mono" style={{ fontSize: '11.5px', color: '#5a544c', lineHeight: 1.7, marginBottom: '12px' }}>
                   Eje: estructuras sucesoras del clan Cantero (Los Monos) post-detención de Dylan Cantero (dic. 2025). Líneas abiertas: lavado de activos vía inmuebles y financieras, nexos con fuerzas de seguridad provinciales, operación desde penal de Marcos Paz.<br/>
@@ -1102,14 +1118,14 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   <span className="mono" style={{ fontSize: '10px', padding: '3px 8px', backgroundColor: '#f5edd5', color: '#8a6d2b', borderRadius: '2px' }}>T-DOM ACTIVO</span>
                   <span className="mono" style={{ fontSize: '10px', padding: '3px 8px', backgroundColor: '#f5edd5', color: '#8a6d2b', borderRadius: '2px' }}>T-PHYS · ANTECEDENTE</span>
                   <span className="mono" style={{ fontSize: '10px', padding: '3px 8px', backgroundColor: '#e8f0de', color: '#5a6e3c', borderRadius: '2px' }}>FOPEA ACTIVO</span>
-                  <span className="mono" style={{ fontSize: '10px', padding: '3px 8px', backgroundColor: '#eceae4', color: '#6b6454', borderRadius: '2px' }}>OSINT EN CURSO</span>
+                  <span className="mono" style={{ fontSize: '10px', padding: '3px 8px', backgroundColor: '#eceae4', color: '#5a544c', borderRadius: '2px' }}>OSINT EN CURSO</span>
                 </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                 {/* Tareas pendientes */}
                 <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px' }}>
-                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '12px' }}>Pendientes</div>
+                  <div className="mono micro" style={{ color: '#5a544c', marginBottom: '12px' }}>Pendientes</div>
                   <div style={{ fontSize: '13px', lineHeight: 1.8 }}>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '4px' }}>
                       <span style={{ color: '#bd2828', fontSize: '10px' }}>●</span>
@@ -1136,7 +1152,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
                 {/* Documentos actualizados */}
                 <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px' }}>
-                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '12px' }}>Actualizado recientemente</div>
+                  <div className="mono micro" style={{ color: '#5a544c', marginBottom: '12px' }}>Actualizado recientemente</div>
                   {[
                     { titulo: 'Higiene RF ed. 4.2', sub: 'T-PHYS, T-DOM, sección 08', estado: 'vigente', onClick: () => { setShowLanding(false); } },
                     { titulo: 'Seguros de alto riesgo', sub: 'Nueva cobertura para fixers', estado: 'en_revision', onClick: () => { setActiveView('seguros_riesgo'); setShowLanding(false); } },
@@ -1148,10 +1164,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                         <span style={{ fontSize: '13px', fontWeight: 500 }}>{d.titulo}</span>
                         <span className="mono" style={{ fontSize: '9px', padding: '1px 5px', borderRadius: '2px', letterSpacing: '0.04em', textTransform: 'uppercase',
                           backgroundColor: d.estado === 'vigente' ? '#e8f0de' : d.estado === 'en_revision' ? '#f5edd5' : '#eceae4',
-                          color: d.estado === 'vigente' ? '#5a6e3c' : d.estado === 'en_revision' ? '#8a6d2b' : '#6b6454'
+                          color: d.estado === 'vigente' ? '#5a6e3c' : d.estado === 'en_revision' ? '#8a6d2b' : '#5a544c'
                         }}>{d.estado.replace('_', ' ')}</span>
                       </div>
-                      <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454' }}>{d.sub}</div>
+                      <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{d.sub}</div>
                     </div>
                   ))}
                 </div>
@@ -1166,7 +1182,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   { label: 'Pipeline verif.', icon: '◉', onClick: () => { setActiveView('pipeline_verificacion'); setShowLanding(false); } }
                 ].map((q, i) => (
                   <div key={i} onClick={q.onClick} className="sidebar-item" style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '16px', cursor: 'pointer', textAlign: 'center' }}>
-                    <div style={{ fontSize: '20px', color: '#6b6454', marginBottom: '6px' }}>{q.icon}</div>
+                    <div style={{ fontSize: '20px', color: '#5a544c', marginBottom: '6px' }}>{q.icon}</div>
                     <div className="mono" style={{ fontSize: '10.5px', color: '#1f1f1f', letterSpacing: '0.02em' }}>{q.label}</div>
                   </div>
                 ))}
@@ -1175,7 +1191,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {/* Áreas seguidas */}
               {suscripciones.length > 0 && (
                 <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px', marginBottom: '20px' }}>
-                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Áreas seguidas ({suscripciones.length})</div>
+                  <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Áreas seguidas ({suscripciones.length})</div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                     {suscripciones.map(k => (
                       <div key={k} onClick={() => { setActiveView(k); setShowLanding(false); }} className="mono" style={{ fontSize: '11px', padding: '6px 12px', backgroundColor: '#f0ecde', border: '1px solid #d9d4c2', cursor: 'pointer' }}>
@@ -1183,7 +1199,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                       </div>
                     ))}
                   </div>
-                  <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginTop: '10px', fontStyle: 'italic' }}>
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginTop: '10px', fontStyle: 'italic' }}>
                     Recibirás aviso cuando haya cambios en estas áreas. Editar desde cada carpeta.
                   </div>
                 </div>
@@ -1192,13 +1208,13 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {/* Noticias recientes (preview) */}
               <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '12px' }}>
-                  <div className="mono micro" style={{ color: '#6b6454' }}>Noticias internas</div>
-                  <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c', cursor: 'pointer' }} onClick={() => { setActiveView('noticias'); setShowLanding(false); }}>ver todas →</span>
+                  <div className="mono micro" style={{ color: '#5a544c' }}>Noticias internas</div>
+                  <span role="button" tabIndex={0} className="mono" style={{ fontSize: '10.5px', color: '#5a544c', cursor: 'pointer' }} onClick={() => { setActiveView('noticias'); setShowLanding(false); }}>ver todas →</span>
                 </div>
                 {VISTAS.noticias.items.slice(0, 3).map((n, i) => (
                   <div key={i} style={{ padding: '8px 0', borderBottom: i < 2 ? '1px solid #eceae4' : 'none' }}>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
-                      <span className="mono" style={{ fontSize: '10px', color: '#6b6454' }}>{n.fecha}</span>
+                      <span className="mono" style={{ fontSize: '10px', color: '#5a544c' }}>{n.fecha}</span>
                       <span className="mono" style={{ fontSize: '9.5px', color: '#bd2828', letterSpacing: '0.04em' }}>{n.tag}</span>
                     </div>
                     <div style={{ fontSize: '13px', fontWeight: 500, marginTop: '2px' }}>{n.titulo}</div>
@@ -1216,23 +1232,23 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             <div style={{ maxWidth: '780px' }}>
               <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 {(() => { const back = getBackLink(); return back ? (
-                  <span className="mono" style={{ fontSize: '11px', color: '#6b6454', cursor: 'pointer' }} onClick={back.onClick}>
+                  <span role="button" tabIndex={0} className="mono" style={{ fontSize: '11px', color: '#5a544c', cursor: 'pointer' }} onClick={back.onClick}>
                     ← {back.label}
                   </span>
                 ) : <span />; })()}
                 {(VISTAS[activeView]?.doc || VISTAS[activeView]?.contenido || VISTAS[activeView]?.tool || VISTAS[activeView]?.form) && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '12.5px', color: '#5a544c' }}>
-                    <div onClick={() => toggleFavorito(activeView)} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', color: favoritos.includes(activeView) ? '#1f1f1f' : '#5a544c' }}>
+                    <div role="button" tabIndex={0} onClick={() => toggleFavorito(activeView)} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', color: favoritos.includes(activeView) ? '#1f1f1f' : '#5a544c', padding: '8px 6px', minHeight: '32px' }}>
                       <Star size={13} fill={favoritos.includes(activeView) ? '#1f1f1f' : 'none'} />
                       <span>{favoritos.includes(activeView) ? 'En favoritos' : 'Guardar'}</span>
                     </div>
-                    <div onClick={handlePDF} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+                    <div role="button" tabIndex={0} onClick={handlePDF} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
                       <Download size={13} /><span>PDF</span>
                     </div>
-                    <div onClick={handlePrint} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+                    <div role="button" tabIndex={0} onClick={handlePrint} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
                       <Printer size={13} /><span>Imprimir</span>
                     </div>
-                    <div onClick={handleCopyLink} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+                    <div role="button" tabIndex={0} onClick={handleCopyLink} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
                       <Share2 size={13} /><span>Compartir</span>
                     </div>
                   </div>
@@ -1249,7 +1265,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {activeView === 'noticias' && VISTAS.noticias.items.map((item, i) => (
                 <div key={i} style={{ marginBottom: '24px', paddingBottom: '24px', borderBottom: '1px solid #d9d4c2' }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '6px' }}>
-                    <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454' }}>{item.fecha}</div>
+                    <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{item.fecha}</div>
                     <div className="mono micro" style={{ color: '#bd2828' }}>{item.tag}</div>
                   </div>
                   <h3 className="serif" style={{ fontSize: '18px', fontWeight: 500, margin: '0 0 8px' }}>{item.titulo}</h3>
@@ -1282,7 +1298,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                       <div>Sistema</div><div>Estado</div><div>Nota</div>
                     </div>
                     {sistemasData.map((s, i) => {
-                      const color = s.estado === 'operativo' ? '#5a6e3c' : s.estado === 'degradado' ? '#8a6d2b' : s.estado === 'off-line' ? '#bd2828' : '#6b6454';
+                      const color = s.estado === 'operativo' ? '#5a6e3c' : s.estado === 'degradado' ? '#8a6d2b' : s.estado === 'off-line' ? '#bd2828' : '#5a544c';
                       const bg = s.estado === 'operativo' ? '#e8f0de' : s.estado === 'degradado' ? '#f5edd5' : s.estado === 'off-line' ? '#f5d5d5' : '#eceae4';
                       return (
                         <div key={i} className="mono" style={{ display: 'grid', gridTemplateColumns: '2fr 0.8fr 3fr', padding: '12px 14px', fontSize: '12px', borderTop: '1px solid #d9d4c2', lineHeight: 1.4, alignItems: 'center' }}>
@@ -1295,7 +1311,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                       );
                     })}
                   </div>
-                  <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginTop: '16px', fontStyle: 'italic' }}>
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginTop: '16px', fontStyle: 'italic' }}>
                     Registro actualizado automáticamente. Para reportar un incidente: seg.digital@infobae.interna.
                   </div>
                 </div>
@@ -1304,7 +1320,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {/* Resultados de búsqueda global */}
               {activeView === 'search_results' && (() => {
                 const q = searchQuery.trim().toLowerCase();
-                if (!q) return <div className="serif" style={{ fontSize: '14px', color: '#6b6454', fontStyle: 'italic' }}>Ingresá un término en la barra de búsqueda.</div>;
+                if (!q) return <div className="serif" style={{ fontSize: '14px', color: '#5a544c', fontStyle: 'italic' }}>Ingresá un término en la barra de búsqueda.</div>;
 
                 const match = (...fields) => fields.some(f => (f || '').toLowerCase().includes(q));
 
@@ -1333,17 +1349,17 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
                 return (
                   <div>
-                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>INFOBAE · BÚSQUEDA</div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · BÚSQUEDA</div>
                     <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Resultados para "{searchQuery}"</h1>
-                    <div className="mono" style={{ fontSize: '12px', color: '#6b6454', marginBottom: '32px' }}>{total} coincidencias</div>
+                    <div className="mono" style={{ fontSize: '12px', color: '#5a544c', marginBottom: '32px' }}>{total} coincidencias</div>
 
                     {docs.length > 0 && (
                       <div style={{ marginBottom: '28px' }}>
-                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Documentos ({docs.length})</div>
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Documentos ({docs.length})</div>
                         <div style={{ border: '1px solid #d9d4c2' }}>
                           {docs.map(d => (
                             <div key={d.key} onClick={() => setActiveView(d.key)} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
-                              <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginBottom: '2px' }}>{d.codigo} · v{d.version} · {d.area}</div>
+                              <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginBottom: '2px' }}>{d.codigo} · v{d.version} · {d.area}</div>
                               <div className="serif" style={{ fontSize: '14px' }}>{d.titulo}</div>
                             </div>
                           ))}
@@ -1353,12 +1369,12 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
                     {personas.length > 0 && (
                       <div style={{ marginBottom: '28px' }}>
-                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Personas ({personas.length})</div>
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Personas ({personas.length})</div>
                         <div style={{ border: '1px solid #d9d4c2' }}>
                           {personas.map(p => (
                             <div key={p.key} onClick={() => setActiveView(`perfil_${p.key}`)} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
                               <div className="serif" style={{ fontSize: '14px', fontWeight: 500 }}>{p.nombre}</div>
-                              <div className="mono" style={{ fontSize: '11px', color: '#6b6454', marginTop: '2px' }}>{p.rol} · {p.base}</div>
+                              <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '2px' }}>{p.rol} · {p.base}</div>
                             </div>
                           ))}
                         </div>
@@ -1367,7 +1383,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
                     {noticias.length > 0 && (
                       <div style={{ marginBottom: '28px' }}>
-                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Noticias ({noticias.length})</div>
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Noticias ({noticias.length})</div>
                         <div style={{ border: '1px solid #d9d4c2' }}>
                           {noticias.map((n, i) => (
                             <div key={i} onClick={() => setActiveView('noticias')} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
@@ -1381,7 +1397,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
                     {paginas.length > 0 && (
                       <div style={{ marginBottom: '28px' }}>
-                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Secciones ({paginas.length})</div>
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Secciones ({paginas.length})</div>
                         <div style={{ border: '1px solid #d9d4c2' }}>
                           {paginas.map(p => (
                             <div key={p.key} onClick={() => setActiveView(p.key)} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
@@ -1393,7 +1409,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     )}
 
                     {total === 0 && (
-                      <div className="serif" style={{ fontSize: '14px', color: '#6b6454', fontStyle: 'italic', padding: '20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #bd2828' }}>
+                      <div className="serif" style={{ fontSize: '14px', color: '#5a544c', fontStyle: 'italic', padding: '20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #bd2828' }}>
                         Sin coincidencias para "{searchQuery}".
                       </div>
                     )}
@@ -1412,32 +1428,32 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 const actividadPropia = ACTIVIDAD_RECIENTE.filter(a => matches(a.usuario));
                 return (
                   <div>
-                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>INFOBAE · DIRECTORIO</div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · DIRECTORIO</div>
                     <h1 className="serif" style={{ fontSize: '32px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>{p.nombre}</h1>
                     <div className="serif" style={{ fontSize: '15px', color: '#5a544c', fontStyle: 'italic', marginBottom: '32px' }}>{p.rol}</div>
 
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', padding: '16px 20px', backgroundColor: '#f0ecde', marginBottom: '32px', fontSize: '12.5px' }}>
                       <div>
-                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '4px' }}>Base</div>
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Base</div>
                         <div className="mono">{p.base}</div>
                       </div>
                       <div>
-                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '4px' }}>Contacto</div>
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Contacto</div>
                         <div className="mono" style={{ color: '#bd2828' }}>{p.contacto.includes('@') ? <a href={'mailto:' + p.contacto}>{p.contacto}</a> : p.contacto}</div>
                       </div>
                     </div>
 
                     <div style={{ marginBottom: '32px' }}>
-                      <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Documentos firmados ({docsFirmados.length})</div>
+                      <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Documentos firmados ({docsFirmados.length})</div>
                       {docsFirmados.length === 0 ? (
-                        <div className="serif" style={{ fontSize: '13px', color: '#6b6454', fontStyle: 'italic' }}>No figura como responsable en documentos vigentes.</div>
+                        <div className="serif" style={{ fontSize: '13px', color: '#5a544c', fontStyle: 'italic' }}>No figura como responsable en documentos vigentes.</div>
                       ) : (
                         <div style={{ border: '1px solid #d9d4c2' }}>
                           {docsFirmados.map(d => (
                             <div key={d.viewKey} onClick={() => setActiveView(d.viewKey)} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
-                              <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginBottom: '2px' }}>{d.codigo} · v{d.version} · {d.fecha}</div>
+                              <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginBottom: '2px' }}>{d.codigo} · v{d.version} · {d.fecha}</div>
                               <div className="serif" style={{ fontSize: '14px' }}>{d.titulo}</div>
-                              <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginTop: '3px' }}>{d.responsable}</div>
+                              <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginTop: '3px' }}>{d.responsable}</div>
                             </div>
                           ))}
                         </div>
@@ -1445,13 +1461,13 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     </div>
 
                     <div style={{ marginBottom: '32px' }}>
-                      <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Actividad reciente ({actividadPropia.length})</div>
+                      <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Actividad reciente ({actividadPropia.length})</div>
                       {actividadPropia.length === 0 ? (
-                        <div className="serif" style={{ fontSize: '13px', color: '#6b6454', fontStyle: 'italic' }}>Sin actividad registrada en el ciclo actual.</div>
+                        <div className="serif" style={{ fontSize: '13px', color: '#5a544c', fontStyle: 'italic' }}>Sin actividad registrada en el ciclo actual.</div>
                       ) : (
                         actividadPropia.map((a, i) => (
                           <div key={i} style={{ marginBottom: '10px', fontSize: '13px', lineHeight: 1.5 }}>
-                            <div className="mono" style={{ color: '#6b6454', fontSize: '11px' }}>{a.fecha}</div>
+                            <div className="mono" style={{ color: '#5a544c', fontSize: '11px' }}>{a.fecha}</div>
                             <div style={{ color: '#1f1f1f' }}>{a.accion}</div>
                           </div>
                         ))
@@ -1490,10 +1506,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
               {/* Soporte */}
               {activeView === 'soporte' && (<>
-                <div onClick={() => setActiveView('sistemas_estado')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', marginBottom: '24px', cursor: 'pointer' }}>
-                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '4px' }}>Monitoreo</div>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('sistemas_estado')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', marginBottom: '24px', cursor: 'pointer' }}>
+                  <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Monitoreo</div>
                   <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Estado de sistemas internos →</div>
-                  <div className="mono" style={{ fontSize: '11px', color: '#6b6454', marginTop: '4px' }}>Signal, Starlink, VPN, pipeline de verificación, canal fixer.</div>
+                  <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '4px' }}>Signal, Starlink, VPN, pipeline de verificación, canal fixer.</div>
                 </div>
                 {VISTAS.soporte.items.map((s, i) => (
                   <div key={i} style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid #d9d4c2' }}>
@@ -1508,7 +1524,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {/* Registro de correcciones */}
               {activeView === 'correcciones_log' && (
                 <div>
-                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>INFOBAE · REDACCIÓN · OP-RED-2029-006</div>
+                  <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · REDACCIÓN · OP-RED-2029-006</div>
                   <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Registro de correcciones públicas</h1>
                   <div className="serif" style={{ fontSize: '14.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '20px' }}>Correcciones aplicadas a notas publicadas. Actualización continua. Criterio: Manual de estilo OP-RED-2027-001, §12.</div>
 
@@ -1521,23 +1537,23 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   {correccionesData.map((c, i) => (
                     <div key={i} style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '16px 20px', marginBottom: '14px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }}>
-                        <div className="mono" style={{ fontSize: '11px', color: '#6b6454' }}>{c.fecha}</div>
-                        <div className="mono" style={{ fontSize: '9.5px', padding: '2px 7px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: c.tipo === 'retiro' ? '#f5d5d5' : c.tipo === 'dato' || c.tipo === 'atribución' ? '#f5edd5' : '#eceae4', color: c.tipo === 'retiro' ? '#bd2828' : c.tipo === 'dato' || c.tipo === 'atribución' ? '#8a6d2b' : '#6b6454' }}>{c.tipo}</div>
+                        <div className="mono" style={{ fontSize: '11px', color: '#5a544c' }}>{c.fecha}</div>
+                        <div className="mono" style={{ fontSize: '9.5px', padding: '2px 7px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: c.tipo === 'retiro' ? '#f5d5d5' : c.tipo === 'dato' || c.tipo === 'atribución' ? '#f5edd5' : '#eceae4', color: c.tipo === 'retiro' ? '#bd2828' : c.tipo === 'dato' || c.tipo === 'atribución' ? '#8a6d2b' : '#5a544c' }}>{c.tipo}</div>
                       </div>
                       <div className="serif" style={{ fontSize: '15px', fontWeight: 500, marginBottom: '10px' }}>{c.nota}</div>
                       <div style={{ fontSize: '12.5px', lineHeight: 1.55, color: '#3d3931', marginBottom: '6px' }}>
-                        <span className="mono" style={{ fontSize: '10.5px', color: '#6b6454', textTransform: 'uppercase', letterSpacing: '0.04em', marginRight: '6px' }}>Original:</span>
+                        <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c', textTransform: 'uppercase', letterSpacing: '0.04em', marginRight: '6px' }}>Original:</span>
                         {c.original}
                       </div>
                       <div style={{ fontSize: '12.5px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '8px' }}>
-                        <span className="mono" style={{ fontSize: '10.5px', color: '#6b6454', textTransform: 'uppercase', letterSpacing: '0.04em', marginRight: '6px' }}>Corrección:</span>
+                        <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c', textTransform: 'uppercase', letterSpacing: '0.04em', marginRight: '6px' }}>Corrección:</span>
                         {c.correccion}
                       </div>
-                      <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', fontStyle: 'italic' }}>firmado: {c.firma}</div>
+                      <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', fontStyle: 'italic' }}>firmado: {c.firma}</div>
                     </div>
                   ))}
 
-                  <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginTop: '20px', fontStyle: 'italic' }}>
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginTop: '20px', fontStyle: 'italic' }}>
                     Reportar un error en una nota publicada: correcciones@infobae.interna.
                   </div>
                 </div>
@@ -1546,7 +1562,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {activeView === 'anmac_enacom' && (
                 <article style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '40px 48px' }}>
                   <header style={{ borderBottom: '1px solid #d9d4c2', paddingBottom: '20px', marginBottom: '28px' }}>
-                    <div className="mono" style={{ fontSize: '11px', color: '#6b6454', letterSpacing: '0.06em', marginBottom: '8px' }}>
+                    <div className="mono" style={{ fontSize: '11px', color: '#5a544c', letterSpacing: '0.06em', marginBottom: '8px' }}>
                       INFOBAE · LEGALES · DOCUMENTO OPERATIVO · OP-LEG-2028-007
                     </div>
                     <h2 className="serif" style={{ fontSize: '26px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>
@@ -1563,7 +1579,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
                   {/* Sección 1: Equipamiento de protección balística */}
                   <section style={{ marginBottom: '32px' }}>
-                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>01</div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>01</div>
                     <h3 className="serif" style={{ fontSize: '20px', fontWeight: 500, margin: '0 0 14px' }}>Equipamiento de protección balística</h3>
                     <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f' }}>
                       <p style={{ margin: '0 0 12px' }}>
@@ -1575,7 +1591,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     </div>
 
                     <div style={{ backgroundColor: '#f0ecde', padding: '16px 20px', marginBottom: '16px' }}>
-                      <div className="mono micro" style={{ color: '#6b6454', marginBottom: '8px' }}>Requisitos para tenencia (persona física)</div>
+                      <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>Requisitos para tenencia (persona física)</div>
                       <div className="mono" style={{ fontSize: '12px', lineHeight: 1.7, color: '#1f1f1f' }}>
                         1. Ser Legítimo Usuario de Materiales de Usos Especiales o Legítimo Usuario de Armas de Fuego de uso civil condicional (CLU vigente ante ANMaC).<br/>
                         2. Presentar Formularios Leyes 23.283 y 23.412.<br/>
@@ -1596,7 +1612,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     </div>
 
                     <div style={{ backgroundColor: '#f0ecde', padding: '16px 20px' }}>
-                      <div className="mono micro" style={{ color: '#6b6454', marginBottom: '8px' }}>Alternativa operativa: préstamo RSF</div>
+                      <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>Alternativa operativa: préstamo RSF</div>
                       <div className="mono" style={{ fontSize: '12px', lineHeight: 1.7, color: '#1f1f1f' }}>
                         Reporteros Sin Fronteras (RSF España) presta chalecos antibalas y cascos de forma gratuita a reporteros independientes. Fianza reembolsable: 300€. Devolución: máximo 1 mes desde el retorno.<br/>
                         Contacto: rsf-es.org/seguridad-para-periodistas<br/>
@@ -1607,7 +1623,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
                   {/* Sección 2: Equipamiento de telecomunicaciones */}
                   <section style={{ marginBottom: '32px' }}>
-                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>02</div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>02</div>
                     <h3 className="serif" style={{ fontSize: '20px', fontWeight: 500, margin: '0 0 14px' }}>Equipamiento de telecomunicaciones</h3>
                     <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f' }}>
                       <p style={{ margin: '0 0 12px' }}>
@@ -1640,7 +1656,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     </div>
 
                     <div style={{ backgroundColor: '#f0ecde', padding: '16px 20px' }}>
-                      <div className="mono micro" style={{ color: '#6b6454', marginBottom: '8px' }}>Equipos comprados en el exterior</div>
+                      <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>Equipos comprados en el exterior</div>
                       <div className="mono" style={{ fontSize: '12px', lineHeight: 1.7, color: '#1f1f1f' }}>
                         Si el equipo fue adquirido fuera de Argentina y no tiene homologación local, el régimen ENACOM prevé autorizaciones para uso experimental o temporario (RESOL-2023-1133-APN-ENACOM). Este equipo no puede ser comercializado en el país.<br/>
                         Recomendación operativa: al viajar con equipo comprado localmente, llevar copia de factura y especificaciones como documentación de respaldo ante aduana. No es requisito legal verificado pero reduce fricciones.
@@ -1650,7 +1666,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
                   {/* Sección 3: Otros ítems del kit */}
                   <section style={{ marginBottom: '32px' }}>
-                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>03</div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>03</div>
                     <h3 className="serif" style={{ fontSize: '20px', fontWeight: 500, margin: '0 0 14px' }}>Otros ítems con posible regulación</h3>
                     <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '16px' }}>
                       Los siguientes ítems del kit de despliegue pueden tener regulación aplicable que varía según la pieza y el destino. Consultar con legales caso por caso.
@@ -1677,7 +1693,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {activeView && VISTAS[activeView]?.doc && (
                 <article style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '40px 48px' }}>
                   <header style={{ borderBottom: '1px solid #d9d4c2', paddingBottom: '20px', marginBottom: '28px' }}>
-                    <div className="mono" style={{ fontSize: '11px', color: '#6b6454', letterSpacing: '0.06em', marginBottom: '8px' }}>
+                    <div className="mono" style={{ fontSize: '11px', color: '#5a544c', letterSpacing: '0.06em', marginBottom: '8px' }}>
                       {VISTAS[activeView].doc.area} · {VISTAS[activeView].doc.codigo}
                     </div>
                     <h2 className="serif" style={{ fontSize: '26px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>
@@ -1692,7 +1708,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   </header>
                   {VISTAS[activeView].doc.secciones.map((sec, i) => (
                     <section key={i} style={{ marginBottom: '28px', paddingBottom: '24px', borderBottom: i < VISTAS[activeView].doc.secciones.length - 1 ? '1px dashed #d9d4c2' : 'none' }}>
-                      <div className="mono micro" style={{ color: '#6b6454', marginBottom: '4px' }}>{String(i + 1).padStart(2, '0')}</div>
+                      <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>{String(i + 1).padStart(2, '0')}</div>
                       <h3 className="serif" style={{ fontSize: '18px', fontWeight: 500, margin: '0 0 12px' }}>{sec.titulo}</h3>
                       {sec.texto && <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f' }}>{sec.texto}</div>}
                       {sec.items && (
@@ -1717,7 +1733,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {activeView && VISTAS[activeView]?.folder && (
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '12px' }}>
-                    <div onClick={() => toggleSuscripcion(activeView)} className="mono" style={{ cursor: 'pointer', fontSize: '11px', padding: '5px 10px', border: '1px solid #d9d4c2', backgroundColor: suscripciones.includes(activeView) ? '#e8f0de' : '#f8f5ec', color: suscripciones.includes(activeView) ? '#5a6e3c' : '#5a544c' }}>
+                    <div role="button" tabIndex={0} onClick={() => toggleSuscripcion(activeView)} className="mono" style={{ cursor: 'pointer', fontSize: '11px', padding: '10px 14px', minHeight: '32px', display: 'flex', alignItems: 'center', border: '1px solid #d9d4c2', backgroundColor: suscripciones.includes(activeView) ? '#e8f0de' : '#f8f5ec', color: suscripciones.includes(activeView) ? '#5a6e3c' : '#5a544c' }}>
                       {suscripciones.includes(activeView) ? '☑ Suscripto · dejar de seguir' : '☐ Suscribirse al área'}
                     </div>
                   </div>
@@ -1728,17 +1744,17 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                         <div className="serif" style={{ fontSize: '15px', fontWeight: 500, marginBottom: '2px' }}>
                           {d.titulo} {d.actual && <span className="mono" style={{ fontSize: '10px', color: '#bd2828' }}>· actual</span>}
                         </div>
-                        <div className="mono" style={{ fontSize: '11px', color: '#6b6454', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <div className="mono" style={{ fontSize: '11px', color: '#5a544c', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span>{d.codigo} · v{d.version}</span>
                           {d.estado && (
                             <span style={{ fontSize: '9.5px', padding: '1px 6px', borderRadius: '2px', letterSpacing: '0.04em', textTransform: 'uppercase',
                               backgroundColor: d.estado === 'vigente' ? '#e8f0de' : d.estado === 'en_revision' ? '#f5edd5' : d.estado === 'borrador' ? '#eceae4' : '#e5e1d3',
-                              color: d.estado === 'vigente' ? '#5a6e3c' : d.estado === 'en_revision' ? '#8a6d2b' : '#6b6454'
+                              color: d.estado === 'vigente' ? '#5a6e3c' : d.estado === 'en_revision' ? '#8a6d2b' : '#5a544c'
                             }}>{d.estado.replace('_', ' ')}</span>
                           )}
                         </div>
                       </div>
-                      <ChevronRight size={14} color="#6b6454" style={{ marginTop: '4px' }} />
+                      <ChevronRight size={14} color="#5a544c" style={{ marginTop: '4px' }} />
                     </div>
                   ))}
                 </div>
@@ -1747,7 +1763,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {/* Renderizador de formulario */}
               {activeView && VISTAS[activeView]?.form && (
                 <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '40px 48px' }}>
-                  <div className="mono" style={{ fontSize: '11px', color: '#6b6454', letterSpacing: '0.06em', marginBottom: '8px' }}>
+                  <div className="mono" style={{ fontSize: '11px', color: '#5a544c', letterSpacing: '0.06em', marginBottom: '8px' }}>
                     INFOBAE · OPERACIONES · FORMULARIO
                   </div>
                   <h2 className="serif" style={{ fontSize: '26px', fontWeight: 500, margin: '0 0 6px' }}>{VISTAS[activeView].titulo}</h2>
@@ -1764,14 +1780,14 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     <button onClick={() => showToast('Parte de despliegue registrado (demo)')} className="mono" style={{ padding: '10px 20px', fontSize: '11px', letterSpacing: '0.06em', backgroundColor: '#1f1f1f', color: '#f8f5ec', border: 'none', cursor: 'pointer' }}>REGISTRAR PARTE</button>
                     <button onClick={() => { setActiveView(null); setShowLanding(false); }} className="mono" style={{ padding: '10px 20px', fontSize: '11px', letterSpacing: '0.06em', backgroundColor: 'transparent', color: '#5a544c', border: '1px solid #d9d4c2', cursor: 'pointer' }}>CANCELAR</button>
                   </div>
-                  <div className="mono" style={{ fontSize: '10px', color: '#6b6454', marginTop: '16px' }}>El parte se archiva en OP-SEC-LOG. Campos obligatorios: corresponsal, destino, fechas, fixer, seguro.</div>
+                  <div className="mono" style={{ fontSize: '10px', color: '#5a544c', marginTop: '16px' }}>El parte se archiva en OP-SEC-LOG. Campos obligatorios: corresponsal, destino, fechas, fixer, seguro.</div>
                 </div>
               )}
 
               {/* Renderizador de herramienta: Analista automatizado */}
               {activeView === 'analista_auto' && (
                 <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '40px 48px' }}>
-                  <div className="mono" style={{ fontSize: '11px', color: '#6b6454', letterSpacing: '0.06em', marginBottom: '8px' }}>
+                  <div className="mono" style={{ fontSize: '11px', color: '#5a544c', letterSpacing: '0.06em', marginBottom: '8px' }}>
                     INFOBAE · SEGURIDAD DIGITAL · HERRAMIENTA
                   </div>
                   <h2 className="serif" style={{ fontSize: '26px', fontWeight: 500, margin: '0 0 6px' }}>{VISTAS.analista_auto.titulo}</h2>
@@ -1795,19 +1811,19 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '12px' }}>
                       <button onClick={correrAnalisis} disabled={consultaResult.loading || !consultaInput.trim()} className="mono" style={{
                         padding: '10px 20px', fontSize: '11px', letterSpacing: '0.06em',
-                        backgroundColor: consultaResult.loading ? '#6b6454' : '#1f1f1f',
+                        backgroundColor: consultaResult.loading ? '#5a544c' : '#1f1f1f',
                         color: '#f8f5ec', border: 'none',
                         cursor: consultaResult.loading || !consultaInput.trim() ? 'not-allowed' : 'pointer',
                         opacity: !consultaInput.trim() ? 0.5 : 1
                       }}>
                         {consultaResult.loading ? 'PROCESANDO...' : 'CORRER ANÁLISIS'}
                       </button>
-                      {consultaResult.loading && <Loader2 size={14} color="#6b6454" style={{ animation: 'spin 1s linear infinite' }} />}
+                      {consultaResult.loading && <Loader2 size={14} color="#5a544c" style={{ animation: 'spin 1s linear infinite' }} />}
                     </div>
 
                     {consultaResult.text && (
                       <div style={{ marginTop: '20px', padding: '16px', backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2' }}>
-                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '8px' }}>
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>
                           respuesta del analista · {new Date().toISOString().slice(0, 16).replace('T', ' ')} · registrado en OP-SEC-LOG
                         </div>
                         <div className="serif" style={{ fontSize: '14px', lineHeight: 1.6, color: '#1f1f1f', whiteSpace: 'pre-wrap' }}>
@@ -1825,7 +1841,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     )}
                   </div>
 
-                  <div className="mono" style={{ fontSize: '10px', color: '#6b6454', marginTop: '16px', lineHeight: 1.6 }}>
+                  <div className="mono" style={{ fontSize: '10px', color: '#5a544c', marginTop: '16px', lineHeight: 1.6 }}>
                     Modelo: Claude Sonnet · Contexto: OP-SEC-2029-004 ed. 4.2 · Retención de consultas: 5 años<br/>
                     Este analista también está disponible como sección 07 dentro del documento Higiene RF.
                   </div>
@@ -1849,15 +1865,15 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <div onClick={handlePDF} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+              <div role="button" tabIndex={0} onClick={handlePDF} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
                 <Download size={13} />
                 <span>PDF</span>
               </div>
-              <div onClick={handlePrint} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+              <div role="button" tabIndex={0} onClick={handlePrint} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
                 <Printer size={13} />
                 <span>Imprimir</span>
               </div>
-              <div onClick={handleCopyLink} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+              <div role="button" tabIndex={0} onClick={handleCopyLink} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
                 <Share2 size={13} />
                 <span>Compartir</span>
               </div>
@@ -1869,7 +1885,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
             {/* Document header */}
             <header style={{ borderBottom: '1px solid #d9d4c2', paddingBottom: '24px', marginBottom: '32px' }}>
-              <div className="mono" style={{ fontSize: '11px', color: '#6b6454', letterSpacing: '0.06em', marginBottom: '10px' }}>
+              <div className="mono" style={{ fontSize: '11px', color: '#5a544c', letterSpacing: '0.06em', marginBottom: '10px' }}>
                 INFOBAE · SEGURIDAD DIGITAL · MANUAL OPERATIVO · {DOC_META.codigo}
               </div>
               <h1 className="serif" style={{ fontSize: '32px', fontWeight: 500, lineHeight: 1.15, margin: '0 0 6px', letterSpacing: '-0.015em' }}>
@@ -1911,7 +1927,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
             {/* SECCIÓN 01 */}
             <section id="sec-01" style={{ marginBottom: '40px' }}>
-              <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>Sección 01</div>
+              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Sección 01</div>
               <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Alcance y vigencia</h2>
               <div className="serif" style={{ fontSize: '15px', lineHeight: 1.65, color: '#1f1f1f' }}>
                 <p style={{ margin: '0 0 14px' }}>
@@ -1934,7 +1950,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
             {/* SECCIÓN 02 */}
             <section id="sec-02" style={{ marginBottom: '40px' }}>
-              <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>Sección 02</div>
+              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Sección 02</div>
               <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Protocolo pre-despliegue</h2>
               <div className="serif" style={{ fontSize: '15px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '18px' }}>
                 Completar en orden antes de cada salida internacional. Tiempo mínimo recomendado: 30 días hábiles. Tiempo mínimo absoluto (salida urgente): 72 horas, con autorización del editor de turno y asunción documentada de riesgos no cubiertos por protocolo.
@@ -1948,7 +1964,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
             {/* SECCIÓN 03 */}
             <section id="sec-03" style={{ marginBottom: '40px' }}>
-              <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>Sección 03</div>
+              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Sección 03</div>
               <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Glosario de amenazas</h2>
               <div className="serif" style={{ fontSize: '15px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '20px' }}>
                 Las siete categorías documentadas como vigentes en zona primaria de aplicación y territorio doméstico. Actualización continua por el equipo de Seguridad Digital.
@@ -1963,11 +1979,11 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     {t.cuerpo}
                   </div>
                   <div style={{ marginBottom: '8px' }}>
-                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '3px' }}>Implicación operacional</div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '3px' }}>Implicación operacional</div>
                     <div className="serif" style={{ fontSize: '13.5px', lineHeight: 1.55, color: '#3d3931' }}>{t.vectorPractico}</div>
                   </div>
                   <div>
-                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '3px' }}>Mitigación</div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '3px' }}>Mitigación</div>
                     <div className="mono" style={{ fontSize: '12px', lineHeight: 1.6, color: '#1f1f1f' }}>{t.mitigacion}</div>
                   </div>
                 </div>
@@ -1976,7 +1992,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
             {/* SECCIÓN 04 — Cono de silencio RF (SVG) */}
             <section id="sec-04" style={{ marginBottom: '40px' }}>
-              <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>Sección 04</div>
+              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Sección 04</div>
               <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Cono de silencio RF</h2>
               <div className="serif" style={{ fontSize: '15px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '20px' }}>
                 Modelo operativo para transmisiones desde zona activa. No busca invisibilidad RF — busca reducir la exposición a ventanas acotadas en el tiempo y detectables solo retroactivamente.
@@ -2027,7 +2043,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
             {/* SECCIÓN 05 */}
             <section id="sec-05" style={{ marginBottom: '40px' }}>
-              <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>Sección 05</div>
+              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Sección 05</div>
               <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Apéndice: dispositivos y mitigaciones</h2>
               <div className="serif" style={{ fontSize: '15px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '20px' }}>
                 Listado curado de equipamiento con estado actual. Cualquier dispositivo fuera de esta lista requiere evaluación específica por Seguridad Digital antes de ser incorporado al kit de despliegue.
@@ -2041,10 +2057,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
                 {DEVICES_APPENDIX.map((d, i) => (
                   <div key={i} className="mono" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 2fr 1fr', padding: '12px 14px', fontSize: '11.5px', borderTop: '1px solid #d9d4c2', lineHeight: 1.5 }}>
-                    <div style={{ fontWeight: 500 }}>{d.modelo}<div style={{ fontWeight: 400, color: '#6b6454', fontSize: '10.5px', marginTop: '2px' }}>{d.fabricante}</div></div>
+                    <div style={{ fontWeight: 500 }}>{d.modelo}<div style={{ fontWeight: 400, color: '#5a544c', fontSize: '10.5px', marginTop: '2px' }}>{d.fabricante}</div></div>
                     <div style={{ color: '#3d3931' }}>{d.firmware}</div>
                     <div style={{ color: '#3d3931' }}>{d.mitigacion}</div>
-                    <div style={{ color: d.estado === 'no_recomendado' ? '#bd2828' : d.estado === 'aprobado' ? '#5a6e3c' : '#6b6454' }}>{d.estado.replace(/_/g, ' ')}</div>
+                    <div style={{ color: d.estado === 'no_recomendado' ? '#bd2828' : d.estado === 'aprobado' ? '#5a6e3c' : '#5a544c' }}>{d.estado.replace(/_/g, ' ')}</div>
                   </div>
                 ))}
               </div>
@@ -2052,7 +2068,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
             {/* SECCIÓN 06 */}
             <section id="sec-06" style={{ marginBottom: '40px' }}>
-              <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>Sección 06</div>
+              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Sección 06</div>
               <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Protocolo post-despliegue</h2>
               <div className="serif" style={{ fontSize: '15px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '18px' }}>
                 Completar dentro de las 72 horas del retorno. El incumplimiento dentro de este plazo activa alerta al editor de seguridad y al responsable del despliegue.
@@ -2066,7 +2082,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
             {/* SECCIÓN 07 — Widget Claudeception */}
             <section id="sec-07" style={{ marginBottom: '20px' }}>
-              <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>Sección 07</div>
+              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Sección 07</div>
               <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Consulta al analista automatizado</h2>
               <div className="serif" style={{ fontSize: '15px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '20px' }}>
                 Herramienta complementaria al manual para casos no cubiertos explícitamente. Asistencia orientativa — no sustituye consulta a Seguridad Digital ni decisión editorial humana. Cada consulta se registra en OP-SEC-LOG con timestamp, usuario y contenido.
@@ -2084,12 +2100,12 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   style={{ width: '100%', minHeight: '80px', padding: '10px 12px', fontSize: '12px', lineHeight: 1.5, backgroundColor: '#f8f5ec', border: '1px solid #c9c1ab', color: '#1f1f1f', resize: 'vertical', fontFamily: "'JetBrains Mono', monospace", boxSizing: 'border-box' }}
                 />
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
-                  <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454' }}>
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>
                     modelo: claude-sonnet-4 · usuario: mondini.l · consulta registrada
                   </div>
                   <button onClick={correrAnalisis} disabled={consultaResult.loading || !consultaInput.trim()} className="mono" style={{
                     padding: '8px 16px', fontSize: '11px', letterSpacing: '0.06em',
-                    backgroundColor: consultaResult.loading ? '#6b6454' : '#1f1f1f',
+                    backgroundColor: consultaResult.loading ? '#5a544c' : '#1f1f1f',
                     color: '#f8f5ec', border: 'none',
                     cursor: consultaResult.loading || !consultaInput.trim() ? 'not-allowed' : 'pointer',
                     opacity: !consultaInput.trim() ? 0.5 : 1
@@ -2100,13 +2116,13 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
                 {consultaResult.text && (
                   <div style={{ marginTop: '16px', padding: '14px 16px', backgroundColor: '#f8f5ec', borderLeft: '2px solid #1f1f1f' }}>
-                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '8px' }}>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>
                       RESPUESTA · {formatUTC(now)}
                     </div>
                     <div className="mono" style={{ fontSize: '11.5px', lineHeight: 1.65, color: '#1f1f1f', whiteSpace: 'pre-wrap' }}>
                       {consultaResult.text}
                     </div>
-                    <div className="mono" style={{ fontSize: '10px', color: '#6b6454', marginTop: '10px', fontStyle: 'italic' }}>
+                    <div className="mono" style={{ fontSize: '10px', color: '#5a544c', marginTop: '10px', fontStyle: 'italic' }}>
                       análisis orientativo · escalamiento humano requerido para decisión editorial
                     </div>
                   </div>
@@ -2124,7 +2140,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
             {/* SECCIÓN 08 — Nota de encuadre */}
             <section id="sec-08" style={{ marginBottom: '20px' }}>
-              <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>Sección 08</div>
+              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Sección 08</div>
               <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Nota sobre alcance institucional y vacío ecosistémico</h2>
               <div className="serif" style={{ fontSize: '15px', lineHeight: 1.65, color: '#1f1f1f' }}>
                 <p style={{ margin: '0 0 14px' }}>
@@ -2160,30 +2176,30 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           {/* Metadatos de Higiene RF (documento principal) */}
           {!activeView && !showLanding && (<>
           <div style={{ marginBottom: '28px' }}>
-            <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Metadatos</div>
+            <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Metadatos</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px' }}>
               <div>
-                <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Código</div>
+                <div className="mono micro" style={{ color: '#5a544c', fontSize: '9.5px' }}>Código</div>
                 <div className="mono" style={{ color: '#1f1f1f' }}>{DOC_META.codigo}</div>
               </div>
               <div>
-                <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Versión</div>
+                <div className="mono micro" style={{ color: '#5a544c', fontSize: '9.5px' }}>Versión</div>
                 <div className="mono" style={{ color: '#1f1f1f' }}>{DOC_META.version}</div>
               </div>
               <div>
-                <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Clasificación</div>
+                <div className="mono micro" style={{ color: '#5a544c', fontSize: '9.5px' }}>Clasificación</div>
                 <div className="mono" style={{ color: '#bd2828' }}>{DOC_META.clasificacion}</div>
               </div>
               <div>
-                <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Responsable</div>
+                <div className="mono micro" style={{ color: '#5a544c', fontSize: '9.5px' }}>Responsable</div>
                 <div style={{ color: '#1f1f1f' }}>{DOC_META.responsable}</div>
               </div>
               <div>
-                <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Idiomas</div>
+                <div className="mono micro" style={{ color: '#5a544c', fontSize: '9.5px' }}>Idiomas</div>
                 <div className="mono" style={{ color: '#1f1f1f' }}>{DOC_META.idiomas.join(' · ')}</div>
               </div>
               <div>
-                <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Próxima revisión</div>
+                <div className="mono micro" style={{ color: '#5a544c', fontSize: '9.5px' }}>Próxima revisión</div>
                 <div className="mono" style={{ color: '#1f1f1f' }}>{DOC_META.proximaRevision}</div>
               </div>
             </div>
@@ -2191,10 +2207,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
           {DOC_META.historial && (
             <div style={{ marginBottom: '28px' }}>
-              <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Historial de revisiones</div>
+              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Historial de revisiones</div>
               {DOC_META.historial.map((h, i) => (
                 <div key={i} style={{ marginBottom: '10px', fontSize: '11.5px', lineHeight: 1.5, paddingLeft: '10px', borderLeft: '2px solid #d9d4c2' }}>
-                  <div className="mono" style={{ color: '#6b6454', fontSize: '10.5px' }}>{h.fecha} · {h.autor}</div>
+                  <div className="mono" style={{ color: '#5a544c', fontSize: '10.5px' }}>{h.fecha} · {h.autor}</div>
                   <div style={{ color: '#1f1f1f' }}>{h.cambio}</div>
                 </div>
               ))}
@@ -2202,10 +2218,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           )}
 
           <div style={{ marginBottom: '28px' }}>
-            <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Actividad reciente</div>
+            <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Actividad reciente</div>
             {ACTIVIDAD_RECIENTE.map((a, i) => (
               <div key={i} style={{ marginBottom: '10px', fontSize: '11.5px', lineHeight: 1.5 }}>
-                <div className="mono" style={{ color: '#6b6454', fontSize: '10.5px' }}>{a.fecha}</div>
+                <div className="mono" style={{ color: '#5a544c', fontSize: '10.5px' }}>{a.fecha}</div>
                 <div style={{ color: '#1f1f1f' }}>
                   <span className="mono" style={{ fontWeight: 500 }}>{a.usuario}</span> {a.accion}
                 </div>
@@ -2214,14 +2230,14 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           </div>
 
           <div style={{ marginBottom: '28px' }}>
-            <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Documentos relacionados</div>
+            <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Documentos relacionados</div>
             {DOCUMENTOS_RELACIONADOS.map((d, i) => (
               <div key={i} style={{ marginBottom: '10px', padding: '8px 0', borderBottom: i < DOCUMENTOS_RELACIONADOS.length - 1 ? '1px solid #d9d4c2' : 'none' }}>
                 <div className="doc-link" style={{ display: 'block', cursor: 'pointer' }} onClick={() => {
                   const viewMap = { 'OP-LEG-2028-007': 'anmac_enacom', 'OP-SEC-2028-011': 'comunicacion_cifrada', 'OP-SEC-2029-001': 'verificacion_c2pa', 'OP-SEC-2029-003': 'compromiso_dispositivo', 'OP-LEG-2029-002': 'exportacion_equip', 'OP-LEG-2028-014': 'seguros_riesgo', 'OP-HR-2027-012': 'jtsn_apoyo', 'OP-HR-2028-003': 'politica_despliegue', 'OP-HR-2029-001': 'contactos_emergencia', 'OP-SEC-2029-004-FX': 'version_fixer', 'EXT-FOPEA-2028': 'fopea_protocolo' };
                   if (viewMap[d.codigo]) { setActiveView(viewMap[d.codigo]); } else { handleDocNoDisponible(d.titulo); }
                 }}>
-                  <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginBottom: '2px' }}>{d.codigo} · v{d.version}</div>
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginBottom: '2px' }}>{d.codigo} · v{d.version}</div>
                   <div style={{ fontSize: '12px', lineHeight: 1.35 }}>{d.titulo}</div>
                 </div>
               </div>
@@ -2229,7 +2245,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           </div>
 
           <div>
-            <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Visualizaciones</div>
+            <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Visualizaciones</div>
             <div className="mono" style={{ fontSize: '11px', color: '#5a544c', lineHeight: 1.6 }}>
               127 vistas últimos 30 días<br/>
               14 personas en el último día<br/>
@@ -2243,26 +2259,26 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             const d = VISTAS[activeView].doc || VISTAS[activeView].meta;
             return (<>
               <div style={{ marginBottom: '28px' }}>
-                <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Metadatos</div>
+                <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Metadatos</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px' }}>
                   <div>
-                    <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Código</div>
+                    <div className="mono micro" style={{ color: '#5a544c', fontSize: '9.5px' }}>Código</div>
                     <div className="mono" style={{ color: '#1f1f1f' }}>{d.codigo}</div>
                   </div>
                   <div>
-                    <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Versión</div>
+                    <div className="mono micro" style={{ color: '#5a544c', fontSize: '9.5px' }}>Versión</div>
                     <div className="mono" style={{ color: '#1f1f1f' }}>{d.version}</div>
                   </div>
                   <div>
-                    <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Clasificación</div>
+                    <div className="mono micro" style={{ color: '#5a544c', fontSize: '9.5px' }}>Clasificación</div>
                     <div className="mono" style={{ color: '#bd2828' }}>USO INTERNO · distribución controlada</div>
                   </div>
                   <div>
-                    <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Responsable</div>
+                    <div className="mono micro" style={{ color: '#5a544c', fontSize: '9.5px' }}>Responsable</div>
                     <div style={{ color: '#1f1f1f' }}>{d.responsable}</div>
                   </div>
                   <div>
-                    <div className="mono micro" style={{ color: '#6b6454', fontSize: '9.5px' }}>Publicado</div>
+                    <div className="mono micro" style={{ color: '#5a544c', fontSize: '9.5px' }}>Publicado</div>
                     <div className="mono" style={{ color: '#1f1f1f' }}>{d.fecha}</div>
                   </div>
                 </div>
@@ -2272,15 +2288,15 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 if (historial.length === 0) return null;
                 return (
                   <div style={{ marginBottom: '28px' }}>
-                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Historial de revisiones</div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Historial de revisiones</div>
                     {historial.map((h, i) => (
                       <div key={i} style={{ marginBottom: '10px', fontSize: '11.5px', lineHeight: 1.5, paddingLeft: '10px', borderLeft: '2px solid #d9d4c2' }}>
-                        <div className="mono" style={{ color: '#6b6454', fontSize: '10.5px' }}>{h.fecha || '—'} · {h.autor || '—'}</div>
+                        <div className="mono" style={{ color: '#5a544c', fontSize: '10.5px' }}>{h.fecha || '—'} · {h.autor || '—'}</div>
                         <div style={{ color: '#1f1f1f' }}>{h.cambio}</div>
                       </div>
                     ))}
                     {!d.historial && historial.length === 1 && (
-                      <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', fontStyle: 'italic', marginTop: '4px' }}>
+                      <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', fontStyle: 'italic', marginTop: '4px' }}>
                         Versiones anteriores archivadas en OP-SEC-LOG.
                       </div>
                     )}
@@ -2288,27 +2304,27 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 );
               })()}
               <div style={{ marginBottom: '28px' }}>
-                <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Navegación</div>
+                <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Navegación</div>
                 {(() => { const back = getBackLink(); return back ? (
-                  <div onClick={back.onClick} className="doc-link" style={{ cursor: 'pointer', fontSize: '12px', padding: '6px 0', borderBottom: '1px solid #d9d4c2' }}>
+                  <div role="button" tabIndex={0} onClick={back.onClick} className="doc-link" style={{ cursor: 'pointer', fontSize: '12px', padding: '6px 0', borderBottom: '1px solid #d9d4c2' }}>
                     ← {back.label}
                   </div>
                 ) : null; })()}
                 {d.fuentes && (
                   <div style={{ marginTop: '16px' }}>
-                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>Fuentes</div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Fuentes</div>
                     <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', lineHeight: 1.6 }}>{d.fuentes}</div>
                   </div>
                 )}
               </div>
               {favoritos.length > 0 && (
                 <div style={{ marginBottom: '28px' }}>
-                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <Star size={10} /> Favoritos ({favoritos.length})
                   </div>
                   {favoritos.map(k => (
                     <div key={k} onClick={() => setActiveView(k)} className="doc-link" style={{ cursor: 'pointer', fontSize: '11.5px', padding: '5px 0', borderBottom: '1px solid #d9d4c2' }}>
-                      <div className="mono" style={{ fontSize: '10px', color: '#6b6454' }}>{codigoOf(k) || ''}</div>
+                      <div className="mono" style={{ fontSize: '10px', color: '#5a544c' }}>{codigoOf(k) || ''}</div>
                       <div>{titleOf(k)}</div>
                     </div>
                   ))}
@@ -2316,12 +2332,12 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               )}
               {recent.filter(k => k !== activeView).length > 0 && (
                 <div style={{ marginBottom: '28px' }}>
-                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <Clock size={10} /> Últimos consultados
                   </div>
                   {recent.filter(k => k !== activeView).slice(0, 5).map(k => (
                     <div key={k} onClick={() => setActiveView(k)} className="doc-link" style={{ cursor: 'pointer', fontSize: '11.5px', padding: '5px 0', borderBottom: '1px solid #d9d4c2' }}>
-                      <div className="mono" style={{ fontSize: '10px', color: '#6b6454' }}>{codigoOf(k) || ''}</div>
+                      <div className="mono" style={{ fontSize: '10px', color: '#5a544c' }}>{codigoOf(k) || ''}</div>
                       <div>{titleOf(k)}</div>
                     </div>
                   ))}
@@ -2339,7 +2355,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           <div className="sans">
             © Infobae · Interna corporativa · acceso restringido a personal autorizado
           </div>
-          <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454' }}>
+          <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>
             sesión: mondini.l · nodo BsAs · {formatUTC(now)}
           </div>
         </div>

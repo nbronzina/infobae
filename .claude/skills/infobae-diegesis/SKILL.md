@@ -51,12 +51,11 @@ Colores primarios:
 - #d9d4c2 — separadores
 - #5a6e3c — verde vigente (sobre #e8f0de)
 - #8a6d2b — ámbar revisión (sobre #f5edd5)
-- #8a8472 — gris metadata (uso decorativo; para texto legible preferir #6b6454)
+- #8a8472 — gris metadata (uso decorativo; para texto legible usar #5a544c)
 
 Tokens funcionales:
 - #2a2a2a, #3d3931 — panel de login (fondo oscuro corporativo)
-- #5a544c — texto secundario
-- #6b6454 — gris metadata accesible (AA sobre #f0ede4)
+- #5a544c — texto secundario y metadata accesible (AA sobre #f0ede4 y #f8f5ec)
 - #e5e1d3 — hover/active en sidebar
 - #e8f0de — chip de fondo workflow vigente
 - #f5edd5 — chip de fondo workflow revisión
