@@ -798,6 +798,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
         .sans { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
         a { color: #bd2828; text-decoration: none; }
         a:hover { text-decoration: underline; }
+        a.no-hover:hover { text-decoration: none; }
         .doc-link { color: #1f1f1f; }
         .doc-link:hover { color: #bd2828; text-decoration: none; }
         .chrome-link { color: #fff; opacity: 0.9; }
@@ -2396,7 +2397,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               Cada protocolo, norma y herramienta es extensión plausible de algo que existe hoy. Los personajes y los despliegues son ficticios. Las fuentes externas, las regulaciones y los papers citados son reales.
             </div>
             <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f', marginTop: '22px', paddingTop: '18px', borderTop: '1px solid #d9d4c2', lineHeight: 1.7 }}>
-              Ideado, diseñado y codificado por <strong><a href="https://www.nicolasbronzina.com/" target="_blank" rel="noreferrer" style={{ color: '#1f1f1f', borderBottom: '1px solid #1f1f1f' }}>Nicolás Bronzina</a></strong>.
+              Ideado, diseñado y codificado por <strong><a href="https://www.nicolasbronzina.com/" target="_blank" rel="noreferrer" className="no-hover" style={{ color: '#1f1f1f', borderBottom: '1px solid #1f1f1f' }}>Nicolás Bronzina</a></strong>.
             </div>
             <div
               role="button"
