@@ -2785,20 +2785,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             </div>
 
             <div style={{ marginBottom: '18px', paddingTop: '14px', borderTop: '1px solid #d9d4c2' }}>
-              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Colofón metodológico</div>
-
               <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '12px' }}>
-                <strong>Método.</strong> Diegetic prototype en la tradición de Near Future Laboratory (Bleecker, Girardin, Nova) y la noción de <em>Future Mundane</em> de Nick Foster. Horizon scanning sobre fuentes primarias y secundarias asociadas a un glosario propio de amenazas. Tres líneas contrafactuales para estresar el artefacto desde ángulos divergentes. Apoyo metodológico en armasuisse Deftech (Q. Ladetto) y su trabajo con NFL — particularmente <em>E-Soldat</em> como referencia de objeto institucional ficticio.
+                <strong>Método.</strong> Design fiction + rapid prototyping.
               </div>
-
-              <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '12px' }}>
-                <strong>Fuentes técnicas verificadas.</strong> Rye &amp; Levin (IEEE S&amp;P 2024 · arXiv:2405.14975); Ley 20.429, Decreto 395/75, Disp. RENAR 883/11, Res. ANMaC 83/2023, Res. ENACOM 955/2025; Berkeley Protocol on Digital Open Source Investigations (UNHCHR, 2022); C2PA spec (IPTC, 2024–); Citizen Lab (Pegasus); Dart Center / JTSN; FOPEA; CPJ; RSF; ACOS Alliance; ICIJ; OCCRP; Bellingcat; FLIP Colombia; SNTP Venezuela.
-              </div>
-
-              <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '12px' }}>
-                <strong>Qué queda intencionalmente fuera.</strong> Métricas de tráfico y engagement. Gamificación. Reactions y likes. Reconocimientos públicos tipo kudos. Mensajería social abierta. Banners motivacionales y misión/visión. Anuncios y publicidad. Cualquier copy que le hable al usuario en lugar de registrar condiciones.
-              </div>
-
               <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f' }}>
                 <strong>Tecnología.</strong> React + Vite. Datos en JSON local. Function serverless en Vercel para el horizon scanning semanal con la API de Claude (web search → generación → validación → consolidación → commit vía GitHub Data API). Tres líneas de planificación servidas como rutas distintas (<em>/vigente</em>, <em>/starlink-restringido</em>, <em>/transicion-estable</em>) sobre la misma codebase.
               </div>
