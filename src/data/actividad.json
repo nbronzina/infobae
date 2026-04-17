@@ -1,0 +1,10 @@
+[
+  { "fecha": "2029-04-17 08:30", "usuario": "j. fiorella", "accion": "agregó T-PHYS, T-DOM al glosario; sección 08" },
+  { "fecha": "2029-04-16 14:22", "usuario": "s. peralta", "accion": "publicó informe HEFAT: 8 certificados, próximo sept." },
+  { "fecha": "2029-04-16 10:00", "usuario": "mondini.l", "accion": "ROS-038: nuevos registros inmobiliarios cruzados con OSINT" },
+  { "fecha": "2029-04-15 11:05", "usuario": "r. velásquez (ext.)", "accion": "revisó versión fixer OP-SEC-2029-004-FX" },
+  { "fecha": "2029-04-13 09:15", "usuario": "l. pollastri", "accion": "actualizó OP-LEG-2028-014 (seguros para fixers)" },
+  { "fecha": "2029-04-10 09:41", "usuario": "d. roca", "accion": "configuró Reality Defender en pipeline verificación" },
+  { "fecha": "2029-04-08 16:30", "usuario": "m. villafañe", "accion": "cerró despliegue ARQ-042 · parte archivado" },
+  { "fecha": "2029-03-14 17:03", "usuario": "j. fiorella", "accion": "publicó edición 4.2 manual higiene RF" }
+]

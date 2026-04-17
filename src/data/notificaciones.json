@@ -1,0 +1,6 @@
+[
+  { "id": "n1", "tiempo": "hace 2h", "usuario": "j. fiorella", "texto": "Actualizó secciones T-PHYS y T-DOM en OP-SEC-2029-004. Revisión obligatoria.", "leida": false },
+  { "id": "n2", "tiempo": "hace 4h", "usuario": "s. peralta", "texto": "Publicó resultados HEFAT abril: 8 certificados. Próxima edición septiembre.", "leida": false },
+  { "id": "n3", "tiempo": "ayer 14:10", "usuario": "l. pollastri", "texto": "Nueva póliza de seguro para fixers activa desde mayo. Ver OP-LEG-2028-014.", "leida": true },
+  { "id": "n4", "tiempo": "lun 09:22", "usuario": "r. velásquez (ext.)", "texto": "Completó revisión de OP-SEC-2029-004-FX (versión fixer)", "leida": true }
+]

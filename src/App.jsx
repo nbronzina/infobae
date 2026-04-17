@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Bell, ChevronRight, ChevronDown, FileText, Folder, FolderOpen, Lock, Download, Printer, Share2, Home, Calendar, BookOpen, Users, Shield, Settings, Loader2 } from 'lucide-react';
+import noticiasData from './data/noticias.json';
+import actividadData from './data/actividad.json';
+import notificacionesData from './data/notificaciones.json';
+import agendaData from './data/agenda.json';
+import directorioData from './data/directorio.json';
 
 // ============================================================================
 // CONTENIDO DEL MANUAL — OP-SEC-2029-004
@@ -110,16 +115,7 @@ const DOCUMENTOS_RELACIONADOS = [
   { codigo: 'EXT-FOPEA-2028', titulo: 'Protocolo de aviso mutuo entre colegas (referencia FOPEA)', version: 'ext.' }
 ];
 
-const ACTIVIDAD_RECIENTE = [
-  { fecha: '2029-04-17 08:30', usuario: 'j. fiorella', accion: 'agregó T-PHYS, T-DOM al glosario; sección 08' },
-  { fecha: '2029-04-16 14:22', usuario: 's. peralta', accion: 'publicó informe HEFAT: 8 certificados, próximo sept.' },
-  { fecha: '2029-04-16 10:00', usuario: 'mondini.l', accion: 'ROS-038: nuevos registros inmobiliarios cruzados con OSINT' },
-  { fecha: '2029-04-15 11:05', usuario: 'r. velásquez (ext.)', accion: 'revisó versión fixer OP-SEC-2029-004-FX' },
-  { fecha: '2029-04-13 09:15', usuario: 'l. pollastri', accion: 'actualizó OP-LEG-2028-014 (seguros para fixers)' },
-  { fecha: '2029-04-10 09:41', usuario: 'd. roca', accion: 'configuró Reality Defender en pipeline verificación' },
-  { fecha: '2029-04-08 16:30', usuario: 'm. villafañe', accion: 'cerró despliegue ARQ-042 · parte archivado' },
-  { fecha: '2029-03-14 17:03', usuario: 'j. fiorella', accion: 'publicó edición 4.2 manual higiene RF' }
-];
+const ACTIVIDAD_RECIENTE = actividadData;
 
 // ============================================================================
 // HELPERS
@@ -151,53 +147,23 @@ export default function IntranetInfobae() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showLanding, setShowLanding] = useState(true);
 
-  const NOTIFICACIONES = [
-    { id: 'n1', tiempo: 'hace 2h', usuario: 'j. fiorella', texto: 'Actualizó secciones T-PHYS y T-DOM en OP-SEC-2029-004. Revisión obligatoria.', leida: false },
-    { id: 'n2', tiempo: 'hace 4h', usuario: 's. peralta', texto: 'Publicó resultados HEFAT abril: 8 certificados. Próxima edición septiembre.', leida: false },
-    { id: 'n3', tiempo: 'ayer 14:10', usuario: 'l. pollastri', texto: 'Nueva póliza de seguro para fixers activa desde mayo. Ver OP-LEG-2028-014.', leida: true },
-    { id: 'n4', tiempo: 'lun 09:22', usuario: 'r. velásquez (ext.)', texto: 'Completó revisión de OP-SEC-2029-004-FX (versión fixer)', leida: true }
-  ];
+  const NOTIFICACIONES = notificacionesData;
 
   const VISTAS = {
     noticias: {
       titulo: 'Noticias internas',
       subtitulo: 'Organización, entrenamiento, herramientas y operaciones del equipo de Infobae',
-      items: [
-        { fecha: '2029-04-17', tag: 'OPERACIONES', titulo: 'Cierre de despliegue ARQ-042 (Arauca)', texto: 'El despliegue de 13 días en zona fronteriza fue cerrado formalmente. Parte de despliegue y material archivados en OP-SEC-LOG. Corresponsal: mondini.l. Fixer: Velásquez. Sesión JTSN agendada para el 23.04.' },
-        { fecha: '2029-04-15', tag: 'SEG. DIGITAL', titulo: 'Actualización del manual de higiene RF a edición 4.2', texto: 'Se incorporaron dos nuevas categorías de amenaza (T-PHYS, T-DOM) y la sección 08 sobre vacío ecosistémico. Revisión obligatoria para personal con despliegue activo o planificado.' },
-        { fecha: '2029-04-13', tag: 'FORMACIÓN', titulo: 'Resultado del primer HEFAT institucional en Buenos Aires', texto: 'El taller de 3 días con RISC Training finalizó con 8 participantes certificados. Es la primera instancia HEFAT organizada por Infobae como institución (antes dependía de formación individual de cada corresponsal). Próxima edición: septiembre 2029, abierta a freelancers bajo encargo.' },
-        { fecha: '2029-04-11', tag: 'RRHH', titulo: 'Nueva política de cobertura de seguro para fixers', texto: 'A partir de mayo, todo fixer bajo contrato con Infobae tendrá cobertura de seguro durante el período de despliegue completo, no solo durante las jornadas de grabación. Alineado con los principios ACOS Alliance. Detalle en OP-LEG-2028-014 actualizado.' },
-        { fecha: '2029-04-08', tag: 'HERRAMIENTAS', titulo: 'Incorporación de Reality Defender al pipeline de verificación', texto: 'A partir del 01.05, todo material audiovisual entrante de zona activa pasará por detector de síntesis automatizado antes de la decisión editorial. Entrenamiento obligatorio para mesa de verificación. Ver OP-SEC-2029-001.' },
-        { fecha: '2029-04-05', tag: 'EDITORIAL', titulo: 'Revisión del protocolo de fuentes anónimas', texto: 'Se actualizó OP-RED-2028-003 con criterio más estricto: toda información de fuente anónima requiere al menos una vía de verificación independiente. El cambio responde a tres incidentes de material no verificable recibido en el último trimestre.' },
-        { fecha: '2029-04-02', tag: 'RED EXTERNA', titulo: 'Activación del protocolo FOPEA tras amenaza a periodista en Rosario', texto: 'Se activó la red de aviso mutuo para un colega de otro medio bajo amenaza directa en Rosario. Personal de Infobae participó como nodo de difusión. Recordatorio: mantener actualizados los 3 contactos FOPEA (ver EXT-FOPEA-2028).' },
-        { fecha: '2029-03-28', tag: 'EQUIPAMIENTO', titulo: 'Aprobación de Starlink Mini como terminal estándar de despliegue', texto: 'Tras evaluación de 6 meses, seguridad digital aprobó el Starlink Mini como terminal satelital principal para despliegues internacionales. Condición: firmware con randomización BSSID vigente. GL.iNet MT3000 se mantiene como router de viaje estándar. Detalle en OP-SEC-2029-004, apéndice de dispositivos.' }
-      ]
+      items: noticiasData
     },
     directorio: {
       titulo: 'Directorio',
       subtitulo: 'Personal de Infobae — equipo operativo, editorial y de soporte',
-      items: [
-        { nombre: 'Lucía Mondini', rol: 'Corresponsal — cobertura transnacional', base: 'Buenos Aires', contacto: 'mondini.l@infobae.interna' },
-        { nombre: 'Javier Fiorella', rol: 'Seguridad digital — lead', base: 'Buenos Aires', contacto: 'fiorella.j@infobae.interna' },
-        { nombre: 'Marina Villafañe', rol: 'Operaciones de campo — coordinación logística y despliegues', base: 'Buenos Aires', contacto: 'villafane.m@infobae.interna' },
-        { nombre: 'Lucas Pollastri', rol: 'Legales — despliegue internacional, contratos, regulación', base: 'Buenos Aires', contacto: 'pollastri.l@infobae.interna' },
-        { nombre: 'Daniela Roca', rol: 'Verificación y OSINT — lead pipeline', base: 'Bogotá', contacto: 'roca.d@infobae.interna' },
-        { nombre: 'Felipe Zelaya', rol: 'Editor guardia — turno noche, enlace con redacciones', base: 'Madrid', contacto: 'zelaya.f@infobae.interna' },
-        { nombre: 'Sofía Peralta', rol: 'Formación y capacitación — HEFAT, seguridad digital, onboarding', base: 'Buenos Aires', contacto: 'peralta.s@infobae.interna' },
-        { nombre: 'Tomás Quiroga', rol: 'Freelancer liaison — contratos, seguros, cobertura ACOS', base: 'Lima', contacto: 'quiroga.t@infobae.interna' },
-        { nombre: 'R. Velásquez (ext.)', rol: 'Fixer designado — frontera COL/VEN (Arauca/Apure)', base: 'Arauca', contacto: 'vía Signal · canal seguro' }
-      ]
+      items: directorioData
     },
     agenda: {
       titulo: 'Agenda editorial',
       subtitulo: 'Semana del 14 al 20 de abril de 2029 — editorial, operaciones y formación',
-      items: [
-        { dia: 'LUN 14', entradas: ['09:00 — Reunión editorial semanal (remoto, todas las mesas)', '11:00 — Debrief HEFAT con S. Peralta: lecciones del primer taller institucional', '14:00 — Revisión pipeline verificación con D. Roca: estado Reality Defender'] },
-        { dia: 'MAR 15', entradas: ['10:30 — Check-in post-despliegue ARQ-042 con Villafañe y Mondini', '14:00 — Sesión de onboarding seguridad digital para freelancers (Fiorella)', '16:00 — Llamada con fixer Velásquez: revisión OP-SEC-2029-004-FX'] },
-        { dia: 'MIÉ 16', entradas: ['10:00 — Coordinación legales: nueva póliza de seguro para fixers (Pollastri)', '11:00 — Sesión Dart Center / JTSN — protocolo automático post-ARQ-042', '15:00 — Entrega material verificado Arauca a mesa de edición'] },
-        { dia: 'JUE 17', entradas: ['08:00 — Cola de verificación: 5 items pendientes', '10:00 — Reunión Quiroga (Lima): estado de contratos freelance ACOS', '20:00 — Emisión en vivo: análisis transición Venezuela, frontera Arauca/Apure'] },
-        { dia: 'VIE 18', entradas: ['10:00 — Revisión trimestral de manuales operativos (seg. digital + legales)', '12:00 — ROS-038: reunión con fuente judicial Rosario (Signal, protocolo contra-vigilancia activo)', '13:00 — Cierre de semana editorial', '15:00 — Evaluación de amenazas para próximo despliegue: definir teatro y equipo'] }
-      ]
+      items: agendaData
     },
     redaccion: {
       titulo: 'Redacción',
