@@ -71,7 +71,7 @@ function ScenarioIndex() {
         <div style={{ marginBottom: '48px' }}>
           <img src="/infobae-logo.png" alt="infobae" style={{ height: '40px', width: 'auto', display: 'block', marginBottom: '24px' }} />
           <div className="mono" style={{ fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#f18b1e', marginBottom: '14px' }}>
-            Bitácora · diegetic prototype · 2029
+            Bitácora
           </div>
           <h1 className="serif" style={{ fontSize: '34px', fontWeight: 500, margin: '0 0 16px', letterSpacing: '-0.01em', color: '#f0ede4' }}>
             Tres líneas de planificación
