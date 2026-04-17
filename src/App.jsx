@@ -5,6 +5,7 @@ import actividadData from './data/actividad.json';
 import notificacionesData from './data/notificaciones.json';
 import agendaData from './data/agenda.json';
 import directorioData from './data/directorio.json';
+import alertasData from './data/alertas.json';
 
 // ============================================================================
 // CONTENIDO DEL MANUAL — OP-SEC-2029-004
@@ -770,6 +771,17 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           </div>
         </div>
       )}
+
+      {/* ======================= BANNER DE ALERTA OPERATIVA ======================= */}
+      {alertasData.length > 0 && alertasData.map(a => (
+        <div key={a.id} style={{ backgroundColor: '#f0ecde', borderTop: '1px solid #d9d4c2', borderBottom: '1px solid #d9d4c2', borderLeft: '2px solid #bd2828', padding: '10px 24px', display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px' }}>
+          <span className="mono" style={{ color: '#bd2828', fontWeight: 500, fontSize: '10.5px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            Alerta · {a.teatro}
+          </span>
+          <span className="mono" style={{ color: '#1f1f1f', flex: 1 }}>{a.mensaje}</span>
+          <span className="mono" style={{ color: '#6b6454', fontSize: '10.5px' }}>activa desde {a.desde} · {a.emisor}</span>
+        </div>
+      ))}
 
       {/* ======================= BREADCRUMB DINÁMICO ======================= */}
       <div style={{ backgroundColor: '#f7f5ee', borderBottom: '1px solid #d9d4c2', padding: '10px 24px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', color: '#5a544c' }}>
