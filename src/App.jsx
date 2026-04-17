@@ -29,7 +29,7 @@ const DOC_META = {
   historial: [
     { fecha: '2029-03-14', autor: 'j. fiorella', cambio: 'Edición 4.2: sección 08 (vacío ecosistémico) y amenazas T-PHYS, T-DOM.' },
     { fecha: '2028-09-10', autor: 'j. fiorella', cambio: 'Edición 4.1: actualización de T-WPS tras Rye & Levin (IEEE S&P 2024).' },
-    { fecha: '2028-02-15', autor: 'j. fiorella', cambio: 'Edición 4.0: reescritura completa post-despliegue ARQ-032.' }
+    { fecha: '2028-02-15', autor: 'j. fiorella', cambio: 'Edición 4.0: reescritura completa tras revisión trimestral de amenazas 2028.' }
   ]
 };
 
@@ -293,7 +293,7 @@ export default function IntranetInfobae() {
       secciones: [
         { titulo: 'Alcance', texto: 'Este documento complementa OP-LEG-2028-007 con detalle procedimental para el egreso de materiales de usos especiales clasificados bajo Ley 20.429. Aplica a chalecos antibalas, cascos balísticos y placas de blindaje. No aplica a equipos de telecomunicaciones (ver sección ENACOM de OP-LEG-2028-007).' },
         { titulo: 'Procedimiento de egreso', texto: 'Según Disposición RENAR 883/11, Anexo II: máximo 1 chaleco por año calendario. Requiere Formularios Leyes 23.283 y 23.412, credencial de tenencia vigente, y declaración de destino. El trámite se realiza ante ANMaC. No se encontró plazo publicado para resolución del trámite de egreso. Recomendación: iniciar con al menos 45 días de anticipación.' },
-        { titulo: 'Alternativa operativa', texto: 'Para despliegues urgentes donde el trámite de egreso no es viable: préstamo de chaleco y casco vía RSF España (rsf-es.org/seguridad-para-periodistas). Fianza reembolsable: 300€. Devolución: máximo 1 mes. Esta alternativa es la opción práctica estándar para la mayoría de los despliegues internacionales.' }
+        { titulo: 'Alternativa operativa', texto: 'Para despliegues urgentes donde el trámite de egreso no es viable: préstamo de chaleco y casco vía RSF España (rsf-es.org/seguridad-para-periodistas). Fianza reembolsable: 300€. Devolución: máximo 1 mes. Esta alternativa es la vía utilizada en los despliegues recientes de Infobae con ventana menor a 30 días.' }
       ], fuentes: 'Ley 20.429 (1973). Decreto 395/75. Disposición RENAR 883/11. RSF España, programa de préstamo de equipamiento.' }},
     seguros_riesgo: { doc: {
       area: 'INFOBAE · LEGALES', codigo: 'OP-LEG-2028-014', version: '2.0', fecha: '2028-08-30', responsable: 'l. pollastri + operaciones',
@@ -390,7 +390,7 @@ export default function IntranetInfobae() {
       titulo: 'Pipeline de verificación', subtitulo: 'Flujo de trabajo para material entrante de zona activa',
       secciones: [
         { titulo: 'Flujo estándar', texto: 'Material entrante → registro en cola (timestamp, fixer, tipo, tamaño) → verificación de origen (¿quién envió, desde dónde?) → verificación de contenido (geolocalización, análisis visual, detector de síntesis) → evaluación de riesgo (impacto sobre fuentes) → decisión editorial (publicar / condiciones / reserva / no publicar) → registro en OP-SEC-LOG con cadena completa.' },
-        { titulo: 'Herramientas integradas', texto: 'Detector de síntesis automatizado (Reality Defender API, activo desde 05.2029). Verificador C2PA (IPTC Origin Verifier). Analista automatizado (IA, sección 07 de OP-SEC-2029-004). Imágenes satelitales: Sentinel Hub, Planet Labs (sujeto a disponibilidad regional). Geolocalización: Google Earth Pro, QGIS para análisis avanzado.' },
+        { titulo: 'Herramientas integradas', texto: 'Detector de síntesis automatizado (Reality Defender API, activo desde 05.2029). Verificador C2PA (IPTC Origin Verifier). Analista automatizado (IA, sección 07 de OP-SEC-2029-004). Imágenes satelitales: Sentinel Hub, Planet Labs (sujeto a disponibilidad regional). Geolocalización: Google Earth Pro, QGIS.' },
         { titulo: 'Tiempos', texto: 'Material urgente (breaking): verificación mínima en < 30 minutos. Material estándar: verificación completa en < 4 horas. Material de investigación: sin límite temporal, verificación exhaustiva. El nivel de verificación se define al ingreso y se registra en el log.' }
       ], fuentes: 'Documento interno. Referencia: Bellingcat Online Investigation Toolkit, BBC Verify workflow, First Draft Verification Handbook.' }},
     opsec_log: { doc: {
@@ -466,7 +466,7 @@ export default function IntranetInfobae() {
         { titulo: 'Principio general', texto: 'OSINT (Open Source Intelligence) usa información públicamente accesible: registros oficiales, redes sociales, imágenes satelitales, bases de datos abiertas, registros corporativos y judiciales. No es hacking. No implica acceso no autorizado a sistemas. Si requiere una contraseña, no es OSINT.' },
         { titulo: 'Herramientas estándar', texto: 'Geolocalización: Google Earth Pro, Sentinel Hub, Mapillary. Verificación de imagen/video: TinEye, búsqueda inversa Google/Yandex, InVID/WeVerify. Registros corporativos: boletines oficiales, AFIP (Argentina), Registro Público de Comercio, OpenCorporates. Redes sociales: CrowdTangle (Meta), Wayback Machine, captura con Hunchly o ArchiveBox. Vuelos: FlightRadar24, ADS-B Exchange. Embarcaciones: MarineTraffic, VesselFinder.' },
         { titulo: 'Documentación del proceso', texto: 'Toda investigación OSINT se documenta paso a paso: qué se buscó, cuándo, en qué plataforma, qué se encontró, y capturas de pantalla con timestamp. Esta documentación se archiva en OP-SEC-LOG y sirve como evidencia del proceso en caso de cuestionamiento legal o editorial.' },
-        { titulo: 'Límites éticos', texto: 'No se crean perfiles falsos para obtener información de fuentes sin su conocimiento (catfishing). No se accede a información eliminada por la fuente si fue claramente retirada intencionalmente. No se publican datos personales de civiles no involucrados. Doxing está prohibido. Ante duda sobre el límite ético de una técnica, consultar con editor en jefe.' }
+        { titulo: 'Límites éticos', texto: 'No se crean perfiles falsos para obtener información de fuentes sin su conocimiento (catfishing). No se accede a información que la fuente retiró del dominio público. No se publican datos personales de civiles no involucrados. Doxing está prohibido. Ante duda sobre el límite ético de una técnica, consultar con editor en jefe.' }
       ], fuentes: 'Bellingcat, Online Investigation Toolkit (2024). First Draft, Verification Handbook. Berkeley Protocol on Digital Open Source Investigations (ONU/ACNUDH, 2022). Henk van Ess, OSINT training methodology.' }},
     redes_internacionales: { doc: {
       area: 'INFOBAE · INVESTIGACIÓN', codigo: 'OP-INV-2029-003', version: '1.0', fecha: '2029-03-10', responsable: 'dirección editorial',
@@ -796,6 +796,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
         .sb-collapsed .sidebar-item svg { transform: scale(1.35); }
         .sb-collapsed .sb-chevron { display: none; }
         .sb-collapsed .sb-divider { display: none; }
+        :focus-visible { outline: 2px solid #1f1f1f; outline-offset: 2px; }
+        a:focus-visible { outline-offset: 1px; }
+        input:focus-visible, select:focus-visible, textarea:focus-visible { outline-offset: 0; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       `}</style>
 
@@ -1222,7 +1225,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 ) : <span />; })()}
                 {(VISTAS[activeView]?.doc || VISTAS[activeView]?.contenido || VISTAS[activeView]?.tool || VISTAS[activeView]?.form) && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '12.5px', color: '#5a544c' }}>
-                    <div onClick={() => toggleFavorito(activeView)} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', color: favoritos.includes(activeView) ? '#1f1f1f' : '#5a544c' }}>
+                    <div onClick={() => toggleFavorito(activeView)} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', color: favoritos.includes(activeView) ? '#1f1f1f' : '#5a544c', padding: '8px 6px', minHeight: '32px' }}>
                       <Star size={13} fill={favoritos.includes(activeView) ? '#1f1f1f' : 'none'} />
                       <span>{favoritos.includes(activeView) ? 'En favoritos' : 'Guardar'}</span>
                     </div>
@@ -1717,7 +1720,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {activeView && VISTAS[activeView]?.folder && (
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '12px' }}>
-                    <div onClick={() => toggleSuscripcion(activeView)} className="mono" style={{ cursor: 'pointer', fontSize: '11px', padding: '5px 10px', border: '1px solid #d9d4c2', backgroundColor: suscripciones.includes(activeView) ? '#e8f0de' : '#f8f5ec', color: suscripciones.includes(activeView) ? '#5a6e3c' : '#5a544c' }}>
+                    <div onClick={() => toggleSuscripcion(activeView)} className="mono" style={{ cursor: 'pointer', fontSize: '11px', padding: '10px 14px', minHeight: '32px', display: 'flex', alignItems: 'center', border: '1px solid #d9d4c2', backgroundColor: suscripciones.includes(activeView) ? '#e8f0de' : '#f8f5ec', color: suscripciones.includes(activeView) ? '#5a6e3c' : '#5a544c' }}>
                       {suscripciones.includes(activeView) ? '☑ Suscripto · dejar de seguir' : '☐ Suscribirse al área'}
                     </div>
                   </div>
