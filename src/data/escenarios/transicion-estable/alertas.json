@@ -1,17 +1,17 @@
 [
   {
-    "id": "ros-038-escalado",
+    "id": "ros-038-contravig",
     "teatro": "ROS-038",
     "nivel": "atención",
-    "mensaje": "contra-vigilancia activa · vigilancia doméstica intensificada en ausencia del frente externo · ROS-038 consolidado como frente principal · próxima revisión técnica 2029-04-19",
+    "mensaje": "contra-vigilancia activa · no hablar de avances de la investigación en canales no cifrados · última verificación técnica 2029-04-17",
     "desde": "2029-04-02",
     "emisor": "j. fiorella (seg. digital)"
   },
   {
-    "id": "arq-042-revisado",
+    "id": "arq-042-reevaluacion",
     "teatro": "ARQ-042",
     "nivel": "baja",
-    "mensaje": "condiciones de acceso normalizadas tras consolidación del gobierno interino venezolano · reapertura del teatro evaluada por mesa editorial para próxima ventana",
+    "mensaje": "condiciones de acceso normalizadas tras consolidación del gobierno interino venezolano · mesa editorial evalúa reapertura para próxima ventana",
     "desde": "2029-04-10",
     "emisor": "m. villafañe (operaciones)"
   }

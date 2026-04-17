@@ -1,12 +1,12 @@
 [
   { "sistema": "Signal (canal oficial)", "estado": "operativo", "nota": "Último handshake: 2029-04-18 06:12 UTC. Todas las mesas reportan conectividad." },
-  { "sistema": "Starlink Mini (kit despliegue A)", "estado": "off-line", "nota": "Decommissioned tras revocación Res. ENACOM 955/2025. Aduana retiene homologación de re-importación. En depósito custodiado." },
-  { "sistema": "Starlink Mini (kit despliegue B)", "estado": "off-line", "nota": "Decommissioned. Misma situación regulatoria. No hay vía operativa para despliegue internacional con este terminal." },
+  { "sistema": "Starlink Mini (kit despliegue A)", "estado": "off-line", "nota": "Fuera de RAMATEL tras Res. ENACOM 1184/2029. En depósito custodiado pendiente de resolución del expediente judicial." },
+  { "sistema": "Starlink Mini (kit despliegue B)", "estado": "off-line", "nota": "Misma situación regulatoria. Diagnóstico RF post-ARQ-042 en pausa hasta definición." },
   { "sistema": "VPN corporativa (Buenos Aires)", "estado": "operativo", "nota": "Sesiones activas: 7. Última rotación de claves: 2029-04-01." },
-  { "sistema": "Pipeline verificación C2PA (IPTC Origin Verifier)", "estado": "degradado", "nota": "Cola: 12 items pendientes, ratio creciente por ausencia de canal sat redundante para verificación remota. Tiempo promedio: 8.4 min." },
-  { "sistema": "Reality Defender (detector de síntesis)", "estado": "operativo", "nota": "Go-live 2029-05-01. Modo shadow." },
-  { "sistema": "Canal fixer (Velásquez · Signal)", "estado": "standby", "nota": "Último check-in: 2029-04-17 18:40 UTC. Sin despliegue activo previsto en próximos 60 días." },
-  { "sistema": "Conectividad alternativa (Iridium GO! exec)", "estado": "evaluación", "nota": "En proceso de procurement. Latencia significativamente mayor que Starlink. Ancho de banda limitado a transferencia de texto y audio comprimido." },
+  { "sistema": "Pipeline verificación C2PA (IPTC Origin Verifier)", "estado": "operativo", "nota": "Cola: 5 items pendientes. Tiempo promedio de verificación: 3.2 min." },
+  { "sistema": "Reality Defender (detector de síntesis)", "estado": "operativo", "nota": "Go-live 2029-05-01. Actualmente en modo shadow — resultados no vinculantes." },
+  { "sistema": "Canal fixer (Velásquez · Signal)", "estado": "standby", "nota": "Último check-in: 2029-04-17 18:40 UTC. Sin despliegue activo." },
+  { "sistema": "Iridium GO! exec (evaluación kit alternativo)", "estado": "evaluación", "nota": "Procurement en curso como canal sat de respaldo mientras dure el expediente Starlink. Latencia ~300ms, ancho de banda limitado a texto y audio comprimido." },
   { "sistema": "Dart Center / JTSN (bridge)", "estado": "operativo", "nota": "Sesión post-ARQ-042 agendada 2029-04-23." },
   { "sistema": "Infobae CMS (interno)", "estado": "operativo", "nota": "Sin incidentes en últimos 30 días." },
   { "sistema": "FOPEA (canal de aviso mutuo)", "estado": "operativo", "nota": "3 contactos activos por corresponsal. Última activación: 2029-04-02." }

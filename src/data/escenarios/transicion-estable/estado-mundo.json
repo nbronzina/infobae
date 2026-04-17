@@ -1,19 +1,19 @@
 {
   "ultima_auditoria_humana": "2025-04-17",
   "personajes": {
-    "mondini": { "ubicacion": "Buenos Aires", "estado": "descanso post-ARQ-042 hasta 2029-05-01 · próximo despliegue evaluado: reapertura ARQ-042 o foco ROS-038", "activo_en": ["ROS-038"] },
-    "fiorella": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["manual RF v4.2", "ROS-038 seg digital intensificada"] },
-    "villafane": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["evaluación reapertura ARQ-042", "cierre ARQ-042 v1"] },
-    "pollastri": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["seguros fixers", "ROS-038 legales", "consulta sobre marco legal post-transición VEN"] },
-    "roca": { "ubicacion": "Bogotá", "estado": "operativo", "activo_en": ["pipeline verificación", "Reality Defender", "evaluación de fuentes en gobierno interino VEN"] },
+    "mondini": { "ubicacion": "Buenos Aires", "estado": "descanso post-ARQ-042 hasta 2029-05-01", "activo_en": ["ROS-038"] },
+    "fiorella": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["manual RF", "ROS-038 seg digital"] },
+    "villafane": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["cierre ARQ-042", "evaluación reapertura ARQ-042"] },
+    "pollastri": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["seguros fixers", "ROS-038 legales"] },
+    "roca": { "ubicacion": "Bogotá", "estado": "operativo", "activo_en": ["pipeline verificación", "Reality Defender"] },
     "zelaya": { "ubicacion": "Madrid", "estado": "operativo", "activo_en": ["editor guardia noche"] },
     "peralta": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["HEFAT", "onboarding freelancers"] },
     "quiroga": { "ubicacion": "Lima", "estado": "operativo", "activo_en": ["contratos freelance ACOS"] },
-    "velasquez": { "ubicacion": "Arauca", "estado": "standby_disponible", "activo_en": ["consulta reapertura ARQ-042"] }
+    "velasquez": { "ubicacion": "Arauca", "estado": "standby", "activo_en": [] }
   },
   "despliegues": {
-    "ARQ-042": { "estado": "evaluacion_reapertura", "cierre_v1": "2029-04-17" },
-    "ROS-038": { "estado": "en_curso_intensificado", "tipo": "investigacion_domestica" }
+    "ARQ-042": { "estado": "evaluacion_reapertura", "cierre": "2029-04-17" },
+    "ROS-038": { "estado": "en_curso", "tipo": "investigacion_domestica" }
   },
-  "amenazas_activas": ["T-DOM", "T-PHYS", "T-SPY", "T-SYNTH", "T-CKP"]
+  "amenazas_activas": ["T-DOM", "T-PHYS", "T-WPS", "T-RF", "T-SPY", "T-SYNTH", "T-CKP"]
 }
