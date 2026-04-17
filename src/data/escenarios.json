@@ -5,7 +5,8 @@
     "nombre": "Línea vigente",
     "subtitulo": "Post-captura Maduro (ene 2026), transición venezolana inestable, ROS-038 en curso",
     "descripcion": "Escenario operativo actual del universo. Mondini en descanso post-ARQ-042, ROS-038 activo bajo contra-vigilancia, Reality Defender en shadow mode pre-go-live. La intranet se actualiza semanalmente vía monitor automatizado.",
-    "estado": "actualización_continua"
+    "estado": "Actualización semanal",
+    "congelado": false
   },
   {
     "id": "starlink-restringido",
@@ -13,7 +14,8 @@
     "nombre": "Contrafactual A · Starlink restringido",
     "subtitulo": "ENACOM revoca homologación Starlink Mini · despliegues internacionales sin conectividad satelital redundante",
     "descripcion": "Tras consulta pública, ENACOM revoca Res. 955/2025. Pollastri litiga la revocación junto a CELE y RSF Argentina. Operaciones evalúa Iridium GO! exec como kit alternativo. Pipeline de verificación bajo presión por dependencia residual de canales sat.",
-    "estado": "frozen · 2029-04-17"
+    "estado": "Congelado · 2029-04-17",
+    "congelado": true
   },
   {
     "id": "transicion-estable",
@@ -21,6 +23,7 @@
     "nombre": "Contrafactual B · Transición venezolana estable",
     "subtitulo": "Gobierno interino consolidado · frontera Arauca/Apure normalizada · ROS-038 escalado",
     "descripcion": "El gobierno interino venezolano consolida control territorial. ARQ-042 evaluado para reapertura. La presión doméstica sobre periodistas de investigación argentinos se intensifica en ausencia del frente externo. ICIJ convoca a Infobae a colaboración internacional sobre Rosario.",
-    "estado": "frozen · 2029-04-17"
+    "estado": "Congelado · 2029-04-17",
+    "congelado": true
   }
 ]
