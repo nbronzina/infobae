@@ -420,7 +420,10 @@ export default async function handler(req, res) {
     diag.phase = 'validacion';
     const validated = await faseValidacion(apiKey, generated, current, findings);
     const approvedRaw = validated.filter(v => v.aprobado);
-    const approved = approvedRaw.map(a => ({ ...a, contenido: cleanContent(a.contenido) }));
+    const approved = approvedRaw.map(a => ({
+      ...a,
+      contenido: { ...cleanContent(a.contenido), origen: 'auto' }
+    }));
     diag.approved = approved.length;
     diag.rejected = validated.length - approved.length;
 
