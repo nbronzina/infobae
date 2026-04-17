@@ -609,9 +609,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
       `}</style>
       <div style={{ width: '380px', textAlign: 'center' }}>
         <div style={{ marginBottom: '40px' }}>
-          <span className="serif" style={{ fontWeight: 600, letterSpacing: '-0.02em', fontSize: '36px', color: '#f18b1e', lineHeight: 1 }}>
-            infobae
-          </span>
+          <img src="/infobae-logo.png" alt="infobae" style={{ height: '36px', width: 'auto', display: 'inline-block' }} />
           <div className="mono" style={{ fontSize: '12px', color: '#5a544c', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: '8px' }}>
             / interna
           </div>
@@ -697,9 +695,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
       <div style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #d9d4c2', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '56px', fontSize: '13px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-            <span className="serif" style={{ fontWeight: 600, letterSpacing: '-0.02em', fontSize: '22px', color: '#f18b1e', lineHeight: 1 }}>
-              infobae
-            </span>
+            <img src="/infobae-logo.png" alt="infobae" style={{ height: '22px', width: 'auto', display: 'block' }} />
             <span className="mono" style={{ fontSize: '11px', color: '#5a544c', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
               / interna
             </span>
