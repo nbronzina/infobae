@@ -6,6 +6,7 @@ import notificacionesData from './data/notificaciones.json';
 import agendaData from './data/agenda.json';
 import directorioData from './data/directorio.json';
 import alertasData from './data/alertas.json';
+import sistemasData from './data/sistemas.json';
 
 // ============================================================================
 // CONTENIDO DEL MANUAL — OP-SEC-2029-004
@@ -162,6 +163,7 @@ export default function IntranetInfobae() {
   const VISTAS = {
     ...PERFILES,
     search_results: { titulo: 'Resultados de búsqueda', subtitulo: 'Coincidencias en documentos, personas, noticias y secciones' },
+    sistemas_estado: { titulo: 'Estado de sistemas', subtitulo: 'Monitoreo de infraestructura crítica y canales operativos', items: sistemasData },
     noticias: {
       titulo: 'Noticias internas',
       subtitulo: 'Organización, entrenamiento, herramientas y operaciones del equipo de Infobae',
@@ -569,7 +571,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
-  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte'];
+  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte', 'sistemas_estado'];
   const folderKeys = ['folder_redaccion', 'folder_segdigital', 'folder_legales', 'folder_rrhh', 'folder_investigacion', 'folder_herramientas'];
 
   const goToLanding = () => { setActiveView(null); setShowLanding(true); };
@@ -1151,6 +1153,33 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
               )}
 
+              {/* Estado de sistemas */}
+              {activeView === 'sistemas_estado' && (
+                <div>
+                  <div style={{ border: '1px solid #d9d4c2' }}>
+                    <div className="mono" style={{ display: 'grid', gridTemplateColumns: '2fr 0.8fr 3fr', padding: '10px 14px', fontSize: '10.5px', color: '#5a544c', textTransform: 'uppercase', letterSpacing: '0.04em', backgroundColor: '#f0ecde' }}>
+                      <div>Sistema</div><div>Estado</div><div>Nota</div>
+                    </div>
+                    {sistemasData.map((s, i) => {
+                      const color = s.estado === 'operativo' ? '#5a6e3c' : s.estado === 'degradado' ? '#8a6d2b' : s.estado === 'off-line' ? '#bd2828' : '#6b6454';
+                      const bg = s.estado === 'operativo' ? '#e8f0de' : s.estado === 'degradado' ? '#f5edd5' : s.estado === 'off-line' ? '#f5d5d5' : '#eceae4';
+                      return (
+                        <div key={i} className="mono" style={{ display: 'grid', gridTemplateColumns: '2fr 0.8fr 3fr', padding: '12px 14px', fontSize: '12px', borderTop: '1px solid #d9d4c2', lineHeight: 1.4, alignItems: 'center' }}>
+                          <div style={{ fontWeight: 500 }}>{s.sistema}</div>
+                          <div>
+                            <span style={{ fontSize: '9.5px', padding: '2px 7px', borderRadius: '2px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: bg, color }}>{s.estado}</span>
+                          </div>
+                          <div style={{ color: '#3d3931', fontSize: '11.5px' }}>{s.nota}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginTop: '16px', fontStyle: 'italic' }}>
+                    Registro actualizado automáticamente. Para reportar un incidente: seg.digital@infobae.interna.
+                  </div>
+                </div>
+              )}
+
               {/* Resultados de búsqueda global */}
               {activeView === 'search_results' && (() => {
                 const q = searchQuery.trim().toLowerCase();
@@ -1339,13 +1368,20 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               ))}
 
               {/* Soporte */}
-              {activeView === 'soporte' && VISTAS.soporte.items.map((s, i) => (
-                <div key={i} style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid #d9d4c2' }}>
-                  <div className="serif" style={{ fontSize: '16px', fontWeight: 500, marginBottom: '4px' }}>{s.area}</div>
-                  <div className="mono" style={{ fontSize: '12px', color: '#bd2828', marginBottom: '6px' }}><a href={'mailto:' + s.contacto}>{s.contacto}</a></div>
-                  <div className="sans" style={{ fontSize: '13px', lineHeight: 1.5, color: '#3d3931' }}>{s.desc}</div>
+              {activeView === 'soporte' && (<>
+                <div onClick={() => setActiveView('sistemas_estado')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', marginBottom: '24px', cursor: 'pointer' }}>
+                  <div className="mono micro" style={{ color: '#6b6454', marginBottom: '4px' }}>Monitoreo</div>
+                  <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Estado de sistemas internos →</div>
+                  <div className="mono" style={{ fontSize: '11px', color: '#6b6454', marginTop: '4px' }}>Signal, Starlink, VPN, pipeline de verificación, canal fixer.</div>
                 </div>
-              ))}
+                {VISTAS.soporte.items.map((s, i) => (
+                  <div key={i} style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid #d9d4c2' }}>
+                    <div className="serif" style={{ fontSize: '16px', fontWeight: 500, marginBottom: '4px' }}>{s.area}</div>
+                    <div className="mono" style={{ fontSize: '12px', color: '#bd2828', marginBottom: '6px' }}><a href={'mailto:' + s.contacto}>{s.contacto}</a></div>
+                    <div className="sans" style={{ fontSize: '13px', lineHeight: 1.5, color: '#3d3931' }}>{s.desc}</div>
+                  </div>
+                ))}
+              </>)}
 
               {/* ANMaC / ENACOM — documento completo */}
               {activeView === 'anmac_enacom' && (
