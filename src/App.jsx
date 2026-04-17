@@ -155,6 +155,7 @@ export default function IntranetInfobae() {
 
   const VISTAS = {
     ...PERFILES,
+    search_results: { titulo: 'Resultados de búsqueda', subtitulo: 'Coincidencias en documentos, personas, noticias y secciones' },
     noticias: {
       titulo: 'Noticias internas',
       subtitulo: 'Organización, entrenamiento, herramientas y operaciones del equipo de Infobae',
@@ -469,15 +470,12 @@ export default function IntranetInfobae() {
   }
 
   function executeSearch(query) {
-    setSearchQuery(query);
-    if (!query.trim() || !articleRef.current) return;
-    // Usar la API nativa del browser para encontrar y resaltar
-    if (window.find) {
-      articleRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setTimeout(() => {
-        window.find(query, false, false, true, false, true, false);
-      }, 300);
-    }
+    const q = query.trim();
+    setSearchQuery(q);
+    if (!q) return;
+    setActiveView('search_results');
+    setShowLanding(false);
+    setSearchOpen(false);
   }
 
   useEffect(() => {
@@ -578,6 +576,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     }
     if (activeView?.startsWith('perfil_')) {
       return { label: 'Directorio', onClick: () => goToFolder('directorio') };
+    }
+    if (activeView === 'search_results') {
+      return { label: 'Inicio', onClick: goToLanding };
     }
     if (pageKeys.includes(activeView) || folderKeys.includes(activeView)) {
       return { label: 'Inicio', onClick: goToLanding };
@@ -755,7 +756,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter') executeSearch(searchQuery); if (e.key === 'Escape') { setSearchOpen(false); setSearchQuery(''); } }}
-            placeholder="Buscar en este documento..."
+            placeholder="Buscar en la intranet..."
             className="mono"
             style={{ flex: 1, border: 'none', backgroundColor: 'transparent', fontSize: '12.5px', color: '#1f1f1f', outline: 'none', fontFamily: "'JetBrains Mono', monospace" }}
           />
@@ -775,6 +776,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
           if (showLanding && !activeView) return <>{sep}<span className="mono" style={{ color: '#1f1f1f' }}>Inicio</span></>;
           if (!showLanding && !activeView) return <>{sep}{link('Documentos', () => { setActiveView('folder_segdigital'); setShowLanding(false); })}{sep}{link('Seguridad Digital', () => { setActiveView('folder_segdigital'); setShowLanding(false); })}{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{DOC_META.codigo}</span></>;
           if (activeView?.startsWith('perfil_')) return <>{sep}{link('Directorio', () => { setActiveView('directorio'); setShowLanding(false); })}{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{VISTAS[activeView]?.titulo}</span></>;
+          if (activeView === 'search_results') return <>{sep}<span className="mono" style={{ color: '#1f1f1f' }}>Búsqueda: {searchQuery}</span></>;
           if (pageKeys.includes(activeView)) return <>{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{VISTAS[activeView]?.titulo}</span></>;
           if (folderKeys.includes(activeView)) return <>{sep}{link('Documentos', () => { setActiveView('folder_segdigital'); setShowLanding(false); })}{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{VISTAS[activeView]?.titulo}</span></>;
           if (docFolders[activeView]) {
@@ -1131,6 +1133,106 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   ))}
                 </div>
               )}
+
+              {/* Resultados de búsqueda global */}
+              {activeView === 'search_results' && (() => {
+                const q = searchQuery.trim().toLowerCase();
+                if (!q) return <div className="serif" style={{ fontSize: '14px', color: '#6b6454', fontStyle: 'italic' }}>Ingresá un término en la barra de búsqueda.</div>;
+
+                const match = (...fields) => fields.some(f => (f || '').toLowerCase().includes(q));
+
+                const docs = Object.entries(VISTAS)
+                  .filter(([, v]) => v.doc)
+                  .filter(([, v]) => {
+                    const d = v.doc;
+                    const seccionesTexto = (d.secciones || []).map(s => `${s.titulo} ${s.texto}`).join(' ');
+                    return match(d.codigo, d.titulo, d.subtitulo, d.area, d.responsable, seccionesTexto, d.fuentes);
+                  })
+                  .map(([key, v]) => ({ key, ...v.doc }));
+
+                const personas = directorioData.filter(p => match(p.nombre, p.rol, p.base, p.contacto));
+                const noticias = VISTAS.noticias.items.filter(n => match(n.titulo, n.texto, n.tag));
+                const paginasCandidatas = [
+                  { key: 'noticias', titulo: 'Noticias internas' },
+                  { key: 'directorio', titulo: 'Directorio' },
+                  { key: 'agenda', titulo: 'Agenda editorial' },
+                  { key: 'redaccion', titulo: 'Redacción' },
+                  { key: 'herramientas', titulo: 'Herramientas' },
+                  { key: 'soporte', titulo: 'Soporte' }
+                ];
+                const paginas = paginasCandidatas.filter(p => match(p.titulo));
+
+                const total = docs.length + personas.length + noticias.length + paginas.length;
+
+                return (
+                  <div>
+                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>INFOBAE · BÚSQUEDA</div>
+                    <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Resultados para "{searchQuery}"</h1>
+                    <div className="mono" style={{ fontSize: '12px', color: '#6b6454', marginBottom: '32px' }}>{total} coincidencias</div>
+
+                    {docs.length > 0 && (
+                      <div style={{ marginBottom: '28px' }}>
+                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Documentos ({docs.length})</div>
+                        <div style={{ border: '1px solid #d9d4c2' }}>
+                          {docs.map(d => (
+                            <div key={d.key} onClick={() => setActiveView(d.key)} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
+                              <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginBottom: '2px' }}>{d.codigo} · v{d.version} · {d.area}</div>
+                              <div className="serif" style={{ fontSize: '14px' }}>{d.titulo}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {personas.length > 0 && (
+                      <div style={{ marginBottom: '28px' }}>
+                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Personas ({personas.length})</div>
+                        <div style={{ border: '1px solid #d9d4c2' }}>
+                          {personas.map(p => (
+                            <div key={p.key} onClick={() => setActiveView(`perfil_${p.key}`)} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
+                              <div className="serif" style={{ fontSize: '14px', fontWeight: 500 }}>{p.nombre}</div>
+                              <div className="mono" style={{ fontSize: '11px', color: '#6b6454', marginTop: '2px' }}>{p.rol} · {p.base}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {noticias.length > 0 && (
+                      <div style={{ marginBottom: '28px' }}>
+                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Noticias ({noticias.length})</div>
+                        <div style={{ border: '1px solid #d9d4c2' }}>
+                          {noticias.map((n, i) => (
+                            <div key={i} onClick={() => setActiveView('noticias')} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
+                              <div className="mono" style={{ fontSize: '10.5px', color: '#bd2828', marginBottom: '2px' }}>{n.tag} · {n.fecha}</div>
+                              <div className="serif" style={{ fontSize: '14px' }}>{n.titulo}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {paginas.length > 0 && (
+                      <div style={{ marginBottom: '28px' }}>
+                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Secciones ({paginas.length})</div>
+                        <div style={{ border: '1px solid #d9d4c2' }}>
+                          {paginas.map(p => (
+                            <div key={p.key} onClick={() => setActiveView(p.key)} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
+                              <div className="serif" style={{ fontSize: '14px' }}>{p.titulo}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {total === 0 && (
+                      <div className="serif" style={{ fontSize: '14px', color: '#6b6454', fontStyle: 'italic', padding: '20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #bd2828' }}>
+                        Sin coincidencias para "{searchQuery}".
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
 
               {/* Perfil individual */}
               {activeView && VISTAS[activeView]?.perfil && (() => {
