@@ -1,0 +1,18 @@
+[
+  {
+    "id": "enacom-starlink-revoc",
+    "teatro": "Regulatorio",
+    "nivel": "crítico",
+    "mensaje": "Res. ENACOM 955/2025 revocada · Starlink Mini fuera de RAMATEL · despliegues internacionales en pausa hasta confirmar kit alternativo de conectividad",
+    "desde": "2029-04-12",
+    "emisor": "l. pollastri (legales)"
+  },
+  {
+    "id": "ros-038-contravig",
+    "teatro": "ROS-038",
+    "nivel": "atención",
+    "mensaje": "contra-vigilancia activa · no hablar de avances de la investigación en canales no cifrados · última verificación técnica 2029-04-17",
+    "desde": "2029-04-02",
+    "emisor": "j. fiorella (seg. digital)"
+  }
+]

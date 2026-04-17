@@ -13,8 +13,8 @@ const DATA_PATHS = {
   noticias: 'src/data/noticias.json',
   actividad: 'src/data/actividad.json',
   notificaciones: 'src/data/notificaciones.json',
-  estadoMundo: 'src/data/estado-mundo.json',
-  hechos: 'src/data/hechos.json'
+  estadoMundo: 'src/data/escenarios/vigente/estado-mundo.json',
+  hechos: 'src/data/escenarios/vigente/hechos.json'
 };
 
 function stripTags(text) {

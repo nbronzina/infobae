@@ -1,0 +1,19 @@
+{
+  "ultima_auditoria_humana": "2025-04-17",
+  "personajes": {
+    "mondini": { "ubicacion": "Buenos Aires", "estado": "descanso post-ARQ-042 hasta 2029-05-01 · próximo despliegue internacional pendiente de definir kit alternativo", "activo_en": ["ROS-038"] },
+    "fiorella": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["evaluación de Iridium GO! exec", "manual RF v4.3 (en revisión post-revocación)", "ROS-038 seg digital"] },
+    "villafane": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["procurement kit alternativo", "cierre ARQ-042"] },
+    "pollastri": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["litigio sobre revocación 955/2025", "seguros fixers", "ROS-038 legales"] },
+    "roca": { "ubicacion": "Bogotá", "estado": "operativo", "activo_en": ["pipeline verificación bajo estrés", "Reality Defender"] },
+    "zelaya": { "ubicacion": "Madrid", "estado": "operativo", "activo_en": ["editor guardia noche"] },
+    "peralta": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["HEFAT", "onboarding freelancers", "actualización módulo de conectividad sat alternativa"] },
+    "quiroga": { "ubicacion": "Lima", "estado": "operativo", "activo_en": ["contratos freelance ACOS"] },
+    "velasquez": { "ubicacion": "Arauca", "estado": "standby_extendido", "activo_en": [] }
+  },
+  "despliegues": {
+    "ARQ-042": { "estado": "cerrado", "cierre": "2029-04-17" },
+    "ROS-038": { "estado": "en_curso", "tipo": "investigacion_domestica" }
+  },
+  "amenazas_activas": ["T-DOM", "T-PHYS", "T-WPS", "T-RF", "T-SPY", "T-SYNTH", "T-CKP"]
+}

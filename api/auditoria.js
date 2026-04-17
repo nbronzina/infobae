@@ -1,6 +1,6 @@
 export const maxDuration = 30;
 
-const ESTADO_MUNDO_PATH = 'src/data/estado-mundo.json';
+const ESTADO_MUNDO_PATH = 'src/data/escenarios/vigente/estado-mundo.json';
 
 async function ghFetch(token, url, init = {}) {
   const res = await fetch(url, {
