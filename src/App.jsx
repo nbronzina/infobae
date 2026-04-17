@@ -8,6 +8,10 @@ import directorioData from './data/directorio.json';
 import alertasData from './data/alertas.json';
 import sistemasData from './data/sistemas.json';
 import correccionesData from './data/correcciones.json';
+import senalesData from './data/senales.json';
+import escenariosData from './data/escenarios.json';
+import gabineteData from './data/gabinete.json';
+import diarioData from './data/diario.json';
 
 // ============================================================================
 // CONTENIDO DEL MANUAL — OP-SEC-2029-004
@@ -50,49 +54,56 @@ const THREAT_GLOSSARY = [
     nombre: 'Harvesting de geolocalización por Wi-Fi',
     cuerpo: 'Sistemas de posicionamiento Wi-Fi de proveedores comerciales (principalmente Apple WPS) mantienen bases de datos globales de BSSIDs con coordenadas asociadas. Cualquier actor con acceso a esa API puede rastrear la posición histórica y actual de un router o terminal satelital con resolución aproximada de 8 metros.',
     vectorPractico: 'Terminales Starlink con firmware anterior a 2024 y routers de viaje sin randomización de MAC quedan inscriptos en la base como presencia persistente del operador.',
-    mitigacion: 'Bagging (bolsa Faraday) del router durante traslados. Firmware 2024+ en terminal principal. Añadir _nomap al SSID de cualquier red operada.'
+    mitigacion: 'Bagging (bolsa Faraday) del router durante traslados. Firmware 2024+ en terminal principal. Añadir _nomap al SSID de cualquier red operada.',
+    implicancias: 'Regulatoria: presión institucional sobre ENACOM para incluir requisitos de firmware en RAMATEL. Formativa: higiene de MAC y bagging Faraday como módulo base del HEFAT. Operacional: verificación de firmware 2024+ obligatoria en checklist pre-despliegue.'
   },
   {
     codigo: 'T-RF',
     nombre: 'Detección pasiva de emisión RF',
     cuerpo: 'Sensores pasivos de detección de terminales Starlink — caso de referencia reportado: StarLock / Excem Technologies, presentación en FEINDEF Madrid 2025, sin verificación independiente por terceros — permitirían detectar y triangular terminales activos a varios kilómetros sin requerir acceso al sistema de comunicaciones del objetivo. El vector no se resuelve con randomización de BSSID.',
     vectorPractico: 'El terminal emite mientras transmite. Si la transmisión es continua o prolongada, la presencia es detectable por cualquier actor con el hardware disponible comercialmente.',
-    mitigacion: 'Ventanas de transmisión cortas (2-5 min). Silencio RF de al menos 60 min entre ventanas. No transmitir en movimiento. Apagar terminal fuera de ventana.'
+    mitigacion: 'Ventanas de transmisión cortas (2-5 min). Silencio RF de al menos 60 min entre ventanas. No transmitir en movimiento. Apagar terminal fuera de ventana.',
+    implicancias: 'Regulatoria: vacío normativo — ningún Estado regula la detección pasiva de terminales LEO. Formativa: ventanas cortas y silencio RF como práctica estándar del corresponsal, no opcional. Operacional: revisión de doctrina de campo cada 12 meses mientras el costo del hardware detector siga bajando.'
   },
   {
     codigo: 'T-SPY',
     nombre: 'Spyware comercial sin interacción',
     cuerpo: 'Herramientas tipo Pegasus y derivados permiten compromiso de dispositivos móviles sin acción del usuario (zero-click). El ecosistema de inteligencia post-transición venezolana combina herramientas heredadas del chavismo con proveedores externos no identificados.',
     vectorPractico: 'Ataques documentados contra periodistas en la región desde 2022. La higiene de uso (no abrir links, no aceptar mensajes) no alcanza.',
-    mitigacion: 'Dispositivo secundario con GrapheneOS. Signal como única aplicación de llamadas. Separación física entre dispositivo de trabajo y dispositivo personal.'
+    mitigacion: 'Dispositivo secundario con GrapheneOS. Signal como única aplicación de llamadas. Separación física entre dispositivo de trabajo y dispositivo personal.',
+    implicancias: 'Regulatoria: trabajo de Citizen Lab y Access Now como única vía de contención pública del mercado de spyware comercial. Formativa: dispositivo secundario GrapheneOS obligatorio para investigación sensible. Operacional: política sin excepciones de separación dispositivo-trabajo / dispositivo-personal.'
   },
   {
     codigo: 'T-SYNTH',
     nombre: 'Contenido sintético en circulación',
     cuerpo: 'Desde 2027 el volumen de deepfakes de voceros conocidos y audios falsos atribuidos a fuentes reales supera la capacidad de verificación manual. El ecosistema de actores con capacidad de síntesis incluye grupos armados, actores estatales y particulares.',
     vectorPractico: 'Material entrante vía canales abiertos (WhatsApp, redes sociales) puede ser íntegramente sintético. Firma C2PA ausente no es prueba de falsedad pero sí señal de alerta.',
-    mitigacion: 'Verificación cruzada mínima: dos fuentes independientes. Detector de síntesis automatizado antes de publicar. Consulta al analista automatizado ante material de alto impacto.'
+    mitigacion: 'Verificación cruzada mínima: dos fuentes independientes. Detector de síntesis automatizado antes de publicar. Consulta al analista automatizado ante material de alto impacto.',
+    implicancias: 'Regulatoria: adopción de C2PA como requisito editorial — discusión pendiente en redacciones LATAM. Formativa: verificación cruzada de dos fuentes como mínimo no negociable. Operacional: pipeline Reality Defender + IPTC Origin Verifier pre-publicación para material de zona activa.'
   },
   {
     codigo: 'T-CKP',
     nombre: 'Reconocimiento facial en puntos de control',
     cuerpo: 'Fuerzas armadas venezolanas y colombianas despliegan sistemas de reconocimiento facial de proveedores externos en puntos de control fronterizos. Las bases de datos probablemente incorporan datos de redes sociales públicas.',
     vectorPractico: 'Fixers y fuentes con presencia pública online son identificables en checkpoints. La afiliación a un medio internacional puede ser detectada por el sistema antes que por el operador humano.',
-    mitigacion: 'No publicar imágenes del fixer con rostro visible. Cubrir cara en desplazamientos por zona. No mencionar nombre completo del fixer en material público.'
+    mitigacion: 'No publicar imágenes del fixer con rostro visible. Cubrir cara en desplazamientos por zona. No mencionar nombre completo del fixer en material público.',
+    implicancias: 'Regulatoria: ausencia de marco internacional de protección de identidad de colaboradores locales frente a reconocimiento facial. Formativa: briefing OPSEC al fixer antes de cada despliegue, no solo al corresponsal. Operacional: no identificar fixers en material publicado; revisión editorial específica sobre esto antes de publicar.'
   },
   {
     codigo: 'T-PHYS',
     nombre: 'Amenaza física directa y presión sobre periodistas locales',
     cuerpo: 'El vector que más periodistas mata en la región no es tecnológico. Grupos armados en Arauca y Apure ejercen presión directa sobre periodistas locales mediante amenazas por WhatsApp, seguimiento físico, y represalias contra familiares. El patrón documentado desde 2022 incluye exigencia de publicar material favorable bajo amenaza explícita.',
     vectorPractico: 'El fixer y los periodistas locales están expuestos a este vector de manera permanente, no solo durante el despliegue del corresponsal. La presencia del corresponsal internacional puede intensificar la presión sobre el fixer después de la publicación.',
-    mitigacion: 'No identificar al fixer en material publicado. Protocolo de check-in cada 6 horas durante despliegue. Plan de extracción documentado. Línea directa con FLIP (Colombia) y SNTP (Venezuela). Post-publicación: seguimiento de seguridad del fixer durante 30 días mínimo.'
+    mitigacion: 'No identificar al fixer en material publicado. Protocolo de check-in cada 6 horas durante despliegue. Plan de extracción documentado. Línea directa con FLIP (Colombia) y SNTP (Venezuela). Post-publicación: seguimiento de seguridad del fixer durante 30 días mínimo.',
+    implicancias: 'Regulatoria: marco de protección de periodistas bajo Convención de Ginebra no alcanza a civiles que operan como fixers. Formativa: módulo específico de amenaza física en el HEFAT institucional, ineludible. Operacional: cobertura del fixer extendida 30 días post-publicación como política, no como excepción.'
   },
   {
     codigo: 'T-DOM',
     nombre: 'Vigilancia estatal doméstica (territorio argentino)',
     cuerpo: 'Periodistas de investigación argentinos operan bajo vigilancia estatal de intensidad variable pero persistente. Casos documentados incluyen seguimiento físico, colocación de GPS en vehículos, intervención telefónica, e intentos coordinados de hackeo de cuentas (WhatsApp, X) post-publicación. La Secretaría de Inteligencia del Estado (SIDE) mantiene capacidad operativa sobre periodistas bajo marcos legales ambiguos.',
     vectorPractico: 'La vigilancia doméstica no se limita al período de despliegue. Un corresponsal que investiga temas sensibles (corrupción, inteligencia, narco transnacional) puede estar bajo observación antes, durante y después de cualquier viaje. Familiares y entorno cercano pueden ser incluidos en el perímetro de vigilancia.',
-    mitigacion: 'Protocolo de contra-vigilancia urbana: variación de rutas, inspección periódica de vehículo, monitoreo de actividad anómala en cuentas. Red de colegas con protocolo de aviso mutuo (modelo FOPEA). Documentar incidentes ante CPJ y FOPEA. Ver OP-SEC-2028-011 para comunicación cifrada doméstica.'
+    mitigacion: 'Protocolo de contra-vigilancia urbana: variación de rutas, inspección periódica de vehículo, monitoreo de actividad anómala en cuentas. Red de colegas con protocolo de aviso mutuo (modelo FOPEA). Documentar incidentes ante CPJ y FOPEA. Ver OP-SEC-2028-011 para comunicación cifrada doméstica.',
+    implicancias: 'Regulatoria: ambigüedad del marco de inteligencia estatal pendiente de litigio y reforma. Formativa: protocolo de contra-vigilancia doméstica obligatorio en onboarding para personal de investigación. Operacional: asumir vigilancia hasta prueba en contrario; nunca hablar de investigaciones en curso por teléfono ni en redacción con sospecha de intervención ambiental.'
   }
 ];
 
@@ -161,6 +172,10 @@ export default function IntranetInfobae() {
     if (typeof localStorage === 'undefined') return [];
     try { return JSON.parse(localStorage.getItem('infobae:suscripciones') || '[]'); } catch { return []; }
   });
+  const [escenario, setEscenario] = useState(() => {
+    if (typeof localStorage === 'undefined') return 'vigente';
+    try { return localStorage.getItem('infobae:escenario') || 'vigente'; } catch { return 'vigente'; }
+  });
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -178,6 +193,8 @@ export default function IntranetInfobae() {
     ...PERFILES,
     search_results: { titulo: 'Resultados de búsqueda', subtitulo: 'Coincidencias en documentos, personas, noticias y secciones' },
     sistemas_estado: { titulo: 'Estado de sistemas', subtitulo: 'Monitoreo de infraestructura crítica y canales operativos', items: sistemasData },
+    senales_seguimiento: { titulo: 'Señales en seguimiento', subtitulo: 'Horizon scanning — fuentes primarias y secundarias asociadas al glosario de amenazas', items: senalesData },
+    diario_turno: { titulo: 'Diario de turno', subtitulo: 'Registro abierto del equipo — una entrada por turno, firmada por el responsable', items: diarioData },
     noticias: {
       titulo: 'Noticias internas',
       subtitulo: 'Organización, entrenamiento, herramientas y operaciones del equipo de Infobae',
@@ -496,8 +513,15 @@ export default function IntranetInfobae() {
       { key: 'pipeline_verificacion', codigo: 'OP-TOOL-2029-001', titulo: 'Pipeline de verificación', version: '1.0', estado: 'vigente' },
       { key: 'opsec_log', codigo: 'OP-TOOL-2029-002', titulo: 'OP-SEC-LOG: bitácora auditable', version: '1.0', estado: 'vigente' },
       { key: 'analista_auto', codigo: 'OP-TOOL-2029-003', titulo: 'Analista automatizado', version: '1.0', estado: 'vigente' },
-      { key: 'parte_despliegue', codigo: 'OP-TOOL-2029-004', titulo: 'Parte de despliegue', version: '1.0', estado: 'vigente' }
-    ]}
+      { key: 'parte_despliegue', codigo: 'OP-TOOL-2029-004', titulo: 'Parte de despliegue', version: '1.0', estado: 'vigente' },
+      { key: 'gabinete_campo', codigo: 'OP-TOOL-2029-005', titulo: 'Gabinete de campo', version: '1.0', estado: 'vigente' }
+    ]},
+    gabinete_campo: {
+      gabinete: true,
+      titulo: 'Gabinete de campo',
+      subtitulo: 'Equipamiento aprobado para despliegue — ficha por unidad',
+      meta: { codigo: 'OP-TOOL-2029-005', version: '1.0', fecha: '2029-03-15', responsable: 'm. villafañe + j. fiorella' }
+    }
   };
 
   function showToast(msg, duracion = 2800) {
@@ -556,6 +580,13 @@ export default function IntranetInfobae() {
   useEffect(() => {
     try { localStorage.setItem('infobae:suscripciones', JSON.stringify(suscripciones)); } catch {}
   }, [suscripciones]);
+
+  useEffect(() => {
+    try { localStorage.setItem('infobae:escenario', escenario); } catch {}
+  }, [escenario]);
+
+  const escenarioActivo = escenariosData.find(s => s.id === escenario) || escenariosData[0];
+  const alertasActivas = escenarioActivo.alertas || [];
 
   function toggleSuscripcion(key) {
     setSuscripciones(prev => prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]);
@@ -663,7 +694,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     'legales': ['anmac_enacom', 'exportacion_equip', 'seguros_riesgo', 'folder_legales'],
     'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'onboarding', 'folder_rrhh'],
     'investigacion': ['docs_filtrados', 'osint_investigacion', 'redes_internacionales', 'contravigilancia', 'folder_investigacion'],
-    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'folder_herramientas']
+    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'folder_herramientas']
   };
   const isFolderActive = (key) => {
     if (key === 'seg-digital' && !activeView && !showLanding) return true;
@@ -676,10 +707,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
     jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'], onboarding: ['RRHH', 'folder_rrhh'],
     docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'],
-    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'],
+    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
-  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte', 'sistemas_estado'];
+  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno'];
   const folderKeys = ['folder_redaccion', 'folder_segdigital', 'folder_legales', 'folder_rrhh', 'folder_investigacion', 'folder_herramientas'];
 
   const goToLanding = () => { setActiveView(null); setShowLanding(true); };
@@ -886,11 +917,20 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
         </div>
       )}
 
+      {/* ======================= BANNER DE ESCENARIO CONTRAFACTUAL ======================= */}
+      {escenario !== 'vigente' && (
+        <div style={{ backgroundColor: '#1f1f1f', color: '#d9d4c2', padding: '8px 24px', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
+          <span className="mono" style={{ letterSpacing: '0.06em', textTransform: 'uppercase', color: '#f18b1e' }}>Escenario contrafactual activo</span>
+          <span className="mono" style={{ flex: 1, textAlign: 'left' }}>{escenarioActivo.nombre} — {escenarioActivo.subtitulo}</span>
+          <span role="button" tabIndex={0} onClick={() => setEscenario('vigente')} className="mono" style={{ cursor: 'pointer', padding: '4px 10px', border: '1px solid #3d3931', letterSpacing: '0.04em', textTransform: 'uppercase', fontSize: '10px' }}>Volver a línea vigente</span>
+        </div>
+      )}
+
       {/* ======================= BANNER DE ALERTA OPERATIVA ======================= */}
-      {alertasData.length > 0 && alertasData.map(a => (
-        <div key={a.id} style={{ backgroundColor: '#f0ecde', borderTop: '1px solid #d9d4c2', borderBottom: '1px solid #d9d4c2', borderLeft: '2px solid #bd2828', padding: '10px 24px', display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px' }}>
+      {alertasActivas.length > 0 && alertasActivas.map(a => (
+        <div key={a.id} style={{ backgroundColor: a.nivel === 'crítico' ? '#f5d5d5' : '#f0ecde', borderTop: '1px solid #d9d4c2', borderBottom: '1px solid #d9d4c2', borderLeft: '2px solid #bd2828', padding: '10px 24px', display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px' }}>
           <span className="mono" style={{ color: '#bd2828', fontWeight: 500, fontSize: '10.5px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-            Alerta · {a.teatro}
+            {a.nivel === 'crítico' ? 'Crítico' : 'Alerta'} · {a.teatro}
           </span>
           <span className="mono" style={{ color: '#1f1f1f', flex: 1 }}>{a.mensaje}</span>
           <span className="mono" style={{ color: '#5a544c', fontSize: '10.5px' }}>activa desde {a.desde} · {a.emisor}</span>
@@ -941,6 +981,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             <div role="button" tabIndex={0} onClick={() => setActiveView('agenda')} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: activeView === 'agenda' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'agenda' ? '2px solid #1f1f1f' : '2px solid transparent', fontWeight: activeView === 'agenda' ? 500 : 400 }}>
               <Calendar size={13} color={activeView === 'agenda' ? '#1f1f1f' : '#5a544c'} />
               <span className="sb-text">Agenda editorial</span>
+            </div>
+            <div role="button" tabIndex={0} onClick={() => setActiveView('diario_turno')} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: activeView === 'diario_turno' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'diario_turno' ? '2px solid #1f1f1f' : '2px solid transparent', fontWeight: activeView === 'diario_turno' ? 500 : 400 }}>
+              <FileText size={13} color={activeView === 'diario_turno' ? '#1f1f1f' : '#5a544c'} />
+              <span className="sb-text">Diario de turno</span>
             </div>
           </div>
 
@@ -1075,6 +1119,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 <div role="button" tabIndex={0} onClick={() => setActiveView('parte_despliegue')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'parte_despliegue' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'parte_despliegue' ? 500 : 400, backgroundColor: activeView === 'parte_despliegue' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'parte_despliegue' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Parte de despliegue
                 </div>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('gabinete_campo')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'gabinete_campo' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'gabinete_campo' ? 500 : 400, backgroundColor: activeView === 'gabinete_campo' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'gabinete_campo' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Gabinete de campo
+                </div>
               </div>
             )}
           </div>
@@ -1172,6 +1219,32 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                       <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{d.sub}</div>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Escenarios de planificación */}
+              <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '16px 20px', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '10px' }}>
+                  <div className="mono micro" style={{ color: '#5a544c' }}>Escenario de planificación</div>
+                  <div className="mono" style={{ fontSize: '10px', color: '#5a544c', fontStyle: 'italic' }}>ejercicio de foresight · no afecta contenido real</div>
+                </div>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {escenariosData.map(s => {
+                    const activo = escenario === s.id;
+                    return (
+                      <div
+                        key={s.id}
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => setEscenario(s.id)}
+                        className="mono"
+                        style={{ cursor: 'pointer', padding: '8px 12px', fontSize: '11px', border: activo ? '1px solid #1f1f1f' : '1px solid #d9d4c2', backgroundColor: activo ? '#1f1f1f' : 'transparent', color: activo ? '#f0ede4' : '#1f1f1f', flex: '1 1 30%', minWidth: '160px' }}
+                      >
+                        <div style={{ fontWeight: 500, marginBottom: '2px' }}>{s.nombre}</div>
+                        <div style={{ fontSize: '10px', color: activo ? '#d9d4c2' : '#5a544c', lineHeight: 1.4, fontWeight: 400 }}>{s.subtitulo}</div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -1315,6 +1388,68 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   </div>
                   <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginTop: '16px', fontStyle: 'italic' }}>
                     Registro actualizado automáticamente. Para reportar un incidente: seg.digital@infobae.interna.
+                  </div>
+                </div>
+              )}
+
+              {/* Diario de turno */}
+              {activeView === 'diario_turno' && (
+                <div>
+                  <div style={{ padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c', marginBottom: '20px' }}>
+                    <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                      Registro del equipo, una entrada por turno. Cada firma es individual pero la voz es operativa — no diario personal. Consulta en cualquier turno; escritura al cerrar.
+                    </div>
+                  </div>
+
+                  {diarioData.map((e, i) => (
+                    <div key={i} style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '16px 20px', marginBottom: '12px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
+                        <div className="mono" style={{ fontSize: '11px', color: '#5a544c' }}>{e.fecha}</div>
+                        <div className="mono" style={{ fontSize: '11px', color: '#1f1f1f' }}>
+                          <strong>{e.autor}</strong> · {e.rol}
+                        </div>
+                      </div>
+                      <div className="serif" style={{ fontSize: '13.5px', lineHeight: 1.6, color: '#1f1f1f' }}>{e.nota}</div>
+                    </div>
+                  ))}
+
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginTop: '20px', fontStyle: 'italic' }}>
+                    Entrada nueva al cerrar turno. Consultas sobre formato: s. peralta.
+                  </div>
+                </div>
+              )}
+
+              {/* Señales en seguimiento */}
+              {activeView === 'senales_seguimiento' && (
+                <div>
+                  <div style={{ padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c', marginBottom: '20px' }}>
+                    <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                      Scan automatizado de fuentes primarias (boletines, resoluciones, papers, comunicados) y secundarias (notas periodísticas con cita directa). Las señales terciarias se descartan. Asociación con el glosario T-* del manual OP-SEC-2029-004.
+                    </div>
+                  </div>
+                  <div style={{ border: '1px solid #d9d4c2' }}>
+                    <div className="mono" style={{ display: 'grid', gridTemplateColumns: '0.8fr 1.1fr 0.7fr 0.7fr 3fr 0.8fr', padding: '10px 14px', fontSize: '10.5px', color: '#5a544c', textTransform: 'uppercase', letterSpacing: '0.04em', backgroundColor: '#f0ecde' }}>
+                      <div>Código</div><div>Fuente</div><div>Asociado</div><div>Confianza</div><div>Resumen</div><div>Estado</div>
+                    </div>
+                    {senalesData.map(s => {
+                      const confColor = s.confianza === 'primaria' ? '#5a6e3c' : s.confianza === 'secundaria' ? '#8a6d2b' : '#5a544c';
+                      const confBg = s.confianza === 'primaria' ? '#e8f0de' : s.confianza === 'secundaria' ? '#f5edd5' : '#eceae4';
+                      return (
+                        <div key={s.codigo} className="mono" style={{ display: 'grid', gridTemplateColumns: '0.8fr 1.1fr 0.7fr 0.7fr 3fr 0.8fr', padding: '12px 14px', fontSize: '11.5px', borderTop: '1px solid #d9d4c2', lineHeight: 1.45, alignItems: 'start' }}>
+                          <div style={{ fontWeight: 500 }}>{s.codigo}</div>
+                          <div style={{ color: '#3d3931' }}>{s.fuente}<div style={{ fontSize: '10px', color: '#5a544c', marginTop: '2px' }}>{s.tipo} · {s.detectado}</div></div>
+                          <div style={{ color: '#bd2828' }}>{s.asociado_a}</div>
+                          <div>
+                            <span style={{ fontSize: '9.5px', padding: '2px 6px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: confBg, color: confColor }}>{s.confianza}</span>
+                          </div>
+                          <div className="serif" style={{ fontSize: '12px', color: '#1f1f1f', lineHeight: 1.5 }}>{s.resumen}</div>
+                          <div className="mono" style={{ fontSize: '10px', color: '#5a544c', textTransform: 'uppercase', letterSpacing: '0.02em' }}>{s.estado.replace(/_/g, ' ')}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginTop: '16px', fontStyle: 'italic' }}>
+                    Actualización continua vía monitor semanal. Propuesta de elevación de señal a protocolo: seg.digital@infobae.interna.
                   </div>
                 </div>
               )}
@@ -1508,10 +1643,17 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
               {/* Soporte */}
               {activeView === 'soporte' && (<>
-                <div role="button" tabIndex={0} onClick={() => setActiveView('sistemas_estado')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', marginBottom: '24px', cursor: 'pointer' }}>
-                  <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Monitoreo</div>
-                  <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Estado de sistemas internos →</div>
-                  <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '4px' }}>Signal, Starlink, VPN, pipeline de verificación, canal fixer.</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
+                  <div role="button" tabIndex={0} onClick={() => setActiveView('sistemas_estado')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', cursor: 'pointer' }}>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Monitoreo técnico</div>
+                    <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Estado de sistemas →</div>
+                    <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '4px' }}>Signal, Starlink, VPN, pipeline, canal fixer.</div>
+                  </div>
+                  <div role="button" tabIndex={0} onClick={() => setActiveView('senales_seguimiento')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', cursor: 'pointer' }}>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Horizon scanning</div>
+                    <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Señales en seguimiento →</div>
+                    <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '4px' }}>CPJ, ANMaC, ENACOM, FOPEA, C2PA, Dart Center.</div>
+                  </div>
                 </div>
                 {VISTAS.soporte.items.map((s, i) => (
                   <div key={i} style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid #d9d4c2' }}>
@@ -1524,6 +1666,44 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
               {/* ANMaC / ENACOM — documento completo */}
               {/* Registro de correcciones */}
+              {/* Gabinete de campo */}
+              {activeView === 'gabinete_campo' && (
+                <div>
+                  <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · HERRAMIENTAS · OP-TOOL-2029-005</div>
+                  <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Gabinete de campo</h1>
+                  <div className="serif" style={{ fontSize: '14.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '20px' }}>Equipamiento aprobado para despliegue. Cada unidad tiene ficha con especificación, notas operativas y amenaza asociada del glosario.</div>
+
+                  <div style={{ padding: '10px 14px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c', marginBottom: '24px' }}>
+                    <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                      Trazabilidad por código KIT-*. Verificación de vigencia pre-despliegue, auditoría trimestral por operaciones. Alta y baja de ítems: m. villafañe.
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '14px' }}>
+                    {gabineteData.map(k => {
+                      const estadoColor = k.estado === 'aprobado' ? '#5a6e3c' : k.estado === 'aprobado_condicional' || k.estado === 'aprobado_con_configuracion' ? '#8a6d2b' : k.estado === 'restringido_anmac' ? '#bd2828' : '#5a544c';
+                      const estadoBg = k.estado === 'aprobado' ? '#e8f0de' : k.estado === 'aprobado_condicional' || k.estado === 'aprobado_con_configuracion' ? '#f5edd5' : k.estado === 'restringido_anmac' ? '#f5d5d5' : '#eceae4';
+                      return (
+                        <div key={k.codigo} style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '16px 18px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }}>
+                            <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{k.codigo}</div>
+                            <span style={{ fontSize: '9.5px', padding: '2px 7px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: estadoBg, color: estadoColor }} className="mono">{k.estado.replace(/_/g, ' ')}</span>
+                          </div>
+                          <div className="serif" style={{ fontSize: '15px', fontWeight: 500, marginBottom: '3px' }}>{k.nombre}</div>
+                          <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '10px' }}>{k.categoria}</div>
+                          <div className="serif" style={{ fontSize: '12.5px', color: '#1f1f1f', lineHeight: 1.5, marginBottom: '10px' }}>{k.especificacion}</div>
+                          <div style={{ paddingTop: '8px', borderTop: '1px solid #d9d4c2' }}>
+                            <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Notas operativas</div>
+                            <div className="serif" style={{ fontSize: '12px', color: '#3d3931', lineHeight: 1.5, marginBottom: '8px' }}>{k.notas_operativas}</div>
+                            <div className="mono" style={{ fontSize: '10.5px', color: '#bd2828' }}>{k.asociado_a}</div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               {activeView === 'correcciones_log' && (
                 <div>
                   <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · REDACCIÓN · OP-RED-2029-006</div>
@@ -1984,10 +2164,16 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     <div className="mono micro" style={{ color: '#5a544c', marginBottom: '3px' }}>Implicación operacional</div>
                     <div className="serif" style={{ fontSize: '13.5px', lineHeight: 1.55, color: '#3d3931' }}>{t.vectorPractico}</div>
                   </div>
-                  <div>
+                  <div style={{ marginBottom: '8px' }}>
                     <div className="mono micro" style={{ color: '#5a544c', marginBottom: '3px' }}>Mitigación</div>
                     <div className="mono" style={{ fontSize: '12px', lineHeight: 1.6, color: '#1f1f1f' }}>{t.mitigacion}</div>
                   </div>
+                  {t.implicancias && (
+                    <div style={{ padding: '10px 14px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c', marginTop: '8px' }}>
+                      <div className="mono micro" style={{ color: '#5a544c', marginBottom: '3px' }}>Implicancias estratégicas</div>
+                      <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f' }}>{t.implicancias}</div>
+                    </div>
+                  )}
                 </div>
               ))}
             </section>
@@ -2393,10 +2579,22 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
               <strong>Infobae · Bitácora</strong> es un <em>diegetic prototype</em>: la ficción está en que el sistema existe, no en lo que dice. Ambientado en 2029, pregunta cómo podría organizarse una redacción argentina para cubrir investigación doméstica y corresponsalía internacional en un contexto donde la vigilancia, la autenticidad del contenido y la seguridad operativa de periodistas se volvieron condiciones cotidianas del trabajo.
             </div>
-            <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
+            <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '18px' }}>
               Cada protocolo, norma y herramienta es extensión plausible de algo que existe hoy. Los personajes y los despliegues son ficticios. Las fuentes externas, las regulaciones y los papers citados son reales.
             </div>
-            <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f', marginTop: '22px', paddingTop: '18px', borderTop: '1px solid #d9d4c2', lineHeight: 1.7 }}>
+
+            <div style={{ padding: '14px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c', marginBottom: '18px' }}>
+              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>Preguntas que abre este artefacto</div>
+              <ul className="serif" style={{ fontSize: '13px', lineHeight: 1.6, color: '#1f1f1f', margin: 0, paddingLeft: '18px' }}>
+                <li>¿Qué responsabilidad tienen los medios de traducir investigación técnica sobre vigilancia a doctrina operativa cuando los organismos internacionales no lo hacen?</li>
+                <li>¿Cómo se regula la detección pasiva de infraestructura satelital civil, si hoy no hay marco?</li>
+                <li>¿Qué protección concreta existe para fixers y colaboradores locales frente a reconocimiento facial en checkpoints?</li>
+                <li>¿Puede una redacción civil asumir la carga de OPSEC militar sin perder su función periodística?</li>
+                <li>¿La vigilancia estatal doméstica sobre periodistas de investigación es un riesgo ocupacional asumible, o una condición que exige respuesta colectiva de la profesión?</li>
+              </ul>
+            </div>
+
+            <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f', paddingTop: '14px', borderTop: '1px solid #d9d4c2', lineHeight: 1.7 }}>
               Ideado, diseñado y codificado por <strong><a href="https://www.nicolasbronzina.com/" target="_blank" rel="noreferrer" className="no-hover" style={{ color: '#1f1f1f', borderBottom: '1px solid #1f1f1f' }}>Nicolás Bronzina</a></strong>.
             </div>
             <div
