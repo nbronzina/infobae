@@ -149,7 +149,12 @@ export default function IntranetInfobae() {
 
   const NOTIFICACIONES = notificacionesData;
 
+  const PERFILES = Object.fromEntries(
+    directorioData.map(p => [`perfil_${p.key}`, { perfil: true, persona: p, titulo: p.nombre, subtitulo: p.rol + ' · ' + p.base }])
+  );
+
   const VISTAS = {
+    ...PERFILES,
     noticias: {
       titulo: 'Noticias internas',
       subtitulo: 'Organización, entrenamiento, herramientas y operaciones del equipo de Infobae',
@@ -571,6 +576,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     if (!activeView && !showLanding) {
       return { label: 'Seguridad Digital', onClick: () => goToFolder('folder_segdigital') };
     }
+    if (activeView?.startsWith('perfil_')) {
+      return { label: 'Directorio', onClick: () => goToFolder('directorio') };
+    }
     if (pageKeys.includes(activeView) || folderKeys.includes(activeView)) {
       return { label: 'Inicio', onClick: goToLanding };
     }
@@ -766,6 +774,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
           if (showLanding && !activeView) return <>{sep}<span className="mono" style={{ color: '#1f1f1f' }}>Inicio</span></>;
           if (!showLanding && !activeView) return <>{sep}{link('Documentos', () => { setActiveView('folder_segdigital'); setShowLanding(false); })}{sep}{link('Seguridad Digital', () => { setActiveView('folder_segdigital'); setShowLanding(false); })}{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{DOC_META.codigo}</span></>;
+          if (activeView?.startsWith('perfil_')) return <>{sep}{link('Directorio', () => { setActiveView('directorio'); setShowLanding(false); })}{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{VISTAS[activeView]?.titulo}</span></>;
           if (pageKeys.includes(activeView)) return <>{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{VISTAS[activeView]?.titulo}</span></>;
           if (folderKeys.includes(activeView)) return <>{sep}{link('Documentos', () => { setActiveView('folder_segdigital'); setShowLanding(false); })}{sep}<span className="mono" style={{ color: '#1f1f1f' }}>{VISTAS[activeView]?.titulo}</span></>;
           if (docFolders[activeView]) {
@@ -1113,15 +1122,75 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     <div>Nombre</div><div>Rol</div><div>Base</div><div>Contacto</div>
                   </div>
                   {VISTAS.directorio.items.map((p, i) => (
-                    <div key={i} className="mono" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.5fr 0.8fr 1.2fr', padding: '12px 14px', fontSize: '12px', borderTop: '1px solid #d9d4c2', lineHeight: 1.4 }}>
+                    <div key={i} onClick={() => setActiveView(`perfil_${p.key}`)} className="mono" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.5fr 0.8fr 1.2fr', padding: '12px 14px', fontSize: '12px', borderTop: '1px solid #d9d4c2', lineHeight: 1.4, cursor: 'pointer', backgroundColor: 'transparent', transition: 'background-color 0.1s' }} onMouseEnter={e => e.currentTarget.style.backgroundColor = '#e5e1d3'} onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}>
                       <div style={{ fontWeight: 500 }}>{p.nombre}</div>
                       <div style={{ color: '#3d3931' }}>{p.rol}</div>
                       <div style={{ color: '#5a544c' }}>{p.base}</div>
-                      <div><a href={'mailto:' + p.contacto} style={{ color: '#bd2828', fontSize: '11.5px' }}>{p.contacto}</a></div>
+                      <div><a href={'mailto:' + p.contacto} onClick={e => e.stopPropagation()} style={{ color: '#bd2828', fontSize: '11.5px' }}>{p.contacto}</a></div>
                     </div>
                   ))}
                 </div>
               )}
+
+              {/* Perfil individual */}
+              {activeView && VISTAS[activeView]?.perfil && (() => {
+                const p = VISTAS[activeView].persona;
+                const aliases = (p.aliases || []).map(a => a.toLowerCase());
+                const matches = (field) => aliases.some(a => (field || '').toLowerCase().includes(a));
+                const docsFirmados = Object.entries(VISTAS)
+                  .filter(([, val]) => val.doc && matches(val.doc.responsable))
+                  .map(([key, val]) => ({ viewKey: key, ...val.doc }));
+                const actividadPropia = ACTIVIDAD_RECIENTE.filter(a => matches(a.usuario));
+                return (
+                  <div>
+                    <div className="mono micro" style={{ color: '#6b6454', marginBottom: '6px' }}>INFOBAE · DIRECTORIO</div>
+                    <h1 className="serif" style={{ fontSize: '32px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>{p.nombre}</h1>
+                    <div className="serif" style={{ fontSize: '15px', color: '#5a544c', fontStyle: 'italic', marginBottom: '32px' }}>{p.rol}</div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', padding: '16px 20px', backgroundColor: '#f0ecde', marginBottom: '32px', fontSize: '12.5px' }}>
+                      <div>
+                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '4px' }}>Base</div>
+                        <div className="mono">{p.base}</div>
+                      </div>
+                      <div>
+                        <div className="mono micro" style={{ color: '#6b6454', marginBottom: '4px' }}>Contacto</div>
+                        <div className="mono" style={{ color: '#bd2828' }}>{p.contacto.includes('@') ? <a href={'mailto:' + p.contacto}>{p.contacto}</a> : p.contacto}</div>
+                      </div>
+                    </div>
+
+                    <div style={{ marginBottom: '32px' }}>
+                      <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Documentos firmados ({docsFirmados.length})</div>
+                      {docsFirmados.length === 0 ? (
+                        <div className="serif" style={{ fontSize: '13px', color: '#6b6454', fontStyle: 'italic' }}>No figura como responsable en documentos vigentes.</div>
+                      ) : (
+                        <div style={{ border: '1px solid #d9d4c2' }}>
+                          {docsFirmados.map(d => (
+                            <div key={d.viewKey} onClick={() => setActiveView(d.viewKey)} className="sidebar-item" style={{ padding: '12px 16px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
+                              <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginBottom: '2px' }}>{d.codigo} · v{d.version} · {d.fecha}</div>
+                              <div className="serif" style={{ fontSize: '14px' }}>{d.titulo}</div>
+                              <div className="mono" style={{ fontSize: '10.5px', color: '#6b6454', marginTop: '3px' }}>{d.responsable}</div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div style={{ marginBottom: '32px' }}>
+                      <div className="mono micro" style={{ color: '#6b6454', marginBottom: '10px' }}>Actividad reciente ({actividadPropia.length})</div>
+                      {actividadPropia.length === 0 ? (
+                        <div className="serif" style={{ fontSize: '13px', color: '#6b6454', fontStyle: 'italic' }}>Sin actividad registrada en el ciclo actual.</div>
+                      ) : (
+                        actividadPropia.map((a, i) => (
+                          <div key={i} style={{ marginBottom: '10px', fontSize: '13px', lineHeight: 1.5 }}>
+                            <div className="mono" style={{ color: '#6b6454', fontSize: '11px' }}>{a.fecha}</div>
+                            <div style={{ color: '#1f1f1f' }}>{a.accion}</div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                );
+              })()}
 
               {/* Agenda */}
               {activeView === 'agenda' && VISTAS.agenda.items.map((dia, i) => (
