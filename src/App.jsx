@@ -55,7 +55,7 @@ const THREAT_GLOSSARY = [
   {
     codigo: 'T-RF',
     nombre: 'Detección pasiva de emisión RF',
-    cuerpo: 'Sensores pasivos comerciales (categoría StarLock / Excem Technologies, presentación reportada en FEINDEF Madrid 2025 — verificación pendiente) detectan y triangulan terminales Starlink activos a varios kilómetros sin requerir acceso al sistema de comunicaciones del objetivo. El vector no se resuelve con randomización de BSSID.',
+    cuerpo: 'Sensores pasivos de detección de terminales Starlink — caso de referencia reportado: StarLock / Excem Technologies, presentación en FEINDEF Madrid 2025, sin verificación independiente por terceros — permitirían detectar y triangular terminales activos a varios kilómetros sin requerir acceso al sistema de comunicaciones del objetivo. El vector no se resuelve con randomización de BSSID.',
     vectorPractico: 'El terminal emite mientras transmite. Si la transmisión es continua o prolongada, la presencia es detectable por cualquier actor con el hardware disponible comercialmente.',
     mitigacion: 'Ventanas de transmisión cortas (2-5 min). Silencio RF de al menos 60 min entre ventanas. No transmitir en movimiento. Apagar terminal fuera de ventana.'
   },
@@ -1535,7 +1535,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   </div>
 
                   {correccionesData.map((c, i) => (
-                    <div key={i} style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '16px 20px', marginBottom: '14px' }}>
+                    <div key={i} style={{ backgroundColor: c.tipo === 'retiro' ? '#f5d5d5' : '#f8f5ec', border: '1px solid #d9d4c2', borderLeft: c.tipo === 'retiro' ? '3px solid #bd2828' : '1px solid #d9d4c2', padding: '16px 20px', marginBottom: '14px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }}>
                         <div className="mono" style={{ fontSize: '11px', color: '#5a544c' }}>{c.fecha}</div>
                         <div className="mono" style={{ fontSize: '9.5px', padding: '2px 7px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: c.tipo === 'retiro' ? '#f5d5d5' : c.tipo === 'dato' || c.tipo === 'atribución' ? '#f5edd5' : '#eceae4', color: c.tipo === 'retiro' ? '#bd2828' : c.tipo === 'dato' || c.tipo === 'atribución' ? '#8a6d2b' : '#5a544c' }}>{c.tipo}</div>
@@ -2147,7 +2147,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   Este manual es un documento interno de un medio. No es un estándar sectorial, no tiene fuerza normativa fuera de Infobae, y no fue validado por ningún organismo de seguridad para periodistas ni por ninguna institución de defensa.
                 </p>
                 <p style={{ margin: '0 0 14px' }}>
-                  Hasta la fecha de publicación de esta edición, no existe un protocolo equivalente publicado por ACOS Alliance, CPJ, RSF, UNESCO ni ninguna organización internacional de seguridad para periodistas que aborde específicamente el vector de localización pasiva por WPS o el de detección RF de terminales satelitales. La investigación técnica que sustenta las secciones T-WPS y T-RF de este manual (Rye & Levin, IEEE S&P 2024) fue publicada en peer review hace cinco años. La traducción de ese hallazgo a doctrina operativa para civiles en zona de conflicto no fue realizada por ninguna institución durante ese período. Este manual es un intento parcial de cubrir ese vacío desde un medio individual.
+                  A la fecha de publicación no se registra doctrina operativa equivalente sobre localización pasiva por WPS o detección RF de terminales satelitales en ACOS Alliance, CPJ, RSF ni UNESCO. La investigación técnica que sustenta T-WPS y T-RF (Rye & Levin, IEEE S&P 2024) fue publicada hace cinco años sin traducción institucional a protocolo de campo.
                 </p>
                 <p style={{ margin: '0 0 14px' }}>
                   La pregunta que este documento no puede responder por sí solo es quién debería estandarizar el protocolo a escala. Un manual de un medio argentino no sustituye un marco compartido entre medios, organizaciones de formación HEFAT, proveedores de equipamiento, y agencias de seguridad digital. Ese marco no existe. Este documento funciona mientras tanto.
