@@ -105,10 +105,10 @@ function ScenarioIndex() {
 
         <div style={{ paddingTop: '28px', borderTop: '1px solid #3d3931', maxWidth: '660px' }}>
           <div className="mono" style={{ fontSize: '11px', color: '#8a8472', lineHeight: 1.7 }}>
-            <strong style={{ color: '#d9d4c2' }}>Infobae · Bitácora</strong> es un diegetic prototype: la ficción está en que el sistema existe, no en lo que dice. Cada protocolo, norma y herramienta es extensión plausible de algo que existe hoy. Los personajes y los despliegues son ficticios; las fuentes externas, las regulaciones y los papers citados son reales.
+            <strong style={{ color: '#d9d4c2' }}>Infobae · Bitácora</strong> es una obra de ficción que explora el futuro cercano del periodismo de investigación y la corresponsalía internacional argentina a través de la intranet operativa de uno de sus medios icónicos —Infobae— en 2029. Un trabajo liderado por <a href="https://www.nicolasbronzina.com/" target="_blank" rel="noreferrer" className="esc-link-foot">Nicolás Bronzina</a>.
           </div>
-          <div className="mono" style={{ fontSize: '11px', color: '#8a8472', marginTop: '14px' }}>
-            Ideado, diseñado y codificado por <a href="https://www.nicolasbronzina.com/" target="_blank" rel="noreferrer" className="esc-link-foot">Nicolás Bronzina</a>.
+          <div className="mono" style={{ fontSize: '11px', color: '#8a8472', marginTop: '14px', lineHeight: 1.7 }}>
+            Diegetic prototype: la ficción está en que el sistema existe, no en lo que dice. Cada protocolo, norma y herramienta es extensión plausible de algo que existe hoy. Los personajes y los despliegues son ficticios; las fuentes externas, las regulaciones y los papers citados son reales.
           </div>
         </div>
       </div>
