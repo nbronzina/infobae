@@ -196,10 +196,6 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     if (typeof localStorage === 'undefined') return [];
     try { return JSON.parse(localStorage.getItem('infobae:recent') || '[]'); } catch { return []; }
   });
-  const [suscripciones, setSuscripciones] = useState(() => {
-    if (typeof localStorage === 'undefined') return [];
-    try { return JSON.parse(localStorage.getItem('infobae:suscripciones') || '[]'); } catch { return []; }
-  });
   const escenarioActivo = escenariosData.find(s => s.slug === scenario) || escenariosData[0];
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -246,16 +242,6 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
         { mesa: 'Argentina', responsable: 'equipo BsAs + mondini.l', coberturas: 'Elecciones legislativas (pre-campaña). ROS-038: narcotráfico Rosario, estructuras sucesoras Los Monos, nexo fuerzas de seguridad (activa, protocolo contra-vigilancia + FOPEA). Litio Jujuy (en pausa).' },
         { mesa: 'Verificación', responsable: 'roca.d', coberturas: 'Pipeline C2PA (implementación), Reality Defender (testing, go-live 01.05), cola de verificación: 5 items pendientes.' },
         { mesa: 'Formación y capacitación', responsable: 'peralta.s', coberturas: 'HEFAT: 8 certificados (abr. 2029), próximo sept. 2029. Seguridad digital: actualización obligatoria post-ed. 4.2 del manual RF. Onboarding: 2 freelancers en proceso.' }
-      ]
-    },
-    herramientas: {
-      titulo: 'Herramientas',
-      subtitulo: 'Sistemas de apoyo para preparación, verificación y documentación operativa',
-      items: [
-        { nombre: 'Analista automatizado', desc: 'Consulta al modelo de IA para evaluación de material y amenazas. Integrado en OP-SEC-2029-004, sección 07.', accion: 'analista_auto' },
-        { nombre: 'Parte de despliegue', desc: 'Formulario digital para registro de salidas, kit, itinerario y fixer designado.', accion: 'parte_despliegue' },
-        { nombre: 'Pipeline de verificación', desc: 'Cola de material entrante con estado de verificación y decisión editorial.', accion: 'pipeline_verificacion' },
-        { nombre: 'OP-SEC-LOG', desc: 'Bitácora auditable de decisiones editoriales con cadena de procedencia.', accion: 'opsec_log' }
       ]
     },
     soporte: {
@@ -626,13 +612,6 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     try { localStorage.setItem('infobae:recent', JSON.stringify(recent)); } catch {}
   }, [recent]);
 
-  useEffect(() => {
-    try { localStorage.setItem('infobae:suscripciones', JSON.stringify(suscripciones)); } catch {}
-  }, [suscripciones]);
-
-  function toggleSuscripcion(key) {
-    setSuscripciones(prev => prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]);
-  }
 
   useEffect(() => {
     if (activeView && VISTAS[activeView] && (VISTAS[activeView].doc || VISTAS[activeView].contenido)) {
@@ -752,7 +731,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
-  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'radar_tecnologico', 'mapa_teatros'];
+  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'radar_tecnologico', 'mapa_teatros'];
   const folderKeys = ['folder_redaccion', 'folder_segdigital', 'folder_legales', 'folder_rrhh', 'folder_investigacion', 'folder_herramientas'];
 
   const goToLanding = () => { setActiveView(null); setShowLanding(true); };
@@ -901,7 +880,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             <span role="button" tabIndex={0} className="sans" style={{ fontSize: '13px', color: activeView === 'redaccion' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'redaccion' ? 500 : 400, cursor: 'pointer' }} onClick={() => setActiveView('redaccion')}>Redacción</span>
             <span role="button" tabIndex={0} className="sans" style={{ fontSize: '13px', color: (activeView === 'folder_segdigital' || (!activeView && !showLanding)) ? '#1f1f1f' : '#5a544c', fontWeight: (activeView === 'folder_segdigital' || (!activeView && !showLanding)) ? 500 : 400, cursor: 'pointer' }} onClick={() => { setActiveView('folder_segdigital'); setShowLanding(false); }}>Documentos</span>
             <span role="button" tabIndex={0} className="sans" style={{ fontSize: '13px', color: activeView === 'directorio' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'directorio' ? 500 : 400, cursor: 'pointer' }} onClick={() => setActiveView('directorio')}>Directorio</span>
-            <span role="button" tabIndex={0} className="sans" style={{ fontSize: '13px', color: activeView === 'herramientas' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'herramientas' ? 500 : 400, cursor: 'pointer' }} onClick={() => setActiveView('herramientas')}>Herramientas</span>
+            <span role="button" tabIndex={0} className="sans" style={{ fontSize: '13px', color: isFolderActive('herramientas') ? '#1f1f1f' : '#5a544c', fontWeight: isFolderActive('herramientas') ? 500 : 400, cursor: 'pointer' }} onClick={() => { setActiveView('folder_herramientas'); setShowLanding(false); }}>Herramientas</span>
             <span role="button" tabIndex={0} className="sans" style={{ fontSize: '13px', color: activeView === 'soporte' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'soporte' ? 500 : 400, cursor: 'pointer' }} onClick={() => setActiveView('soporte')}>Soporte</span>
           </nav>
         </div>
@@ -1287,23 +1266,6 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   </div>
                 ))}
               </div>
-
-              {/* Áreas seguidas */}
-              {suscripciones.length > 0 && (
-                <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px', marginBottom: '20px' }}>
-                  <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Áreas seguidas ({suscripciones.length})</div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                    {suscripciones.map(k => (
-                      <div key={k} onClick={() => { setActiveView(k); setShowLanding(false); }} className="mono" style={{ fontSize: '11px', padding: '6px 12px', backgroundColor: '#f0ecde', border: '1px solid #d9d4c2', cursor: 'pointer' }}>
-                        {VISTAS[k]?.titulo || k}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginTop: '10px', fontStyle: 'italic' }}>
-                    Recibirás aviso cuando haya cambios en estas áreas. Editar desde cada carpeta.
-                  </div>
-                </div>
-              )}
 
               {/* Noticias recientes (preview) */}
               <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px' }}>
@@ -1702,7 +1664,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   { key: 'directorio', titulo: 'Directorio' },
                   { key: 'agenda', titulo: 'Agenda editorial' },
                   { key: 'redaccion', titulo: 'Redacción' },
-                  { key: 'herramientas', titulo: 'Herramientas' },
+                  { key: 'folder_herramientas', titulo: 'Herramientas' },
                   { key: 'soporte', titulo: 'Soporte' }
                 ];
                 const paginas = paginasCandidatas.filter(p => match(p.titulo));
@@ -1887,6 +1849,13 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                             </div>
                           )}
 
+                          {p.libreta.vinculacion && (
+                            <div style={{ marginBottom: '16px' }}>
+                              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Vinculación</div>
+                              <div className="serif" style={{ fontSize: '13px', color: '#1f1f1f', lineHeight: 1.55 }}>{p.libreta.vinculacion}</div>
+                            </div>
+                          )}
+
                           {p.libreta.entrenamientos_recientes?.length > 0 && (
                             <div>
                               <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Entrenamientos recientes</div>
@@ -1918,14 +1887,6 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   <div className="serif" style={{ fontSize: '16px', fontWeight: 500, marginBottom: '4px' }}>{mesa.mesa}</div>
                   <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginBottom: '8px' }}>responsable: {mesa.responsable}</div>
                   <div className="sans" style={{ fontSize: '13px', lineHeight: 1.5, color: '#3d3931' }}>{mesa.coberturas}</div>
-                </div>
-              ))}
-
-              {/* Herramientas */}
-              {activeView === 'herramientas' && VISTAS.herramientas.items.map((h, i) => (
-                <div key={i} onClick={() => { if (h.accion?.startsWith('sec-')) { setActiveView(null); setShowLanding(false); setTimeout(() => scrollTo(h.accion), 200); } else if (h.accion) { setActiveView(h.accion); } else { showToast(h.nombre + ' — no disponible en esta demo'); } }} style={{ marginBottom: '12px', padding: '16px', backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', cursor: 'pointer' }} className="sidebar-item">
-                  <div className="serif" style={{ fontSize: '16px', fontWeight: 500, marginBottom: '4px' }}>{h.nombre}</div>
-                  <div className="sans" style={{ fontSize: '13px', lineHeight: 1.5, color: '#3d3931' }}>{h.desc}</div>
                 </div>
               ))}
 
@@ -2212,11 +2173,6 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {/* Renderizador de folders */}
               {activeView && VISTAS[activeView]?.folder && (
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '12px' }}>
-                    <div role="button" tabIndex={0} onClick={() => toggleSuscripcion(activeView)} className="mono" style={{ cursor: 'pointer', fontSize: '11px', padding: '10px 14px', minHeight: '32px', display: 'flex', alignItems: 'center', border: '1px solid #d9d4c2', backgroundColor: suscripciones.includes(activeView) ? '#e8f0de' : '#f8f5ec', color: suscripciones.includes(activeView) ? '#5a6e3c' : '#5a544c' }}>
-                      {suscripciones.includes(activeView) ? '☑ Suscripto · dejar de seguir' : '☐ Suscribirse al área'}
-                    </div>
-                  </div>
                   {VISTAS[activeView].docs.map((d, i) => (
                     <div key={i} onClick={() => { if (d.actual) { setActiveView(null); setShowLanding(false); } else if (d.key) { setActiveView(d.key); } else { showToast(d.titulo + ' — sin vista disponible'); }}} className="sidebar-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', padding: '16px 20px', borderBottom: '1px solid #d9d4c2', cursor: 'pointer', backgroundColor: '#f8f5ec' }}>
                       <FileText size={16} color="#5a544c" style={{ marginTop: '2px', flexShrink: 0 }} />
