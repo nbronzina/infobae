@@ -5,7 +5,6 @@ import actividadData from './data/actividad.json';
 import notificacionesData from './data/notificaciones.json';
 import agendaData from './data/agenda.json';
 import directorioData from './data/directorio.json';
-import correccionesData from './data/correcciones.json';
 import gabineteData from './data/gabinete.json';
 import escenariosData from './data/escenarios.json';
 
@@ -196,6 +195,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     if (typeof localStorage === 'undefined') return [];
     try { return JSON.parse(localStorage.getItem('infobae:recent') || '[]'); } catch { return []; }
   });
+  const [panoramaTab, setPanoramaTab] = useState('mapa');
   const escenarioActivo = escenariosData.find(s => s.slug === scenario) || escenariosData[0];
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -216,8 +216,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     sistemas_estado: { titulo: 'Estado de sistemas', subtitulo: 'Monitoreo de infraestructura crítica y canales operativos', items: sistemasData },
     senales_seguimiento: { titulo: 'Señales en seguimiento', subtitulo: 'Horizon scanning — fuentes primarias y secundarias asociadas al glosario de amenazas', items: senalesData },
     diario_turno: { titulo: 'Diario de turno', subtitulo: 'Registro abierto del equipo — una entrada por turno, firmada por el responsable', items: diarioData },
-    radar_tecnologico: { titulo: 'Radar tecnológico', subtitulo: 'Mapa de adopción — sistemas, equipamiento y señales cruzados por estado y dominio operativo' },
-    mapa_teatros: { titulo: 'Mapa operativo', subtitulo: 'Red de corresponsales, mesas remotas y teatros activos — vista esquemática' },
+    panorama: { titulo: 'Panorama operativo', subtitulo: 'Mapa de red + radar de adopción tecnológica — dos lecturas del mismo estado de operaciones' },
     noticias: {
       titulo: 'Noticias internas',
       subtitulo: 'Organización, entrenamiento, herramientas y operaciones del equipo de Infobae',
@@ -452,15 +451,8 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     folder_redaccion: { folder: true, titulo: 'Redacción', subtitulo: 'Documentos operativos del área editorial', docs: [
       { key: 'manual_estilo', codigo: 'OP-RED-2027-001', titulo: 'Manual de estilo editorial', version: '12.3', estado: 'vigente' },
       { key: 'fuentes_anonimas', codigo: 'OP-RED-2028-003', titulo: 'Protocolo de fuentes anónimas', version: '3.0', estado: 'en_revision' },
-      { key: 'verificacion_prepub', codigo: 'OP-RED-2029-005', titulo: 'Guía de verificación pre-publicación', version: '5.1', estado: 'vigente' },
-      { key: 'correcciones_log', codigo: 'OP-RED-2029-006', titulo: 'Registro de correcciones públicas', version: '—', estado: 'vigente' }
+      { key: 'verificacion_prepub', codigo: 'OP-RED-2029-005', titulo: 'Guía de verificación pre-publicación', version: '5.1', estado: 'vigente' }
     ]},
-    correcciones_log: {
-      contenido: true,
-      titulo: 'Registro de correcciones públicas',
-      subtitulo: 'Log de correcciones aplicadas a notas publicadas por Infobae',
-      meta: { codigo: 'OP-RED-2029-006', version: '—', fecha: '2029-04-17', responsable: 'dirección editorial' }
-    },
     folder_segdigital: { folder: true, titulo: 'Seguridad digital', subtitulo: 'Manuales operativos y protocolos de seguridad', docs: [
       { key: 'comunicacion_cifrada', codigo: 'OP-SEC-2028-011', titulo: 'Comunicación cifrada en campo', version: '3.1', estado: 'vigente' },
       { key: 'verificacion_c2pa', codigo: 'OP-SEC-2029-001', titulo: 'Verificación C2PA en redacción', version: '2.0', estado: 'en_revision' },
@@ -710,7 +702,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
   }
 
   const folderChildren = {
-    'redaccion': ['manual_estilo', 'fuentes_anonimas', 'verificacion_prepub', 'correcciones_log', 'folder_redaccion'],
+    'redaccion': ['manual_estilo', 'fuentes_anonimas', 'verificacion_prepub', 'folder_redaccion'],
     'seg-digital': ['comunicacion_cifrada', 'verificacion_c2pa', 'compromiso_dispositivo', 'vigilancia_destino', 'version_fixer', 'folder_segdigital'],
     'legales': ['anmac_enacom', 'exportacion_equip', 'seguros_riesgo', 'folder_legales'],
     'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'onboarding', 'folder_rrhh'],
@@ -723,7 +715,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
   };
 
   const docFolders = {
-    manual_estilo: ['Redacción', 'folder_redaccion'], fuentes_anonimas: ['Redacción', 'folder_redaccion'], verificacion_prepub: ['Redacción', 'folder_redaccion'], correcciones_log: ['Redacción', 'folder_redaccion'],
+    manual_estilo: ['Redacción', 'folder_redaccion'], fuentes_anonimas: ['Redacción', 'folder_redaccion'], verificacion_prepub: ['Redacción', 'folder_redaccion'],
     comunicacion_cifrada: ['Seguridad Digital', 'folder_segdigital'], verificacion_c2pa: ['Seguridad Digital', 'folder_segdigital'], compromiso_dispositivo: ['Seguridad Digital', 'folder_segdigital'], vigilancia_destino: ['Seguridad Digital', 'folder_segdigital'], version_fixer: ['Seguridad Digital', 'folder_segdigital'],
     anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
     jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'], onboarding: ['RRHH', 'folder_rrhh'],
@@ -731,7 +723,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
-  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'radar_tecnologico', 'mapa_teatros'];
+  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'panorama'];
   const folderKeys = ['folder_redaccion', 'folder_segdigital', 'folder_legales', 'folder_rrhh', 'folder_investigacion', 'folder_herramientas'];
 
   const goToLanding = () => { setActiveView(null); setShowLanding(true); };
@@ -1010,6 +1002,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               <FileText size={13} color={activeView === 'diario_turno' ? '#1f1f1f' : '#5a544c'} />
               <span className="sb-text">Diario de turno</span>
             </div>
+            <div role="button" tabIndex={0} onClick={() => setActiveView('panorama')} className="sidebar-item" style={{ padding: '6px 20px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', backgroundColor: activeView === 'panorama' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'panorama' ? '2px solid #1f1f1f' : '2px solid transparent', fontWeight: activeView === 'panorama' ? 500 : 400 }}>
+              <Shield size={13} color={activeView === 'panorama' ? '#1f1f1f' : '#5a544c'} />
+              <span className="sb-text">Panorama</span>
+            </div>
           </div>
 
           <div className="micro sb-label" style={{ padding: '16px 20px 10px', color: '#5a544c' }}>
@@ -1031,9 +1027,6 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
                 <div role="button" tabIndex={0} onClick={() => setActiveView('verificacion_prepub')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'verificacion_prepub' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'verificacion_prepub' ? 500 : 400, backgroundColor: activeView === 'verificacion_prepub' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'verificacion_prepub' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Verificación pre-pub
-                </div>
-                <div role="button" tabIndex={0} onClick={() => setActiveView('correcciones_log')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'correcciones_log' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'correcciones_log' ? 500 : 400, backgroundColor: activeView === 'correcciones_log' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'correcciones_log' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-                  Correcciones públicas
                 </div>
               </div>
             )}
@@ -1406,8 +1399,20 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
               )}
 
-              {/* Radar tecnológico */}
-              {activeView === 'radar_tecnologico' && (() => {
+              {/* Panorama operativo — tabs entre mapa y radar */}
+              {activeView === 'panorama' && (
+                <div style={{ display: 'flex', gap: '4px', marginBottom: '20px', borderBottom: '1px solid #d9d4c2' }}>
+                  <div role="button" tabIndex={0} onClick={() => setPanoramaTab('mapa')} className="mono" style={{ cursor: 'pointer', padding: '10px 16px', fontSize: '12px', backgroundColor: panoramaTab === 'mapa' ? '#f0ecde' : 'transparent', borderBottom: panoramaTab === 'mapa' ? '2px solid #1f1f1f' : '2px solid transparent', color: panoramaTab === 'mapa' ? '#1f1f1f' : '#5a544c', fontWeight: panoramaTab === 'mapa' ? 500 : 400, marginBottom: '-1px' }}>
+                    Mapa de red
+                  </div>
+                  <div role="button" tabIndex={0} onClick={() => setPanoramaTab('radar')} className="mono" style={{ cursor: 'pointer', padding: '10px 16px', fontSize: '12px', backgroundColor: panoramaTab === 'radar' ? '#f0ecde' : 'transparent', borderBottom: panoramaTab === 'radar' ? '2px solid #1f1f1f' : '2px solid transparent', color: panoramaTab === 'radar' ? '#1f1f1f' : '#5a544c', fontWeight: panoramaTab === 'radar' ? 500 : 400, marginBottom: '-1px' }}>
+                    Radar de adopción
+                  </div>
+                </div>
+              )}
+
+              {/* Radar tecnológico (tab dentro de panorama) */}
+              {activeView === 'panorama' && panoramaTab === 'radar' && (() => {
                 const QUADRANTS = [
                   { id: 'conectividad', nombre: 'Conectividad', start: -Math.PI / 2 },
                   { id: 'verificacion', nombre: 'Verificación', start: 0 },
@@ -1532,8 +1537,8 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 );
               })()}
 
-              {/* Mapa operativo */}
-              {activeView === 'mapa_teatros' && (() => {
+              {/* Mapa operativo (tab dentro de panorama) */}
+              {activeView === 'panorama' && panoramaTab === 'mapa' && (() => {
                 const teatroActivo = {
                   'internacional': { arq042: 'cerrado', ros038: 'en_curso', ana047: null },
                   'rosario': { arq042: 'cerrado', ros038: 'activo', ana047: null },
@@ -1903,15 +1908,10 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Señales en seguimiento →</div>
                     <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '4px' }}>CPJ, ANMaC, ENACOM, FOPEA, C2PA, Dart Center.</div>
                   </div>
-                  <div role="button" tabIndex={0} onClick={() => setActiveView('radar_tecnologico')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', cursor: 'pointer' }}>
-                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Mapa cruzado</div>
-                    <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Radar tecnológico →</div>
-                    <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '4px' }}>Sistemas, gabinete y señales por estado de adopción.</div>
-                  </div>
-                  <div role="button" tabIndex={0} onClick={() => setActiveView('mapa_teatros')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', cursor: 'pointer' }}>
-                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Red operativa</div>
-                    <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Mapa operativo →</div>
-                    <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '4px' }}>Base, mesas remotas y teatros activos por línea.</div>
+                  <div role="button" tabIndex={0} onClick={() => setActiveView('panorama')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', cursor: 'pointer' }}>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Panorama</div>
+                    <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Mapa + Radar →</div>
+                    <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '4px' }}>Red de teatros y adopción tecnológica en una vista.</div>
                   </div>
                 </div>
                 {VISTAS.soporte.items.map((s, i) => (
@@ -1963,42 +1963,6 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
               )}
 
-              {activeView === 'correcciones_log' && (
-                <div>
-                  <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · REDACCIÓN · OP-RED-2029-006</div>
-                  <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Registro de correcciones públicas</h1>
-                  <div className="serif" style={{ fontSize: '14.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '20px' }}>Correcciones aplicadas a notas publicadas. Actualización continua. Criterio: Manual de estilo OP-RED-2027-001, §12.</div>
-
-                  <div style={{ padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #bd2828', marginBottom: '24px' }}>
-                    <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f' }}>
-                      Toda corrección mayor se comunica en la misma nota (nota al pie) y se registra acá. Las correcciones menores (ortografía, tipografía) se registran sin nota al pie.
-                    </div>
-                  </div>
-
-                  {correccionesData.map((c, i) => (
-                    <div key={i} style={{ backgroundColor: c.tipo === 'retiro' ? '#f5d5d5' : '#f8f5ec', border: '1px solid #d9d4c2', borderLeft: c.tipo === 'retiro' ? '3px solid #bd2828' : '1px solid #d9d4c2', padding: '16px 20px', marginBottom: '14px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }}>
-                        <div className="mono" style={{ fontSize: '11px', color: '#5a544c' }}>{c.fecha}</div>
-                        <div className="mono" style={{ fontSize: '9.5px', padding: '2px 7px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: c.tipo === 'retiro' ? '#f5d5d5' : c.tipo === 'dato' || c.tipo === 'atribución' ? '#f5edd5' : '#eceae4', color: c.tipo === 'retiro' ? '#bd2828' : c.tipo === 'dato' || c.tipo === 'atribución' ? '#8a6d2b' : '#5a544c' }}>{c.tipo}</div>
-                      </div>
-                      <div className="serif" style={{ fontSize: '15px', fontWeight: 500, marginBottom: '10px' }}>{c.nota}</div>
-                      <div style={{ fontSize: '12.5px', lineHeight: 1.55, color: '#3d3931', marginBottom: '6px' }}>
-                        <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c', textTransform: 'uppercase', letterSpacing: '0.04em', marginRight: '6px' }}>Original:</span>
-                        {c.original}
-                      </div>
-                      <div style={{ fontSize: '12.5px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '8px' }}>
-                        <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c', textTransform: 'uppercase', letterSpacing: '0.04em', marginRight: '6px' }}>Corrección:</span>
-                        {c.correccion}
-                      </div>
-                      <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', fontStyle: 'italic' }}>firmado: {c.firma}</div>
-                    </div>
-                  ))}
-
-                  <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginTop: '20px', fontStyle: 'italic' }}>
-                    Reportar un error en una nota publicada: correcciones@infobae.interna.
-                  </div>
-                </div>
-              )}
 
               {activeView === 'anmac_enacom' && (
                 <article style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '40px 48px' }}>
