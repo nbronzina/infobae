@@ -131,10 +131,7 @@
     "libreta": {
       "ingreso": "2025-05-04",
       "idiomas": ["es-PE (nativo)", "en (B2)", "qu (A2)"],
-      "certificaciones": ["ACOS Alliance liaison (2025)", "Rory Peck Trust freelance support training (2026)"],
-      "autorizaciones": ["Firma de contratos freelance bajo monto institucional", "Coordinación de cobertura ACOS regional"],
-      "despliegues": [],
-      "entrenamientos_recientes": ["Encuentro IWMF Lima 2028 — protección de freelancers en zonas calientes"]
+      "vinculacion": "Coordinación ACOS Alliance regional · firma de contratos freelance bajo monto institucional"
     }
   },
   {
@@ -147,13 +144,7 @@
     "libreta": {
       "ingreso": "vinculación externa por contrato · primera operación 2026-08",
       "idiomas": ["es-CO (nativo)", "es-VE (operativo)", "en (A2)"],
-      "certificaciones": ["FLIP Colombia — taller de fixers (2024)", "Curso de primeros auxilios en zona armada (CICR, 2025)"],
-      "autorizaciones": ["Acceso a canal Signal interno limitado a operaciones · sin acceso a sistemas Infobae"],
-      "despliegues": [
-        { "codigo": "ARQ-042", "rol": "fixer designado", "periodo": "2029-04-04 → 2029-04-17", "estado": "cerrado" },
-        { "codigo": "ARQ-031", "rol": "fixer designado", "periodo": "2028-02 → 2028-03", "estado": "cerrado" }
-      ],
-      "entrenamientos_recientes": ["Sesión OP-SEC-2029-004-FX — revisión de versión fixer del manual RF (2029-04-15)"]
+      "vinculacion": "Contratista externo. Sin acceso a sistemas Infobae. Canal Signal limitado a operaciones en teatros ARQ-*."
     }
   }
 ]
