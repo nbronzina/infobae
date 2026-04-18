@@ -1,0 +1,13 @@
+[
+  { "sistema": "Signal (canal oficial)", "estado": "operativo", "nota": "Último handshake: 2029-04-18 06:12 UTC. Todas las mesas reportan conectividad." },
+  { "sistema": "Starlink Mini (kit despliegue A)", "estado": "operativo", "nota": "Firmware 2024.11. En depósito. Sin uso previsto en línea ROS-038 — investigación doméstica no requiere canal sat." },
+  { "sistema": "Starlink Mini (kit despliegue B)", "estado": "degradado", "nota": "Retornó de ARQ-042. Pendiente diagnóstico RF y actualización de firmware antes de próximo uso internacional." },
+  { "sistema": "VPN corporativa (Buenos Aires)", "estado": "operativo", "nota": "Sesiones activas: 7. Última rotación de claves: 2029-04-01." },
+  { "sistema": "Pipeline verificación C2PA (IPTC Origin Verifier)", "estado": "operativo", "nota": "Cola: 7 items pendientes · 3 de ROS-038 (registros inmobiliarios, audios judiciales). Tiempo promedio: 4.1 min." },
+  { "sistema": "Reality Defender (detector de síntesis)", "estado": "operativo", "nota": "Go-live 2029-05-01. Actualmente en modo shadow — resultados no vinculantes." },
+  { "sistema": "Canal fixer (Velásquez · Signal)", "estado": "standby", "nota": "Último check-in: 2029-04-17 18:40 UTC. Sin despliegue activo." },
+  { "sistema": "Canal mesa judicial Rosario", "estado": "operativo", "nota": "Signal grupo cerrado con fuente en el expediente Cantero II. Rotación de claves 2029-04-01." },
+  { "sistema": "Dart Center / JTSN (bridge)", "estado": "operativo", "nota": "Sesión post-ARQ-042 agendada 2029-04-23." },
+  { "sistema": "Infobae CMS (interno)", "estado": "operativo", "nota": "Sin incidentes en últimos 30 días." },
+  { "sistema": "FOPEA (canal de aviso mutuo)", "estado": "operativo", "nota": "3 contactos activos por corresponsal · activación en curso por colega amenazado en Rosario." }
+]

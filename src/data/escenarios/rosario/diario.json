@@ -18,33 +18,33 @@
     "nota": "Incorporé T-PHYS y T-DOM al glosario. Las secciones 08 del manual RF quedan asociadas. Revisión obligatoria comunicada a todo personal con despliegue activo. Aproveché para rotar claves de VPN corporativa — próxima rotación 2029-07."
   },
   {
+    "fecha": "2029-04-17 11:45 ART",
+    "autor": "l. mondini",
+    "rol": "corresponsal · Buenos Aires (ROS-038)",
+    "nota": "Cruzados los registros del Colegio de Escribanos con las transferencias documentadas por Defensoría del Pueblo Rosario: tres fideicomisos nuevos abiertos en 2028 bajo apoderados con domicilio coincidente. Próximo paso: entrevista presencial con fuente judicial en Rosario, segunda semana de mayo, protocolo contra-vigilancia activo."
+  },
+  {
     "fecha": "2029-04-16 18:20 ART",
     "autor": "m. villafañe",
     "rol": "operaciones de campo · Buenos Aires",
-    "nota": "Cerré formalmente ARQ-042. Kit B de Starlink Mini retornó sin hallazgos en diagnóstico. Sesión JTSN de Mondini agendada 2029-04-23. Velásquez consultado sobre disponibilidad para eventual reapertura — confirmó. Decisión editorial pendiente."
+    "nota": "Cerré formalmente ARQ-042. Kit B de Starlink Mini retornó con comportamiento RF anómalo — en cuarentena técnica hasta diagnóstico de Fiorella. Sesión JTSN de Mondini agendada 2029-04-23. No abrir próximo teatro internacional antes del debrief."
   },
   {
     "fecha": "2029-04-16 11:05 ART",
     "autor": "l. pollastri",
     "rol": "legales · Buenos Aires",
-    "nota": "Póliza de seguro para fixers firmada. Cobertura efectiva desde 2029-05-01. OP-LEG-2028-014 actualizado y distribuido a operaciones y RRHH. Pendiente: consulta de ANMaC sobre egreso de segundo chaleco dentro del mismo año calendario — respuesta no antes de 2029-05."
+    "nota": "Póliza de seguro para fixers firmada. Cobertura efectiva desde 2029-05-01. OP-LEG-2028-014 actualizado y distribuido a operaciones y RRHH. En paralelo: preparando respuesta a citación del Juzgado Federal Rosario 2 — secreto de fuentes invocado, escrito listo para miércoles."
   },
   {
     "fecha": "2029-04-15 20:15 ART",
     "autor": "s. peralta",
     "rol": "formación · Buenos Aires",
-    "nota": "HEFAT institucional cerrado con 8 certificados. RISC Training confirmó segunda edición en septiembre con cupo ampliado (12 participantes). Incorporé feedback de esta edición: más tiempo en módulo de contra-vigilancia, menos en primeros auxilios."
+    "nota": "HEFAT institucional cerrado con 8 certificados. RISC Training confirmó segunda edición en septiembre con cupo ampliado (12 participantes). Incorporé feedback de esta edición: más tiempo en módulo de contra-vigilancia doméstica, menos en primeros auxilios."
   },
   {
     "fecha": "2029-04-15 16:40 COT",
     "autor": "d. roca",
     "rol": "verificación · Bogotá",
-    "nota": "Material de Arauca verificado y archivado. Cadena completa registrada en OP-SEC-LOG. Tres items fueron retirados a pedido del fixer por riesgo residual post-publicación — decisión editorial confirmada por Zelaya en turno noche."
-  },
-  {
-    "fecha": "2029-04-14 10:30 ART",
-    "autor": "t. quiroga",
-    "rol": "freelancer liaison · Lima",
-    "nota": "Dos freelancers peruanos en proceso de onboarding para cobertura regional. Pendiente de RRHH: firma de convenios ACOS Alliance. Una solicitud de acreditación institucional vía IWMF rechazada por falta de HEFAT — redirigida a inscripción en próxima edición."
+    "nota": "Material de Arauca verificado y archivado. En paralelo: tres audios judiciales ROS-038 en cola — autenticación C2PA no aplicable (material judicial, no editorial). Verificación por metadatos forenses con QGIS + FFmpeg, reporte a Mondini antes de cierre."
   }
 ]

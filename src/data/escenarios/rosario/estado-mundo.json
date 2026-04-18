@@ -1,0 +1,19 @@
+{
+  "ultima_auditoria_humana": "2025-04-17",
+  "personajes": {
+    "mondini": { "ubicacion": "Buenos Aires", "estado": "activa en ROS-038 desde base · viaje a Rosario proyectado segunda semana de mayo", "activo_en": ["ROS-038", "registros inmobiliarios clan Cantero", "coordinación mesa judicial"] },
+    "fiorella": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["manual RF", "ROS-038 seg digital", "coordinación FOPEA con red Rosario"] },
+    "villafane": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["cierre ARQ-042"] },
+    "pollastri": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["seguros fixers", "ROS-038 legales · respuesta a citación"] },
+    "roca": { "ubicacion": "Bogotá", "estado": "operativo", "activo_en": ["pipeline verificación", "Reality Defender", "verificación documentos judiciales ROS-038"] },
+    "zelaya": { "ubicacion": "Madrid", "estado": "operativo", "activo_en": ["editor guardia noche"] },
+    "peralta": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["HEFAT", "onboarding freelancers"] },
+    "quiroga": { "ubicacion": "Lima", "estado": "operativo", "activo_en": ["contratos freelance ACOS"] },
+    "velasquez": { "ubicacion": "Arauca", "estado": "standby", "activo_en": [] }
+  },
+  "despliegues": {
+    "ARQ-042": { "estado": "cerrado", "cierre": "2029-04-17" },
+    "ROS-038": { "estado": "en_curso_intensificado", "tipo": "investigacion_domestica_narco" }
+  },
+  "amenazas_activas": ["T-DOM", "T-PHYS", "T-SPY", "T-SYNTH"]
+}

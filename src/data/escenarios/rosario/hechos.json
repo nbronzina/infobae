@@ -1,12 +1,12 @@
 [
   { "fecha": "2025-12-01", "hecho": "Dylan Cantero detenido por PFA, Plan Bandera (real)", "tipo": "real" },
   { "fecha": "2029-03-14", "hecho": "Publicación manual higiene RF edición 4.2", "tipo": "diegetico" },
-  { "fecha": "2029-04-02", "hecho": "Activación protocolo FOPEA por amenaza a colega en Rosario", "tipo": "diegetico" },
+  { "fecha": "2029-04-02", "hecho": "Activación protocolo FOPEA por amenaza a colega local con expediente sobre estructuras sucesoras clan Cantero", "tipo": "diegetico" },
   { "fecha": "2029-04-08", "hecho": "Reality Defender integrado al pipeline de verificación", "tipo": "diegetico" },
-  { "fecha": "2029-04-09", "hecho": "Gobierno interino venezolano consolida control territorial efectivo · frontera Arauca/Apure reduce intensidad de violencia armada", "tipo": "diegetico" },
-  { "fecha": "2029-04-10", "hecho": "Mesa editorial evalúa reapertura del teatro ARQ-042 · operaciones consulta a Velásquez", "tipo": "diegetico" },
+  { "fecha": "2029-04-10", "hecho": "Mondini recibe primera entrega de registros inmobiliarios cruzados OSINT sobre fideicomisos presuntamente vinculados a sucesores Cantero", "tipo": "diegetico" },
   { "fecha": "2029-04-11", "hecho": "Nueva póliza de seguro para fixers activa desde mayo, alineada ACOS", "tipo": "diegetico" },
   { "fecha": "2029-04-13", "hecho": "Primer HEFAT institucional Infobae con RISC Training, 8 certificados", "tipo": "diegetico" },
+  { "fecha": "2029-04-14", "hecho": "Citación judicial a Infobae sobre fuentes de una nota reciente sobre lavado en Rosario · respuesta legal preparada por Pollastri", "tipo": "diegetico" },
   { "fecha": "2029-04-15", "hecho": "Versión fixer OP-SEC-2029-004-FX revisada por Velásquez", "tipo": "diegetico" },
   { "fecha": "2029-04-17", "hecho": "Cierre despliegue ARQ-042, 13 días, sesión JTSN pendiente", "tipo": "diegetico" },
   { "fecha": "2029-04-17", "hecho": "Agregados T-PHYS y T-DOM al glosario de amenazas, sección 08", "tipo": "diegetico" }

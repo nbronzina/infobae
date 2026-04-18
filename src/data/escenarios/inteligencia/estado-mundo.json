@@ -1,0 +1,19 @@
+{
+  "ultima_auditoria_humana": "2025-04-17",
+  "personajes": {
+    "mondini": { "ubicacion": "Buenos Aires", "estado": "activa en ANA-047 bajo protocolo contra-vigilancia doméstica · dispositivo aire separado · reuniones con fuentes en lugares sin cámaras identificables", "activo_en": ["ANA-047", "expediente Anaconda-2", "red FOPEA"] },
+    "fiorella": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["manual RF", "soporte contra-vigilancia ANA-047", "custodia técnica dispositivo aire Mondini"] },
+    "villafane": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["cierre ARQ-042"] },
+    "pollastri": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["seguros fixers", "custodia legal material ANA-047"] },
+    "roca": { "ubicacion": "Bogotá", "estado": "operativo", "activo_en": ["pipeline verificación", "Reality Defender"] },
+    "zelaya": { "ubicacion": "Madrid", "estado": "operativo", "activo_en": ["editor guardia noche"] },
+    "peralta": { "ubicacion": "Buenos Aires", "estado": "operativo", "activo_en": ["HEFAT", "onboarding freelancers"] },
+    "quiroga": { "ubicacion": "Lima", "estado": "operativo", "activo_en": ["contratos freelance ACOS"] },
+    "velasquez": { "ubicacion": "Arauca", "estado": "standby", "activo_en": [] }
+  },
+  "despliegues": {
+    "ARQ-042": { "estado": "cerrado", "cierre": "2029-04-17" },
+    "ANA-047": { "estado": "en_curso", "tipo": "investigacion_inteligencia_estatal" }
+  },
+  "amenazas_activas": ["T-DOM", "T-SPY", "T-SYNTH"]
+}
