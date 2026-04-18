@@ -1,0 +1,14 @@
+[
+  { "sistema": "Signal (canal oficial)", "estado": "operativo", "nota": "Último handshake: 2029-04-18 06:12 UTC. Todas las mesas reportan conectividad." },
+  { "sistema": "Starlink Mini (kit despliegue A)", "estado": "operativo", "nota": "Firmware 2024.11. En depósito, sin despliegue internacional previsto." },
+  { "sistema": "Starlink Mini (kit despliegue B)", "estado": "degradado", "nota": "Retornó de ARQ-042. Pendiente diagnóstico RF." },
+  { "sistema": "VPN corporativa (Buenos Aires)", "estado": "operativo", "nota": "Sesiones activas: 7. Última rotación de claves: 2029-04-01." },
+  { "sistema": "Pipeline verificación C2PA (IPTC Origin Verifier)", "estado": "operativo", "nota": "Cola: 5 items pendientes. Tiempo promedio: 3.2 min." },
+  { "sistema": "Reality Defender (detector de síntesis)", "estado": "operativo", "nota": "Go-live 2029-05-01. Actualmente en modo shadow — resultados no vinculantes." },
+  { "sistema": "Canal fixer (Velásquez · Signal)", "estado": "standby", "nota": "Último check-in: 2029-04-17 18:40 UTC. Sin despliegue activo." },
+  { "sistema": "Custodia legal · material ANA-047", "estado": "operativo", "nota": "Material sensible del expediente Anaconda-2 bajo custodia de abogado externo con secreto profesional (Estudio Pollastri & Asoc.). Acceso limitado a Mondini y Pollastri en sala sin conectividad." },
+  { "sistema": "Dispositivo aire (Pixel GrapheneOS · ANA-047)", "estado": "operativo", "nota": "Dispositivo sin cuenta, solo Signal y Briar. Usado exclusivamente para contactos con fuentes del expediente. Nunca conectado a red corporativa." },
+  { "sistema": "Dart Center / JTSN (bridge)", "estado": "operativo", "nota": "Sesión post-ARQ-042 agendada 2029-04-23." },
+  { "sistema": "Infobae CMS (interno)", "estado": "operativo", "nota": "Sin incidentes en últimos 30 días." },
+  { "sistema": "FOPEA (canal de aviso mutuo)", "estado": "operativo", "nota": "3 contactos activos por corresponsal · registro de dos incidentes de seguimiento físico sobre Mondini en última semana." }
+]

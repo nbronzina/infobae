@@ -9,31 +9,31 @@ import correccionesData from './data/correcciones.json';
 import gabineteData from './data/gabinete.json';
 import escenariosData from './data/escenarios.json';
 
-import vigAlertas from './data/escenarios/vigente/alertas.json';
-import vigSistemas from './data/escenarios/vigente/sistemas.json';
-import vigEstadoMundo from './data/escenarios/vigente/estado-mundo.json';
-import vigHechos from './data/escenarios/vigente/hechos.json';
-import vigSenales from './data/escenarios/vigente/senales.json';
-import vigDiario from './data/escenarios/vigente/diario.json';
+import intAlertas from './data/escenarios/internacional/alertas.json';
+import intSistemas from './data/escenarios/internacional/sistemas.json';
+import intEstadoMundo from './data/escenarios/internacional/estado-mundo.json';
+import intHechos from './data/escenarios/internacional/hechos.json';
+import intSenales from './data/escenarios/internacional/senales.json';
+import intDiario from './data/escenarios/internacional/diario.json';
 
-import starAlertas from './data/escenarios/starlink-restringido/alertas.json';
-import starSistemas from './data/escenarios/starlink-restringido/sistemas.json';
-import starEstadoMundo from './data/escenarios/starlink-restringido/estado-mundo.json';
-import starHechos from './data/escenarios/starlink-restringido/hechos.json';
-import starSenales from './data/escenarios/starlink-restringido/senales.json';
-import starDiario from './data/escenarios/starlink-restringido/diario.json';
+import rosAlertas from './data/escenarios/rosario/alertas.json';
+import rosSistemas from './data/escenarios/rosario/sistemas.json';
+import rosEstadoMundo from './data/escenarios/rosario/estado-mundo.json';
+import rosHechos from './data/escenarios/rosario/hechos.json';
+import rosSenales from './data/escenarios/rosario/senales.json';
+import rosDiario from './data/escenarios/rosario/diario.json';
 
-import transAlertas from './data/escenarios/transicion-estable/alertas.json';
-import transSistemas from './data/escenarios/transicion-estable/sistemas.json';
-import transEstadoMundo from './data/escenarios/transicion-estable/estado-mundo.json';
-import transHechos from './data/escenarios/transicion-estable/hechos.json';
-import transSenales from './data/escenarios/transicion-estable/senales.json';
-import transDiario from './data/escenarios/transicion-estable/diario.json';
+import inteAlertas from './data/escenarios/inteligencia/alertas.json';
+import inteSistemas from './data/escenarios/inteligencia/sistemas.json';
+import inteEstadoMundo from './data/escenarios/inteligencia/estado-mundo.json';
+import inteHechos from './data/escenarios/inteligencia/hechos.json';
+import inteSenales from './data/escenarios/inteligencia/senales.json';
+import inteDiario from './data/escenarios/inteligencia/diario.json';
 
 const ESCENARIO_DATA = {
-  'vigente': { alertas: vigAlertas, sistemas: vigSistemas, estadoMundo: vigEstadoMundo, hechos: vigHechos, senales: vigSenales, diario: vigDiario },
-  'starlink-restringido': { alertas: starAlertas, sistemas: starSistemas, estadoMundo: starEstadoMundo, hechos: starHechos, senales: starSenales, diario: starDiario },
-  'transicion-estable': { alertas: transAlertas, sistemas: transSistemas, estadoMundo: transEstadoMundo, hechos: transHechos, senales: transSenales, diario: transDiario }
+  'internacional': { alertas: intAlertas, sistemas: intSistemas, estadoMundo: intEstadoMundo, hechos: intHechos, senales: intSenales, diario: intDiario },
+  'rosario': { alertas: rosAlertas, sistemas: rosSistemas, estadoMundo: rosEstadoMundo, hechos: rosHechos, senales: rosSenales, diario: rosDiario },
+  'inteligencia': { alertas: inteAlertas, sistemas: inteSistemas, estadoMundo: inteEstadoMundo, hechos: inteHechos, senales: inteSenales, diario: inteDiario }
 };
 
 // ============================================================================
@@ -43,7 +43,7 @@ const ESCENARIO_DATA = {
 const DOC_META = {
   codigo: 'OP-SEC-2029-004',
   titulo: 'Higiene RF en despliegue internacional',
-  subtitulo: 'Manual operativo para corresponsales y personal de campo',
+  subtitulo: 'Protección contra localización por emisiones de radiofrecuencia (Wi-Fi, Starlink, celular) — manual operativo para corresponsales y personal de campo',
   version: '4.2',
   edicionFecha: '2029-03-14',
   vigenteHasta: '2029-09-30',
@@ -171,8 +171,8 @@ function formatUTC(date) {
 // MAIN
 // ============================================================================
 
-export default function IntranetInfobae({ scenario = 'vigente' }) {
-  const escData = ESCENARIO_DATA[scenario] || ESCENARIO_DATA.vigente;
+export default function IntranetInfobae({ scenario = 'internacional' }) {
+  const escData = ESCENARIO_DATA[scenario] || ESCENARIO_DATA.internacional;
   const alertasData = escData.alertas;
   const sistemasData = escData.sistemas;
   const senalesData = escData.senales;
@@ -221,6 +221,7 @@ export default function IntranetInfobae({ scenario = 'vigente' }) {
     senales_seguimiento: { titulo: 'Señales en seguimiento', subtitulo: 'Horizon scanning — fuentes primarias y secundarias asociadas al glosario de amenazas', items: senalesData },
     diario_turno: { titulo: 'Diario de turno', subtitulo: 'Registro abierto del equipo — una entrada por turno, firmada por el responsable', items: diarioData },
     radar_tecnologico: { titulo: 'Radar tecnológico', subtitulo: 'Mapa de adopción — sistemas, equipamiento y señales cruzados por estado y dominio operativo' },
+    mapa_teatros: { titulo: 'Mapa operativo', subtitulo: 'Red de corresponsales, mesas remotas y teatros activos — vista esquemática' },
     noticias: {
       titulo: 'Noticias internas',
       subtitulo: 'Organización, entrenamiento, herramientas y operaciones del equipo de Infobae',
@@ -529,11 +530,33 @@ export default function IntranetInfobae({ scenario = 'vigente' }) {
         { titulo: 'Red de protección', texto: 'Mantener al menos 3 contactos FOPEA actualizados para activación de protocolo de aviso mutuo (ver EXT-FOPEA-2028). Documentar todo incidente (seguimiento, hackeo, amenaza) ante FOPEA y CPJ. Si la amenaza incluye agresión física o vigilancia sostenida: comunicar al director editorial y activar cobertura legal inmediata. Considerar publicación coordinada con otro medio como medida de protección (la visibilidad protege).' },
         { titulo: 'Investigaciones sobre inteligencia', texto: 'Cuando el objeto de investigación es la propia SIDE o sus derivados, el nivel de precaución se eleva. No almacenar material en ningún dispositivo conectado a red. Copias físicas en lugar seguro fuera de la redacción y del domicilio. Considerar uso de intermediario legal (abogado con secreto profesional) para custodia de material crítico. No subestimar capacidad técnica del adversario — la SIDE tiene acceso a herramientas de vigilancia comercial de grado militar.' }
       ], fuentes: 'FOPEA, informes de amenazas a periodistas 2020-2029. CPJ, Argentina country reports. Hugo Alconada Mon, descripción pública de vigilancia (GIJN, 2024). Citizen Lab, reportes sobre uso de Pegasus en América Latina.' }},
+    narco_cobertura: { doc: {
+      area: 'INFOBAE · INVESTIGACIÓN', codigo: 'OP-INV-2029-005', version: '1.0', fecha: '2029-02-18', responsable: 'dirección editorial + l. pollastri',
+      titulo: 'Cobertura de narcotráfico y crimen organizado doméstico', subtitulo: 'Protocolo editorial y operativo para investigaciones sobre estructuras criminales en territorio argentino',
+      secciones: [
+        { titulo: 'Alcance', texto: 'Este protocolo aplica a toda investigación sobre estructuras de narcotráfico y crimen organizado con operación doméstica — foco principal Rosario post-detención del clan Cantero (dic 2025), rutas Paraguay-Argentina, lavado inmobiliario, y nexo narcotráfico-fuerzas de seguridad locales. Rosario concentra el riesgo operativo más alto de la profesión en Argentina post-2020 según InSight Crime y FOPEA.' },
+        { titulo: 'Coordinación judicial y fiscal', texto: 'La mayoría del material útil proviene de expedientes federales en curso. La cobertura requiere coordinación con mesa judicial y defensa legal temprana de fuentes. No publicar nombres de testigos protegidos. Verificar con Pollastri antes de publicar cualquier identidad de funcionario judicial o policial local. Anticipar citaciones por la justicia en busca de fuentes: la respuesta estándar es secreto de fuentes bajo art. 43 CN.' },
+        { titulo: 'Protección del periodista local', texto: 'El periodista local es el vector de riesgo más alto. Un corresponsal desde Buenos Aires puede volver a base tras el trabajo de campo — el colega rosarino no. Toda cobertura debe considerar: no identificar al colega en redes internas, coordinar publicación con pares de la ciudad vía FOPEA, activar protocolo de aviso mutuo ante amenaza directa. No exponer al colega por un detalle que puede omitirse.' },
+        { titulo: 'Amenazas operativas frecuentes', texto: 'Amenazas por WhatsApp de números descartables. Seguimiento físico de baja sofisticación (motos, vehículos sin patente visible). Intentos de intimidación a familiares. Ocasionalmente: aviso de "esta nota la pagás" en redacción o domicilio. Todas deben ser documentadas ante FOPEA y CPJ dentro de las 48h. Registrar foto, hora, lugar, descripción del contactante.' },
+        { titulo: 'Diferencia con cobertura internacional', texto: 'A diferencia de un despliegue internacional, la cobertura narco doméstica es continua — no hay ventana de entrada y salida. El riesgo persiste después de publicar y puede extenderse meses o años. La sesión JTSN post-publicación es recomendable aunque no obligatoria para investigaciones de más de 6 meses de trabajo continuo.' }
+      ], fuentes: 'InSight Crime, Los Monos: reconfiguración post-2025. Plan Bandera PFA dic 2025 (real). De los Santos & Lascano, "Los Monos" (premio FOPEA). FOPEA, protocolo de aviso mutuo. CPJ Argentina country reports. Fiscalía Federal Rosario, expedientes públicos.' }},
+    inteligencia_investigacion: { doc: {
+      area: 'INFOBAE · INVESTIGACIÓN', codigo: 'OP-INV-2029-007', version: '1.0', fecha: '2029-03-10', responsable: 'dirección editorial + l. pollastri + j. fiorella',
+      titulo: 'Investigación sobre servicios de inteligencia y zonas grises del Estado', subtitulo: 'Criterios editoriales, protocolo legal y OPSEC para cobertura del aparato de inteligencia argentino',
+      secciones: [
+        { titulo: 'Qué abarca', texto: 'Investigaciones que tengan como objeto operaciones, presupuestos reservados, escuchas con orden judicial ambigua, legajos abiertos sobre periodistas y políticos, y articulaciones entre servicios estatales y actores privados. Incluye tanto la SIDE como organismos provinciales y fuerzas federales que cumplen funciones de inteligencia de facto.' },
+        { titulo: 'Lectura del caso Anaconda (2016-2020, real)', texto: 'El caso Anaconda — legajo SIDE abierto sobre Hugo Alconada Mon entre 2016 y 2020 — es el antecedente doméstico más documentado de vigilancia estatal sobre un periodista de investigación en Argentina en el siglo XXI. La existencia del legajo se confirmó judicialmente. El caso define el piso de riesgo: cualquier investigación sobre el aparato de inteligencia asume que es posible replicarse. Criterio operativo: si Alconada Mon fue vigilado durante cuatro años por el servicio de inteligencia argentino, el supuesto por defecto es que un periodista actual investigando material análogo también puede estarlo.' },
+        { titulo: 'Custodia legal del material', texto: 'Material obtenido de expedientes o filtraciones relativas a servicios de inteligencia se custodia fuera de infraestructura Infobae. Estudio jurídico externo con secreto profesional (convenio Pollastri & Asoc.). Lectura solo en sala sin conectividad. No se digitaliza material original hasta decisión editorial final. Copia forense bajo custodia legal separada de la copia de trabajo.' },
+        { titulo: 'Contra-vigilancia elevada', texto: 'Además de las medidas de OP-INV-2028-004: dispositivo aire (Pixel con GrapheneOS sin cuenta) para contactos con fuentes del expediente, exclusivo para esa investigación. No se conecta nunca a red corporativa. Rotación de clave cada 14 días. Si hay sospecha de compromiso, destrucción física del dispositivo y emisión de nuevo.' },
+        { titulo: 'Criterio editorial de publicación', texto: 'La publicación requiere: doble fuente con acceso directo al material; verificación cruzada con otra investigación independiente si es posible; revisión legal completa con cálculo de exposición a denuncia penal por violación del secreto; y plan de respuesta ante eventual amparo o intento de censura previa. Publicación coordinada con socio internacional (ICIJ, OCCRP) como medida de protección cuando el material lo permita.' }
+      ], fuentes: 'Hugo Alconada Mon, descripción pública del caso Anaconda (GIJN 2024, CPJ 2023). Citizen Lab, reportes sobre Pegasus y otras herramientas comerciales en América Latina. CELE - Universidad de Palermo, publicaciones sobre inteligencia y libertad de expresión. Ley 25.520 de Inteligencia Nacional (texto ordenado).' }},
     folder_investigacion: { folder: true, titulo: 'Investigación', subtitulo: 'Metodología, protocolos y herramientas para periodismo de investigación', docs: [
       { key: 'docs_filtrados', codigo: 'OP-INV-2028-001', titulo: 'Documentos filtrados', version: '2.0', estado: 'vigente' },
       { key: 'osint_investigacion', codigo: 'OP-INV-2029-002', titulo: 'Metodología OSINT', version: '1.0', estado: 'vigente' },
       { key: 'redes_internacionales', codigo: 'OP-INV-2029-003', titulo: 'Redes internacionales (ICIJ, OCCRP)', version: '1.0', estado: 'vigente' },
-      { key: 'contravigilancia', codigo: 'OP-INV-2028-004', titulo: 'Contra-vigilancia doméstica', version: '3.0', estado: 'vigente' }
+      { key: 'contravigilancia', codigo: 'OP-INV-2028-004', titulo: 'Contra-vigilancia doméstica', version: '3.0', estado: 'vigente' },
+      { key: 'narco_cobertura', codigo: 'OP-INV-2029-005', titulo: 'Narcotráfico y crimen organizado doméstico', version: '1.0', estado: 'vigente' },
+      { key: 'inteligencia_investigacion', codigo: 'OP-INV-2029-007', titulo: 'Investigación sobre servicios de inteligencia', version: '1.0', estado: 'vigente' }
     ]},
     folder_herramientas: { folder: true, titulo: 'Herramientas', subtitulo: 'Sistemas operativos, flujos de verificación y bitácoras', docs: [
       { key: 'pipeline_verificacion', codigo: 'OP-TOOL-2029-001', titulo: 'Pipeline de verificación', version: '1.0', estado: 'vigente' },
@@ -712,7 +735,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     'seg-digital': ['comunicacion_cifrada', 'verificacion_c2pa', 'compromiso_dispositivo', 'vigilancia_destino', 'version_fixer', 'folder_segdigital'],
     'legales': ['anmac_enacom', 'exportacion_equip', 'seguros_riesgo', 'folder_legales'],
     'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'onboarding', 'folder_rrhh'],
-    'investigacion': ['docs_filtrados', 'osint_investigacion', 'redes_internacionales', 'contravigilancia', 'folder_investigacion'],
+    'investigacion': ['docs_filtrados', 'osint_investigacion', 'redes_internacionales', 'contravigilancia', 'narco_cobertura', 'inteligencia_investigacion', 'folder_investigacion'],
     'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'folder_herramientas']
   };
   const isFolderActive = (key) => {
@@ -725,11 +748,11 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     comunicacion_cifrada: ['Seguridad Digital', 'folder_segdigital'], verificacion_c2pa: ['Seguridad Digital', 'folder_segdigital'], compromiso_dispositivo: ['Seguridad Digital', 'folder_segdigital'], vigilancia_destino: ['Seguridad Digital', 'folder_segdigital'], version_fixer: ['Seguridad Digital', 'folder_segdigital'],
     anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
     jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'], onboarding: ['RRHH', 'folder_rrhh'],
-    docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'],
+    docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'], narco_cobertura: ['Investigación', 'folder_investigacion'], inteligencia_investigacion: ['Investigación', 'folder_investigacion'],
     pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
-  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'radar_tecnologico'];
+  const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'herramientas', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'radar_tecnologico', 'mapa_teatros'];
   const folderKeys = ['folder_redaccion', 'folder_segdigital', 'folder_legales', 'folder_rrhh', 'folder_investigacion', 'folder_herramientas'];
 
   const goToLanding = () => { setActiveView(null); setShowLanding(true); };
@@ -937,9 +960,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
       )}
 
       {/* ======================= BANNER DE ESCENARIO CONTRAFACTUAL ======================= */}
-      {scenario !== 'vigente' && (
+      {scenario !== 'internacional' && (
         <div style={{ backgroundColor: '#1f1f1f', color: '#d9d4c2', padding: '8px 24px', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
-          <span className="mono" style={{ letterSpacing: '0.06em', textTransform: 'uppercase', color: '#f18b1e' }}>Línea contrafactual</span>
+          <span className="mono" style={{ letterSpacing: '0.06em', textTransform: 'uppercase', color: '#f18b1e' }}>Línea temática</span>
           <span className="mono" style={{ flex: 1, textAlign: 'left' }}>{escenarioActivo.nombre} — {escenarioActivo.subtitulo}</span>
           {escenarioActivo.congelado && (
             <span className="mono" style={{ fontSize: '9.5px', padding: '2px 7px', border: '1px solid #3d3931', color: '#8a8472', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{escenarioActivo.estado}</span>
@@ -1116,6 +1139,12 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
                 <div role="button" tabIndex={0} onClick={() => setActiveView('contravigilancia')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'contravigilancia' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'contravigilancia' ? 500 : 400, backgroundColor: activeView === 'contravigilancia' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'contravigilancia' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Contra-vigilancia doméstica
+                </div>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('narco_cobertura')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'narco_cobertura' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'narco_cobertura' ? 500 : 400, backgroundColor: activeView === 'narco_cobertura' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'narco_cobertura' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Narcotráfico doméstico
+                </div>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('inteligencia_investigacion')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'inteligencia_investigacion' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'inteligencia_investigacion' ? 500 : 400, backgroundColor: activeView === 'inteligencia_investigacion' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'inteligencia_investigacion' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Servicios de inteligencia
                 </div>
               </div>
             )}
@@ -1541,6 +1570,80 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 );
               })()}
 
+              {/* Mapa operativo */}
+              {activeView === 'mapa_teatros' && (() => {
+                const teatroActivo = {
+                  'internacional': { arq042: 'cerrado', ros038: 'en_curso', ana047: null },
+                  'rosario': { arq042: 'cerrado', ros038: 'activo', ana047: null },
+                  'inteligencia': { arq042: 'cerrado', ros038: 'en_curso', ana047: 'activo' }
+                }[scenario] || { arq042: 'cerrado', ros038: 'en_curso', ana047: null };
+
+                const nodos = [
+                  { id: 'madrid', label: 'MADRID', rol: 'editor guardia · f. zelaya', x: 680, y: 90, tipo: 'mesa' },
+                  { id: 'bogota', label: 'BOGOTÁ', rol: 'verificación · d. roca', x: 150, y: 130, tipo: 'mesa' },
+                  { id: 'arauca', label: 'ARAUCA / APURE', rol: 'teatro ARQ-042 · fixer r. velásquez', x: 200, y: 200, tipo: 'teatro', estado: teatroActivo.arq042 },
+                  { id: 'lima', label: 'LIMA', rol: 'freelancers · t. quiroga', x: 140, y: 330, tipo: 'mesa' },
+                  { id: 'bsas', label: 'BUENOS AIRES', rol: 'redacción central · mondini · fiorella · villafañe · pollastri · peralta', x: 520, y: 470, tipo: 'base' },
+                  { id: 'rosario', label: 'ROSARIO', rol: 'teatro ROS-038 · investigación doméstica', x: 470, y: 400, tipo: 'teatro', estado: teatroActivo.ros038 }
+                ];
+                if (teatroActivo.ana047) {
+                  nodos.push({ id: 'ana047', label: 'ANA-047', rol: 'expediente bajo protocolo contra-vigilancia · custodia legal externa', x: 590, y: 430, tipo: 'teatro', estado: 'activo' });
+                }
+                const bsas = nodos.find(n => n.id === 'bsas');
+
+                const colorNodo = (n) => {
+                  if (n.id === 'bsas') return '#1f1f1f';
+                  if (n.tipo === 'teatro') {
+                    if (n.estado === 'activo') return '#bd2828';
+                    if (n.estado === 'en_curso') return '#8a6d2b';
+                    return '#5a544c';
+                  }
+                  return '#5a6e3c';
+                };
+
+                return (
+                  <div>
+                    <div style={{ padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c', marginBottom: '20px' }}>
+                      <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                        Vista esquemática de la red operativa. No es mapa geográfico — es diagrama de coordinación: base (Buenos Aires), mesas remotas, teatros. El color de cada teatro refleja el estado en la línea {scenario}.
+                      </div>
+                    </div>
+
+                    <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px', display: 'flex', justifyContent: 'center' }}>
+                      <svg viewBox="0 0 800 560" style={{ width: '100%', maxWidth: '780px', height: 'auto' }}>
+                        <rect width="800" height="560" fill="#f7f5ee" />
+                        {nodos.filter(n => n.id !== 'bsas').map(n => (
+                          <line key={'l-' + n.id} x1={bsas.x} y1={bsas.y} x2={n.x} y2={n.y} stroke="#d9d4c2" strokeWidth="1" strokeDasharray={n.tipo === 'teatro' ? '0' : '3 3'} />
+                        ))}
+                        {nodos.map(n => {
+                          const r = n.id === 'bsas' ? 14 : n.tipo === 'teatro' ? 10 : 8;
+                          return (
+                            <g key={n.id}>
+                              <circle cx={n.x} cy={n.y} r={r} fill={colorNodo(n)} stroke="#f8f5ec" strokeWidth="2" />
+                              <text x={n.x + r + 6} y={n.y - 2} fontFamily="JetBrains Mono, monospace" fontSize="11" fill="#1f1f1f" fontWeight="500" style={{ letterSpacing: '0.04em' }}>{n.label}</text>
+                              <text x={n.x + r + 6} y={n.y + 11} fontFamily="JetBrains Mono, monospace" fontSize="9.5" fill="#5a544c">{n.rol}</text>
+                            </g>
+                          );
+                        })}
+                        <text x="30" y="540" fontFamily="JetBrains Mono, monospace" fontSize="9" fill="#5a544c" style={{ letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                          Base · Mesa remota · Teatro (activo / en curso / cerrado)
+                        </text>
+                      </svg>
+                    </div>
+
+                    <div style={{ marginTop: '20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px' }}>
+                      {nodos.map(n => (
+                        <div key={'lg-' + n.id} style={{ padding: '10px 14px', backgroundColor: '#f0ecde', border: '1px solid #d9d4c2' }}>
+                          <div className="mono" style={{ fontSize: '10.5px', color: colorNodo(n), textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '3px', fontWeight: 500 }}>{n.label}</div>
+                          <div className="serif" style={{ fontSize: '12.5px', color: '#1f1f1f', lineHeight: 1.5 }}>{n.rol}</div>
+                          {n.estado && <div className="mono" style={{ fontSize: '10px', color: '#5a544c', marginTop: '4px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>estado: {n.estado.replace(/_/g, ' ')}</div>}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
+
               {/* Señales en seguimiento */}
               {activeView === 'senales_seguimiento' && (
                 <div>
@@ -1843,6 +1946,11 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Mapa cruzado</div>
                     <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Radar tecnológico →</div>
                     <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '4px' }}>Sistemas, gabinete y señales por estado de adopción.</div>
+                  </div>
+                  <div role="button" tabIndex={0} onClick={() => setActiveView('mapa_teatros')} style={{ padding: '14px 20px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f', cursor: 'pointer' }}>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Red operativa</div>
+                    <div className="serif" style={{ fontSize: '15px', fontWeight: 500 }}>Mapa operativo →</div>
+                    <div className="mono" style={{ fontSize: '11px', color: '#5a544c', marginTop: '4px' }}>Base, mesas remotas y teatros activos por línea.</div>
                   </div>
                 </div>
                 {VISTAS.soporte.items.map((s, i) => (

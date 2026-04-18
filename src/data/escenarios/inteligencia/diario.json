@@ -15,36 +15,36 @@
     "fecha": "2029-04-17 09:30 ART",
     "autor": "j. fiorella",
     "rol": "seguridad digital · Buenos Aires",
-    "nota": "Incorporé T-PHYS y T-DOM al glosario. Las secciones 08 del manual RF quedan asociadas. Revisión obligatoria comunicada a todo personal con despliegue activo. Aproveché para rotar claves de VPN corporativa — próxima rotación 2029-07."
+    "nota": "Incorporé T-PHYS y T-DOM al glosario. Secciones 08 del manual RF asociadas. Rotación de claves de VPN corporativa completada. En paralelo: instalación del dispositivo aire GrapheneOS de Mondini para ANA-047 · flasheo sin cuenta, solo Signal y Briar."
+  },
+  {
+    "fecha": "2029-04-17 08:50 ART",
+    "autor": "l. mondini",
+    "rol": "corresponsal · Buenos Aires (ANA-047)",
+    "nota": "Segunda reunión con la fuente. Variación de ruta completada, inspección del vehículo sin hallazgos. Material recibido bajo custodia inmediata de Pollastri. No hablar del caso por canales primarios hasta nueva instrucción de seg. digital."
   },
   {
     "fecha": "2029-04-16 18:20 ART",
     "autor": "m. villafañe",
     "rol": "operaciones de campo · Buenos Aires",
-    "nota": "Cerré formalmente ARQ-042. Kit B de Starlink Mini quedó en depósito — sin urgencia de diagnóstico mientras dure el expediente 1184/2029. Arranqué evaluación de Iridium GO! exec como respaldo sat. Sesión JTSN de Mondini agendada 2029-04-23."
+    "nota": "Cerré formalmente ARQ-042. Kit B de Starlink Mini retornó con comportamiento RF anómalo — en cuarentena técnica hasta diagnóstico de Fiorella. Sesión JTSN de Mondini agendada 2029-04-23. No abrir próximo teatro internacional antes del debrief."
   },
   {
     "fecha": "2029-04-16 11:05 ART",
     "autor": "l. pollastri",
     "rol": "legales · Buenos Aires",
-    "nota": "Póliza de seguro para fixers firmada. Cobertura efectiva desde 2029-05-01. OP-LEG-2028-014 actualizado y distribuido a operaciones y RRHH. Paralelo: apertura de expediente judicial contra Res. 1184/2029 junto a CELE y RSF Argentina — audiencia preliminar 2029-04-30."
+    "nota": "Póliza de seguro para fixers firmada. Cobertura efectiva desde 2029-05-01. OP-LEG-2028-014 actualizado y distribuido a operaciones y RRHH. En paralelo: acuerdo con estudio externo para custodia legal del material ANA-047 bajo secreto profesional · sala sin conectividad habilitada para lectura."
   },
   {
     "fecha": "2029-04-15 20:15 ART",
     "autor": "s. peralta",
     "rol": "formación · Buenos Aires",
-    "nota": "HEFAT institucional cerrado con 8 certificados. RISC Training confirmó segunda edición en septiembre con cupo ampliado (12 participantes). Incorporé feedback de esta edición: más tiempo en módulo de contra-vigilancia, menos en primeros auxilios."
+    "nota": "HEFAT institucional cerrado con 8 certificados. RISC Training confirmó segunda edición en septiembre con cupo ampliado (12 participantes). Incorporé feedback de esta edición: más tiempo en módulo de contra-vigilancia doméstica, menos en primeros auxilios."
   },
   {
     "fecha": "2029-04-15 16:40 COT",
     "autor": "d. roca",
     "rol": "verificación · Bogotá",
     "nota": "Material de Arauca verificado y archivado. Cadena completa registrada en OP-SEC-LOG. Tres items fueron retirados a pedido del fixer por riesgo residual post-publicación — decisión editorial confirmada por Zelaya en turno noche."
-  },
-  {
-    "fecha": "2029-04-14 10:30 ART",
-    "autor": "t. quiroga",
-    "rol": "freelancer liaison · Lima",
-    "nota": "Dos freelancers peruanos en proceso de onboarding para cobertura regional. Pendiente de RRHH: firma de convenios ACOS Alliance. Una solicitud de acreditación institucional vía IWMF rechazada por falta de HEFAT — redirigida a inscripción en próxima edición."
   }
 ]

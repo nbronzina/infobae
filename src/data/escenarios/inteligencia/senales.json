@@ -1,0 +1,82 @@
+[
+  {
+    "codigo": "S-2029-033",
+    "fuente": "Citizen Lab",
+    "tipo": "investigación",
+    "asociado_a": "T-SPY",
+    "confianza": "primaria",
+    "detectado": "2029-04-15",
+    "resumen": "Informe preliminar sobre indicadores de compromiso de spyware comercial en dispositivos de periodistas argentinos de investigación. Una muestra confirmada por análisis forense, dos pendientes.",
+    "estado": "mitigación_en_curso"
+  },
+  {
+    "codigo": "S-2029-018",
+    "fuente": "CPJ",
+    "tipo": "incidente",
+    "asociado_a": "T-DOM",
+    "confianza": "primaria",
+    "detectado": "2029-04-14",
+    "resumen": "Registro de tres casos de vigilancia doméstica documentada contra periodistas de investigación en Argentina en primer trimestre 2029. Informe trimestral CPJ pendiente de publicación oficial.",
+    "estado": "en_seguimiento"
+  },
+  {
+    "codigo": "S-2029-034",
+    "fuente": "ADC · Asoc. por los Derechos Civiles",
+    "tipo": "judicial",
+    "asociado_a": "T-DOM",
+    "confianza": "primaria",
+    "detectado": "2029-04-12",
+    "resumen": "Amparo presentado ante Cámara Federal por acceso a información sobre intervenciones telefónicas con orden judicial ambigua. Tres medios nombrados como terceros interesados.",
+    "estado": "bajo_evaluación"
+  },
+  {
+    "codigo": "S-2029-035",
+    "fuente": "Auditoría General · Congreso",
+    "tipo": "regulatorio",
+    "asociado_a": "T-DOM",
+    "confianza": "primaria",
+    "detectado": "2029-04-10",
+    "resumen": "Informe interno sobre uso de partidas reservadas de inteligencia estatal en el período 2027-2028. Fragmento filtrado a medios. Confirmación cruzada con dos fuentes independientes pendiente.",
+    "estado": "seguimiento_editorial"
+  },
+  {
+    "codigo": "S-2029-019",
+    "fuente": "FOPEA",
+    "tipo": "activación",
+    "asociado_a": "T-PHYS",
+    "confianza": "primaria",
+    "detectado": "2029-04-11",
+    "resumen": "Activación del protocolo de aviso mutuo por amenaza a periodista local en Rosario. Infobae como nodo de difusión.",
+    "estado": "en_seguimiento"
+  },
+  {
+    "codigo": "S-2029-022",
+    "fuente": "C2PA consortium",
+    "tipo": "estándar",
+    "asociado_a": "T-SYNTH",
+    "confianza": "primaria",
+    "detectado": "2029-04-05",
+    "resumen": "Publicación de C2PA spec 2.1 con soporte nativo para cámaras de acción y drones. Actualización de pipeline de verificación interna requerida antes del 2029-06.",
+    "estado": "acción_pendiente"
+  },
+  {
+    "codigo": "S-2029-023",
+    "fuente": "Access Now · Digital Security Helpline",
+    "tipo": "alerta",
+    "asociado_a": "T-SPY",
+    "confianza": "secundaria",
+    "detectado": "2029-04-03",
+    "resumen": "Campaña activa de spyware comercial dirigida a periodistas en Argentina. Vector probable: mensajes con adjunto PDF vía WhatsApp. Indicadores de compromiso compartidos por canal privado.",
+    "estado": "mitigación_en_curso"
+  },
+  {
+    "codigo": "S-2029-024",
+    "fuente": "Dart Center",
+    "tipo": "guía",
+    "asociado_a": "JTSN",
+    "confianza": "primaria",
+    "detectado": "2029-03-28",
+    "resumen": "Actualización de protocolos de apoyo psicológico post-despliegue en zona activa. Énfasis en primera sesión obligatoria dentro de 72h posteriores al retorno.",
+    "estado": "incorporado"
+  }
+]
