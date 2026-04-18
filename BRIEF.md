@@ -14,9 +14,10 @@ en que el sistema existe, no en lo que dice.
 
 ## Estado actual
 
-El archivo `App.jsx` (renombrar desde `infobae-interna.jsx`) es un 
-componente React standalone de ~1945 líneas que funciona como artifact 
-de Claude.ai. Incluye:
+El archivo `src/App.jsx` (ex-`infobae-interna.jsx`) es un componente 
+React monolítico post-migración a Vite. Tamaño aproximado: ~2900 
+líneas, con la mayoría del contenido del universo diegético inline. 
+Incluye:
 
 ### Estructura
 - Login screen (fondo negro, wordmark naranja, auto-fill mondini.l)
@@ -75,6 +76,17 @@ cerrado) e investigación doméstica (ROS-038, Rosario, Los Monos, en curso).
    proxy o variable de entorno para la API key
 4. Deploy a Vercel — URL limpia, sin subpath
 5. El archivo se llama infobae-interna.jsx — renombrar a App.jsx en src/
+
+## Nota de seguridad
+
+`VITE_ANTHROPIC_API_KEY` queda embebida en el bundle client-side — es 
+consecuencia de que el widget "analista automatizado" llama a la API 
+de Anthropic desde el browser (header 
+`anthropic-dangerous-direct-browser-access: true`). Para un diegetic 
+prototype con tráfico bajo y key con rate-limit acotado, aceptable. 
+Si el artefacto se expone a tráfico abierto o se repurpose a 
+producción real, mover la llamada a una Vercel Function que mantenga 
+la key del lado servidor.
 
 ## Restricciones de voz
 

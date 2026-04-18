@@ -9,6 +9,7 @@ const MAX_ACTIVIDAD = 10;
 const MAX_NOTIFICACIONES = 6;
 const THROTTLE_DIAS = 30;
 const PAUSE_DIAS = 60;
+const PHASE_DELAY_MS = Number(process.env.ACTUALIZAR_PHASE_DELAY_MS) || 65000;
 const DATA_PATHS = {
   noticias: 'src/data/noticias.json',
   actividad: 'src/data/actividad.json',
@@ -405,7 +406,7 @@ export default async function handler(req, res) {
 
     diag.throttled = dias > THROTTLE_DIAS;
 
-    await new Promise(r => setTimeout(r, 65000));
+    await new Promise(r => setTimeout(r, PHASE_DELAY_MS));
 
     diag.phase = 'generacion';
     const generated = await faseGeneracion(apiKey, findings, current, diag.throttled);
@@ -415,7 +416,7 @@ export default async function handler(req, res) {
       notificacion: generated.notificacion ? 1 : 0
     };
 
-    await new Promise(r => setTimeout(r, 65000));
+    await new Promise(r => setTimeout(r, PHASE_DELAY_MS));
 
     diag.phase = 'validacion';
     const validated = await faseValidacion(apiKey, generated, current, findings);
@@ -431,7 +432,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ status: 'no-changes', ...diag, verdicts: validated });
     }
 
-    await new Promise(r => setTimeout(r, 65000));
+    await new Promise(r => setTimeout(r, PHASE_DELAY_MS));
 
     diag.phase = 'consolidacion';
     const consolidado = await faseConsolidacion(apiKey, approved, current, findings);
