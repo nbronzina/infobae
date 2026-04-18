@@ -1260,6 +1260,34 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 ))}
               </div>
 
+              {/* Documentos destacados — spotlight por línea */}
+              {escenarioActivo.docs_destacados?.length > 0 && (
+                <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px', marginBottom: '20px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '12px' }}>
+                    <div className="mono micro" style={{ color: '#5a544c' }}>Documentos destacados · línea {escenarioActivo.nombre.toLowerCase()}</div>
+                    <div className="mono" style={{ fontSize: '10px', color: '#5a544c', fontStyle: 'italic' }}>canon compartido · foco del escenario</div>
+                  </div>
+                  {escenarioActivo.docs_destacados.map((d, i) => {
+                    const isMain = d.key === 'main';
+                    const v = isMain ? null : VISTAS[d.key];
+                    const titulo = isMain ? DOC_META.titulo : (v?.doc?.titulo || v?.titulo || d.key);
+                    const codigo = isMain ? DOC_META.codigo : (v?.doc?.codigo || v?.meta?.codigo || '');
+                    const onClick = isMain
+                      ? () => { setActiveView(null); setShowLanding(false); setTimeout(scrollToTop, 80); }
+                      : () => { setActiveView(d.key); setShowLanding(false); };
+                    return (
+                      <div key={i} role="button" tabIndex={0} onClick={onClick} className="doc-link" style={{ cursor: 'pointer', padding: '10px 0', borderBottom: i < escenarioActivo.docs_destacados.length - 1 ? '1px solid #d9d4c2' : 'none' }}>
+                        <div style={{ display: 'flex', gap: '12px', alignItems: 'baseline' }}>
+                          <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c', minWidth: '110px' }}>{codigo}</span>
+                          <span className="serif" style={{ fontSize: '14px', fontWeight: 500, flex: 1 }}>{titulo}</span>
+                        </div>
+                        <div className="serif" style={{ fontSize: '12.5px', color: '#3d3931', marginTop: '3px', paddingLeft: '122px', lineHeight: 1.5 }}>{d.motivo}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
               {/* Noticias recientes (preview) */}
               <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '12px' }}>

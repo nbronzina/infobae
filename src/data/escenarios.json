@@ -6,7 +6,12 @@
     "subtitulo": "Corresponsalía transnacional · ARQ-042 (Arauca/Apure) cerrado, próximos teatros en evaluación",
     "descripcion": "Mondini en descanso post-despliegue mientras la redacción opera en su frecuencia habitual: verificación, pipeline C2PA, formación HEFAT, operaciones. La línea mantiene el 10% de fricción visible propio de la corresponsalía internacional — contra-vigilancia heredada, evaluación de próximos despliegues, normativa satelital bajo revisión.",
     "estado": "Actualización semanal",
-    "congelado": false
+    "congelado": false,
+    "docs_destacados": [
+      { "key": "main", "motivo": "Manual operativo de despliegue internacional — lectura base antes de cualquier salida." },
+      { "key": "anmac_enacom", "motivo": "Requisitos regulatorios para equipamiento sensible de campo." },
+      { "key": "politica_despliegue", "motivo": "Ciclo de trabajo, descanso post-despliegue y activación JTSN." }
+    ]
   },
   {
     "id": "rosario",
@@ -15,7 +20,12 @@
     "subtitulo": "ROS-038 · narcotráfico, estructuras sucesoras clan Cantero, causas judiciales sensibles",
     "descripcion": "La misma redacción con Mondini activa en ROS-038 desde Buenos Aires: cruces OSINT sobre registros inmobiliarios, coordinación con mesa judicial, protocolo FOPEA en alerta por amenaza a colega local. El resto del trabajo sigue igual — 90% operaciones de rutina, 10% fricción específica del frente doméstico narco.",
     "estado": "Congelado · 2029-04-17",
-    "congelado": true
+    "congelado": true,
+    "docs_destacados": [
+      { "key": "narco_cobertura", "motivo": "Doctrina editorial específica para narcotráfico y crimen organizado doméstico." },
+      { "key": "contravigilancia", "motivo": "Protocolo activo en la investigación en curso — criterio de contra-vigilancia urbana." },
+      { "key": "fopea_protocolo", "motivo": "Referencia del protocolo FOPEA de aviso mutuo — activado en Rosario." }
+    ]
   },
   {
     "id": "inteligencia",
@@ -24,6 +34,11 @@
     "subtitulo": "Investigación sobre servicios estatales · caso Anaconda-2, vigilancia documentada, zonas grises legales",
     "descripcion": "La misma redacción con Mondini trabajando una investigación sobre operaciones de inteligencia estatal argentina (legajo referenciado internamente como Anaconda-2). Protocolo de contra-vigilancia doméstica activo. El resto del trabajo sigue igual — 90% operaciones de rutina, 10% fricción específica del trabajo bajo observación estatal.",
     "estado": "Congelado · 2029-04-17",
-    "congelado": true
+    "congelado": true,
+    "docs_destacados": [
+      { "key": "inteligencia_investigacion", "motivo": "Doctrina operativa para investigación sobre servicios estatales — lectura del caso Anaconda como piso de riesgo." },
+      { "key": "contravigilancia", "motivo": "Protocolo elevado sobre corresponsal · dispositivo aire + custodia legal externa." },
+      { "key": "comunicacion_cifrada", "motivo": "Signal obligatorio y separación de dispositivos para comunicación con fuentes." }
+    ]
   }
 ]
