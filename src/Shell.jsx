@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import HerramientasView from './herramientas/index.jsx';
 import DocsView from './DocsView.jsx';
+import EstadoView from './EstadoView.jsx';
 
 const TABS = [
   { id: 'mision', label: 'MISIÓN' },
@@ -151,6 +152,9 @@ function ViewSwitch({ activeView, modo, onOpenDoc, onOpenPerfil, docRequest }) {
   }
   if (activeView === 'docs') {
     return <DocsView modo={modo} request={docRequest} />;
+  }
+  if (activeView === 'estado') {
+    return <EstadoView modo={modo} />;
   }
   return <Placeholder tabId={activeView} modo={modo} />;
 }
