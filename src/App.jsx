@@ -6,6 +6,8 @@ import notificacionesData from './data/notificaciones.json';
 import agendaData from './data/agenda.json';
 import directorioData from './data/directorio.json';
 import gabineteData from './data/gabinete.json';
+import teatrosData from './data/teatros.json';
+import checklistData from './data/checklist_predespliegue.json';
 import escenariosData from './data/escenarios.json';
 
 import intAlertas from './data/escenarios/internacional/alertas.json';
@@ -100,7 +102,7 @@ const THREAT_GLOSSARY = [
     nombre: 'Contenido sintético en circulación',
     cuerpo: 'Desde 2027 el volumen de deepfakes de voceros conocidos y audios falsos atribuidos a fuentes reales supera la capacidad de verificación manual. El ecosistema de actores con capacidad de síntesis incluye grupos armados, actores estatales y particulares.',
     vectorPractico: 'Material entrante vía canales abiertos (WhatsApp, redes sociales) puede ser íntegramente sintético. Firma C2PA ausente no es prueba de falsedad pero sí señal de alerta.',
-    mitigacion: 'Verificación cruzada mínima: dos fuentes independientes. Detector de síntesis automatizado antes de publicar. Consulta al analista automatizado ante material de alto impacto.',
+    mitigacion: 'Verificación cruzada mínima: dos fuentes independientes. Detector de síntesis antes de publicar. Consulta al analista de guardia ante material de alto impacto.',
     implicancias: 'Regulatoria: adopción de C2PA como requisito editorial — discusión pendiente en redacciones LATAM. Formativa: verificación cruzada de dos fuentes como mínimo no negociable. Operacional: pipeline Reality Defender + IPTC Origin Verifier pre-publicación para material de zona activa.'
   },
   {
@@ -196,6 +198,12 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     try { return JSON.parse(localStorage.getItem('infobae:recent') || '[]'); } catch { return []; }
   });
   const [panoramaTab, setPanoramaTab] = useState('mapa');
+  const [teatroSeleccionado, setTeatroSeleccionado] = useState(null);
+  const [checklistTicks, setChecklistTicks] = useState(() => {
+    if (typeof localStorage === 'undefined') return {};
+    try { return JSON.parse(localStorage.getItem('infobae:checklist') || '{}'); } catch { return {}; }
+  });
+  const [parteAptitudEmitido, setParteAptitudEmitido] = useState(false);
   const escenarioActivo = escenariosData.find(s => s.slug === scenario) || escenariosData[0];
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -251,7 +259,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
         { area: 'Operaciones de campo', contacto: 'operaciones@infobae.interna', desc: 'Logística de despliegue, seguros, equipamiento, partes de viaje, coordinación con fixers.' },
         { area: 'Legales', contacto: 'legales@infobae.interna', desc: 'Regulación ANMaC/ENACOM, exportación de material, contratos con fixers y freelancers, seguros.' },
         { area: 'Formación y capacitación', contacto: 'peralta.s@infobae.interna', desc: 'HEFAT, seguridad digital, onboarding de freelancers, actualizaciones de protocolos, coordinación con RISC Training y Dart Center.' },
-        { area: 'Mesa de ayuda IT', contacto: 'it@infobae.interna', desc: 'Acceso a sistemas, intranet, VPN, dispositivos, GrapheneOS, configuración de equipamiento.' }
+        { area: 'Mesa de ayuda IT', contacto: 'it@infobae.interna', desc: 'Acceso a sistemas, kit operativo, VPN, dispositivos, GrapheneOS, configuración de equipamiento.' }
       ]
     },
     anmac_enacom: {
@@ -391,8 +399,8 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       ], fuentes: 'Diseño del programa: s. peralta y rrhh. Coordinación operativa con seg. digital (j. fiorella) y formación externa (RISC Training, Dart Center, FOPEA).'
     }},
     analista_auto: { tool: true,
-      titulo: 'Analista automatizado',
-      subtitulo: 'Consulta al modelo de IA para evaluación de material, amenazas y decisiones operativas',
+      titulo: 'Analista de guardia',
+      subtitulo: 'Módulo de consulta operacional — evaluación de material, amenazas y decisiones de campo',
       descripcion: 'Herramienta complementaria a los manuales operativos para casos no cubiertos explícitamente. Cada consulta se registra en OP-SEC-LOG con timestamp, usuario y contenido. No sustituye consulta a Seguridad Digital ni decisión editorial humana.',
       contexto: 'El modelo tiene acceso al contenido del manual OP-SEC-2029-004 (Higiene RF), el glosario de amenazas vigentes (T-WPS, T-RF, T-SPY, T-SYNTH, T-CKP, T-PHYS, T-DOM), y los protocolos operativos asociados. Respuestas orientativas — no vinculantes.',
       meta: { codigo: 'OP-TOOL-2029-003', version: '1.0', fecha: '2029-03-01', responsable: 'j. fiorella + d. roca' }
@@ -420,14 +428,14 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       titulo: 'Pipeline de verificación', subtitulo: 'Flujo de trabajo para material entrante de zona activa',
       secciones: [
         { titulo: 'Flujo estándar', texto: 'Material entrante → registro en cola (timestamp, fixer, tipo, tamaño) → verificación de origen (¿quién envió, desde dónde?) → verificación de contenido (geolocalización, análisis visual, detector de síntesis) → evaluación de riesgo (impacto sobre fuentes) → decisión editorial (publicar / condiciones / reserva / no publicar) → registro en OP-SEC-LOG con cadena completa.' },
-        { titulo: 'Herramientas integradas', texto: 'Detector de síntesis automatizado (Reality Defender API, activo desde 05.2029). Verificador C2PA (IPTC Origin Verifier). Analista automatizado (IA, sección 07 de OP-SEC-2029-004). Imágenes satelitales: Sentinel Hub, Planet Labs (sujeto a disponibilidad regional). Geolocalización: Google Earth Pro, QGIS.' },
+        { titulo: 'Herramientas integradas', texto: 'Detector de síntesis (Reality Defender API, activo desde 05.2029). Verificador C2PA (IPTC Origin Verifier). Analista de guardia (módulo de consulta operacional, sección 07 de OP-SEC-2029-004). Imágenes satelitales: Sentinel Hub, Planet Labs (sujeto a disponibilidad regional). Geolocalización: Google Earth Pro, QGIS.' },
         { titulo: 'Tiempos', texto: 'Material urgente (breaking): verificación mínima en < 30 minutos. Material estándar: verificación completa en < 4 horas. Material de investigación: sin límite temporal, verificación exhaustiva. El nivel de verificación se define al ingreso y se registra en el log.' }
       ], fuentes: 'Documento interno. Referencia: Bellingcat Online Investigation Toolkit, BBC Verify workflow, First Draft Verification Handbook.' }},
     opsec_log: { doc: {
       area: 'INFOBAE · HERRAMIENTAS', codigo: 'OP-TOOL-2029-002', version: '1.0', fecha: '2029-03-01', responsable: 'j. fiorella + d. roca',
       titulo: 'OP-SEC-LOG: bitácora auditable', subtitulo: 'Sistema de registro de decisiones editoriales con cadena de procedencia',
       secciones: [
-        { titulo: 'Qué se registra', texto: 'Cada decisión editorial sobre material de zona activa queda registrada con: timestamp, identificador del material, fixer de origen, resultado de verificación (automatizada y humana), decisión editorial (publicar / condiciones / reserva / no publicar), responsable de la decisión, y modelo de IA usado si aplica.' },
+        { titulo: 'Qué se registra', texto: 'Cada decisión editorial sobre material de zona activa queda registrada con: timestamp, identificador del material, fixer de origen, resultado de verificación (automática y humana), decisión editorial (publicar / condiciones / reserva / no publicar), responsable de la decisión, y módulo de consulta usado si aplica.' },
         { titulo: 'Por qué', texto: 'La bitácora permite reconstruir la cadena completa de procedencia de cualquier publicación: desde quién capturó el material hasta quién decidió publicarlo y con qué nivel de verificación. En caso de cuestionamiento post-publicación, la bitácora es la evidencia de due diligence editorial.' },
         { titulo: 'Acceso', texto: 'Lectura: editor de turno, seguridad digital, legales, dirección editorial. Escritura: corresponsal que registra la decisión. Modificación post-registro: no permitida. Las entradas son append-only. Retención: 5 años desde la fecha de registro.' }
       ], fuentes: 'Documento interno.' }},
@@ -479,7 +487,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       secciones: [
         { titulo: 'Recepción segura', texto: 'Todo material filtrado se recibe exclusivamente por canales cifrados (SecureDrop, Signal, entrega física). No se recibe material por email corporativo, WhatsApp ni redes sociales. El periodista receptor no copia el material a dispositivos personales. Se registra fecha, hora y canal de recepción sin identificar a la fuente.' },
         { titulo: 'Cadena de custodia', texto: 'El material se almacena en dispositivo aislado (air-gapped) asignado por seguridad digital. No se conecta a red. Las copias de trabajo se hacen en dispositivo secundario dedicado. Cada copia se registra con hash SHA-256 para verificar integridad. El original permanece intacto.' },
-        { titulo: 'Verificación de autenticidad', texto: 'Antes de publicar: verificar metadatos del documento (fecha de creación, autor, historial de modificaciones). Contrastar contenido con fuentes independientes. Evaluar posibilidad de material fabricado o alterado (documentos plantados como operación de inteligencia). Consultar al analista automatizado para evaluación de riesgo.' },
+        { titulo: 'Verificación de autenticidad', texto: 'Antes de publicar: verificar metadatos del documento (fecha de creación, autor, historial de modificaciones). Contrastar contenido con fuentes independientes. Evaluar posibilidad de material fabricado o alterado (documentos plantados como operación de inteligencia). Consultar al analista de guardia para evaluación de riesgo.' },
         { titulo: 'Protección legal', texto: 'Argentina: la jurisprudencia del caso Campillay (CSJN, 1986) establece estándares de protección para periodistas que publican información de terceros. No exime de verificación. Ante requerimiento judicial: se activa protocolo con legales (l. pollastri). La identidad de la fuente se protege bajo doctrina de secreto profesional. Consultar OP-RED-2028-003 (fuentes anónimas) para procedimiento de otorgamiento de anonimato.' }
       ], fuentes: 'CSJN, "Campillay c/ La Razón", 1986. Freedom of the Press Foundation, SecureDrop documentation. ICIJ, protocolo de recepción de material (referencia pública). CPJ, "Journalist Security Guide", capítulo sobre documentos sensibles.' }},
     osint_investigacion: { doc: {
@@ -537,9 +545,11 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       { key: 'inteligencia_investigacion', codigo: 'OP-INV-2029-007', titulo: 'Investigación sobre servicios de inteligencia', version: '1.0', estado: 'vigente' }
     ]},
     folder_herramientas: { folder: true, titulo: 'Herramientas', subtitulo: 'Sistemas operativos, flujos de verificación y bitácoras', docs: [
+      { key: 'evaluacion_teatros', codigo: 'OP-TOOL-2029-006', titulo: 'Evaluación por teatro', version: '1.0', estado: 'vigente' },
+      { key: 'checklist_predespliegue', codigo: 'OP-TOOL-2029-007', titulo: 'Checklist pre-despliegue', version: '1.0', estado: 'vigente' },
       { key: 'pipeline_verificacion', codigo: 'OP-TOOL-2029-001', titulo: 'Pipeline de verificación', version: '1.0', estado: 'vigente' },
       { key: 'opsec_log', codigo: 'OP-TOOL-2029-002', titulo: 'OP-SEC-LOG: bitácora auditable', version: '1.0', estado: 'vigente' },
-      { key: 'analista_auto', codigo: 'OP-TOOL-2029-003', titulo: 'Analista automatizado', version: '1.0', estado: 'vigente' },
+      { key: 'analista_auto', codigo: 'OP-TOOL-2029-003', titulo: 'Analista de guardia', version: '1.0', estado: 'vigente' },
       { key: 'parte_despliegue', codigo: 'OP-TOOL-2029-004', titulo: 'Parte de despliegue', version: '1.0', estado: 'vigente' },
       { key: 'gabinete_campo', codigo: 'OP-TOOL-2029-005', titulo: 'Gabinete de campo', version: '1.0', estado: 'vigente' }
     ]},
@@ -548,6 +558,18 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       titulo: 'Gabinete de campo',
       subtitulo: 'Equipamiento aprobado para despliegue — ficha por unidad',
       meta: { codigo: 'OP-TOOL-2029-005', version: '1.0', fecha: '2029-03-15', responsable: 'm. villafañe + j. fiorella' }
+    },
+    evaluacion_teatros: {
+      evaluacion: true,
+      titulo: 'Evaluación por teatro',
+      subtitulo: 'Parte de evaluación preliminar · amenazas, protocolos y equipamiento por destino',
+      meta: { codigo: 'OP-TOOL-2029-006', version: '1.0', fecha: '2029-03-20', responsable: 'j. fiorella + m. villafañe + l. pollastri' }
+    },
+    checklist_predespliegue: {
+      checklist: true,
+      titulo: 'Checklist pre-despliegue',
+      subtitulo: 'Parte de aptitud operativa · items tickeables firmados al completar',
+      meta: { codigo: 'OP-TOOL-2029-007', version: '1.0', fecha: '2029-03-22', responsable: 'm. villafañe + j. fiorella + l. pollastri' }
     }
   };
 
@@ -604,6 +626,19 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     try { localStorage.setItem('infobae:recent', JSON.stringify(recent)); } catch {}
   }, [recent]);
 
+  useEffect(() => {
+    try { localStorage.setItem('infobae:checklist', JSON.stringify(checklistTicks)); } catch {}
+  }, [checklistTicks]);
+
+  function toggleChecklistItem(id) {
+    setChecklistTicks(prev => ({ ...prev, [id]: !prev[id] }));
+  }
+
+  function resetChecklist() {
+    setChecklistTicks({});
+    setParteAptitudEmitido(false);
+  }
+
 
   useEffect(() => {
     if (activeView && VISTAS[activeView] && (VISTAS[activeView].doc || VISTAS[activeView].contenido)) {
@@ -657,7 +692,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     if (!consultaInput.trim()) return;
     setConsultaResult({ loading: true, text: null, error: null });
 
-    const prompt = `Sos el "analista automatizado" integrado al manual operativo OP-SEC-2029-004 de Infobae. Tu rol es asistir a corresponsales y personal de campo evaluando material de interés (video, audio, imagen, texto, testimonio) contra el glosario de amenazas vigente. El usuario consulta desde la sección 07 del manual.
+    const prompt = `Sos el "analista de guardia" integrado al manual operativo OP-SEC-2029-004 de Infobae. Tu rol es asistir a corresponsales y personal de campo evaluando material de interés (video, audio, imagen, texto, testimonio) contra el glosario de amenazas vigente. El usuario consulta desde la sección 07 del manual.
 
 Contexto operacional del manual:
 - Zona primaria de aplicación: frontera Arauca (COL) / Apure (VEN) post-transición venezolana 2026
@@ -707,7 +742,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     'legales': ['anmac_enacom', 'exportacion_equip', 'seguros_riesgo', 'folder_legales'],
     'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'onboarding', 'folder_rrhh'],
     'investigacion': ['docs_filtrados', 'osint_investigacion', 'redes_internacionales', 'contravigilancia', 'narco_cobertura', 'inteligencia_investigacion', 'folder_investigacion'],
-    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'folder_herramientas']
+    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'evaluacion_teatros', 'checklist_predespliegue', 'folder_herramientas']
   };
   const isFolderActive = (key) => {
     if (key === 'seg-digital' && !activeView && !showLanding) return true;
@@ -720,7 +755,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
     jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'], onboarding: ['RRHH', 'folder_rrhh'],
     docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'], narco_cobertura: ['Investigación', 'folder_investigacion'], inteligencia_investigacion: ['Investigación', 'folder_investigacion'],
-    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'],
+    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'], evaluacion_teatros: ['Herramientas', 'folder_herramientas'], checklist_predespliegue: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
   const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'panorama'];
@@ -920,7 +955,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter') executeSearch(searchQuery); if (e.key === 'Escape') { setSearchOpen(false); setSearchQuery(''); } }}
-            placeholder="Buscar en la intranet..."
+            placeholder="Buscar en el kit operativo..."
             className="mono"
             style={{ flex: 1, border: 'none', backgroundColor: 'transparent', fontSize: '12.5px', color: '#1f1f1f', outline: 'none', fontFamily: "'JetBrains Mono', monospace" }}
           />
@@ -1137,13 +1172,19 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   OP-SEC-LOG
                 </div>
                 <div role="button" tabIndex={0} onClick={() => setActiveView('analista_auto')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'analista_auto' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'analista_auto' ? 500 : 400, backgroundColor: activeView === 'analista_auto' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'analista_auto' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-                  Analista automatizado
+                  Analista de guardia
                 </div>
                 <div role="button" tabIndex={0} onClick={() => setActiveView('parte_despliegue')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'parte_despliegue' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'parte_despliegue' ? 500 : 400, backgroundColor: activeView === 'parte_despliegue' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'parte_despliegue' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Parte de despliegue
                 </div>
                 <div role="button" tabIndex={0} onClick={() => setActiveView('gabinete_campo')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'gabinete_campo' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'gabinete_campo' ? 500 : 400, backgroundColor: activeView === 'gabinete_campo' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'gabinete_campo' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Gabinete de campo
+                </div>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('evaluacion_teatros')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'evaluacion_teatros' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'evaluacion_teatros' ? 500 : 400, backgroundColor: activeView === 'evaluacion_teatros' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'evaluacion_teatros' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Evaluación por teatro
+                </div>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('checklist_predespliegue')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'checklist_predespliegue' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'checklist_predespliegue' ? 500 : 400, backgroundColor: activeView === 'checklist_predespliegue' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'checklist_predespliegue' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Checklist pre-despliegue
                 </div>
               </div>
             )}
@@ -1248,7 +1289,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {/* Accesos rápidos */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '12px', marginBottom: '20px' }}>
                 {[
-                  { label: 'Analista IA', icon: '◆', onClick: () => { setActiveView('analista_auto'); setShowLanding(false); } },
+                  { label: 'Analista guardia', icon: '◆', onClick: () => { setActiveView('analista_auto'); setShowLanding(false); } },
                   { label: 'Parte despliegue', icon: '◇', onClick: () => { setActiveView('parte_despliegue'); setShowLanding(false); } },
                   { label: 'Contactos emerg.', icon: '◈', onClick: () => { setActiveView('contactos_emergencia'); setShowLanding(false); } },
                   { label: 'Pipeline verif.', icon: '◉', onClick: () => { setActiveView('pipeline_verificacion'); setShowLanding(false); } }
@@ -1953,6 +1994,231 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
               {/* ANMaC / ENACOM — documento completo */}
               {/* Registro de correcciones */}
+              {/* Checklist pre-despliegue */}
+              {activeView === 'checklist_predespliegue' && (() => {
+                const items = checklistData;
+                const porArea = items.reduce((acc, it) => { (acc[it.area] = acc[it.area] || []).push(it); return acc; }, {});
+                const obligatorios = items.filter(i => i.obligatorio);
+                const opcionales = items.filter(i => !i.obligatorio);
+                const obligatoriosHechos = obligatorios.filter(i => checklistTicks[i.id]).length;
+                const totalHechos = items.filter(i => checklistTicks[i.id]).length;
+                const opcionalesHechos = opcionales.filter(i => checklistTicks[i.id]).length;
+                const listo = obligatoriosHechos === obligatorios.length;
+                return (
+                  <div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · HERRAMIENTAS · OP-TOOL-2029-007</div>
+                    <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Checklist pre-despliegue</h1>
+                    <div className="serif" style={{ fontSize: '14.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '20px' }}>Parte de aptitud operativa para salida internacional. El parte se emite con firma conjunta cuando todos los obligatorios están marcados. Items opcionales quedan registrados con nota.</div>
+
+                    <div style={{ padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid ' + (listo ? '#5a6e3c' : '#8a6d2b'), marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+                      <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f' }}>
+                        {totalHechos} de {items.length} items marcados · <span style={{ color: listo ? '#5a6e3c' : '#8a6d2b', fontWeight: 500 }}>{listo ? 'obligatorios completos' : `${obligatorios.length - obligatoriosHechos} obligatorios pendientes`}</span>
+                        {opcionales.length > 0 && <span style={{ color: '#5a544c' }}> · {opcionalesHechos}/{opcionales.length} opcionales</span>}
+                      </div>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <div role="button" tabIndex={0} onClick={resetChecklist} className="mono" style={{ cursor: 'pointer', padding: '6px 12px', fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase', border: '1px solid #d9d4c2', backgroundColor: 'transparent', color: '#5a544c' }}>
+                          Reset
+                        </div>
+                        <div role="button" tabIndex={listo ? 0 : -1} onClick={() => listo && setParteAptitudEmitido(true)} className="mono" style={{ cursor: listo ? 'pointer' : 'not-allowed', padding: '6px 12px', fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase', border: '1px solid ' + (listo ? '#1f1f1f' : '#d9d4c2'), backgroundColor: listo ? '#1f1f1f' : '#eceae4', color: listo ? '#f0ede4' : '#8a8472', opacity: listo ? 1 : 0.6 }}>
+                          Emitir parte de aptitud
+                        </div>
+                      </div>
+                    </div>
+
+                    {Object.entries(porArea).map(([area, arr]) => (
+                      <section key={area} style={{ marginBottom: '20px' }}>
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>{area} ({arr.filter(i => checklistTicks[i.id]).length}/{arr.length})</div>
+                        <div style={{ border: '1px solid #d9d4c2' }}>
+                          {arr.map((it, idx) => {
+                            const done = !!checklistTicks[it.id];
+                            return (
+                              <div key={it.id} style={{ padding: '14px 16px', borderBottom: idx < arr.length - 1 ? '1px solid #d9d4c2' : 'none', backgroundColor: done ? '#e8f0de' : '#f8f5ec', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+                                <div role="button" tabIndex={0} onClick={() => toggleChecklistItem(it.id)} style={{ cursor: 'pointer', flexShrink: 0, width: '20px', height: '20px', border: '1.5px solid ' + (done ? '#5a6e3c' : '#5a544c'), backgroundColor: done ? '#5a6e3c' : 'transparent', color: '#f0ede4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: 600, marginTop: '1px' }}>
+                                  {done ? '✓' : ''}
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px', gap: '12px', flexWrap: 'wrap' }}>
+                                    <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline' }}>
+                                      <span className="mono" style={{ fontSize: '10px', color: '#5a544c' }}>{it.id.toUpperCase()}</span>
+                                      <span className="serif" style={{ fontSize: '14px', fontWeight: 500 }}>{it.titulo}</span>
+                                      {!it.obligatorio && <span className="mono" style={{ fontSize: '9.5px', color: '#5a544c', padding: '1px 6px', backgroundColor: '#eceae4', letterSpacing: '0.04em', textTransform: 'uppercase' }}>opcional</span>}
+                                    </div>
+                                    <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{it.responsable}</span>
+                                  </div>
+                                  <div className="serif" style={{ fontSize: '12.5px', color: '#3d3931', lineHeight: 1.55, marginBottom: '6px' }}>{it.detalle}</div>
+                                  {it.doc_ref && (
+                                    <div role="button" tabIndex={0} onClick={(e) => { e.stopPropagation(); if (it.doc_ref.key === 'main') { setActiveView(null); setShowLanding(false); scrollToTop(); } else { setActiveView(it.doc_ref.key); } }} className="mono doc-link" style={{ fontSize: '10.5px', color: '#5a544c', cursor: 'pointer', display: 'inline-block' }}>
+                                      ver {it.doc_ref.codigo} →
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </section>
+                    ))}
+
+                    {parteAptitudEmitido && listo && (
+                      <div style={{ marginTop: '32px', padding: '28px 32px', backgroundColor: '#f8f5ec', border: '2px solid #1f1f1f' }}>
+                        <div className="mono micro" style={{ color: '#5a6e3c', marginBottom: '8px' }}>Parte de aptitud · emitido</div>
+                        <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Apto para despliegue internacional</h2>
+
+                        <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.7, marginBottom: '18px' }}>
+                          Fecha emisión: 2029-04-17 14:30 ART<br/>
+                          Corresponsal: mondini.l<br/>
+                          Checklist completado: {obligatoriosHechos}/{obligatorios.length} obligatorios {opcionalesHechos > 0 && `· ${opcionalesHechos}/${opcionales.length} opcionales`}<br/>
+                          Código parte: OP-TOOL-2029-007 · instancia 2029-04-17-01
+                        </div>
+
+                        <div style={{ padding: '14px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a6e3c', marginBottom: '18px' }}>
+                          <div className="serif" style={{ fontSize: '13px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                            El corresponsal cumple con los requisitos de seguridad digital, legales, operacionales y de recursos humanos para despliegue internacional en zona activa. El parte se archiva en OP-SEC-LOG y vence a los 14 días desde la emisión o al ingresar a territorio de despliegue, lo primero que ocurra.
+                          </div>
+                        </div>
+
+                        <div className="mono" style={{ fontSize: '11px', color: '#5a544c', lineHeight: 1.7 }}>
+                          Firmas:<br/>
+                          m. villafañe — operaciones<br/>
+                          j. fiorella — seguridad digital<br/>
+                          l. pollastri — legales
+                        </div>
+                      </div>
+                    )}
+
+                    {parteAptitudEmitido && !listo && (
+                      <div style={{ marginTop: '20px', padding: '12px 16px', backgroundColor: '#f5d5d5', borderLeft: '2px solid #bd2828' }}>
+                        <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f' }}>
+                          Parte de aptitud cancelado — hay items obligatorios pendientes. Completar y volver a emitir.
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
+              {/* Evaluación por teatro */}
+              {activeView === 'evaluacion_teatros' && (() => {
+                const teatro = teatrosData.find(t => t.codigo === teatroSeleccionado);
+                const levelColor = (n) => n === 'crítico' ? '#bd2828' : n === 'alto' ? '#8a6d2b' : n === 'medio' ? '#5a544c' : '#5a6e3c';
+                const levelBg = (n) => n === 'crítico' ? '#f5d5d5' : n === 'alto' ? '#f5edd5' : n === 'medio' ? '#eceae4' : '#e8f0de';
+                const kitsPorCodigo = Object.fromEntries(gabineteData.map(k => [k.codigo, k]));
+                const personaPorKey = Object.fromEntries(directorioData.map(p => [p.key, p]));
+                return (
+                  <div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · HERRAMIENTAS · OP-TOOL-2029-006</div>
+                    <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Evaluación por teatro</h1>
+                    <div className="serif" style={{ fontSize: '14.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '20px' }}>Parte preliminar de evaluación operativa · amenazas aplicables, protocolos obligatorios, equipamiento requerido y contactos clave por destino.</div>
+
+                    <div style={{ padding: '10px 14px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c', marginBottom: '20px' }}>
+                      <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                        Elegir teatro. La evaluación cruza el glosario T-* con la doctrina aplicable y el gabinete de campo. El parte se entrega firmado por seg. digital + operaciones + legales antes de cada despliegue.
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '10px', marginBottom: teatro ? '32px' : '0' }}>
+                      {teatrosData.map(t => {
+                        const sel = t.codigo === teatroSeleccionado;
+                        return (
+                          <div key={t.codigo} role="button" tabIndex={0} onClick={() => setTeatroSeleccionado(t.codigo)} style={{ padding: '14px 16px', border: '1px solid ' + (sel ? '#1f1f1f' : '#d9d4c2'), backgroundColor: sel ? '#f0ecde' : '#f8f5ec', cursor: 'pointer' }}>
+                            <div className="mono" style={{ fontSize: '10px', letterSpacing: '0.06em', textTransform: 'uppercase', color: sel ? '#1f1f1f' : '#5a544c', marginBottom: '4px' }}>{t.codigo}</div>
+                            <div className="serif" style={{ fontSize: '14.5px', fontWeight: 500, marginBottom: '2px' }}>{t.nombre}</div>
+                            <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{t.region}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {teatro && (
+                      <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '24px 28px' }}>
+                        <div style={{ borderBottom: '1px solid #d9d4c2', paddingBottom: '14px', marginBottom: '22px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Parte de evaluación · {teatro.codigo}</div>
+                          <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 4px', letterSpacing: '-0.01em' }}>{teatro.nombre}</h2>
+                          <div className="mono" style={{ fontSize: '11.5px', color: '#5a544c', lineHeight: 1.6 }}>
+                            {teatro.region} · {teatro.tipo} · duración típica {teatro.duracion_tipica}
+                          </div>
+                          <div className="serif" style={{ fontSize: '13px', color: '#1f1f1f', marginTop: '8px', fontStyle: 'italic' }}>
+                            Actor dominante: {teatro.actor_dominante}
+                          </div>
+                          <div className="mono" style={{ fontSize: '10.5px', color: '#bd2828', marginTop: '8px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                            Estado · {teatro.estado}
+                          </div>
+                        </div>
+
+                        <section style={{ marginBottom: '22px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Amenazas aplicables ({teatro.amenazas.length})</div>
+                          {teatro.amenazas.map(a => (
+                            <div key={a.codigo} style={{ padding: '10px 14px', backgroundColor: '#f0ecde', borderLeft: '3px solid ' + levelColor(a.nivel), marginBottom: '8px' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                                <span className="mono" style={{ fontSize: '11.5px', color: '#bd2828', fontWeight: 500 }}>{a.codigo}</span>
+                                <span className="mono" style={{ fontSize: '9.5px', letterSpacing: '0.04em', textTransform: 'uppercase', padding: '2px 7px', backgroundColor: levelBg(a.nivel), color: levelColor(a.nivel) }}>nivel {a.nivel}</span>
+                              </div>
+                              <div className="serif" style={{ fontSize: '12.5px', color: '#1f1f1f', lineHeight: 1.55 }}>{a.motivo}</div>
+                            </div>
+                          ))}
+                        </section>
+
+                        <section style={{ marginBottom: '22px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Protocolos aplicables ({teatro.protocolos.length})</div>
+                          {teatro.protocolos.map(p => (
+                            <div key={p.codigo} role="button" tabIndex={0} onClick={() => { if (p.key === 'main') { setActiveView(null); setShowLanding(false); scrollToTop(); } else { setActiveView(p.key); } }} className="doc-link" style={{ cursor: 'pointer', padding: '10px 0', borderBottom: '1px solid #d9d4c2' }}>
+                              <div style={{ display: 'flex', gap: '12px', alignItems: 'baseline' }}>
+                                <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c', minWidth: '140px' }}>{p.codigo}</span>
+                                <span className="serif" style={{ fontSize: '13.5px', fontWeight: 500, flex: 1 }}>{p.motivo}</span>
+                                {p.obligatorio && <span className="mono" style={{ fontSize: '9.5px', color: '#bd2828', letterSpacing: '0.04em', textTransform: 'uppercase' }}>obligatorio</span>}
+                              </div>
+                            </div>
+                          ))}
+                        </section>
+
+                        <section style={{ marginBottom: '22px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Equipamiento requerido ({teatro.kit_requerido.length})</div>
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '8px' }}>
+                            {teatro.kit_requerido.map(codigo => {
+                              const kit = kitsPorCodigo[codigo];
+                              if (!kit) return null;
+                              return (
+                                <div key={codigo} role="button" tabIndex={0} onClick={() => setActiveView('gabinete_campo')} className="doc-link" style={{ cursor: 'pointer', padding: '10px 12px', backgroundColor: '#f0ecde', border: '1px solid #d9d4c2' }}>
+                                  <div className="mono" style={{ fontSize: '10px', color: '#5a544c', marginBottom: '2px' }}>{codigo}</div>
+                                  <div className="serif" style={{ fontSize: '12.5px', fontWeight: 500 }}>{kit.nombre}</div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </section>
+
+                        <section style={{ marginBottom: '22px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Contactos clave</div>
+                          {teatro.contactos_clave.map(c => {
+                            const p = personaPorKey[c.key];
+                            if (!p) return null;
+                            return (
+                              <div key={c.key} role="button" tabIndex={0} onClick={() => setActiveView('perfil_' + c.key)} className="doc-link" style={{ cursor: 'pointer', padding: '8px 0', borderBottom: '1px solid #d9d4c2' }}>
+                                <div style={{ display: 'flex', gap: '12px', alignItems: 'baseline' }}>
+                                  <span className="serif" style={{ fontSize: '13.5px', fontWeight: 500, minWidth: '160px' }}>{p.nombre}</span>
+                                  <span className="mono" style={{ fontSize: '11.5px', color: '#3d3931', flex: 1 }}>{c.rol}</span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </section>
+
+                        <section>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>Nota operativa</div>
+                          <div className="serif" style={{ fontSize: '13.5px', color: '#1f1f1f', lineHeight: 1.6, padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f' }}>{teatro.nota_operativa}</div>
+                        </section>
+                      </div>
+                    )}
+
+                    {!teatro && (
+                      <div className="serif" style={{ fontSize: '13px', color: '#5a544c', fontStyle: 'italic', padding: '20px 0' }}>
+                        Seleccionar un teatro arriba para emitir el parte de evaluación.
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
               {/* Gabinete de campo */}
               {activeView === 'gabinete_campo' && (
                 <div>
@@ -2212,7 +2478,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
               )}
 
-              {/* Renderizador de herramienta: Analista automatizado */}
+              {/* Renderizador de herramienta: Analista de guardia */}
               {activeView === 'analista_auto' && (
                 <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '40px 48px' }}>
                   <div className="mono" style={{ fontSize: '11px', color: '#5a544c', letterSpacing: '0.06em', marginBottom: '8px' }}>
@@ -2341,7 +2607,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   ['sec-04', 'Cono de silencio RF'],
                   ['sec-05', 'Apéndice: dispositivos y mitigaciones'],
                   ['sec-06', 'Protocolo post-despliegue'],
-                  ['sec-07', 'Consulta al analista automatizado'],
+                  ['sec-07', 'Consulta al analista de guardia'],
                   ['sec-08', 'Nota sobre alcance institucional y vacío ecosistémico']
                 ].map(([id, label]) => (
                   <li key={id} onClick={() => scrollTo(id)} style={{ cursor: 'pointer' }}>
@@ -2517,7 +2783,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             {/* SECCIÓN 07 — Widget Claudeception */}
             <section id="sec-07" style={{ marginBottom: '20px' }}>
               <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Sección 07</div>
-              <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Consulta al analista automatizado</h2>
+              <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Consulta al analista de guardia</h2>
               <div className="serif" style={{ fontSize: '15px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '20px' }}>
                 Herramienta complementaria al manual para casos no cubiertos explícitamente. Asistencia orientativa — no sustituye consulta a Seguridad Digital ni decisión editorial humana. Cada consulta se registra en OP-SEC-LOG con timestamp, usuario y contenido.
               </div>
@@ -2826,7 +3092,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               Sobre este artefacto
             </h2>
             <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
-              <strong>Infobae · Bitácora</strong> es una obra de ficción que explora el futuro cercano del periodismo de investigación y la corresponsalía internacional argentina a través de la intranet operativa de uno de sus medios icónicos —Infobae— en 2029. Un trabajo liderado por Nicolás Bronzina.
+              <strong>Infobae · Bitácora</strong> es una obra de ficción que explora el futuro cercano del periodismo de investigación y la corresponsalía internacional argentina a través del kit operativo de uno de sus medios icónicos —Infobae— en 2029. Un trabajo liderado por Nicolás Bronzina.
             </div>
             <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
               Es un <em>diegetic prototype</em>: la ficción está en que el sistema existe, no en lo que dice. Pregunta cómo podría organizarse una redacción argentina para cubrir investigación doméstica y corresponsalía internacional en un contexto donde la vigilancia, la autenticidad del contenido y la seguridad operativa de periodistas se volvieron condiciones cotidianas del trabajo.

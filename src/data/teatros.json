@@ -1,0 +1,144 @@
+[
+  {
+    "codigo": "ARQ-042",
+    "nombre": "Arauca / Apure",
+    "region": "Frontera Colombia / Venezuela",
+    "tipo": "Corresponsalía internacional",
+    "duracion_tipica": "10–15 días",
+    "actor_dominante": "ELN, disidencias FARC reconfiguradas, inteligencia VEN en transición",
+    "estado": "Cerrado · 2029-04-17 · próxima ventana en evaluación",
+    "amenazas": [
+      { "codigo": "T-WPS", "nivel": "alto", "motivo": "APIs de geolocalización Wi-Fi comerciales con cobertura completa de la región. Router sin randomización de MAC queda inscripto como presencia persistente." },
+      { "codigo": "T-RF", "nivel": "alto", "motivo": "Actores con capacidad de adquisición de hardware comercial. Terminal Starlink en transmisión continua es detectable a varios kilómetros." },
+      { "codigo": "T-SPY", "nivel": "medio", "motivo": "Spyware comercial documentado en la región. Vector principal: mensajes con adjunto PDF vía WhatsApp." },
+      { "codigo": "T-SYNTH", "nivel": "medio", "motivo": "Material fabricado como operación de inteligencia es un riesgo concreto. Verificación cruzada obligatoria antes de publicar." },
+      { "codigo": "T-CKP", "nivel": "alto", "motivo": "Checkpoints con sistemas de reconocimiento facial en ambos lados de la frontera. Fixer y fuentes públicamente identificables son detectables antes de serlo por el operador humano." },
+      { "codigo": "T-PHYS", "nivel": "crítico", "motivo": "Vector que más periodistas mata en la región. El fixer y los periodistas locales están expuestos de manera permanente, no sólo durante la ventana del despliegue del corresponsal." }
+    ],
+    "protocolos": [
+      { "codigo": "OP-SEC-2029-004", "key": "main", "obligatorio": true, "motivo": "Manual operativo base de despliegue internacional — checklist pre-despliegue y glosario de amenazas." },
+      { "codigo": "OP-SEC-2029-004-FX", "key": "version_fixer", "obligatorio": true, "motivo": "Versión resumida del manual para entrega al fixer designado." },
+      { "codigo": "OP-LEG-2028-007", "key": "anmac_enacom", "obligatorio": true, "motivo": "Requisitos regulatorios de egreso de equipamiento clasificado (chaleco, casco, terminal satelital)." },
+      { "codigo": "OP-LEG-2028-014", "key": "seguros_riesgo", "obligatorio": true, "motivo": "Cobertura ART no alcanza en zona activa. Póliza de alto riesgo específica obligatoria." },
+      { "codigo": "OP-HR-2027-012", "key": "jtsn_apoyo", "obligatorio": true, "motivo": "Sesión JTSN post-despliegue automática al retorno." }
+    ],
+    "kit_requerido": ["KIT-SAT-001", "KIT-NET-001", "KIT-DEV-001", "KIT-RF-001", "KIT-PROT-001", "KIT-CAM-001", "KIT-TOK-001"],
+    "contactos_clave": [
+      { "key": "fiorella", "rol": "Soporte técnico y seguridad digital" },
+      { "key": "villafane", "rol": "Operaciones y logística de campo" },
+      { "key": "pollastri", "rol": "Legales · egreso ANMaC y visas" },
+      { "key": "velasquez", "rol": "Fixer designado en destino" },
+      { "key": "roca", "rol": "Verificación remota desde Bogotá" }
+    ],
+    "nota_operativa": "Teatro cerrado el 2029-04-17 tras despliegue de 13 días. Próxima ventana condicionada a evaluación de condiciones post-transición venezolana. Kit B de Starlink en cuarentena técnica pendiente de diagnóstico."
+  },
+  {
+    "codigo": "ROS-038",
+    "nombre": "Rosario",
+    "region": "Santa Fe, Argentina",
+    "tipo": "Investigación doméstica · narcotráfico",
+    "duracion_tipica": "Investigación continua · viajes puntuales",
+    "actor_dominante": "Estructuras sucesoras clan Cantero · nexo narco-fuerzas de seguridad locales",
+    "estado": "En curso · protocolo contra-vigilancia activo",
+    "amenazas": [
+      { "codigo": "T-DOM", "nivel": "alto", "motivo": "Vigilancia estatal doméstica documentada sobre periodistas de investigación argentinos. Caso Anaconda (2016-2020) como piso de riesgo." },
+      { "codigo": "T-PHYS", "nivel": "alto", "motivo": "Amenazas directas a periodistas locales documentadas. Segunda activación FOPEA en Rosario en un mes." },
+      { "codigo": "T-SPY", "nivel": "medio", "motivo": "Campaña activa de spyware comercial dirigida a periodistas en Argentina · IoCs compartidos por Access Now." },
+      { "codigo": "T-SYNTH", "nivel": "bajo", "motivo": "Material sintético usado como herramienta de intimidación o descrédito es posible. Verificación C2PA en pipeline estándar." }
+    ],
+    "protocolos": [
+      { "codigo": "OP-INV-2029-005", "key": "narco_cobertura", "obligatorio": true, "motivo": "Doctrina editorial específica para cobertura de narco y crimen organizado doméstico." },
+      { "codigo": "OP-INV-2028-004", "key": "contravigilancia", "obligatorio": true, "motivo": "Protocolo de contra-vigilancia urbana: variación de rutas, inspección de vehículo, monitoreo de cuentas." },
+      { "codigo": "OP-SEC-2028-011", "key": "comunicacion_cifrada", "obligatorio": true, "motivo": "Signal obligatorio para contacto con fuentes judiciales y colegas bajo amenaza." },
+      { "codigo": "EXT-FOPEA-2028", "key": "fopea_protocolo", "obligatorio": true, "motivo": "Protocolo de aviso mutuo FOPEA activado en la ciudad." }
+    ],
+    "kit_requerido": ["KIT-DEV-001", "KIT-TOK-001", "KIT-GPS-001", "KIT-PRINT-001"],
+    "contactos_clave": [
+      { "key": "fiorella", "rol": "Soporte seg. digital y contra-vigilancia" },
+      { "key": "pollastri", "rol": "Legales · respuesta a citaciones judiciales" },
+      { "key": "roca", "rol": "Verificación de documentos judiciales y OSINT" }
+    ],
+    "nota_operativa": "Teatro doméstico continuo · no hay ventana de entrada y salida. La cobertura narco expone al colega local más que al corresponsal. Protección del colega prevalece sobre identificación en el material publicado."
+  },
+  {
+    "codigo": "ANA-047",
+    "nombre": "Anaconda-2",
+    "region": "Argentina · doméstico nacional",
+    "tipo": "Investigación · servicios de inteligencia estatal",
+    "duracion_tipica": "Investigación continua · sin despliegue físico",
+    "actor_dominante": "SIDE y derivados · partidas reservadas · intervenciones telefónicas con orden judicial ambigua",
+    "estado": "En curso · custodia legal externa del material",
+    "amenazas": [
+      { "codigo": "T-DOM", "nivel": "crítico", "motivo": "Objeto de investigación es el propio aparato de inteligencia. Supuesto por defecto: vigilancia sobre corresponsal ya en curso." },
+      { "codigo": "T-SPY", "nivel": "alto", "motivo": "Adversario con acceso a herramientas comerciales de grado militar. Separación dispositivo-trabajo / dispositivo-personal sin excepciones." },
+      { "codigo": "T-SYNTH", "nivel": "medio", "motivo": "Material plantado como contra-operación es un riesgo concreto. Doble fuente con acceso directo obligatorio." }
+    ],
+    "protocolos": [
+      { "codigo": "OP-INV-2029-007", "key": "inteligencia_investigacion", "obligatorio": true, "motivo": "Doctrina operativa específica · lectura del caso Anaconda como piso de riesgo." },
+      { "codigo": "OP-INV-2028-004", "key": "contravigilancia", "obligatorio": true, "motivo": "Contra-vigilancia elevada con dispositivo aire y custodia legal externa." },
+      { "codigo": "OP-SEC-2028-011", "key": "comunicacion_cifrada", "obligatorio": true, "motivo": "Signal exclusivo · dispositivo aire para fuentes del expediente." },
+      { "codigo": "OP-INV-2028-001", "key": "docs_filtrados", "obligatorio": true, "motivo": "Custodia legal de material sensible · acceso en sala sin conectividad." }
+    ],
+    "kit_requerido": ["KIT-DEV-001", "KIT-TOK-001", "KIT-GPS-001", "KIT-PRINT-001"],
+    "contactos_clave": [
+      { "key": "fiorella", "rol": "Custodia técnica dispositivo aire y rotación de clave" },
+      { "key": "pollastri", "rol": "Custodia legal externa bajo secreto profesional" }
+    ],
+    "nota_operativa": "El expediente se trabaja sin digitalización hasta decisión editorial final. Copia forense bajo custodia legal separada de la copia de trabajo. Publicación requiere plan de respuesta a eventual amparo o intento de censura previa."
+  },
+  {
+    "codigo": "CCS-001",
+    "nombre": "Caracas",
+    "region": "Venezuela · post-transición",
+    "tipo": "Corresponsalía internacional · cobertura política",
+    "duracion_tipica": "5–10 días",
+    "actor_dominante": "Gobierno interino en consolidación · inteligencia heredada del chavismo · proveedores externos no identificados",
+    "estado": "Sin despliegue previo · requiere evaluación previa con mesa editorial",
+    "amenazas": [
+      { "codigo": "T-CKP", "nivel": "medio", "motivo": "Sistemas de reconocimiento facial heredados en proceso de auditoría. Cronograma de desmantelamiento 90 días." },
+      { "codigo": "T-SPY", "nivel": "alto", "motivo": "Herramientas de vigilancia heredadas operativas hasta auditoría completa. Asumir compromiso de dispositivo hasta prueba contraria." },
+      { "codigo": "T-WPS", "nivel": "medio", "motivo": "Infraestructura WPS operativa · cobertura urbana extensa." },
+      { "codigo": "T-RF", "nivel": "medio", "motivo": "Capacidad técnica del Estado documentada · sensor pasivo posible." },
+      { "codigo": "T-SYNTH", "nivel": "alto", "motivo": "Territorio activo de operaciones de manipulación informativa. Verificación cruzada de todo material recibido." }
+    ],
+    "protocolos": [
+      { "codigo": "OP-SEC-2029-004", "key": "main", "obligatorio": true, "motivo": "Manual operativo base · ajustes específicos en sección 03 (vigilancia en destino)." },
+      { "codigo": "OP-SEC-2028-009", "key": "vigilancia_destino", "obligatorio": true, "motivo": "Protocolo de vigilancia en destino · Caracas documentada como escenario de alta capacidad técnica." },
+      { "codigo": "OP-LEG-2028-007", "key": "anmac_enacom", "obligatorio": true, "motivo": "Egreso de equipamiento argentino hacia VEN · régimen restrictivo actual." }
+    ],
+    "kit_requerido": ["KIT-DEV-001", "KIT-TOK-001", "KIT-RF-001", "KIT-CAM-001"],
+    "contactos_clave": [
+      { "key": "fiorella", "rol": "Soporte seg. digital" },
+      { "key": "villafane", "rol": "Operaciones · visa y coordinación in-country" },
+      { "key": "roca", "rol": "Verificación remota" }
+    ],
+    "nota_operativa": "Ventana de cobertura política sensible durante consolidación del gobierno interino. Fuentes oficiales recién accesibles · protocolo nuevo de verificación en coordinación con mesa editorial."
+  },
+  {
+    "codigo": "ESQ-012",
+    "nombre": "Esequibo",
+    "region": "Zona en disputa Venezuela / Guyana",
+    "tipo": "Corresponsalía internacional · disputa territorial",
+    "duracion_tipica": "7–12 días · acceso condicionado",
+    "actor_dominante": "FF.AA. de ambos lados · presencia de empresas petroleras multinacionales",
+    "estado": "Sin despliegue previo · ventana operativa condicionada a negociación de acceso",
+    "amenazas": [
+      { "codigo": "T-PHYS", "nivel": "alto", "motivo": "Zona militarizada con presencia de FF.AA. de dos Estados. Riesgo de detención sin aviso consular." },
+      { "codigo": "T-WPS", "nivel": "alto", "motivo": "Infraestructura de telecomunicaciones limitada · dependencia de Starlink aumenta exposición WPS." },
+      { "codigo": "T-RF", "nivel": "alto", "motivo": "Actores estatales con capacidad técnica en zona fronteriza." },
+      { "codigo": "T-CKP", "nivel": "medio", "motivo": "Checkpoints militares en accesos. Verificación de acreditación exhaustiva." }
+    ],
+    "protocolos": [
+      { "codigo": "OP-SEC-2029-004", "key": "main", "obligatorio": true, "motivo": "Manual base · foco en higiene RF por dependencia satelital." },
+      { "codigo": "OP-LEG-2028-007", "key": "anmac_enacom", "obligatorio": true, "motivo": "Egreso de chaleco y casco · trámite ANMaC ineludible." },
+      { "codigo": "OP-LEG-2028-014", "key": "seguros_riesgo", "obligatorio": true, "motivo": "Seguro de alto riesgo específico · negociación previa con aseguradora por zona en disputa." }
+    ],
+    "kit_requerido": ["KIT-SAT-001", "KIT-NET-001", "KIT-DEV-001", "KIT-RF-001", "KIT-PROT-001", "KIT-PROT-002", "KIT-CAM-001"],
+    "contactos_clave": [
+      { "key": "villafane", "rol": "Operaciones · negociación de acceso" },
+      { "key": "pollastri", "rol": "Legales · consular y seguro específico" },
+      { "key": "fiorella", "rol": "Seg. digital · protocolo RF estricto por dependencia satelital" }
+    ],
+    "nota_operativa": "Teatro sin despliegue previo del equipo. Requiere ventana de preparación mínima de 45 días: trámite ANMaC, visa guyanesa, negociación de seguro, y fixer local confirmado en destino."
+  }
+]
