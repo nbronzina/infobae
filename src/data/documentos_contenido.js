@@ -126,6 +126,21 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  contravigilancia: {
+    area: 'INFOBAE · INVESTIGACIÓN',
+    codigo: 'OP-INV-2028-004', version: '3.0', fecha: '2029-01-20',
+    responsable: 'j. fiorella + dirección editorial',
+    titulo: 'Contra-vigilancia doméstica para periodistas de investigación',
+    subtitulo: 'Protocolo operativo para personal bajo observación estatal o privada en territorio argentino',
+    secciones: [
+      { titulo: 'Supuesto operativo', texto: 'Todo periodista de investigación de Infobae que trabaje temas de corrupción, inteligencia, narcotráfico transnacional o crimen organizado debe asumir que está bajo algún grado de vigilancia. Los casos documentados en Argentina incluyen: seguimiento físico, colocación de GPS en vehículos, intervención telefónica con orden judicial ambigua, intentos coordinados de hackeo de cuentas (WhatsApp, X, email), y apertura de legajos de inteligencia (caso "Anaconda", 2016-2020).' },
+      { titulo: 'Medidas permanentes', texto: 'Variación de rutas habituales (domicilio–redacción). Inspección periódica del vehículo (bajo chasis, ruedas, parachoques) con detección de GPS. No hablar de investigaciones en curso por teléfono ni en la redacción si hay sospecha de intervención ambiental. Signal como canal exclusivo para comunicación sensible. Reuniones con fuentes en lugares sin cámaras de seguridad identificables. No llevar dispositivo personal a reuniones con fuentes de inteligencia.' },
+      { titulo: 'Red de protección', texto: 'Mantener al menos 3 contactos FOPEA actualizados para activación de protocolo de aviso mutuo (ver EXT-FOPEA-2028). Documentar todo incidente (seguimiento, hackeo, amenaza) ante FOPEA y CPJ. Si la amenaza incluye agresión física o vigilancia sostenida: comunicar al director editorial y activar cobertura legal inmediata. Considerar publicación coordinada con otro medio como medida de protección (la visibilidad protege).' },
+      { titulo: 'Investigaciones sobre inteligencia', texto: 'Cuando el objeto de investigación es la propia SIDE o sus derivados, el nivel de precaución se eleva. No almacenar material en ningún dispositivo conectado a red. Copias físicas en lugar seguro fuera de la redacción y del domicilio. Considerar uso de intermediario legal (abogado con secreto profesional) para custodia de material crítico. No subestimar capacidad técnica del adversario — la SIDE tiene acceso a herramientas de vigilancia comercial de grado militar.' }
+    ],
+    fuentes: 'FOPEA, informes de amenazas a periodistas 2020-2029. CPJ, Argentina country reports. Hugo Alconada Mon, descripción pública de vigilancia (GIJN, 2024). Citizen Lab, reportes sobre uso de Pegasus en América Latina.'
+  },
+
   redes_internacionales: {
     area: 'INFOBAE · INVESTIGACIÓN',
     codigo: 'OP-INV-2029-003', version: '1.0', fecha: '2029-03-10',
