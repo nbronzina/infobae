@@ -208,6 +208,12 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
   const [simulacroScenario, setSimulacroScenario] = useState(null);
   const [simulacroRespuestas, setSimulacroRespuestas] = useState({});
   const [simulacroEmitido, setSimulacroEmitido] = useState(false);
+  const [fuenteForm, setFuenteForm] = useState({ alias: '', nivel: '', tipo: '', teatro: 'ninguno', riesgo: '' });
+  const [fuentesRegistros, setFuentesRegistros] = useState(() => {
+    if (typeof localStorage === 'undefined') return [];
+    try { return JSON.parse(localStorage.getItem('infobae:fuentes') || '[]'); } catch { return []; }
+  });
+  const [fuenteActiva, setFuenteActiva] = useState(null);
   const escenarioActivo = escenariosData.find(s => s.slug === scenario) || escenariosData[0];
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -552,6 +558,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       { key: 'evaluacion_teatros', codigo: 'OP-TOOL-2029-006', titulo: 'Evaluación por teatro', version: '1.0', estado: 'vigente' },
       { key: 'checklist_predespliegue', codigo: 'OP-TOOL-2029-007', titulo: 'Checklist pre-despliegue', version: '1.0', estado: 'vigente' },
       { key: 'simulador_compromiso', codigo: 'OP-TOOL-2029-008', titulo: 'Simulador de compromiso de dispositivo', version: '1.0', estado: 'vigente' },
+      { key: 'editor_fuentes', codigo: 'OP-TOOL-2029-009', titulo: 'Registro de fuentes anónimas', version: '1.0', estado: 'vigente' },
       { key: 'pipeline_verificacion', codigo: 'OP-TOOL-2029-001', titulo: 'Pipeline de verificación', version: '1.0', estado: 'vigente' },
       { key: 'opsec_log', codigo: 'OP-TOOL-2029-002', titulo: 'OP-SEC-LOG: bitácora auditable', version: '1.0', estado: 'vigente' },
       { key: 'analista_auto', codigo: 'OP-TOOL-2029-003', titulo: 'Analista de guardia', version: '1.0', estado: 'vigente' },
@@ -581,6 +588,12 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       titulo: 'Simulador de compromiso de dispositivo',
       subtitulo: 'Ejercicio HEFAT · escenarios de respuesta contra el protocolo OP-SEC-2029-003',
       meta: { codigo: 'OP-TOOL-2029-008', version: '1.0', fecha: '2029-03-28', responsable: 'j. fiorella + s. peralta' }
+    },
+    editor_fuentes: {
+      editor_fuentes: true,
+      titulo: 'Registro de fuentes anónimas',
+      subtitulo: 'Alta de fuente con parte firmado · protocolo de comunicación, restricciones de publicación y custodia',
+      meta: { codigo: 'OP-TOOL-2029-009', version: '1.0', fecha: '2029-04-02', responsable: 'dirección editorial + l. pollastri + j. fiorella' }
     }
   };
 
@@ -641,6 +654,10 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     try { localStorage.setItem('infobae:checklist', JSON.stringify(checklistTicks)); } catch {}
   }, [checklistTicks]);
 
+  useEffect(() => {
+    try { localStorage.setItem('infobae:fuentes', JSON.stringify(fuentesRegistros)); } catch {}
+  }, [fuentesRegistros]);
+
   function toggleChecklistItem(id) {
     setChecklistTicks(prev => ({ ...prev, [id]: !prev[id] }));
   }
@@ -648,6 +665,97 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
   function resetChecklist() {
     setChecklistTicks({});
     setParteAptitudEmitido(false);
+  }
+
+  const NIVEL_PROTECCION = {
+    background: { label: 'Background', glosa: 'Atribuible al rol o sector sin identificación específica.' },
+    off_record: { label: 'Off the record', glosa: 'No citable. Orienta la verificación por fuente independiente.' },
+    deep_background: { label: 'Deep background', glosa: 'No citable ni por rol. Marco interpretativo.' },
+    anonimato_total: { label: 'Anonimato total', glosa: 'No citable, no referenciable bajo ninguna forma.' }
+  };
+  const TIPO_FUENTE = {
+    judicial: 'Judicial', policial: 'Policial', politica: 'Política', militar: 'Militar', civil: 'Civil', periodistica: 'Periodística'
+  };
+  const RIESGO = {
+    bajo: { label: 'Bajo', color: '#5a6e3c', bg: '#e8f0de' },
+    medio: { label: 'Medio', color: '#5a544c', bg: '#eceae4' },
+    alto: { label: 'Alto', color: '#8a6d2b', bg: '#f5edd5' },
+    critico: { label: 'Crítico', color: '#bd2828', bg: '#f5d5d5' }
+  };
+
+  function evaluarFuente(r) {
+    let canal;
+    if (r.nivel === 'anonimato_total') {
+      canal = 'Contacto únicamente vía intermediario aprobado (fixer designado o colega de confianza). Dead drop físico habilitado. No establecer canal digital directo entre fuente y operador. Encuentros coordinados por tercero, sin horario ni ubicación publicables.';
+    } else if (r.nivel === 'deep_background') {
+      canal = 'Signal en dispositivo dedicado con caducidad de mensajes a 1 hora. Sin screenshots. Sin transcripción literal. El registro en OP-SEC-LOG se hace por alias y sin vincular contenido al alias.';
+    } else if (r.nivel === 'off_record') {
+      if (r.riesgo === 'alto' || r.riesgo === 'critico') {
+        canal = 'Signal en dispositivo dedicado con caducidad de mensajes a 24 horas. Encuentros presenciales con rutina de contra-vigilancia (ver OP-INV-2028-004). Sin registro fotográfico del encuentro.';
+      } else {
+        canal = 'Signal con caducidad de mensajes a 7 días. Sin screenshots. Sin transcripción literal. Encuentros presenciales según disponibilidad.';
+      }
+    } else {
+      if (r.riesgo === 'alto' || r.riesgo === 'critico') {
+        canal = 'Signal en dispositivo dedicado con caducidad de mensajes a 24 horas. Encuentros presenciales prioritarios sobre canal digital siempre que el material lo permita.';
+      } else {
+        canal = 'Signal en número operativo. Encuentros presenciales según disponibilidad y sensibilidad del material.';
+      }
+    }
+
+    const citabilidadMap = {
+      background: 'Atribuible por rol o sector — por ejemplo "un funcionario judicial con acceso al expediente" o "un mando policial de Rosario". Prohibido identificar por nombre, cargo específico o vínculo personal identificable. Verificación cruzada obligatoria por al menos una vía adicional (OP-RED-2028-003).',
+      off_record: 'No citable en publicación. La información orienta la verificación por fuente independiente. Si la corroboración no se alcanza, el material no se publica. No registrar fragmentos literales en notas de trabajo.',
+      deep_background: 'No citable ni por rol. La información ingresa como marco interpretativo y requiere corroboración por al menos una fuente citable adicional antes de cualquier publicación derivada.',
+      anonimato_total: 'No citable, no referenciable. La información solo vale si se corrobora por fuente documental o testimonial independiente. Para la publicación, la fuente no existe.'
+    };
+    const citabilidad = citabilidadMap[r.nivel];
+
+    const custodia = (r.nivel === 'deep_background' || r.nivel === 'anonimato_total')
+      ? 'Periodista a cargo + dirección editorial. Registro fuera de sistemas digitales compartidos — archivo cifrado local con copia offline en bóveda de legales. Identidad real no se registra bajo ninguna forma en sistemas de la redacción.'
+      : 'Periodista a cargo + editor de turno. Registro en OP-SEC-LOG por alias. La identidad real se conserva solo en notas personales del periodista responsable, bajo cifrado en dispositivo primario.';
+
+    const contactosMap = {
+      'ARQ-042': [{ key: 'velasquez', rol: 'Fixer designado · ventana de contacto en destino' }, { key: 'fiorella', rol: 'Seguridad digital · configuración de canal' }],
+      'ROS-038': [{ key: 'villafane', rol: 'Operaciones · contra-vigilancia doméstica' }, { key: 'fiorella', rol: 'Seguridad digital · configuración de canal' }],
+      'ANA-047': [{ key: 'fiorella', rol: 'Seguridad digital · perfil de amenaza T-DOM' }, { key: 'pollastri', rol: 'Legales · cobertura ante requerimiento judicial' }],
+      'CCS-001': [{ key: 'quiroga', rol: 'Freelancer liaison · contactos locales' }, { key: 'fiorella', rol: 'Seguridad digital · configuración de canal' }],
+      'ESQ-012': [{ key: 'fiorella', rol: 'Seguridad digital · configuración de canal' }, { key: 'villafane', rol: 'Operaciones · ventana de contacto' }],
+      'ninguno': [{ key: 'fiorella', rol: 'Seguridad digital · configuración de canal' }]
+    };
+    const contactos = contactosMap[r.teatro] || contactosMap.ninguno;
+
+    const docs = [
+      { codigo: 'OP-RED-2028-003', key: 'fuentes_anonimas', motivo: 'Protocolo de atribución y verificación obligatoria para fuente anónima.' },
+      { codigo: 'OP-SEC-2028-011', key: 'comunicacion_cifrada', motivo: 'Configuración de canales cifrados y escalera de fallback por nivel de riesgo.' }
+    ];
+    if (r.nivel === 'deep_background' || r.nivel === 'anonimato_total') {
+      docs.push({ codigo: 'OP-INV-2028-004', key: 'contravigilancia', motivo: 'Rutinas de contra-vigilancia para encuentros presenciales y traslados.' });
+    }
+    if (r.riesgo === 'critico') {
+      docs.push({ codigo: 'OP-SEC-2029-003', key: 'compromiso_dispositivo', motivo: 'Protocolo ante compromiso del dispositivo con impacto sobre la fuente.' });
+    }
+
+    const editorResponsable = (r.nivel === 'deep_background' || r.nivel === 'anonimato_total') ? 'dirección editorial' : 'f. zelaya — editor de turno';
+
+    return { canal, citabilidad, custodia, contactos, docs, editorResponsable };
+  }
+
+  function emitirRegistroFuente() {
+    const { alias, nivel, tipo, teatro, riesgo } = fuenteForm;
+    if (!alias.trim() || !nivel || !tipo || !riesgo) return;
+    const siguiente = fuentesRegistros.length + 1;
+    const codigo = `FTE-2029-${String(siguiente).padStart(4, '0')}`;
+    const registro = {
+      codigo,
+      alias: alias.trim(),
+      nivel, tipo, teatro, riesgo,
+      fecha: '2029-04-17',
+      operador: 'mondini.l'
+    };
+    setFuentesRegistros(prev => [...prev, registro]);
+    setFuenteActiva(registro);
+    setFuenteForm({ alias: '', nivel: '', tipo: '', teatro: 'ninguno', riesgo: '' });
   }
 
 
@@ -753,7 +861,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     'legales': ['anmac_enacom', 'exportacion_equip', 'seguros_riesgo', 'folder_legales'],
     'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'onboarding', 'folder_rrhh'],
     'investigacion': ['docs_filtrados', 'osint_investigacion', 'redes_internacionales', 'contravigilancia', 'narco_cobertura', 'inteligencia_investigacion', 'folder_investigacion'],
-    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'evaluacion_teatros', 'checklist_predespliegue', 'simulador_compromiso', 'folder_herramientas']
+    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'evaluacion_teatros', 'checklist_predespliegue', 'simulador_compromiso', 'editor_fuentes', 'folder_herramientas']
   };
   const isFolderActive = (key) => {
     if (key === 'seg-digital' && !activeView && !showLanding) return true;
@@ -766,7 +874,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
     jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'], onboarding: ['RRHH', 'folder_rrhh'],
     docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'], narco_cobertura: ['Investigación', 'folder_investigacion'], inteligencia_investigacion: ['Investigación', 'folder_investigacion'],
-    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'], evaluacion_teatros: ['Herramientas', 'folder_herramientas'], checklist_predespliegue: ['Herramientas', 'folder_herramientas'], simulador_compromiso: ['Herramientas', 'folder_herramientas'],
+    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'], evaluacion_teatros: ['Herramientas', 'folder_herramientas'], checklist_predespliegue: ['Herramientas', 'folder_herramientas'], simulador_compromiso: ['Herramientas', 'folder_herramientas'], editor_fuentes: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
   const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'panorama'];
@@ -1199,6 +1307,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
                 <div role="button" tabIndex={0} onClick={() => setActiveView('simulador_compromiso')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'simulador_compromiso' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'simulador_compromiso' ? 500 : 400, backgroundColor: activeView === 'simulador_compromiso' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'simulador_compromiso' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Simulador de compromiso
+                </div>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('editor_fuentes')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'editor_fuentes' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'editor_fuentes' ? 500 : 400, backgroundColor: activeView === 'editor_fuentes' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'editor_fuentes' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Registro de fuentes
                 </div>
               </div>
             )}
@@ -2415,6 +2526,202 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     {!escenario && (
                       <div className="serif" style={{ fontSize: '13px', color: '#5a544c', fontStyle: 'italic', padding: '20px 0' }}>
                         Seleccionar un escenario arriba para iniciar el ejercicio.
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
+              {/* Registro de fuentes anónimas */}
+              {activeView === 'editor_fuentes' && (() => {
+                const form = fuenteForm;
+                const formCompleto = form.alias.trim() && form.nivel && form.tipo && form.riesgo;
+                const updateForm = (campo, valor) => setFuenteForm(prev => ({ ...prev, [campo]: valor }));
+                const teatrosOpciones = [...teatrosData.map(t => ({ codigo: t.codigo, nombre: t.nombre })), { codigo: 'ninguno', nombre: 'Ninguno / doméstico general' }];
+                const personaPorKey = Object.fromEntries(directorioData.map(p => [p.key, p]));
+                const registroView = fuenteActiva;
+                const evalRegistro = registroView ? evaluarFuente(registroView) : null;
+                const teatroRegistroNombre = registroView
+                  ? (registroView.teatro === 'ninguno' ? 'Ninguno / doméstico general' : (teatrosData.find(t => t.codigo === registroView.teatro)?.nombre || registroView.teatro))
+                  : '';
+                const pillStyle = (activo) => ({ cursor: 'pointer', padding: '7px 12px', fontSize: '11.5px', border: '1px solid ' + (activo ? '#1f1f1f' : '#d9d4c2'), backgroundColor: activo ? '#f0ecde' : '#f8f5ec', color: '#1f1f1f', fontWeight: activo ? 500 : 400 });
+                return (
+                  <div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · HERRAMIENTAS · OP-TOOL-2029-009</div>
+                    <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Registro de fuentes anónimas</h1>
+                    <div className="serif" style={{ fontSize: '14.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '20px' }}>Alta de fuente con parte firmado. El sistema resuelve canal de comunicación, restricciones de publicación y responsable de custodia a partir del nivel de protección, el tipo de fuente, el teatro asociado y el nivel de riesgo. La identidad real no se registra aquí — sólo el alias.</div>
+
+                    <div style={{ padding: '10px 14px', backgroundColor: '#f5d5d5', borderLeft: '2px solid #bd2828', marginBottom: '20px' }}>
+                      <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                        El alias es un código operativo — nunca el nombre real de la fuente, ni un seudónimo vinculable. La identidad real queda en custodia del periodista a cargo según el protocolo OP-RED-2028-003.
+                      </div>
+                    </div>
+
+                    {!registroView && (
+                      <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '24px 28px', marginBottom: '24px' }}>
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Alta de fuente</div>
+
+                        <div style={{ marginBottom: '18px' }}>
+                          <label className="mono" style={{ display: 'block', fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '6px' }}>Alias operativo</label>
+                          <input type="text" value={form.alias} onChange={(e) => updateForm('alias', e.target.value)} placeholder="ej. ROJO-03, CLAVE-ANDES, TESTIGO-B" className="mono" style={{ width: '100%', maxWidth: '420px', padding: '8px 12px', fontSize: '12.5px', border: '1px solid #d9d4c2', backgroundColor: '#f0ecde', color: '#1f1f1f', outline: 'none' }} />
+                        </div>
+
+                        <div style={{ marginBottom: '18px' }}>
+                          <label className="mono" style={{ display: 'block', fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '6px' }}>Nivel de protección</label>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {Object.entries(NIVEL_PROTECCION).map(([k, v]) => (
+                              <div key={k} role="button" tabIndex={0} onClick={() => updateForm('nivel', k)} className="mono" style={pillStyle(form.nivel === k)}>{v.label}</div>
+                            ))}
+                          </div>
+                          {form.nivel && (
+                            <div className="serif" style={{ fontSize: '12px', color: '#5a544c', marginTop: '6px', fontStyle: 'italic' }}>{NIVEL_PROTECCION[form.nivel].glosa}</div>
+                          )}
+                        </div>
+
+                        <div style={{ marginBottom: '18px' }}>
+                          <label className="mono" style={{ display: 'block', fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '6px' }}>Tipo de fuente</label>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {Object.entries(TIPO_FUENTE).map(([k, label]) => (
+                              <div key={k} role="button" tabIndex={0} onClick={() => updateForm('tipo', k)} className="mono" style={pillStyle(form.tipo === k)}>{label}</div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div style={{ marginBottom: '18px' }}>
+                          <label className="mono" style={{ display: 'block', fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '6px' }}>Teatro asociado</label>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {teatrosOpciones.map(t => (
+                              <div key={t.codigo} role="button" tabIndex={0} onClick={() => updateForm('teatro', t.codigo)} className="mono" style={pillStyle(form.teatro === t.codigo)}>
+                                {t.codigo === 'ninguno' ? 'Ninguno' : `${t.codigo} · ${t.nombre}`}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div style={{ marginBottom: '20px' }}>
+                          <label className="mono" style={{ display: 'block', fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '6px' }}>Nivel de riesgo de la fuente</label>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {Object.entries(RIESGO).map(([k, v]) => {
+                              const activo = form.riesgo === k;
+                              return (
+                                <div key={k} role="button" tabIndex={0} onClick={() => updateForm('riesgo', k)} className="mono" style={{ cursor: 'pointer', padding: '7px 12px', fontSize: '11.5px', border: '1px solid ' + (activo ? v.color : '#d9d4c2'), backgroundColor: activo ? v.bg : '#f8f5ec', color: activo ? v.color : '#1f1f1f', fontWeight: activo ? 500 : 400 }}>{v.label}</div>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <div role="button" tabIndex={formCompleto ? 0 : -1} onClick={() => formCompleto && emitirRegistroFuente()} className="mono" style={{ cursor: formCompleto ? 'pointer' : 'not-allowed', padding: '8px 14px', fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase', border: '1px solid ' + (formCompleto ? '#1f1f1f' : '#d9d4c2'), backgroundColor: formCompleto ? '#1f1f1f' : '#eceae4', color: formCompleto ? '#f0ede4' : '#8a8472', opacity: formCompleto ? 1 : 0.6 }}>
+                            Emitir parte de registro
+                          </div>
+                          <div role="button" tabIndex={0} onClick={() => setFuenteForm({ alias: '', nivel: '', tipo: '', teatro: 'ninguno', riesgo: '' })} className="mono" style={{ cursor: 'pointer', padding: '8px 14px', fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase', border: '1px solid #d9d4c2', backgroundColor: 'transparent', color: '#5a544c' }}>
+                            Limpiar formulario
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {registroView && evalRegistro && (
+                      <div style={{ padding: '28px 32px', backgroundColor: '#f8f5ec', border: '2px solid #1f1f1f', marginBottom: '24px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px', gap: '12px', flexWrap: 'wrap' }}>
+                          <div className="mono micro" style={{ color: '#5a6e3c' }}>Parte de registro de fuente · emitido</div>
+                          <div role="button" tabIndex={0} onClick={() => setFuenteActiva(null)} className="mono" style={{ cursor: 'pointer', padding: '4px 10px', fontSize: '10px', letterSpacing: '0.04em', textTransform: 'uppercase', border: '1px solid #d9d4c2', backgroundColor: 'transparent', color: '#5a544c' }}>
+                            Nuevo registro
+                          </div>
+                        </div>
+                        <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 6px' }}>{registroView.codigo} — {registroView.alias}</h2>
+                        <div className="serif" style={{ fontSize: '13.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '18px' }}>
+                          Fuente {TIPO_FUENTE[registroView.tipo].toLowerCase()} · nivel de protección {NIVEL_PROTECCION[registroView.nivel].label.toLowerCase()} · riesgo {RIESGO[registroView.riesgo].label.toLowerCase()}.
+                        </div>
+
+                        <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.7, marginBottom: '20px' }}>
+                          Fecha de alta: {registroView.fecha}<br/>
+                          Operador a cargo: {registroView.operador}<br/>
+                          Alias: {registroView.alias}<br/>
+                          Tipo: {TIPO_FUENTE[registroView.tipo]}<br/>
+                          Teatro asociado: {teatroRegistroNombre}<br/>
+                          Nivel de protección: {NIVEL_PROTECCION[registroView.nivel].label}<br/>
+                          Nivel de riesgo: {RIESGO[registroView.riesgo].label}<br/>
+                          Código de registro: {registroView.codigo}
+                        </div>
+
+                        <section style={{ marginBottom: '18px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>Protocolo de comunicación</div>
+                          <div className="serif" style={{ fontSize: '13px', color: '#1f1f1f', lineHeight: 1.6, padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f' }}>{evalRegistro.canal}</div>
+                        </section>
+
+                        <section style={{ marginBottom: '18px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>Restricciones de publicación</div>
+                          <div className="serif" style={{ fontSize: '13px', color: '#1f1f1f', lineHeight: 1.6, padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #bd2828' }}>{evalRegistro.citabilidad}</div>
+                        </section>
+
+                        <section style={{ marginBottom: '18px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>Custodia del registro</div>
+                          <div className="serif" style={{ fontSize: '13px', color: '#1f1f1f', lineHeight: 1.6, padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c' }}>{evalRegistro.custodia}</div>
+                        </section>
+
+                        <section style={{ marginBottom: '18px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>Contactos operativos</div>
+                          {evalRegistro.contactos.map(c => {
+                            const p = personaPorKey[c.key];
+                            if (!p) return null;
+                            return (
+                              <div key={c.key} role="button" tabIndex={0} onClick={() => setActiveView('perfil_' + c.key)} className="doc-link" style={{ cursor: 'pointer', padding: '8px 0', borderBottom: '1px solid #d9d4c2' }}>
+                                <div style={{ display: 'flex', gap: '12px', alignItems: 'baseline' }}>
+                                  <span className="serif" style={{ fontSize: '13px', fontWeight: 500, minWidth: '160px' }}>{p.nombre}</span>
+                                  <span className="mono" style={{ fontSize: '11px', color: '#3d3931', flex: 1 }}>{c.rol}</span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </section>
+
+                        <section style={{ marginBottom: '20px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>Doctrina aplicable</div>
+                          {evalRegistro.docs.map(d => (
+                            <div key={d.codigo} role="button" tabIndex={0} onClick={() => setActiveView(d.key)} className="doc-link" style={{ cursor: 'pointer', padding: '8px 0', borderBottom: '1px solid #d9d4c2' }}>
+                              <div style={{ display: 'flex', gap: '12px', alignItems: 'baseline' }}>
+                                <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c', minWidth: '140px' }}>{d.codigo}</span>
+                                <span className="serif" style={{ fontSize: '13px', color: '#1f1f1f', flex: 1 }}>{d.motivo}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </section>
+
+                        <div className="mono" style={{ fontSize: '11px', color: '#5a544c', lineHeight: 1.7 }}>
+                          Firmas:<br/>
+                          l. mondini — corresponsal a cargo<br/>
+                          {evalRegistro.editorResponsable}<br/>
+                          l. pollastri — legales
+                        </div>
+                      </div>
+                    )}
+
+                    {fuentesRegistros.length > 0 && (
+                      <div style={{ marginTop: '12px' }}>
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Registros emitidos ({fuentesRegistros.length})</div>
+                        <div style={{ border: '1px solid #d9d4c2', backgroundColor: '#f8f5ec' }}>
+                          {fuentesRegistros.slice().reverse().map((r, idx, arr) => {
+                            const activo = registroView?.codigo === r.codigo;
+                            return (
+                              <div key={r.codigo} role="button" tabIndex={0} onClick={() => setFuenteActiva(r)} style={{ cursor: 'pointer', padding: '12px 16px', borderBottom: idx < arr.length - 1 ? '1px solid #d9d4c2' : 'none', backgroundColor: activo ? '#f0ecde' : 'transparent', display: 'flex', gap: '14px', alignItems: 'baseline', flexWrap: 'wrap' }}>
+                                <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c', minWidth: '120px' }}>{r.codigo}</span>
+                                <span className="serif" style={{ fontSize: '13.5px', fontWeight: 500, minWidth: '160px' }}>{r.alias}</span>
+                                <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{TIPO_FUENTE[r.tipo]}</span>
+                                <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{NIVEL_PROTECCION[r.nivel].label}</span>
+                                <span className="mono" style={{ fontSize: '9.5px', padding: '2px 7px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: RIESGO[r.riesgo].bg, color: RIESGO[r.riesgo].color }}>riesgo {RIESGO[r.riesgo].label.toLowerCase()}</span>
+                                <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{r.teatro === 'ninguno' ? '—' : r.teatro}</span>
+                                <span className="mono" style={{ fontSize: '10.5px', color: '#8a8472', marginLeft: 'auto' }}>{r.fecha}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {fuentesRegistros.length === 0 && !registroView && (
+                      <div className="serif" style={{ fontSize: '13px', color: '#5a544c', fontStyle: 'italic', padding: '20px 0' }}>
+                        No hay fuentes registradas aún. Completar el formulario para emitir el primer parte.
                       </div>
                     )}
                   </div>
