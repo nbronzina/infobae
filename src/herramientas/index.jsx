@@ -28,19 +28,31 @@ export default function HerramientasView({ modo, onOpenDoc, onOpenPerfil }) {
     const Tool = entry.Component;
     return (
       <div>
-        <button type="button" onClick={() => setActiva(null)} style={{
-          background: 'none', border: '1px solid ' + t.border, cursor: 'pointer',
-          padding: isCampo ? '10px 14px' : '6px 12px',
-          fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase',
-          color: t.textSecondary, marginBottom: '18px', minHeight: s.touchMin
-        }}>
-          ← Herramientas
-        </button>
+        {isCampo ? (
+          <button type="button" onClick={() => setActiva(null)} style={{
+            background: 'none', border: '1px solid ' + t.border, cursor: 'pointer',
+            padding: '10px 14px',
+            fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase',
+            color: t.textSecondary, marginBottom: '18px', minHeight: s.touchMin
+          }}>← Herramientas</button>
+        ) : (
+          <button type="button" onClick={() => setActiva(null)} style={{
+            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+            fontFamily: SERIF, fontSize: '13px', fontStyle: 'italic',
+            color: t.textSecondary, marginBottom: '24px',
+            borderBottom: '1px dotted ' + t.border, paddingBottom: '2px'
+          }}>← volver al índice de herramientas</button>
+        )}
         <Tool modo={modo} onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} />
       </div>
     );
   }
 
+  if (isCampo) return <CampoMenu setActiva={setActiva} t={t} s={s} />;
+  return <RedaccionMenu setActiva={setActiva} t={t} />;
+}
+
+function CampoMenu({ setActiva, t, s }) {
   return (
     <div>
       <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
@@ -53,17 +65,17 @@ export default function HerramientasView({ modo, onOpenDoc, onOpenPerfil }) {
         Mecánicas operativas que viven en el dispositivo. Cada una produce un parte firmado o un registro persistente. Ninguna requiere conexión a red.
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: isCampo ? '10px' : '12px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {HERRAMIENTAS.map(h => (
           <button key={h.id} type="button" onClick={() => setActiva(h.id)} style={{
             textAlign: 'left', background: t.bgCard, border: '1px solid ' + t.border,
-            padding: isCampo ? '16px 16px' : '18px 20px', cursor: 'pointer', color: t.text,
+            padding: '16px 16px', cursor: 'pointer', color: t.text,
             minHeight: s.touchMin
           }}>
             <div style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '6px' }}>
               {h.codigo}
             </div>
-            <div style={{ fontFamily: SERIF, fontSize: isCampo ? '16px' : '17px', fontWeight: 500, marginBottom: '4px', color: t.text }}>
+            <div style={{ fontFamily: SERIF, fontSize: '16px', fontWeight: 500, marginBottom: '4px', color: t.text }}>
               {h.label}
             </div>
             <div style={{ fontFamily: SERIF, fontSize: '13px', color: t.textSecondary, lineHeight: 1.5 }}>
@@ -72,6 +84,47 @@ export default function HerramientasView({ modo, onOpenDoc, onOpenPerfil }) {
           </button>
         ))}
       </div>
+    </div>
+  );
+}
+
+function RedaccionMenu({ setActiva, t }) {
+  return (
+    <div>
+      <h1 style={{ fontFamily: SERIF, fontSize: '32px', fontWeight: 500, margin: '0 0 12px', letterSpacing: '-0.015em', color: t.text, lineHeight: 1.15 }}>
+        Herramientas operativas
+      </h1>
+      <div style={{ fontFamily: SERIF, fontSize: 15, color: t.textSecondary, fontStyle: 'italic', marginBottom: '36px', lineHeight: 1.6, maxWidth: '38em' }}>
+        Mecánicas operativas que viven en el dispositivo. Cada una produce un parte firmado o un registro persistente. Ninguna requiere conexión a red.
+      </div>
+
+      <ol style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+        {HERRAMIENTAS.map((h, i) => (
+          <li key={h.id} style={{ borderBottom: '1px dotted ' + t.border }}>
+            <button type="button" onClick={() => setActiva(h.id)} style={{
+              width: '100%', textAlign: 'left', background: 'transparent', border: 'none',
+              padding: '20px 0', cursor: 'pointer', color: t.text,
+              display: 'grid', gridTemplateColumns: '36px 1fr', columnGap: '14px',
+              alignItems: 'baseline'
+            }}>
+              <span style={{ fontFamily: SERIF, fontSize: '16px', fontStyle: 'italic', color: t.textMeta }}>
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <div style={{ fontFamily: SERIF, fontSize: '19px', fontWeight: 500, marginBottom: '6px', color: t.text, letterSpacing: '-0.005em', lineHeight: 1.3 }}>
+                  {h.label}
+                </div>
+                <div style={{ fontFamily: SERIF, fontSize: '14.5px', color: t.textSecondary, lineHeight: 1.55, fontStyle: 'italic', maxWidth: '34em' }}>
+                  {h.desc}
+                </div>
+                <div style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta, marginTop: '6px', letterSpacing: '0.04em' }}>
+                  {h.codigo}
+                </div>
+              </div>
+            </button>
+          </li>
+        ))}
+      </ol>
     </div>
   );
 }
