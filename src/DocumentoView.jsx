@@ -82,31 +82,23 @@ function DocHeader({ doc, modo }) {
       </header>
     );
   }
-  // Campo: header operativo. Mono chrome, denso, con border-bottom.
+  // Campo: header operativo compacto.
   return (
     <header style={{
       borderBottom: '1px solid ' + t.border,
-      paddingBottom: '20px', marginBottom: '24px'
+      paddingBottom: '14px', marginBottom: '18px'
     }}>
-      <div style={{ fontFamily: MONO, fontSize: '11px', letterSpacing: '0.06em', color: t.textMeta, marginBottom: '10px' }}>
-        {doc.area} · DOCUMENTO OPERATIVO · {doc.codigo}
+      <div style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.06em', color: t.textMeta, marginBottom: '6px' }}>
+        {doc.codigo} · v{doc.version}
       </div>
       <h1 style={{
-        fontFamily: SERIF, fontSize: '24px', fontWeight: 500, margin: '0 0 8px',
+        fontFamily: SERIF, fontSize: '20px', fontWeight: 500, margin: '0 0 6px',
         letterSpacing: '-0.01em', lineHeight: 1.25, color: t.text
       }}>
         {doc.titulo}
       </h1>
-      <div style={{
-        fontFamily: SERIF, fontSize: '14.5px',
-        color: t.textSecondary, fontStyle: 'italic', lineHeight: 1.5,
-        marginBottom: '16px'
-      }}>
-        {doc.subtitulo}
-      </div>
-      <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, lineHeight: 1.7 }}>
-        Edición {doc.version} · publicada {doc.fecha}<br/>
-        Responsable: {doc.responsable}
+      <div style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta, lineHeight: 1.6 }}>
+        {doc.responsable}
       </div>
     </header>
   );

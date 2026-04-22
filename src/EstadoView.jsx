@@ -35,15 +35,9 @@ export default function EstadoView({ modo }) {
   if (isCampo) {
     return (
       <div>
-        <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
-          INFOBAE · ESTADO OPERACIONAL · MONDINI.L
-        </div>
-        <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
-          Estado del operador
+        <h1 style={{ fontFamily: SERIF, fontSize: '22px', fontWeight: 500, margin: '0 0 16px', letterSpacing: '-0.01em', color: t.text, lineHeight: 1.2 }}>
+          Estado · mondini.l
         </h1>
-        <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '24px', lineHeight: 1.5 }}>
-          Lectura local de variables de operación. Lo que el dispositivo sabe sobre la condición actual.
-        </div>
         <CampoLayout snapshot={snapshot} flags={flags} t={t} s={s} />
       </div>
     );

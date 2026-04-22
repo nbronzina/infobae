@@ -208,22 +208,18 @@ function PerfilView({ personaKey, modo, onBack }) {
       {persona && (
         <article style={{ background: 'transparent', border: 'none', padding: 0 }}>
           {isCampo ? (
-            <header style={{ borderBottom: '1px solid ' + t.border, paddingBottom: '20px', marginBottom: '24px' }}>
-              <div style={{ fontFamily: MONO, fontSize: '11px', letterSpacing: '0.06em', color: t.textMeta, marginBottom: '10px', textTransform: 'uppercase' }}>
-                INFOBAE · DIRECTORIO INTERNO · {persona.key}
+            <header style={{ borderBottom: '1px solid ' + t.border, paddingBottom: '14px', marginBottom: '18px' }}>
+              <div style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.06em', color: t.textMeta, marginBottom: '6px', textTransform: 'uppercase' }}>
+                {persona.key}
               </div>
-              <h1 style={{ fontFamily: SERIF, fontSize: '24px', fontWeight: 500, margin: '0 0 8px', letterSpacing: '-0.01em', color: t.text }}>
+              <h1 style={{ fontFamily: SERIF, fontSize: '20px', fontWeight: 500, margin: '0 0 4px', letterSpacing: '-0.01em', color: t.text, lineHeight: 1.25 }}>
                 {persona.nombre}
               </h1>
-              <div style={{ fontFamily: SERIF, fontSize: '14.5px', color: t.textSecondary, fontStyle: 'italic', marginBottom: '12px', lineHeight: 1.5 }}>
+              <div style={{ fontFamily: SERIF, fontSize: '13px', color: t.textSecondary, fontStyle: 'italic', marginBottom: '8px', lineHeight: 1.45 }}>
                 {persona.rol}
               </div>
-              <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, lineHeight: 1.7 }}>
-                Base: {persona.base}<br/>
-                Contacto: {persona.contacto}
-                {Array.isArray(persona.aliases) && persona.aliases.length > 0 && (
-                  <><br/>Aliases: {persona.aliases.join(' · ')}</>
-                )}
+              <div style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta, lineHeight: 1.6 }}>
+                {persona.base} · {persona.contacto}
               </div>
             </header>
           ) : (
