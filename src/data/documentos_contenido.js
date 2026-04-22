@@ -126,6 +126,22 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  narco_cobertura: {
+    area: 'INFOBAE · INVESTIGACIÓN',
+    codigo: 'OP-INV-2029-005', version: '1.0', fecha: '2029-02-18',
+    responsable: 'dirección editorial + l. pollastri',
+    titulo: 'Cobertura de narcotráfico y crimen organizado doméstico',
+    subtitulo: 'Protocolo editorial y operativo para investigaciones sobre estructuras criminales en territorio argentino',
+    secciones: [
+      { titulo: 'Alcance', texto: 'Este protocolo aplica a toda investigación sobre estructuras de narcotráfico y crimen organizado con operación doméstica — foco principal Rosario post-detención del clan Cantero (dic 2025), rutas Paraguay-Argentina, lavado inmobiliario, y nexo narcotráfico-fuerzas de seguridad locales. Rosario concentra el riesgo operativo más alto de la profesión en Argentina post-2020 según InSight Crime y FOPEA.' },
+      { titulo: 'Coordinación judicial y fiscal', texto: 'La mayoría del material útil proviene de expedientes federales en curso. La cobertura requiere coordinación con mesa judicial y defensa legal temprana de fuentes. No publicar nombres de testigos protegidos. Verificar con Pollastri antes de publicar cualquier identidad de funcionario judicial o policial local. Anticipar citaciones por la justicia en busca de fuentes: la respuesta estándar es secreto de fuentes bajo art. 43 CN.' },
+      { titulo: 'Protección del periodista local', texto: 'El periodista local es el vector de riesgo más alto. Un corresponsal desde Buenos Aires puede volver a base tras el trabajo de campo — el colega rosarino no. Toda cobertura debe considerar: no identificar al colega en redes internas, coordinar publicación con pares de la ciudad vía FOPEA, activar protocolo de aviso mutuo ante amenaza directa. No exponer al colega por un detalle que puede omitirse.' },
+      { titulo: 'Amenazas operativas frecuentes', texto: 'Amenazas por WhatsApp de números descartables. Seguimiento físico de baja sofisticación (motos, vehículos sin patente visible). Intentos de intimidación a familiares. Ocasionalmente: aviso de "esta nota la pagás" en redacción o domicilio. Todas deben ser documentadas ante FOPEA y CPJ dentro de las 48h. Registrar foto, hora, lugar, descripción del contactante.' },
+      { titulo: 'Diferencia con cobertura internacional', texto: 'A diferencia de un despliegue internacional, la cobertura narco doméstica es continua — no hay ventana de entrada y salida. El riesgo persiste después de publicar y puede extenderse meses o años. La sesión JTSN post-publicación es recomendable aunque no obligatoria para investigaciones de más de 6 meses de trabajo continuo.' }
+    ],
+    fuentes: 'InSight Crime, Los Monos: reconfiguración post-2025. Plan Bandera PFA dic 2025 (real). De los Santos & Lascano, "Los Monos" (premio FOPEA). FOPEA, protocolo de aviso mutuo. CPJ Argentina country reports. Fiscalía Federal Rosario, expedientes públicos.'
+  },
+
   contravigilancia: {
     area: 'INFOBAE · INVESTIGACIÓN',
     codigo: 'OP-INV-2028-004', version: '3.0', fecha: '2029-01-20',
