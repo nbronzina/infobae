@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DOCUMENTOS_SECCIONES, totalDocumentos } from './data/documentos_index.js';
+import DocumentoView from './DocumentoView.jsx';
 import { themeFor, sizesFor, SERIF, MONO } from './theme.js';
 
 const ESTADO_LABEL = {
@@ -20,6 +21,10 @@ export default function DocsView({ modo }) {
   const isCampo = modo === 'campo';
   const [activo, setActivo] = useState(null);
   const total = totalDocumentos();
+
+  if (activo) {
+    return <DocumentoView docKey={activo} modo={modo} onBack={() => setActivo(null)} />;
+  }
 
   return (
     <div>
