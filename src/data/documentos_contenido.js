@@ -126,6 +126,20 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  fopea_protocolo: {
+    area: 'DOCUMENTO EXTERNO · REFERENCIA',
+    codigo: 'EXT-FOPEA-2028', version: 'ext.', fecha: '2028',
+    responsable: 'FOPEA (Foro de Periodismo Argentino)',
+    titulo: 'Protocolo de aviso mutuo entre colegas',
+    subtitulo: 'Referencia externa — no es documento Infobae',
+    secciones: [
+      { titulo: 'Origen', texto: 'FOPEA (fopea.org) es el foro argentino de periodismo que nuclea a periodistas de investigación. Su protocolo de aviso mutuo establece que ante amenaza, hackeo o seguimiento documentado, el periodista afectado avisa a su red de colegas para activar visibilidad pública y protección colectiva. No es un protocolo formal escrito sino una práctica documentada desde el caso "Anaconda" (2016-2020).' },
+      { titulo: 'Cómo funciona', texto: 'El periodista amenazado contacta a entre 3 y 5 colegas de confianza de medios distintos. Les informa la situación sin revelar fuentes ni material en curso. Los colegas publican o mencionan públicamente que el periodista está bajo presión, generando costo político para el agresor. En paralelo, se notifica a CPJ y RSF para registro institucional.' },
+      { titulo: 'Integración con Infobae', texto: 'El personal de Infobae con despliegue activo o investigación sensible debe mantener al menos 3 contactos FOPEA actualizados. La activación del protocolo FOPEA se comunica al editor de turno pero no requiere autorización previa. La protección de la persona prevalece sobre la coordinación editorial.' }
+    ],
+    fuentes: 'FOPEA (fopea.org). Referencia práctica, no normativa. Hugo Alconada Mon, descripción pública del modelo de red de seguridad entre colegas (GIJN, 2024).'
+  },
+
   opsec_log: {
     area: 'INFOBAE · HERRAMIENTAS',
     codigo: 'OP-TOOL-2029-002', version: '1.0', fecha: '2029-03-01',
