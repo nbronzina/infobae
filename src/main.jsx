@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import Shell from './Shell.jsx';
+import Shell, { DeviceFrame } from './Shell.jsx';
 import escenariosData from './data/escenarios.json';
 
 const VALID_SCENARIOS = escenariosData.map(e => e.slug);
@@ -124,16 +124,16 @@ function AboutModal({ onClose }) {
 
 function HomeView({ onEnter, onOpenAbout }) {
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#1f1f1f', color: '#f0ede4', display: 'flex', flexDirection: 'column', padding: '32px', fontFamily: "'IBM Plex Sans', system-ui, sans-serif" }}>
+    <div style={{ height: '100%', color: '#1f1f1f', display: 'flex', flexDirection: 'column', padding: '40px 32px', fontFamily: "'Fraunces', Georgia, serif", boxSizing: 'border-box' }}>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '36px' }}>
-          <img src="/infobae-logo.png" alt="infobae" style={{ height: '34px', width: 'auto', display: 'block' }} />
-          <span className="mono" style={{ fontSize: '14px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#f0ede4', fontWeight: 500 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px' }}>
+          <img src="/infobae-logo.png" alt="infobae" draggable={false} style={{ height: '28px', width: 'auto', display: 'block' }} />
+          <span className="mono" style={{ fontSize: '13px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#1f1f1f', fontWeight: 500 }}>
             Bitácora
           </span>
         </div>
 
-        <div style={{ fontFamily: "'JetBrains Mono', Consolas, monospace", fontSize: '13px', letterSpacing: '0.04em', color: '#8a8472', marginBottom: '56px' }}>
+        <div className="serif" style={{ fontSize: '15px', fontStyle: 'italic', color: '#5a544c', marginBottom: '48px', lineHeight: 1.5 }}>
           Tres escenarios. Un corresponsal.
         </div>
 
@@ -143,7 +143,7 @@ function HomeView({ onEnter, onOpenAbout }) {
           onClick={onEnter}
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onEnter(); } }}
           className="mono"
-          style={{ cursor: 'pointer', padding: '14px 36px', fontSize: '12px', letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 500, backgroundColor: '#f0ede4', color: '#1f1f1f', border: '1px solid #f0ede4', marginBottom: '18px' }}
+          style={{ cursor: 'pointer', padding: '14px 36px', fontSize: '12px', letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 500, backgroundColor: '#1f1f1f', color: '#f8f5ec', border: '1px solid #1f1f1f', marginBottom: '18px' }}
         >
           Entrar
         </div>
@@ -153,14 +153,14 @@ function HomeView({ onEnter, onOpenAbout }) {
           tabIndex={0}
           onClick={onOpenAbout}
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpenAbout(); } }}
-          className="mono"
-          style={{ cursor: 'pointer', fontSize: '11px', letterSpacing: '0.06em', color: '#8a8472', borderBottom: '1px dotted #5a544c', paddingBottom: '1px' }}
+          className="serif"
+          style={{ cursor: 'pointer', fontSize: '13px', fontStyle: 'italic', color: '#5a544c', borderBottom: '1px dotted #8a8472', paddingBottom: '1px' }}
         >
           Sobre este artefacto
         </div>
       </div>
 
-      <div style={{ fontFamily: "'JetBrains Mono', Consolas, monospace", fontSize: '10.5px', color: '#5a544c', textAlign: 'center', letterSpacing: '0.04em' }}>
+      <div className="serif" style={{ fontSize: '11px', fontStyle: 'italic', color: '#8a8472', textAlign: 'center' }}>
         Nicolás Bronzina · 2025
       </div>
     </div>
@@ -174,7 +174,7 @@ function BriefingView({ onSelect, onOpenAbout }) {
     { slug: 'inteligencia', label: 'Línea nacional · Inteligencia' }
   ];
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8f5ec', color: '#1f1f1f', padding: '56px 32px 40px', fontFamily: "'IBM Plex Sans', system-ui, sans-serif" }}>
+    <div style={{ height: '100%', overflowY: 'auto', color: '#1f1f1f', padding: '44px 32px 32px', fontFamily: "'Fraunces', Georgia, serif", boxSizing: 'border-box' }}>
       <style>{`
         .brief-link { cursor: pointer; background: none; border: none; font: inherit; color: inherit; padding: 0; text-align: left; }
         .brief-link:focus-visible { outline: 2px solid #1f1f1f; outline-offset: 3px; }
@@ -268,7 +268,7 @@ function ScenarioIndex() {
   };
 
   return (
-    <>
+    <div style={{ height: '100%' }}>
       <style>{`
         .serif { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; }
         .mono { font-family: 'JetBrains Mono', Consolas, monospace; }
@@ -280,7 +280,7 @@ function ScenarioIndex() {
         <BriefingView onSelect={goToScenario} onOpenAbout={() => setAboutOpen(true)} />
       )}
       {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} />}
-    </>
+    </div>
   );
 }
 
@@ -293,7 +293,11 @@ function Router() {
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
-  if (!scenario) return <ScenarioIndex />;
+  if (!scenario) {
+    // Home + briefing viven dentro del frame e-ink. Mondini los
+    // lee desde su Boox en Buenos Aires, antes de elegir línea.
+    return <DeviceFrame modo="redaccion"><ScenarioIndex /></DeviceFrame>;
+  }
   return <Shell scenario={scenario} />;
 }
 
