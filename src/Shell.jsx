@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import HerramientasView from './herramientas/index.jsx';
+import DocsView from './DocsView.jsx';
 
 const TABS = [
   { id: 'mision', label: 'MISIÓN' },
@@ -147,6 +148,9 @@ function Placeholder({ tabId, modo }) {
 function ViewSwitch({ activeView, modo, onOpenDoc, onOpenPerfil }) {
   if (activeView === 'herramientas') {
     return <HerramientasView modo={modo} onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} />;
+  }
+  if (activeView === 'docs') {
+    return <DocsView modo={modo} />;
   }
   return <Placeholder tabId={activeView} modo={modo} />;
 }
