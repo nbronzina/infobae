@@ -1,132 +1,216 @@
-# BRIEF PARA CLAUDE CODE
+BRIEF PARA CLAUDE CODE
+Qué es esto
+Infobae · Bitácora es una obra de ficción que explora el futuro
+cercano del periodismo de investigación y la corresponsalía
+internacional argentina a través del kit operativo de uno de sus
+medios icónicos — Infobae — en 2029.
+Es un diegetic prototype en la tradición de Near Future Laboratory /
+Superflux / Nick Foster (Future Mundane). La ficción está en que el
+sistema existe, no en lo que dice. Cada protocolo, norma y herramienta
+es extensión plausible de algo que existe hoy. Los personajes y los
+despliegues son ficticios. Las fuentes externas, las regulaciones y
+los papers citados son reales.
+Pregunta madre: ¿Cómo se organizarían los periodistas de investigación
+y corresponsales para entrenarse, informarse, prepararse y trabajar —
+tanto en campo internacional como en investigación doméstica?
+Dirección actual (post-feedback Fabien Girardin, 22 abril 2026)
+Tres decisiones clave
+1. Local-first, no cloud.
+Un periodista bajo vigilancia no debería depender de internet para
+acceder a su protocolo de seguridad. La versión final es una app local
+(Electron o Tauri) con modelo local (Ollama) para el analista. Sin
+servidor, sin DNS, sin tráfico de red identificable. La versión Vercel
+se mantiene como demo de portfolio. La versión local es el artefacto
+"real".
+2. No es una intranet — es un kit operativo personal.
+"Intranet" implica red corporativa, servidor central, IT department.
+Lo que el corresponsal necesita es algo que vive en su dispositivo y
+no depende de nadie más. El formato es más cercano a Obsidian o un
+field manual digital que a un portal web interno.
+3. Experiencia interactiva, no archivo de documentos.
+Tres líneas narrativas como tres escenarios operacionales. El usuario
+elige una línea, entra a ese escenario, y opera dentro de él: toma
+decisiones, completa checklists, consulta al analista, responde a
+situaciones. Los documentos no se navegan — se encuentran cuando los
+necesitás.
+Lo que NO decir en el artefacto
 
-## Qué es esto
+No decir "IA" ni "inteligencia artificial" ni "asistente" — en 2029
+nadie nombra la tecnología como novedad. El analista es un rol, no
+una herramienta. Decir "analista", "analista de guardia", "módulo de
+análisis", "sistema de evaluación".
+No decir "intranet" — es un kit operativo, bitácora de campo,
+sistema de consulta local.
+No decir "modelo: Claude Sonnet" ni revelar el stack dentro del
+artefacto. Rompe diegesis.
 
-Prototipo de design fiction. Una intranet corporativa ficticia de Infobae 
-ambientada en 2029 que responde a la pregunta: ¿cómo se organizarían los 
-periodistas de investigación y corresponsales de una agencia de noticias 
-para entrenarse, informarse, prepararse y trabajar — tanto en campo 
-internacional como en investigación doméstica?
+Estado actual del artefacto
+Arquitectura técnica (versión web)
 
-El artefacto es un diegetic prototype en la tradición de Near Future 
-Laboratory / Superflux / Nick Foster (Future Mundane). La ficción está 
-en que el sistema existe, no en lo que dice.
+React single component (~2000 líneas) con datos como objetos/arrays
+Vite 5 + React 18 + lucide-react
+Vercel deploy con serverless functions
+Contenido dinámico en 5 JSON: noticias, actividad, notificaciones,
+agenda, directorio
+Contenido estático en App.jsx (documentos, threat glossary,
+checklist, dispositivos)
+Analista: llamada real a API Anthropic (claude-sonnet-4-20250514)
+con system prompt diegético
+Pipeline de automatización: monitor → generación → validación →
+consolidación → publicación (lunes 9am UTC)
+Estado-mundo y hechos como memoria de largo plazo
+Throttle por ausencia de curación (30 días → conservador,
+60 días → pausa)
 
-## Estado actual
+Landing pública (página de entrada)
+Fondo negro, wordmark infobae + BITÁCORA. Estructura propuesta:
 
-El archivo `src/App.jsx` (ex-`infobae-interna.jsx`) es un componente 
-React monolítico post-migración a Vite. Tamaño aproximado: ~2900 
-líneas, con la mayoría del contenido del universo diegético inline. 
-Incluye:
+Wordmark + BITÁCORA
+Pregunta madre en Georgia itálica (gancho)
+Una línea de anclaje: "Una obra de ficción ambientada en 2029.
+Tres escenarios. Todo el research es real."
+Tres cards compactas (una por línea), cada una con: nombre,
+código de teatro, frase de tensión, estado, CTA "ENTRAR →"
+Footer: contexto meta-diegético + autoría
 
-### Estructura
-- Login screen (fondo negro, wordmark naranja, auto-fill mondini.l)
-- Landing page operativa (brief del día, despliegues, pendientes, accesos rápidos)
-- Intranet shell (header, sidebar colapsable, breadcrumb dinámico, metadata panel)
-- 21+ documentos navegables con renderizador genérico
-- Widget de consulta IA (llamada real a API Claude — Claudeception)
-- Formulario de parte de despliegue interactivo
-- Sistema de notificaciones (bell dropdown con overlay de cierre)
-- Search bar expandible
+Las cards deben ser compactas — frase de tensión, no descripción.
+Ejemplos de tensión:
 
-### Navegación (70 onClick handlers, 0 dead links)
-- Top nav: Inicio, Redacción, Documentos, Directorio, Herramientas, Soporte
-- Sidebar izquierdo colapsable a icon rail (52px)
-- 6 carpetas expandibles: Redacción, Seguridad Digital, Legales, RRHH, Investigación, Herramientas
-- Folder views con workflow states (vigente/en revisión/borrador)
-- Breadcrumb dinámico por tipo de vista
-- Estado activo visual en todos los items (borde rojo + fondo + peso 500)
-- Carpeta padre se marca activa cuando un hijo está seleccionado
-- Auto-expand de carpeta al navegar a un documento hijo
+Internacional: "Sacar equipamiento de guerra de un país para
+proteger civiles en otro."
+Rosario: "La amenaza es doméstica. No hay chaleco que te proteja
+de un GPS."
+Inteligencia: "El adversario tiene las mismas herramientas que
+vos, o mejores."
 
-### Documentos por área
-**Redacción (3):** Manual de estilo, Fuentes anónimas, Verificación pre-pub
-**Seguridad Digital (6):** Comunicación cifrada, Verificación C2PA, Higiene RF (doc principal con 8 secciones + SVG), Compromiso de dispositivo, Vigilancia en destino, Versión fixer
-**Legales (3):** ANMaC/ENACOM (render custom con tablas), Exportación equipamiento, Seguros alto riesgo
-**RRHH (3):** Apoyo psicológico JTSN, Política de despliegue, Contactos emergencia
-**Investigación (4):** Documentos filtrados, Metodología OSINT, Redes internacionales (ICIJ/OCCRP), Contra-vigilancia doméstica
-**Herramientas (4):** Analista automatizado (Claudeception), Parte de despliegue (formulario), Pipeline verificación, OP-SEC-LOG
-**Extras (2):** Versión fixer, Protocolo FOPEA (doc externo)
+Tres líneas narrativas
 
-### Personaje
-Lucía Mondini — corresponsal Infobae, base Buenos Aires. Trabaja en dos 
-frentes simultáneos: corresponsalía internacional (ARQ-042, Arauca/Apure, 
-cerrado) e investigación doméstica (ROS-038, Rosario, Los Monos, en curso).
+Internacional — ARQ-042, Arauca/Apure (COL/VEN), post-captura
+Maduro ene 2026. Línea vigente, actualización automática.
+Nacional Rosario — ROS-038, Los Monos / clan Cantero, nexo
+narco-estatal. Congelada 2029-04-17.
+Nacional Inteligencia — Anaconda-2, vigilancia estatal
+argentina, zonas grises legales. Congelada 2029-04-17.
 
-### Paleta verificada contra Infobae real
-- Naranja marca (solo logo): #f18b1e
-- Rojo alertas/clasificación: #bd2828
-- Negro corporativo: #1f1f1f
-- Fondos: #eceae4 (base), #f0ede4 (sidebar), #f8f5ec (paper), #f0ecde (bloques)
-- Verde aprobación: #5a6e3c
-- Ámbar revisión: #8a6d2b / #f5edd5
-- Gris metadata: #8a8472
-- Separadores: #d9d4c2
+Personaje principal
+Lucía Mondini — corresponsal ficticia compuesta de:
 
-### Tipografía (3 fuentes, Google Fonts CDN)
-- IBM Plex Sans: chrome corporativo, UI general
-- Fraunces: contenido editorial, títulos, lectura larga
-- JetBrains Mono: metadata, códigos, operaciones, formularios
+Hugo Alconada Mon (investigación doméstica, vigilancia SIDE)
+Teresa Bo (despliegue internacional, Al Jazeera)
+Sebastiana Barráez (diáspora venezolana)
 
-## Lo que necesita para deploy
-
-1. Migrar de artifact React a Vite + React standalone
-2. Resolver fonts via Google Fonts (ya están como CDN en useEffect)
-3. La llamada a la API de Claude en el analista automatizado necesita 
-   proxy o variable de entorno para la API key
-4. Deploy a Vercel — URL limpia, sin subpath
-5. El archivo se llama infobae-interna.jsx — renombrar a App.jsx en src/
-
-## Nota de seguridad
-
-`VITE_ANTHROPIC_API_KEY` queda embebida en el bundle client-side — es 
-consecuencia de que el widget "analista automatizado" llama a la API 
-de Anthropic desde el browser (header 
-`anthropic-dangerous-direct-browser-access: true`). Para un diegetic 
-prototype con tráfico bajo y key con rate-limit acotado, aceptable. 
-Si el artefacto se expone a tráfico abierto o se repurpose a 
-producción real, mover la llamada a una Vercel Function que mantenga 
-la key del lado servidor.
-
-## Restricciones de voz
-
-El sistema no le habla al usuario. Registra condiciones. 
-Nunca copy tipo app/producto. Nunca gesto literario. 
-Todo en registro de documento técnico institucional.
-
-## Fuentes técnicas verificadas
-- Rye & Levin, IEEE S&P 2024, arXiv:2405.14975 (WPS/Starlink)
-- ANMaC: Ley 20.429, Decreto 395/75, Res. 83/2023, Disp. RENAR 883/11
-- ENACOM: Res. 955/2025 (Starlink), RAMATEL
-- RSF España: rsf-es.org/seguridad-para-periodistas
-- Sam Gregory, Journalism Practice 2022 (C2PA/deepfakes)
-- IPTC Origin Verifier: originverify.iptc.org
-- Dart Center / JTSN: dartcenter.org
-- FOPEA: fopea.org
-- Bellingcat Online Investigation Toolkit
-- Berkeley Protocol on Digital Open Source Investigations (ONU, 2022)
-- ICIJ, OCCRP Aleph, GIJN
-- Los Monos / Clan Cantero: InSight Crime, PFA Plan Bandera (dic 2025)
-- De los Santos & Lascano, "Los Monos" (premio FOPEA)
-
-## Contexto completo del universo ficticio
-
-Teatro internacional: frontera Arauca (COL) / Apure (VEN), 2029, 
-post-captura de Maduro (enero 2026), transición venezolana inestable.
-
-Teatro doméstico: Rosario, Santa Fe. Estructuras sucesoras del clan 
-Cantero post-detención de Dylan Cantero (dic 2025). Nexo narcotráfico-
-fuerzas de seguridad. Investigación en curso con protocolo de 
-contra-vigilancia doméstica activo.
-
-Equipo ficticio: Mondini (corresponsal), Fiorella (seg digital), 
-Villafañe (operaciones), Pollastri (legales), Roca (verificación, Bogotá), 
-Zelaya (editor guardia, Madrid), Peralta (formación), Quiroga (freelancers, Lima), 
+Equipo ficticio (9 personas)
+Fiorella (seg digital), Villafañe (operaciones), Pollastri (legales),
+Roca (verificación, Bogotá), Zelaya (editor guardia, Madrid),
+Peralta (formación), Quiroga (freelancers, Lima),
 Velásquez (fixer externo, Arauca).
+Documentos del artefacto (21+)
+Redacción (3): manual_estilo, fuentes_anonimas, verificacion_prepub
+Seguridad Digital (6): comunicacion_cifrada, verificacion_c2pa,
+higiene_rf (doc principal 8 secciones + SVG), compromiso_dispositivo,
+vigilancia_destino, version_fixer
+Legales (3): anmac_enacom, exportacion_equip, seguros_riesgo
+RRHH (3): jtsn_apoyo, politica_despliegue, contactos_emergencia
+Investigación (4): docs_filtrados, osint_investigacion,
+redes_internacionales, contravigilancia
+Herramientas (4): analista (consulta operacional), parte_despliegue
+(formulario), pipeline_verificacion, opsec_log
+Sistema de diseño
+Colores: #f18b1e (naranja, SOLO logo), #bd2828 (rojo alertas),
+#1f1f1f (negro), #f8f5ec (paper), #f0ede4 (sidebar), #eceae4 (base),
+#5a6e3c (vigente), #8a6d2b (revisión)
+Tipografía: IBM Plex Sans (chrome), Fraunces (editorial),
+JetBrains Mono (metadata/operaciones)
+Workflow states: vigente (verde), en_revision (ámbar), borrador (gris)
+Interacciones
+Ya implementadas
 
-## Primera instrucción para Claude Code
+Login con auto-fill
+Analista de guardia (consulta con evaluación operacional)
+Parte de despliegue (formulario interactivo)
+Barra de acciones por documento (PDF, imprimir, compartir)
 
-"Leé BRIEF.md y el archivo infobae-interna.jsx. Migrá a Vite + React. 
-Configurá deploy a Vercel. La API key de Anthropic va como variable 
-de entorno VITE_ANTHROPIC_API_KEY. No cambies contenido ni diseño, 
-solo infraestructura."
+Planificadas
+
+Evaluación de amenazas por teatro: elegir destino → threat
+assessment personalizado con protocolos y equipamiento requerido
+Checklist de pre-despliegue interactivo: items tickeables con
+estado, genera parte de aptitud al completar
+Simulador de compromiso de dispositivo: escenario → opciones →
+evaluación contra protocolo (drill tipo HEFAT)
+Editor de fuentes anónimas: registro de fuente con nivel de
+protección → protocolo de comunicación sugerido
+Diario de campo: bitácora personal con cruce automático contra
+glosario de amenazas
+Niveles operacionales: Redacción → Pre-despliegue → Despliegue →
+Post-despliegue. La interfaz se adapta al estado del usuario.
+
+Fuentes técnicas verificadas
+
+Rye & Levin, IEEE S&P 2024, arXiv:2405.14975 (WPS/Starlink)
+ANMaC: Ley 20.429, Decreto 395/75, Res. 83/2023, Disp. RENAR 883/11
+ENACOM: Res. 955/2025 (Starlink), RAMATEL
+RSF España: rsf-es.org/seguridad-para-periodistas
+Sam Gregory, Journalism Practice 2022 (C2PA/deepfakes)
+IPTC Origin Verifier: originverify.iptc.org
+Dart Center / JTSN: dartcenter.org
+FOPEA: fopea.org
+Bellingcat Online Investigation Toolkit
+Berkeley Protocol (ONU/ACNUDH, 2022)
+ICIJ, OCCRP Aleph, GIJN
+Los Monos / Clan Cantero: InSight Crime, PFA Plan Bandera dic 2025
+De los Santos & Lascano, "Los Monos" (premio FOPEA)
+
+Lo que NO está verificado (marcar si se usa)
+
+StarLock / Excem Technologies — presentado en FEINDEF, pendiente
+de verificación independiente
+Plazos exactos de trámite de egreso ANMaC — no publicado
+Requisito ENACOM para sacar terminal satelital al exterior — no
+encontrado
+Nombre "Anushka Jain" de Access Now — posible confabulación
+
+Skills instalados (.claude/skills/)
+Custom (5): anti-slop, infobae-diegesis, fact-check, react-intranet,
+heated-fiction
+Externos (3): frontend-design (Anthropic), web-artifacts-builder
+(Anthropic), ui-ux-pro-max (nextlevelbuilder)
+Env vars en Vercel
+
+VITE_ANTHROPIC_API_KEY
+GITHUB_TOKEN (fine-grained, Contents R/W, repo nbronzina/infobae)
+GITHUB_REPO (nbronzina/infobae)
+AUDIT_KEY (para /api/auditoria)
+
+Roadmap
+Fase actual — Iterar en web (Vercel)
+
+Rediseñar landing pública con pregunta madre como gancho y
+cards compactas con frases de tensión
+Eliminar toda mención a "IA", "asistente", "modelo" del
+artefacto visible
+Implementar navegación por línea (elegir línea → entrar a
+su escenario con documentos y herramientas contextuales)
+Implementar niveles operacionales (Redacción → Pre-despliegue →
+Despliegue → Post-despliegue)
+Agregar interacciones: evaluación de amenazas, checklist,
+simulador de compromiso, editor de fuentes, diario de campo
+Iterar hasta estable
+
+Fase siguiente — Migrar a local
+
+Empaquetar en Electron o Tauri
+Reemplazar fetch a Anthropic por llamada a Ollama (modelo local)
+JSON en filesystem local en vez de imports
+Sync opcional por USB/Signal/mesh para actualizar línea vigente
+La versión Vercel queda como demo pública de portfolio
+
+Sobre Infobae (contexto para quien no lo conoce)
+Infobae es el medio digital más leído de Argentina, con más de 100
+millones de visitas mensuales. Fundado en 2002 por Daniel Hadad.
+Ediciones con redacción local en Argentina, México, Colombia, Perú y
+España, más oficina en Miami. Su equipo de investigación cubre
+narcotráfico, corrupción e inteligencia estatal. Si una redacción
+argentina tuviera que montar un sistema operativo para corresponsales
+e investigación, Infobae es de los pocos que tendrían la escala y la
+necesidad real de hacerlo.
