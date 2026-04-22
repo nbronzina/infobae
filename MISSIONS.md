@@ -241,3 +241,228 @@ Fiorella + Pollastri):
 - **Sesión JTSN:** el sistema muestra descanso obligatorio y
   sesión pendiente. A Private War: si la ignorás, el estado mental
   arrastra a la siguiente línea.
+
+## Línea Nacional Rosario — ROS-038 · Los Monos
+
+**Tono:** Civil War (A24) + Spotlight. La amenaza está en tu ciudad.
+
+**Premisa:** estructuras sucesoras del clan Cantero post-detención
+de Dylan Cantero (dic 2025). Lavado de activos vía inmuebles y
+financieras, nexos con fuerzas de seguridad provinciales. Mondini
+investiga desde Buenos Aires con fuentes judiciales en Rosario. No
+hay despliegue, no hay zona de conflicto delimitada. La zona de
+conflicto es todo.
+
+**Variables de estado:** `profundidad_investigacion` (0-10),
+`estado_mental` (hereda de línea anterior si se jugó). **Flags:**
+`fuente_judicial_activa`, `osint_registros_cruzados`,
+`fopea_activado`, `contra_vigilancia_activa`,
+`patron_seguimiento_detectado`, `material_custodiado`,
+`colega_protegido`.
+
+### Objetivo 1 — Onboarding: "Lunes. Redacción. Bitácora abierta."
+
+**Situación:** Mondini abre Bitácora en la redacción de Buenos
+Aires. Es una mañana normal de trabajo. En el registro de
+comunicaciones hay un intercambio viejo con Roca (Bogotá) sobre
+cruces OSINT de registros inmobiliarios en Rosario. Hay una nota de
+Pollastri sobre el marco legal de publicación de datos de personas
+jurídicas. Y hay una entrada en el diario de campo que Mondini
+escribió hace dos semanas: "Colega de Rosario mencionó que lo están
+siguiendo. No quiso dar detalles por teléfono."
+
+No hay urgencia. No hay 72 horas. Hay un escritorio, una
+computadora, y una investigación que avanza despacio.
+
+**Decisión 1.1 — ¿Por dónde empezás hoy?**
+- **(A)** Abrís la herramienta OSINT y cruzás registros de
+  propiedad con la lista de personas vinculadas al clan Cantero →
+  aprendés cómo funciona el cruce de datos. `+1 profundidad`. El
+  sistema te muestra coincidencias. Spotlight: cruzar registros
+  como cruzar listas parroquiales.
+- **(B)** Revisás la entrada vieja del diario sobre el colega
+  seguido → el sistema te sugiere activar protocolo FOPEA.
+  Aprendés cómo funciona el editor de fuentes (para registrar al
+  colega como fuente de riesgo).
+- **(C)** Leés el documento de contra-vigilancia doméstica →
+  aprendés el protocolo. No pasa nada visible. Pero la lectura
+  desbloquea opciones en objetivo 3 y 4.
+
+**Decisión 1.2 — Pollastri te dejó una nota legal:** "Los registros
+de propiedad de sociedades son públicos. Los de personas físicas,
+no sin orden judicial."
+- **(A)** Te limitás a registros de sociedades → legal, más lento,
+  menos info.
+- **(B)** Le pedís a la fuente judicial que consiga los de personas
+  físicas → más info, dependés de la fuente, riesgo de exposición.
+- **(C)** Buscás los registros por vía OSINT sin pedir formalmente
+  → zona gris legal. Pollastri no lo aprueba. Flag
+  `metodo_cuestionable`.
+
+**Convergencia:** fin del lunes. Bitácora registra el estado de la
+investigación. No hay parte de aptitud — hay un estado de avance.
+La investigación doméstica no tiene fecha de cierre.
+
+### Objetivo 2 — Preparación: "La fuente judicial"
+
+**Situación:** tu fuente en Rosario es un funcionario judicial que
+tiene acceso a expedientes del caso Cantero. Nunca se vieron en
+persona. Todo fue por Signal. Ahora quiere reunirse presencialmente
+porque tiene material que no puede enviar digitalmente. Querés ir a
+Rosario.
+
+**Decisión 2.1 — ¿Cómo te preparás para el viaje a Rosario?**
+- **(A)** Evaluación de teatro para Rosario → el sistema te muestra
+  amenazas: T-DOM (vigilancia doméstica), T-PHYS (seguimiento
+  físico, antecedente de amenazas a periodistas De los Santos y
+  Lascano). No es Arauca pero el threat assessment existe.
+- **(B)** Activás protocolo FOPEA de aviso mutuo para el viaje →
+  flag `fopea_activado`. Red de protección activa. Si algo pasa, 3
+  contactos FOPEA saben dónde estás.
+- **(C)** Viajás sin avisar a nadie más que a la redacción →
+  operás sola. Sin red de protección externa.
+
+**Decisión 2.2 — ¿Cómo vas a la reunión con la fuente?**
+- **(A)** En tu auto personal → si leíste contra-vigilancia: sabés
+  que tenés que revisar el vehículo. Si no leíste: no sabés y el
+  flag `vehiculo_no_revisado` se activa.
+- **(B)** En transporte público → menos rastreable pero no
+  controlás el entorno de la reunión.
+- **(C)** Le pedís a la fuente que viaje a Buenos Aires → invertís
+  el riesgo. Él queda expuesto viajando. Vos quedás en territorio
+  conocido.
+
+**Decisión 2.3 — La fuente te entrega documentos físicos.**
+Expedientes judiciales con nombres de policías vinculados al clan.
+- **(A)** Los escaneás con el teléfono en el momento → tenés copia
+  digital pero si te revisan el teléfono, el material está ahí.
+- **(B)** Los llevás físicamente y los escaneás en la redacción →
+  más seguro pero viajás con material sensible.
+- **(C)** Los leés, tomás notas a mano, y le devolvés los
+  originales → no tenés el material, tenés tus notas. La fuente
+  conserva la custodia.
+
+**Convergencia:** volvés a Buenos Aires con (o sin) el material.
+La investigación avanzó (o no). La fuente está registrada (o no).
+
+### Objetivo 3 — Operación: "Cruces. Semana 3."
+
+**Situación:** tres semanas de investigación. Bitácora tiene
+acumulado: registros de propiedad cruzados, material de la fuente
+judicial, entradas en el diario de campo. Hoy el cruce OSINT arroja
+una coincidencia que no esperabas: una financiera vinculada a los
+Cantero tiene domicilio en un edificio que pertenece a un oficial
+de policía provincial activo.
+
+**Decisión 3.1 — Tenés el dato. ¿Qué hacés?**
+- **(A)** Verificás con una segunda fuente antes de avanzar →
+  protocolo correcto. Tardás, pero el dato se sostiene (o no).
+  `+2 profundidad`.
+- **(B)** Publicás la coincidencia como nota con la evidencia de
+  registros públicos → impacto inmediato, pero si hay error,
+  quedás expuesta. Y si es correcto, el oficial sabe que lo
+  investigás.
+- **(C)** Se lo pasás a la fuente judicial para que lo cruce con
+  el expediente → dependés de la fuente. Si la fuente está
+  comprometida (no lo sabés todavía), acabás de revelar tu línea de
+  investigación.
+
+**Decisión 3.2 — El colega de Rosario** (el que mencionó que lo
+seguían) te escribe por Signal: "Necesito hablar. No por teléfono."
+- **(A)** Lo registrás como fuente en Bitácora y coordinás reunión
+  con protocolo → flag `colega_protegido`. Aprendés que el editor
+  de fuentes no es solo para informantes — es para proteger
+  colegas.
+- **(B)** Lo llamás por teléfono a pesar de su pedido → violás su
+  pedido de seguridad. Si `contra_vigilancia_activa`: sabés que no
+  debés. Si no leíste el doc: la opción parece razonable.
+- **(C)** Le respondés por Signal: "Vení a Buenos Aires" → lo
+  sacás de Rosario pero le pedís que se mueva.
+
+**Decisión 3.3 — Al salir de la redacción, notás un auto
+estacionado que viste ayer en el mismo lugar.** ¿Lo registrás?
+- **(A)** Abrís el diario de campo y registrás: ubicación, hora,
+  descripción del vehículo, tipo "anomalía" → el sistema cruza
+  contra entradas anteriores del diario. Si hay patrón (3+ entradas
+  con T-PHYS en 7 días), genera alerta. Flag
+  `patron_seguimiento_detectado`.
+- **(B)** Lo ignorás → no queda registro. Si hay seguimiento real,
+  no tenés documentación.
+- **(C)** Cambiás la ruta al día siguiente → medida del protocolo
+  de contra-vigilancia. Funciona como mitigación pero sin registro
+  no podés demostrar el patrón.
+
+**Convergencia:** fin de semana 3. La investigación tiene
+profundidad X. El diario tiene (o no) un patrón documentado. El
+colega está (o no) protegido. Y vos sabés (o no) si te están
+siguiendo.
+
+### Objetivo 4 — Complicación: "El patrón se confirma."
+
+**Situación:** Bitácora muestra el resultado del cruce automático
+del diario: 4 entradas en 10 días con indicadores T-PHYS y T-DOM.
+El banner rojo dice: "Se sugiere revisión del protocolo de
+contra-vigilancia doméstica (OP-INV-2028-004)." Al mismo tiempo, la
+fuente judicial dejó de responder hace 48 horas. Y el colega de
+Rosario te cuenta (si lo protegiste) que recibió una amenaza
+directa.
+
+French Connection invertido: alguien te sigue. No sabés quién.
+
+**Decisión 4.1 — ¿Prioridad?**
+- **(A)** Activar protocolo FOPEA completo: documentar ante FOPEA
+  y CPJ, comunicar a dirección editorial, considerar publicación
+  coordinada con otro medio como medida de protección → la
+  visibilidad protege. Pero la investigación se expone antes de
+  tiempo.
+- **(B)** Intentar contactar a la fuente judicial por canal de
+  respaldo → si la registraste: tenés respaldo. Si no: dependés de
+  Signal y la fuente no responde.
+- **(C)** Intensificar contra-vigilancia sin escalar → seguís
+  investigando pero bajo vigilancia confirmada. Si `estado_mental
+  == agotado`: opciones reducidas.
+
+**Decisión 4.2 — Pollastri te contacta** (registro en Bitácora, no
+en tiempo real): "Si publicamos, necesito saber qué material tenés
+custodiado y dónde."
+- **(A)** Todo digital en dispositivo air-gapped en la redacción →
+  seguro pero accesible si hay allanamiento con orden judicial.
+- **(B)** Copia con abogado personal bajo secreto profesional →
+  máxima protección legal, Alconada Mon lo recomendaría. Flag
+  `material_custodiado`.
+- **(C)** No tenés copia de respaldo → si algo le pasa a tu
+  dispositivo, perdés todo.
+
+**Decisión 4.3 — El colega de Rosario:** "Si publicás, yo quedo
+expuesto. Si no publicás, todo esto fue al pedo." Dilema ético sin
+respuesta correcta. The Spy: el costo de extraer información de
+alguien que confió en vos.
+- **(A)** Publicar con su nombre oculto pero con datos que lo
+  hacen identificable → protección nominal, exposición real.
+- **(B)** Publicar sin ninguna referencia a él → la nota pierde
+  peso probatorio.
+- **(C)** Esperar y publicar solo cuando él esté fuera de Rosario
+  → la ventana de impacto se cierra. La historia envejece.
+
+**Convergencia:** las decisiones están tomadas. La investigación
+llega a su punto de publicación o de pausa.
+
+### Objetivo 5 — Resolución: "Bitácora abierta. Lo mismo de siempre."
+
+No hay decisiones. Debriefing.
+
+**Parte de cierre ROS-038 — firmado** (dirección editorial +
+Pollastri + Fiorella):
+
+- **Ruta de decisiones:** las 12-15 decisiones en el árbol.
+- **Profundidad de investigación:** qué obtuviste según tus
+  decisiones.
+- **Estado de la fuente judicial:** activa, comprometida, o
+  perdida.
+- **Estado del colega:** protegido, expuesto, o amenazado.
+- **Patrón de vigilancia:** documentado (con entradas del diario)
+  o no documentado.
+- **Material publicable:** desde "investigación completa con
+  custodia legal" hasta "indicios sin verificar".
+- **Sesión JTSN:** estado mental. Civil War: no podés irte de tu
+  propia ciudad.
