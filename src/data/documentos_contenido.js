@@ -126,6 +126,20 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  redes_internacionales: {
+    area: 'INFOBAE · INVESTIGACIÓN',
+    codigo: 'OP-INV-2029-003', version: '1.0', fecha: '2029-03-10',
+    responsable: 'dirección editorial',
+    titulo: 'Colaboración con redes internacionales de investigación',
+    subtitulo: 'ICIJ, OCCRP, GIJN y protocolos de trabajo colaborativo transfronterizo',
+    secciones: [
+      { titulo: 'Redes activas', texto: 'ICIJ (International Consortium of Investigative Journalists): red global con más de 280 periodistas en 100+ países. Infobae participa como medio asociado. Proyectos anteriores: Panama Papers, Pandora Papers, FinCEN Files. Comunicación exclusivamente por plataforma cifrada de ICIJ. OCCRP (Organized Crime and Corruption Reporting Project): foco en Europa del Este, Asia Central y América Latina. Herramientas compartidas: Aleph (repositorio de documentos), bases de datos de empresas offshore. GIJN (Global Investigative Journalism Network): red de recursos, capacitación y metodología. Conferencia anual. Directorio de herramientas.' },
+      { titulo: 'Protocolo de colaboración', texto: 'Toda colaboración transfronteriza se comunica al director editorial antes de compartir material. El material compartido con redes externas se clasifica bajo acuerdo de embargo hasta publicación coordinada. No se comparte material con periodistas fuera de la red sin autorización. Las fuentes locales de Infobae no se revelan a periodistas de otros medios dentro de la red salvo acuerdo explícito.' },
+      { titulo: 'Seguridad en colaboraciones', texto: 'Las comunicaciones con redes externas usan exclusivamente los canales cifrados provistos por cada red (ICIJ usa plataforma propia, OCCRP usa Signal). No se usan emails corporativos para compartir material sensible de colaboración. Los dispositivos usados para acceder a plataformas de redes externas son los mismos dispositivos secundarios de despliegue (GrapheneOS).' }
+    ],
+    fuentes: 'ICIJ, membership guidelines (icij.org). OCCRP, Aleph documentation. GIJN, Investigative Journalism Manual. Referencia interna: participación de Infobae en proyectos ICIJ 2024-2029.'
+  },
+
   osint_investigacion: {
     area: 'INFOBAE · INVESTIGACIÓN',
     codigo: 'OP-INV-2029-002', version: '1.0', fecha: '2029-02-01',
