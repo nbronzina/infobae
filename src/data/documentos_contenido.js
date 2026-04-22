@@ -124,6 +124,45 @@ export const DOCUMENTOS_CONTENIDO = {
       { titulo: 'Si algo sale mal', texto: 'Si recibís amenazas directas: contactar al corresponsal inmediatamente. Si tu dispositivo se comporta de manera extraña: no intentar arreglarlo, apagarlo, avisar al corresponsal. Si perdés contacto con el corresponsal por más de 12 horas: contactar a FLIP (Colombia) o SNTP (Venezuela) según tu ubicación.' }
     ],
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
+  },
+
+  // Manual operativo principal. Key 'main' preservada para no romper
+  // cross-refs en checklist_predespliegue.json, teatros.json,
+  // escenarios.json y DiarioCampo.jsx (DOC_POR_AMENAZA). Las 8
+  // secciones se cargan en commits sucesivos.
+  main: {
+    area: 'INFOBAE · SEGURIDAD DIGITAL',
+    codigo: 'OP-SEC-2029-004', version: '4.2', fecha: '2029-03-14',
+    responsable: 'j. fiorella · revisado por m. villafañe + l. pollastri',
+    titulo: 'Higiene RF en despliegue internacional',
+    subtitulo: 'Protección contra localización por emisiones de radiofrecuencia (Wi-Fi, Starlink, celular) — manual operativo para corresponsales y personal de campo',
+    secciones: [
+      {
+        titulo: 'Alcance y vigencia',
+        parrafos: [
+          'Este manual establece el protocolo operativo de higiene electromagnética y seguridad RF para personal de Infobae desplegado en zonas de conflicto de intensidad variable, con foco inicial en la frontera colombo-venezolana (Arauca–Apure) durante el período de transición política venezolana.',
+          'Aplica a corresponsales de staff, productores, operadores de cámara, fixers bajo contrato, y cualquier persona que opere equipamiento de transmisión asociado a un despliegue de Infobae. No sustituye los requisitos legales argentinos de comercio exterior (ANMaC, ENACOM) ni los protocolos de seguridad física.',
+          'Acceso del fixer: este manual debe ser compartido en su totalidad con el fixer designado antes del despliegue. Un protocolo que protege al corresponsal pero no llega al periodista local que asume el riesgo de campo reproduce la brecha que pretende mitigar. Si el fixer no tiene acceso al documento, la cadena de seguridad está rota. Versión resumida disponible en español colombiano y español venezolano bajo código OP-SEC-2029-004-FX.',
+          'La vigencia es de seis meses contados desde la publicación de cada edición. Las mitigaciones detalladas en el apéndice dependen de versiones de firmware específicas que pueden cambiar sin aviso. El manual se revisa trimestralmente y ante cualquier incidente operacional que lo amerite.',
+          'Nota sobre aplicabilidad doméstica: si bien el foco del manual es despliegue internacional, las secciones T-DOM y T-SPY del glosario aplican a periodistas de investigación que operan desde territorio argentino bajo condiciones de vigilancia estatal documentada. El vector doméstico no es menor ni separado — es previo al despliegue y persiste después del retorno.'
+        ]
+      },
+      {
+        titulo: 'Protocolo pre-despliegue',
+        texto: 'Completar en orden antes de cada salida internacional. Tiempo mínimo recomendado: 30 días hábiles. Tiempo mínimo absoluto (salida urgente): 72 horas, con autorización del editor de turno y asunción documentada de riesgos no cubiertos por protocolo.',
+        items: [
+          'Verificar firmware del router de viaje. Requerido: release 2024 o posterior con randomización BSSID vigente.',
+          'Terminal satelital: si fue adquirido en Argentina, verificar que el modelo figure en RAMATEL-ENACOM (Starlink Mini: homologado desde 2025, Res. 955/2025). Llevar copia de factura de compra y especificaciones como documentación de respaldo en aduana. Si fue adquirido en el exterior y no tiene homologación argentina, consultar con legales antes de reingresar al país.',
+          'Equipamiento de protección balística: clasificado como material de usos especiales (Ley 20.429, Decreto 395/75). Requiere Credencial de Legítimo Usuario (CLU) vigente ante ANMaC. Egreso limitado a 1 chaleco por año calendario (Disp. RENAR 883/11, Formularios Leyes 23.283 y 23.412). Tenencia tarda aprox. 30 días. Alternativa: préstamo gratuito RSF en destino (fianza 300€ reembolsable).',
+          'Registrar itinerario tentativo en sistema de despliegues. Incluir puntos de contacto, fixer designado, protocolo de check-in.',
+          'Confirmar cobertura de seguro de alto riesgo. ART doméstica no cubre zona activa.',
+          'Instalar perfil GrapheneOS en dispositivo secundario. Dispositivo principal permanece en Buenos Aires.',
+          'Limpiar metadatos de perfiles públicos relevantes al despliegue. Revisar archivo fotográfico accesible.',
+          'Coordinar primera ventana de transmisión con redacción. Definir fallback comms.'
+        ]
+      }
+    ],
+    fuentes: 'Rye & Levin, IEEE S&P 2024, arXiv:2405.14975 (WPS/Starlink). ANMaC: Ley 20.429, Decreto 395/75, Res. 83/2023, Disp. RENAR 883/11. ENACOM: Res. 955/2025 (Starlink), RAMATEL. RSF España: rsf-es.org/seguridad-para-periodistas. Dart Center / JTSN: dartcenter.org. FOPEA: fopea.org.'
   }
 };
 
