@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import teatrosData from '../data/teatros.json';
+import directorioData from '../data/directorio.json';
 import { themeFor, sizesFor, SERIF, MONO } from '../theme';
 
 const NIVEL_PROTECCION = {
@@ -75,7 +76,7 @@ function evaluarFuente(r) {
   return { canal, citabilidad, custodia, contactos, docs, editorResponsable };
 }
 
-export default function EditorFuentes({ modo }) {
+export default function EditorFuentes({ modo, onOpenDoc, onOpenPerfil }) {
   const t = themeFor(modo);
   const s = sizesFor(modo);
   const isCampo = modo === 'campo';
@@ -248,7 +249,7 @@ export default function EditorFuentes({ modo }) {
       </div>
 
       {registros.length > 0 && (
-        <div>
+        <div style={{ marginBottom: activa ? '24px' : 0 }}>
           <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '10px' }}>
             Registros emitidos ({registros.length})
           </div>
@@ -326,6 +327,126 @@ export default function EditorFuentes({ modo }) {
           )}
         </div>
       )}
+
+      {activa && (() => {
+        const evalR = evaluarFuente(activa);
+        const personaPorKey = Object.fromEntries(directorioData.map(p => [p.key, p]));
+        const teatroNombre = activa.teatro === 'ninguno'
+          ? 'Ninguno / doméstico general'
+          : (teatrosData.find(x => x.codigo === activa.teatro)?.nombre || activa.teatro);
+        const openDoc = (key, codigo) => { if (onOpenDoc) onOpenDoc(key, codigo); };
+        const openPerfil = (key) => { if (onOpenPerfil) onOpenPerfil(key); };
+        return (
+          <article style={{
+            padding: isCampo ? '20px 18px' : '28px 32px',
+            backgroundColor: t.bgCard, border: '2px solid ' + t.borderStrong
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px', gap: '12px', flexWrap: 'wrap' }}>
+              <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.vigente }}>
+                Parte de registro de fuente · emitido
+              </div>
+              <button type="button" onClick={() => setActiva(null)} style={{
+                cursor: 'pointer', padding: '4px 10px', fontFamily: MONO, fontSize: '10px',
+                letterSpacing: '0.04em', textTransform: 'uppercase',
+                border: '1px solid ' + t.border, backgroundColor: 'transparent', color: t.textSecondary
+              }}>Cerrar parte</button>
+            </div>
+            <h2 style={{ fontFamily: SERIF, fontSize: '22px', fontWeight: 500, margin: '0 0 6px', color: t.text }}>
+              {activa.codigo} — {activa.alias}
+            </h2>
+            <div style={{ fontFamily: SERIF, fontSize: '13.5px', color: t.textSecondary, fontStyle: 'italic', marginBottom: '18px' }}>
+              Fuente {TIPO_FUENTE[activa.tipo].toLowerCase()} · nivel de protección {NIVEL_PROTECCION[activa.nivel].label.toLowerCase()} · riesgo {RIESGO[activa.riesgo].label.toLowerCase()}.
+            </div>
+
+            <div style={{ fontFamily: MONO, fontSize: '11.5px', color: t.text, lineHeight: 1.7, marginBottom: '20px' }}>
+              Fecha de alta: {activa.fecha}<br/>
+              Operador a cargo: {activa.operador}<br/>
+              Alias: {activa.alias}<br/>
+              Tipo: {TIPO_FUENTE[activa.tipo]}<br/>
+              Teatro asociado: {teatroNombre}<br/>
+              Nivel de protección: {NIVEL_PROTECCION[activa.nivel].label}<br/>
+              Nivel de riesgo: {RIESGO[activa.riesgo].label}<br/>
+              Código de registro: {activa.codigo}
+            </div>
+
+            <section style={{ marginBottom: '18px' }}>
+              <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
+                Protocolo de comunicación
+              </div>
+              <div style={{ fontFamily: SERIF, fontSize: '13px', color: t.text, lineHeight: 1.6, padding: '12px 16px', backgroundColor: t.bgAccent, borderLeft: '2px solid ' + t.borderStrong }}>
+                {evalR.canal}
+              </div>
+            </section>
+
+            <section style={{ marginBottom: '18px' }}>
+              <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
+                Restricciones de publicación
+              </div>
+              <div style={{ fontFamily: SERIF, fontSize: '13px', color: t.text, lineHeight: 1.6, padding: '12px 16px', backgroundColor: t.bgAccent, borderLeft: '2px solid ' + t.alert }}>
+                {evalR.citabilidad}
+              </div>
+            </section>
+
+            <section style={{ marginBottom: '18px' }}>
+              <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
+                Custodia del registro
+              </div>
+              <div style={{ fontFamily: SERIF, fontSize: '13px', color: t.text, lineHeight: 1.6, padding: '12px 16px', backgroundColor: t.bgAccent, borderLeft: '2px solid ' + t.textSecondary }}>
+                {evalR.custodia}
+              </div>
+            </section>
+
+            <section style={{ marginBottom: '18px' }}>
+              <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
+                Contactos operativos
+              </div>
+              {evalR.contactos.map(c => {
+                const p = personaPorKey[c.key];
+                if (!p) return null;
+                return (
+                  <button key={c.key} type="button" onClick={() => openPerfil(c.key)} style={{
+                    width: '100%', textAlign: 'left', background: 'none', border: 'none',
+                    borderBottom: '1px solid ' + t.border,
+                    padding: isCampo ? '12px 0' : '8px 0',
+                    cursor: 'pointer', color: t.text, minHeight: s.touchMin
+                  }}>
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'baseline', flexWrap: 'wrap' }}>
+                      <span style={{ fontFamily: SERIF, fontSize: '13px', fontWeight: 500, minWidth: isCampo ? 'auto' : '160px' }}>{p.nombre}</span>
+                      <span style={{ fontFamily: MONO, fontSize: '11px', color: t.textSecondary, flex: 1 }}>{c.rol}</span>
+                    </div>
+                  </button>
+                );
+              })}
+            </section>
+
+            <section style={{ marginBottom: '20px' }}>
+              <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
+                Doctrina aplicable
+              </div>
+              {evalR.docs.map(d => (
+                <button key={d.codigo} type="button" onClick={() => openDoc(d.key, d.codigo)} style={{
+                  width: '100%', textAlign: 'left', background: 'none', border: 'none',
+                  borderBottom: '1px solid ' + t.border,
+                  padding: isCampo ? '12px 0' : '8px 0',
+                  cursor: 'pointer', color: t.text, minHeight: s.touchMin
+                }}>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'baseline', flexWrap: 'wrap' }}>
+                    <span style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta, minWidth: isCampo ? 'auto' : '140px' }}>{d.codigo}</span>
+                    <span style={{ fontFamily: SERIF, fontSize: '13px', flex: 1 }}>{d.motivo}</span>
+                  </div>
+                </button>
+              ))}
+            </section>
+
+            <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textSecondary, lineHeight: 1.7, paddingTop: '14px', borderTop: '1px solid ' + t.border }}>
+              Firmas:<br/>
+              l. mondini — corresponsal a cargo<br/>
+              {evalR.editorResponsable}<br/>
+              l. pollastri — legales
+            </div>
+          </article>
+        );
+      })()}
     </div>
   );
 }
