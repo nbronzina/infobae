@@ -169,7 +169,7 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
           Bitácora
         </span>
       </div>
-      <main style={{ flex: 1, padding: '8px 16px 16px', overflowY: 'auto', minHeight: 0 }}>
+      <main className="bitacora-scroll" style={{ flex: 1, padding: '8px 16px 16px', overflowY: 'auto', minHeight: 0 }}>
         <ViewSwitch activeView={activeView} modo="campo" onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} docRequest={docRequest} />
       </main>
       <nav
@@ -211,6 +211,7 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
 function RedaccionShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpenPerfil, docRequest }) {
   return (
     <div
+      className="bitacora-scroll"
       style={{
         height: '100%',
         overflowY: 'auto',
@@ -309,8 +310,16 @@ export default function Shell({ scenario }) {
 // del dispositivo en todos los contextos de visualización. En
 // viewports chicos el frame se adapta por aspect-ratio.
 export function DeviceFrame({ modo, children }) {
-  if (modo === 'campo') return <PixelFrame>{children}</PixelFrame>;
-  return <BooxFrame>{children}</BooxFrame>;
+  const frame = modo === 'campo' ? <PixelFrame>{children}</PixelFrame> : <BooxFrame>{children}</BooxFrame>;
+  return (
+    <>
+      <style>{`
+        .bitacora-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+        .bitacora-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+      `}</style>
+      {frame}
+    </>
+  );
 }
 
 function PixelFrame({ children }) {
