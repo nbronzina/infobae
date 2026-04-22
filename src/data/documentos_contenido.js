@@ -126,6 +126,20 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  opsec_log: {
+    area: 'INFOBAE · HERRAMIENTAS',
+    codigo: 'OP-TOOL-2029-002', version: '1.0', fecha: '2029-03-01',
+    responsable: 'j. fiorella + d. roca',
+    titulo: 'OP-SEC-LOG: bitácora auditable',
+    subtitulo: 'Sistema de registro de decisiones editoriales con cadena de procedencia',
+    secciones: [
+      { titulo: 'Qué se registra', texto: 'Cada decisión editorial sobre material de zona activa queda registrada con: timestamp, identificador del material, fixer de origen, resultado de verificación (automática y humana), decisión editorial (publicar / condiciones / reserva / no publicar), responsable de la decisión, y módulo de consulta usado si aplica.' },
+      { titulo: 'Por qué', texto: 'La bitácora permite reconstruir la cadena completa de procedencia de cualquier publicación: desde quién capturó el material hasta quién decidió publicarlo y con qué nivel de verificación. En caso de cuestionamiento post-publicación, la bitácora es la evidencia de due diligence editorial.' },
+      { titulo: 'Acceso', texto: 'Lectura: editor de turno, seguridad digital, legales, dirección editorial. Escritura: corresponsal que registra la decisión. Modificación post-registro: no permitida. Las entradas son append-only. Retención: 5 años desde la fecha de registro.' }
+    ],
+    fuentes: 'Documento interno.'
+  },
+
   pipeline_verificacion: {
     area: 'INFOBAE · HERRAMIENTAS',
     codigo: 'OP-TOOL-2029-001', version: '1.0', fecha: '2029-03-01',
