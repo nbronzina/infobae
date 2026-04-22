@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Analista from './Analista.jsx';
 import Checklist from './Checklist.jsx';
 import DiarioCampo from './DiarioCampo.jsx';
 import EvaluacionTeatro from './EvaluacionTeatro.jsx';
@@ -7,6 +8,7 @@ import EditorFuentes from './EditorFuentes.jsx';
 import { themeFor, sizesFor, SERIF, MONO } from '../theme';
 
 const HERRAMIENTAS = [
+  { id: 'analista', codigo: 'OP-TOOL-2029-003', label: 'Analista de guardia', desc: 'Consulta operacional contra el manual OP-SEC-2029-004 y el glosario T-*.', Component: Analista },
   { id: 'evaluacion_teatro', codigo: 'OP-TOOL-2029-006', label: 'Evaluación por teatro', desc: 'Parte preliminar por destino — amenazas, protocolos, kit y contactos.', Component: EvaluacionTeatro },
   { id: 'checklist', codigo: 'OP-TOOL-2029-007', label: 'Checklist pre-despliegue', desc: 'Parte de aptitud operativa con firma conjunta al completar.', Component: Checklist },
   { id: 'simulador_compromiso', codigo: 'OP-TOOL-2029-008', label: 'Simulador de compromiso', desc: 'Ejercicio HEFAT contra el protocolo OP-SEC-2029-003.', Component: SimuladorCompromiso },
