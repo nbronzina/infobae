@@ -190,36 +190,34 @@ function BriefingView({ onSelect, onOpenAbout }) {
 
         <article style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '28px 32px', marginBottom: '28px' }}>
           <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '16px' }}>
-            Correo interno · canal redacción
+            Último mensaje · Signal · canal redacción
           </div>
           <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f', lineHeight: 1.9, marginBottom: '18px' }}>
-            <div><span style={{ color: '#5a544c' }}>De:</span> f. zelaya (editor de guardia · Madrid)</div>
-            <div><span style={{ color: '#5a544c' }}>Para:</span> mondini.l</div>
-            <div><span style={{ color: '#5a544c' }}>Asunto:</span> Estado de líneas — semana 16</div>
-            <div><span style={{ color: '#5a544c' }}>Fecha:</span> 2029-04-17 · 08:42 ART</div>
+            <div>f. zelaya → mondini.l</div>
+            <div style={{ color: '#5a544c' }}>2029-04-17 · 08:42 ART</div>
           </div>
           <div style={{ height: '1px', backgroundColor: '#d9d4c2', marginBottom: '18px' }} />
           <div className="serif" style={{ fontSize: '15px', lineHeight: 1.65, color: '#1f1f1f' }}>
-            <p style={{ margin: '0 0 14px' }}>Mondini,</p>
+            <p style={{ margin: '0 0 14px' }}>Mondini.</p>
             <p style={{ margin: '0 0 14px' }}>
-              Internacional está en standby post-Arauca. Descanso obligatorio hasta mayo, la próxima ventana todavía en evaluación con operaciones.
+              Internacional cerrada hasta mayo. No insistas con villafañe, el descanso es obligatorio.
             </p>
             <p style={{ margin: '0 0 14px' }}>
-              Rosario sigue activa. FOPEA en alerta por la amenaza al colega local, OSINT en curso sobre registros inmobiliarios. Si seguís por ahí, coordiná con villafañe el protocolo de contra-vigilancia urbana.
+              Rosario se complicó. La amenaza al colega es real — fopea activó protocolo. Los registros inmobiliarios que cruzaste tienen patrón. Si retomás, coordiná contra-vigilancia antes de moverte.
             </p>
             <p style={{ margin: '0 0 14px' }}>
-              Inteligencia sin movimiento — Anaconda-2 congelado desde el 17. Si abrís la línea, dispositivo aire y custodia legal externa por pollastri desde el primer contacto.
+              Inteligencia sin novedad visible. Anaconda-2 sigue donde lo dejamos. Si abrís eso, dispositivo limpio y pollastri desde el minuto cero. Ya sabés.
             </p>
             <p style={{ margin: '0 0 4px' }}>
-              ¿En qué línea operás esta semana?
+              Elegí. Después de esto, silencio de radio hasta que vos conectes.
             </p>
-            <p className="mono" style={{ margin: '24px 0 0', fontSize: '11.5px', color: '#5a544c' }}>— zelaya</p>
+            <p className="mono" style={{ margin: '24px 0 0', fontSize: '11.5px', color: '#5a544c' }}>z.</p>
           </div>
         </article>
 
         <div style={{ marginBottom: '36px' }}>
           <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '14px' }}>
-            Responder · elegir línea
+            Elegir línea
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {opciones.map((o, idx) => (
