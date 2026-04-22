@@ -100,3 +100,82 @@ artefacto".
 
 **Tono visual:** The Conversation. Pantalla oscura, texto claro,
 aislamiento. No parece una app — parece un terminal seguro.
+
+## Modo redacción (e-ink / Boox)
+
+**Contexto:** pantalla mediana (7-10"), stylus o touch, escala de
+grises o color e-ink limitado, refresh lento. El corresponsal está
+en la redacción, tiene tiempo, cruza datos.
+
+### Layout
+
+- Una columna central, ancho máximo 680px, centrada. Como un libro.
+- Sin sidebar. Sin columnas laterales. Sin grid complejo.
+- Navegación por menú discreto superior o hamburguesa.
+- Los documentos son la interfaz principal — lectura extendida.
+- Las herramientas se acceden desde menú, no desde tabs
+  permanentes.
+
+### Color
+
+- Modo claro por defecto. Optimizado para e-ink.
+- Fondo: `#f8f5ec` (paper).
+- Texto principal: `#1f1f1f`.
+- Texto secundario: `#5a544c`.
+- Metadata: `#6b6454`.
+- Separadores: `#d9d4c2`.
+- Sin gradientes, sin sombras, sin transparencias. E-ink no los
+  renderiza bien.
+- El naranja se ve como gris medio en e-ink. Usarlo solo en
+  wordmark donde el reconocimiento es por forma.
+- Estados de alerta: usar iconografía + texto, no solo color. E-ink
+  no distingue rojo de gris oscuro.
+
+### Tipografía
+
+- Cuerpo: 15px, line-height 1.7. Lectura extensa.
+- Títulos: Fraunces 24px bold.
+- Metadata: JetBrains Mono 12px.
+- Párrafos: max-width 38em (medida óptima de lectura).
+
+### Interacción
+
+- Touch targets 44px.
+- Sin animaciones. Cada cambio de pantalla es cambio de página
+  completo (e-ink refresh lento).
+- Scroll vertical para lectura.
+- Decisiones de misión como texto corrido con opciones al final —
+  como un livre-jeu físico.
+
+### Herramientas en modo redacción
+
+- **Analista:** más espacio para la respuesta. Tipografía de
+  lectura.
+- **Checklist:** tabla con columnas (item, responsable, estado).
+  Más denso.
+- **Diario de campo:** timeline detallada, entradas con más
+  contexto visible.
+- **Evaluación de teatro:** parte completo como documento, no como
+  cards.
+- **Editor de fuentes:** todos los campos visibles a la vez.
+- **OSINT / cruces de datos:** tablas legibles, registros
+  cruzados.
+
+### Documentos en modo redacción
+
+- Lectura larga. Metadata como encabezado del documento, no
+  sidebar.
+- Navegación entre documentos por links internos (wiki), no por
+  sidebar.
+- Se sienten como un libro. Papel, tipografía editorial, márgenes
+  generosos.
+
+### Misiones en modo redacción
+
+- Se sienten como un livre-jeu físico. Texto narrativo largo,
+  opciones como links al final del bloque.
+- Menos urgencia que campo. Más reflexivo.
+- Debriefing como informe impreso.
+
+**Tono visual:** Spotlight. Papeles sobre un escritorio. Parece un
+libro de trabajo, no una app.
