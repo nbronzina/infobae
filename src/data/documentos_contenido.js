@@ -236,6 +236,15 @@ export const DOCUMENTOS_CONTENIDO = {
             ]
           }
         ]
+      },
+      {
+        titulo: 'Cono de silencio RF',
+        parrafos: [
+          'Modelo operativo para transmisiones desde zona activa. No busca invisibilidad RF — busca reducir la exposición a ventanas acotadas en el tiempo y detectables sólo retroactivamente.',
+          'El patrón de referencia en organizaciones con capacidad de despliegue madura es: llegar al punto, desplegar equipamiento, transmitir en ventana breve, desarmar y abandonar el punto. Todo el ciclo en menos de 15 minutos en zona activa. El tiempo que el equipo está desplegado y emitiendo es tiempo en que la presencia es detectable. La diferencia entre un equipo entrenado y uno que no lo es se mide en minutos de exposición RF, no en calidad de imagen.',
+          'Parámetros operativos. Ventana activa: máximo 5 minutos de transmisión continua. Silencio pre y post: el terminal debe permanecer apagado, no solo en reposo. No ejecutar ventana activa durante traslado. Definir coordenadas fijas antes de activar. Silencio RF de al menos 60 minutos entre ventanas consecutivas en la misma ubicación.',
+          'Diagrama de ventana de transmisión: el manual impreso incluye un esquema temporal con las tres fases (silencio pre · ventana activa · silencio post). En esta versión digital queda como referencia textual; el esquema visual se reincorpora con la migración del cono SVG.'
+        ]
       }
     ],
     fuentes: 'Rye & Levin, IEEE S&P 2024, arXiv:2405.14975 (WPS/Starlink). ANMaC: Ley 20.429, Decreto 395/75, Res. 83/2023, Disp. RENAR 883/11. ENACOM: Res. 955/2025 (Starlink), RAMATEL. RSF España: rsf-es.org/seguridad-para-periodistas. Dart Center / JTSN: dartcenter.org. FOPEA: fopea.org.'
