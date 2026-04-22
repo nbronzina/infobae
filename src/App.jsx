@@ -6,6 +6,7 @@ import notificacionesData from './data/notificaciones.json';
 import agendaData from './data/agenda.json';
 import directorioData from './data/directorio.json';
 import gabineteData from './data/gabinete.json';
+import teatrosData from './data/teatros.json';
 import escenariosData from './data/escenarios.json';
 
 import intAlertas from './data/escenarios/internacional/alertas.json';
@@ -196,6 +197,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     try { return JSON.parse(localStorage.getItem('infobae:recent') || '[]'); } catch { return []; }
   });
   const [panoramaTab, setPanoramaTab] = useState('mapa');
+  const [teatroSeleccionado, setTeatroSeleccionado] = useState(null);
   const escenarioActivo = escenariosData.find(s => s.slug === scenario) || escenariosData[0];
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -537,6 +539,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       { key: 'inteligencia_investigacion', codigo: 'OP-INV-2029-007', titulo: 'Investigación sobre servicios de inteligencia', version: '1.0', estado: 'vigente' }
     ]},
     folder_herramientas: { folder: true, titulo: 'Herramientas', subtitulo: 'Sistemas operativos, flujos de verificación y bitácoras', docs: [
+      { key: 'evaluacion_teatros', codigo: 'OP-TOOL-2029-006', titulo: 'Evaluación por teatro', version: '1.0', estado: 'vigente' },
       { key: 'pipeline_verificacion', codigo: 'OP-TOOL-2029-001', titulo: 'Pipeline de verificación', version: '1.0', estado: 'vigente' },
       { key: 'opsec_log', codigo: 'OP-TOOL-2029-002', titulo: 'OP-SEC-LOG: bitácora auditable', version: '1.0', estado: 'vigente' },
       { key: 'analista_auto', codigo: 'OP-TOOL-2029-003', titulo: 'Analista de guardia', version: '1.0', estado: 'vigente' },
@@ -548,6 +551,12 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       titulo: 'Gabinete de campo',
       subtitulo: 'Equipamiento aprobado para despliegue — ficha por unidad',
       meta: { codigo: 'OP-TOOL-2029-005', version: '1.0', fecha: '2029-03-15', responsable: 'm. villafañe + j. fiorella' }
+    },
+    evaluacion_teatros: {
+      evaluacion: true,
+      titulo: 'Evaluación por teatro',
+      subtitulo: 'Parte de evaluación preliminar · amenazas, protocolos y equipamiento por destino',
+      meta: { codigo: 'OP-TOOL-2029-006', version: '1.0', fecha: '2029-03-20', responsable: 'j. fiorella + m. villafañe + l. pollastri' }
     }
   };
 
@@ -707,7 +716,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     'legales': ['anmac_enacom', 'exportacion_equip', 'seguros_riesgo', 'folder_legales'],
     'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'onboarding', 'folder_rrhh'],
     'investigacion': ['docs_filtrados', 'osint_investigacion', 'redes_internacionales', 'contravigilancia', 'narco_cobertura', 'inteligencia_investigacion', 'folder_investigacion'],
-    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'folder_herramientas']
+    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'evaluacion_teatros', 'folder_herramientas']
   };
   const isFolderActive = (key) => {
     if (key === 'seg-digital' && !activeView && !showLanding) return true;
@@ -720,7 +729,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
     jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'], onboarding: ['RRHH', 'folder_rrhh'],
     docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'], narco_cobertura: ['Investigación', 'folder_investigacion'], inteligencia_investigacion: ['Investigación', 'folder_investigacion'],
-    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'],
+    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'], evaluacion_teatros: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
   const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'panorama'];
@@ -1144,6 +1153,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
                 <div role="button" tabIndex={0} onClick={() => setActiveView('gabinete_campo')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'gabinete_campo' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'gabinete_campo' ? 500 : 400, backgroundColor: activeView === 'gabinete_campo' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'gabinete_campo' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Gabinete de campo
+                </div>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('evaluacion_teatros')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'evaluacion_teatros' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'evaluacion_teatros' ? 500 : 400, backgroundColor: activeView === 'evaluacion_teatros' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'evaluacion_teatros' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Evaluación por teatro
                 </div>
               </div>
             )}
@@ -1953,6 +1965,128 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
               {/* ANMaC / ENACOM — documento completo */}
               {/* Registro de correcciones */}
+              {/* Evaluación por teatro */}
+              {activeView === 'evaluacion_teatros' && (() => {
+                const teatro = teatrosData.find(t => t.codigo === teatroSeleccionado);
+                const levelColor = (n) => n === 'crítico' ? '#bd2828' : n === 'alto' ? '#8a6d2b' : n === 'medio' ? '#5a544c' : '#5a6e3c';
+                const levelBg = (n) => n === 'crítico' ? '#f5d5d5' : n === 'alto' ? '#f5edd5' : n === 'medio' ? '#eceae4' : '#e8f0de';
+                const kitsPorCodigo = Object.fromEntries(gabineteData.map(k => [k.codigo, k]));
+                const personaPorKey = Object.fromEntries(directorioData.map(p => [p.key, p]));
+                return (
+                  <div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · HERRAMIENTAS · OP-TOOL-2029-006</div>
+                    <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Evaluación por teatro</h1>
+                    <div className="serif" style={{ fontSize: '14.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '20px' }}>Parte preliminar de evaluación operativa · amenazas aplicables, protocolos obligatorios, equipamiento requerido y contactos clave por destino.</div>
+
+                    <div style={{ padding: '10px 14px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c', marginBottom: '20px' }}>
+                      <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                        Elegir teatro. La evaluación cruza el glosario T-* con la doctrina aplicable y el gabinete de campo. El parte se entrega firmado por seg. digital + operaciones + legales antes de cada despliegue.
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '10px', marginBottom: teatro ? '32px' : '0' }}>
+                      {teatrosData.map(t => {
+                        const sel = t.codigo === teatroSeleccionado;
+                        return (
+                          <div key={t.codigo} role="button" tabIndex={0} onClick={() => setTeatroSeleccionado(t.codigo)} style={{ padding: '14px 16px', border: '1px solid ' + (sel ? '#1f1f1f' : '#d9d4c2'), backgroundColor: sel ? '#f0ecde' : '#f8f5ec', cursor: 'pointer' }}>
+                            <div className="mono" style={{ fontSize: '10px', letterSpacing: '0.06em', textTransform: 'uppercase', color: sel ? '#1f1f1f' : '#5a544c', marginBottom: '4px' }}>{t.codigo}</div>
+                            <div className="serif" style={{ fontSize: '14.5px', fontWeight: 500, marginBottom: '2px' }}>{t.nombre}</div>
+                            <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{t.region}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {teatro && (
+                      <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '24px 28px' }}>
+                        <div style={{ borderBottom: '1px solid #d9d4c2', paddingBottom: '14px', marginBottom: '22px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Parte de evaluación · {teatro.codigo}</div>
+                          <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 4px', letterSpacing: '-0.01em' }}>{teatro.nombre}</h2>
+                          <div className="mono" style={{ fontSize: '11.5px', color: '#5a544c', lineHeight: 1.6 }}>
+                            {teatro.region} · {teatro.tipo} · duración típica {teatro.duracion_tipica}
+                          </div>
+                          <div className="serif" style={{ fontSize: '13px', color: '#1f1f1f', marginTop: '8px', fontStyle: 'italic' }}>
+                            Actor dominante: {teatro.actor_dominante}
+                          </div>
+                          <div className="mono" style={{ fontSize: '10.5px', color: '#bd2828', marginTop: '8px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                            Estado · {teatro.estado}
+                          </div>
+                        </div>
+
+                        <section style={{ marginBottom: '22px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Amenazas aplicables ({teatro.amenazas.length})</div>
+                          {teatro.amenazas.map(a => (
+                            <div key={a.codigo} style={{ padding: '10px 14px', backgroundColor: '#f0ecde', borderLeft: '3px solid ' + levelColor(a.nivel), marginBottom: '8px' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                                <span className="mono" style={{ fontSize: '11.5px', color: '#bd2828', fontWeight: 500 }}>{a.codigo}</span>
+                                <span className="mono" style={{ fontSize: '9.5px', letterSpacing: '0.04em', textTransform: 'uppercase', padding: '2px 7px', backgroundColor: levelBg(a.nivel), color: levelColor(a.nivel) }}>nivel {a.nivel}</span>
+                              </div>
+                              <div className="serif" style={{ fontSize: '12.5px', color: '#1f1f1f', lineHeight: 1.55 }}>{a.motivo}</div>
+                            </div>
+                          ))}
+                        </section>
+
+                        <section style={{ marginBottom: '22px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Protocolos aplicables ({teatro.protocolos.length})</div>
+                          {teatro.protocolos.map(p => (
+                            <div key={p.codigo} role="button" tabIndex={0} onClick={() => { if (p.key === 'main') { setActiveView(null); setShowLanding(false); scrollToTop(); } else { setActiveView(p.key); } }} className="doc-link" style={{ cursor: 'pointer', padding: '10px 0', borderBottom: '1px solid #d9d4c2' }}>
+                              <div style={{ display: 'flex', gap: '12px', alignItems: 'baseline' }}>
+                                <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c', minWidth: '140px' }}>{p.codigo}</span>
+                                <span className="serif" style={{ fontSize: '13.5px', fontWeight: 500, flex: 1 }}>{p.motivo}</span>
+                                {p.obligatorio && <span className="mono" style={{ fontSize: '9.5px', color: '#bd2828', letterSpacing: '0.04em', textTransform: 'uppercase' }}>obligatorio</span>}
+                              </div>
+                            </div>
+                          ))}
+                        </section>
+
+                        <section style={{ marginBottom: '22px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Equipamiento requerido ({teatro.kit_requerido.length})</div>
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '8px' }}>
+                            {teatro.kit_requerido.map(codigo => {
+                              const kit = kitsPorCodigo[codigo];
+                              if (!kit) return null;
+                              return (
+                                <div key={codigo} role="button" tabIndex={0} onClick={() => setActiveView('gabinete_campo')} className="doc-link" style={{ cursor: 'pointer', padding: '10px 12px', backgroundColor: '#f0ecde', border: '1px solid #d9d4c2' }}>
+                                  <div className="mono" style={{ fontSize: '10px', color: '#5a544c', marginBottom: '2px' }}>{codigo}</div>
+                                  <div className="serif" style={{ fontSize: '12.5px', fontWeight: 500 }}>{kit.nombre}</div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </section>
+
+                        <section style={{ marginBottom: '22px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Contactos clave</div>
+                          {teatro.contactos_clave.map(c => {
+                            const p = personaPorKey[c.key];
+                            if (!p) return null;
+                            return (
+                              <div key={c.key} role="button" tabIndex={0} onClick={() => setActiveView('perfil_' + c.key)} className="doc-link" style={{ cursor: 'pointer', padding: '8px 0', borderBottom: '1px solid #d9d4c2' }}>
+                                <div style={{ display: 'flex', gap: '12px', alignItems: 'baseline' }}>
+                                  <span className="serif" style={{ fontSize: '13.5px', fontWeight: 500, minWidth: '160px' }}>{p.nombre}</span>
+                                  <span className="mono" style={{ fontSize: '11.5px', color: '#3d3931', flex: 1 }}>{c.rol}</span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </section>
+
+                        <section>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>Nota operativa</div>
+                          <div className="serif" style={{ fontSize: '13.5px', color: '#1f1f1f', lineHeight: 1.6, padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f' }}>{teatro.nota_operativa}</div>
+                        </section>
+                      </div>
+                    )}
+
+                    {!teatro && (
+                      <div className="serif" style={{ fontSize: '13px', color: '#5a544c', fontStyle: 'italic', padding: '20px 0' }}>
+                        Seleccionar un teatro arriba para emitir el parte de evaluación.
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
               {/* Gabinete de campo */}
               {activeView === 'gabinete_campo' && (
                 <div>
