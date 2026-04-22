@@ -126,6 +126,44 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  onboarding: {
+    area: 'INFOBAE · RECURSOS HUMANOS',
+    codigo: 'OP-HR-2029-002', version: '1.0', fecha: '2029-03-15',
+    responsable: 's. peralta (formación) + rrhh',
+    titulo: 'Onboarding de personal',
+    subtitulo: 'Checklist de incorporación para corresponsales, freelancers y personal de soporte',
+    secciones: [
+      { titulo: 'Pre-ingreso · documentación', items: [
+        '☐ Firma de contrato y convenio de confidencialidad (legales · l. pollastri).',
+        '☐ Verificación de identidad y acreditación profesional vigente.',
+        '☐ Alta en directorio interno (rrhh).',
+        '☐ Asignación de usuario y acceso a sistemas (it@infobae.interna).',
+        '☐ Registro de contactos de emergencia y persona designada (formulario RRHH).'
+      ] },
+      { titulo: 'Primera semana · inducción', items: [
+        '☐ Sesión de orientación con s. peralta: estructura editorial, mesas, flujos de trabajo.',
+        '☐ Lectura obligatoria: OP-RED-2027-001 (Manual de estilo) y OP-RED-2028-003 (Fuentes anónimas).',
+        '☐ Lectura obligatoria: OP-SEC-2029-004 (Higiene RF) — sin excepciones para personal con potencial despliegue.',
+        '☐ Onboarding de seguridad digital con j. fiorella: Signal, GrapheneOS, gestor de contraseñas, 2FA.',
+        '☐ Alta en canal Signal interno y verificación de safety numbers.'
+      ] },
+      { titulo: 'Primer mes · operaciones', items: [
+        '☐ HEFAT: inscripción al próximo taller institucional (RISC Training). Certificación obligatoria para personal con despliegue proyectado.',
+        '☐ Sesión de familiarización con Pipeline de verificación (d. roca).',
+        '☐ Revisión del protocolo FOPEA (EXT-FOPEA-2028) y establecimiento de 3 contactos de aviso mutuo.',
+        '☐ Lectura de OP-INV-2028-004 (Contra-vigilancia doméstica) para personal asignado a investigación.',
+        '☐ Revisión de seguros (OP-LEG-2028-014) y confirmación de cobertura según rol.'
+      ] },
+      { titulo: 'Continuo · renovaciones', items: [
+        '☐ HEFAT: renovación cada 3 años o tras incidente operativo relevante.',
+        '☐ Actualización anual de contactos de emergencia.',
+        '☐ Revisión trimestral de manuales operativos con cambios post-ed.',
+        '☐ Sesión JTSN post-despliegue en zona activa (automática, no opt-in).'
+      ] }
+    ],
+    fuentes: 'Diseño del programa: s. peralta y rrhh. Coordinación operativa con seg. digital (j. fiorella) y formación externa (RISC Training, Dart Center, FOPEA).'
+  },
+
   contactos_emergencia: {
     area: 'INFOBAE · RECURSOS HUMANOS',
     codigo: 'OP-HR-2029-001', version: '1.0', fecha: '2029-01-10',
