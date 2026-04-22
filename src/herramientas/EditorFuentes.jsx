@@ -16,6 +16,65 @@ const TIPO_FUENTE = {
 
 const ESTADO_INICIAL = { alias: '', nivel: '', tipo: '', teatro: 'ninguno', riesgo: '' };
 
+// Matriz nivel × riesgo. Resuelve canal de comunicación, citabilidad,
+// custodia, contactos operativos por teatro y doctrina aplicable.
+// Determinístico — el sistema no decide nada que no esté acá tabulado.
+function evaluarFuente(r) {
+  let canal;
+  if (r.nivel === 'anonimato_total') {
+    canal = 'Contacto únicamente vía intermediario aprobado (fixer designado o colega de confianza). Dead drop físico habilitado. No establecer canal digital directo entre fuente y operador. Encuentros coordinados por tercero, sin horario ni ubicación publicables.';
+  } else if (r.nivel === 'deep_background') {
+    canal = 'Signal en dispositivo dedicado con caducidad de mensajes a 1 hora. Sin screenshots. Sin transcripción literal. El registro en OP-SEC-LOG se hace por alias y sin vincular contenido al alias.';
+  } else if (r.nivel === 'off_record') {
+    canal = (r.riesgo === 'alto' || r.riesgo === 'critico')
+      ? 'Signal en dispositivo dedicado con caducidad de mensajes a 24 horas. Encuentros presenciales con rutina de contra-vigilancia (ver OP-INV-2028-004). Sin registro fotográfico del encuentro.'
+      : 'Signal con caducidad de mensajes a 7 días. Sin screenshots. Sin transcripción literal. Encuentros presenciales según disponibilidad.';
+  } else {
+    canal = (r.riesgo === 'alto' || r.riesgo === 'critico')
+      ? 'Signal en dispositivo dedicado con caducidad de mensajes a 24 horas. Encuentros presenciales prioritarios sobre canal digital siempre que el material lo permita.'
+      : 'Signal en número operativo. Encuentros presenciales según disponibilidad y sensibilidad del material.';
+  }
+
+  const citabilidadMap = {
+    background: 'Atribuible por rol o sector — por ejemplo "un funcionario judicial con acceso al expediente" o "un mando policial de Rosario". Prohibido identificar por nombre, cargo específico o vínculo personal identificable. Verificación cruzada obligatoria por al menos una vía adicional (OP-RED-2028-003).',
+    off_record: 'No citable en publicación. La información orienta la verificación por fuente independiente. Si la corroboración no se alcanza, el material no se publica. No registrar fragmentos literales en notas de trabajo.',
+    deep_background: 'No citable ni por rol. La información ingresa como marco interpretativo y requiere corroboración por al menos una fuente citable adicional antes de cualquier publicación derivada.',
+    anonimato_total: 'No citable, no referenciable. La información solo vale si se corrobora por fuente documental o testimonial independiente. Para la publicación, la fuente no existe.'
+  };
+  const citabilidad = citabilidadMap[r.nivel];
+
+  const custodia = (r.nivel === 'deep_background' || r.nivel === 'anonimato_total')
+    ? 'Periodista a cargo + dirección editorial. Registro fuera de sistemas digitales compartidos — archivo cifrado local con copia offline en bóveda de legales. Identidad real no se registra bajo ninguna forma en sistemas de la redacción.'
+    : 'Periodista a cargo + editor de turno. Registro en OP-SEC-LOG por alias. La identidad real se conserva solo en notas personales del periodista responsable, bajo cifrado en dispositivo primario.';
+
+  const contactosMap = {
+    'ARQ-042': [{ key: 'velasquez', rol: 'Fixer designado · ventana de contacto en destino' }, { key: 'fiorella', rol: 'Seguridad digital · configuración de canal' }],
+    'ROS-038': [{ key: 'villafane', rol: 'Operaciones · contra-vigilancia doméstica' }, { key: 'fiorella', rol: 'Seguridad digital · configuración de canal' }],
+    'ANA-047': [{ key: 'fiorella', rol: 'Seguridad digital · perfil de amenaza T-DOM' }, { key: 'pollastri', rol: 'Legales · cobertura ante requerimiento judicial' }],
+    'CCS-001': [{ key: 'quiroga', rol: 'Freelancer liaison · contactos locales' }, { key: 'fiorella', rol: 'Seguridad digital · configuración de canal' }],
+    'ESQ-012': [{ key: 'fiorella', rol: 'Seguridad digital · configuración de canal' }, { key: 'villafane', rol: 'Operaciones · ventana de contacto' }],
+    'ninguno': [{ key: 'fiorella', rol: 'Seguridad digital · configuración de canal' }]
+  };
+  const contactos = contactosMap[r.teatro] || contactosMap.ninguno;
+
+  const docs = [
+    { codigo: 'OP-RED-2028-003', key: 'fuentes_anonimas', motivo: 'Protocolo de atribución y verificación obligatoria para fuente anónima.' },
+    { codigo: 'OP-SEC-2028-011', key: 'comunicacion_cifrada', motivo: 'Configuración de canales cifrados y escalera de fallback por nivel de riesgo.' }
+  ];
+  if (r.nivel === 'deep_background' || r.nivel === 'anonimato_total') {
+    docs.push({ codigo: 'OP-INV-2028-004', key: 'contravigilancia', motivo: 'Rutinas de contra-vigilancia para encuentros presenciales y traslados.' });
+  }
+  if (r.riesgo === 'critico') {
+    docs.push({ codigo: 'OP-SEC-2029-003', key: 'compromiso_dispositivo', motivo: 'Protocolo ante compromiso del dispositivo con impacto sobre la fuente.' });
+  }
+
+  const editorResponsable = (r.nivel === 'deep_background' || r.nivel === 'anonimato_total')
+    ? 'dirección editorial'
+    : 'f. zelaya — editor de turno';
+
+  return { canal, citabilidad, custodia, contactos, docs, editorResponsable };
+}
+
 export default function EditorFuentes({ modo }) {
   const t = themeFor(modo);
   const s = sizesFor(modo);
@@ -33,7 +92,7 @@ export default function EditorFuentes({ modo }) {
     if (typeof localStorage === 'undefined') return [];
     try { return JSON.parse(localStorage.getItem('infobae:fuentes') || '[]'); } catch { return []; }
   });
-  const [ultimoEmitido, setUltimoEmitido] = useState(null);
+  const [activa, setActiva] = useState(null);
 
   useEffect(() => {
     try { localStorage.setItem('infobae:fuentes', JSON.stringify(registros)); } catch {}
@@ -62,7 +121,7 @@ export default function EditorFuentes({ modo }) {
       operador: 'mondini.l'
     };
     setRegistros(prev => [...prev, registro]);
-    setUltimoEmitido(registro);
+    setActiva(registro);
     setForm(ESTADO_INICIAL);
   }
 
@@ -188,14 +247,83 @@ export default function EditorFuentes({ modo }) {
         </div>
       </div>
 
-      {ultimoEmitido && (
-        <div style={{ padding: '12px 16px', backgroundColor: t.vigenteBg, borderLeft: '2px solid ' + t.vigente }}>
-          <div style={{ fontFamily: MONO, fontSize: '11px', color: t.vigente, letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '4px' }}>
-            Registro guardado · {ultimoEmitido.codigo}
+      {registros.length > 0 && (
+        <div>
+          <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '10px' }}>
+            Registros emitidos ({registros.length})
           </div>
-          <div style={{ fontFamily: SERIF, fontSize: '13px', color: t.text, lineHeight: 1.5 }}>
-            Fuente {ultimoEmitido.alias} archivada en el dispositivo. El parte firmado se compone en el paso siguiente de la herramienta.
-          </div>
+          {isCampo ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {registros.slice().reverse().map(r => {
+                const sel = activa?.codigo === r.codigo;
+                const rColor = RIESGO[r.riesgo]?.color || t.textSecondary;
+                return (
+                  <button key={r.codigo} type="button" onClick={() => setActiva(r)} style={{
+                    textAlign: 'left', cursor: 'pointer',
+                    padding: '12px 14px',
+                    border: '1px solid ' + (sel ? t.borderStrong : t.border),
+                    borderLeft: '3px solid ' + rColor,
+                    backgroundColor: sel ? t.bgAccent : t.bgCard,
+                    color: t.text, minHeight: s.touchMin
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
+                      <span style={{ fontFamily: MONO, fontSize: '11px', color: sel ? t.text : t.textMeta, fontWeight: sel ? 500 : 400 }}>{r.codigo}</span>
+                      <span style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta }}>{r.fecha}</span>
+                    </div>
+                    <div style={{ fontFamily: SERIF, fontSize: '14px', fontWeight: 500, marginBottom: '2px' }}>{r.alias}</div>
+                    <div style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta }}>
+                      {TIPO_FUENTE[r.tipo]} · {NIVEL_PROTECCION[r.nivel].label} · riesgo {RIESGO[r.riesgo].label.toLowerCase()}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <div style={{ border: '1px solid ' + t.border, backgroundColor: t.bgCard }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '120px 1fr 120px 130px 120px 90px',
+                padding: '8px 14px', borderBottom: '1px solid ' + t.border,
+                backgroundColor: t.bgAccent,
+                fontFamily: MONO, fontSize: '10px', letterSpacing: '0.04em', textTransform: 'uppercase', color: t.textMeta, gap: '10px'
+              }}>
+                <span>Código</span>
+                <span>Alias</span>
+                <span>Tipo</span>
+                <span>Protección</span>
+                <span>Riesgo</span>
+                <span>Fecha</span>
+              </div>
+              {registros.slice().reverse().map((r, idx, arr) => {
+                const sel = activa?.codigo === r.codigo;
+                return (
+                  <button key={r.codigo} type="button" onClick={() => setActiva(r)} style={{
+                    display: 'grid',
+                    gridTemplateColumns: '120px 1fr 120px 130px 120px 90px',
+                    width: '100%', textAlign: 'left', gap: '10px',
+                    padding: '10px 14px',
+                    border: 'none',
+                    borderBottom: idx < arr.length - 1 ? '1px solid ' + t.border : 'none',
+                    backgroundColor: sel ? t.bgAccent : 'transparent',
+                    cursor: 'pointer', color: t.text,
+                    alignItems: 'baseline',
+                    fontFamily: MONO, fontSize: '11px'
+                  }}>
+                    <span style={{ color: sel ? t.text : t.textMeta, fontWeight: sel ? 500 : 400 }}>{r.codigo}</span>
+                    <span style={{ fontFamily: SERIF, fontSize: '13px', fontWeight: 500 }}>{r.alias}</span>
+                    <span style={{ color: t.textMeta }}>{TIPO_FUENTE[r.tipo]}</span>
+                    <span style={{ color: t.textMeta }}>{NIVEL_PROTECCION[r.nivel].label}</span>
+                    <span style={{
+                      color: RIESGO[r.riesgo].color, fontSize: '9.5px', letterSpacing: '0.04em',
+                      textTransform: 'uppercase', padding: '2px 6px', backgroundColor: RIESGO[r.riesgo].bg,
+                      alignSelf: 'center', justifySelf: 'start'
+                    }}>{RIESGO[r.riesgo].label}</span>
+                    <span style={{ color: t.textMeta }}>{r.fecha}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
     </div>
