@@ -141,6 +141,37 @@ function DocSecciones({ secciones, modo }) {
                 ))}
               </ul>
             )}
+            {Array.isArray(sec.bloques) && (
+              <div style={{ marginTop: sec.parrafos || sec.texto || sec.items ? '18px' : 0 }}>
+                {sec.bloques.map((b, i) => (
+                  <div key={i} style={{
+                    marginBottom: '20px', paddingBottom: '16px',
+                    borderBottom: i < sec.bloques.length - 1 ? '1px dashed ' + t.border : 'none'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '6px', flexWrap: 'wrap' }}>
+                      {b.codigo && (
+                        <span style={{ fontFamily: MONO, fontSize: '12px', fontWeight: 500, color: t.alert }}>{b.codigo}</span>
+                      )}
+                      {b.titulo && (
+                        <h3 style={{ fontFamily: SERIF, fontSize: '16px', fontWeight: 500, margin: 0, color: t.text, lineHeight: 1.3 }}>
+                          {b.titulo}
+                        </h3>
+                      )}
+                    </div>
+                    {b.texto && (
+                      <p style={{ fontFamily: SERIF, fontSize: '14px', lineHeight: 1.6, color: t.text, margin: 0, maxWidth: isCampo ? 'none' : '38em' }}>
+                        {b.texto}
+                      </p>
+                    )}
+                    {Array.isArray(b.parrafos) && b.parrafos.map((p, j) => (
+                      <p key={j} style={{ fontFamily: SERIF, fontSize: '14px', lineHeight: 1.6, color: t.text, margin: j === 0 ? '0 0 8px' : '0 0 8px', maxWidth: isCampo ? 'none' : '38em' }}>
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
         );
       })}
