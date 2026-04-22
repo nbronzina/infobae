@@ -214,6 +214,13 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     try { return JSON.parse(localStorage.getItem('infobae:fuentes') || '[]'); } catch { return []; }
   });
   const [fuenteActiva, setFuenteActiva] = useState(null);
+  const [diarioCampo, setDiarioCampo] = useState(() => {
+    if (typeof localStorage === 'undefined') return [];
+    try { return JSON.parse(localStorage.getItem('infobae:diario') || '[]'); } catch { return []; }
+  });
+  const [diarioForm, setDiarioForm] = useState({ teatro: 'ninguno', tipo: '', urgencia: 'rutina', texto: '' });
+  const [diarioFiltroTeatro, setDiarioFiltroTeatro] = useState('todos');
+  const [diarioFiltroTipo, setDiarioFiltroTipo] = useState('todos');
   const escenarioActivo = escenariosData.find(s => s.slug === scenario) || escenariosData[0];
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -559,6 +566,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       { key: 'checklist_predespliegue', codigo: 'OP-TOOL-2029-007', titulo: 'Checklist pre-despliegue', version: '1.0', estado: 'vigente' },
       { key: 'simulador_compromiso', codigo: 'OP-TOOL-2029-008', titulo: 'Simulador de compromiso de dispositivo', version: '1.0', estado: 'vigente' },
       { key: 'editor_fuentes', codigo: 'OP-TOOL-2029-009', titulo: 'Registro de fuentes anónimas', version: '1.0', estado: 'vigente' },
+      { key: 'diario_campo', codigo: 'OP-TOOL-2029-010', titulo: 'Diario de campo', version: '1.0', estado: 'vigente' },
       { key: 'pipeline_verificacion', codigo: 'OP-TOOL-2029-001', titulo: 'Pipeline de verificación', version: '1.0', estado: 'vigente' },
       { key: 'opsec_log', codigo: 'OP-TOOL-2029-002', titulo: 'OP-SEC-LOG: bitácora auditable', version: '1.0', estado: 'vigente' },
       { key: 'analista_auto', codigo: 'OP-TOOL-2029-003', titulo: 'Analista de guardia', version: '1.0', estado: 'vigente' },
@@ -594,6 +602,12 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       titulo: 'Registro de fuentes anónimas',
       subtitulo: 'Alta de fuente con parte firmado · protocolo de comunicación, restricciones de publicación y custodia',
       meta: { codigo: 'OP-TOOL-2029-009', version: '1.0', fecha: '2029-04-02', responsable: 'dirección editorial + l. pollastri + j. fiorella' }
+    },
+    diario_campo: {
+      diario_campo: true,
+      titulo: 'Diario de campo',
+      subtitulo: 'Bitácora personal del corresponsal — timeline con cruce automático contra el glosario de amenazas',
+      meta: { codigo: 'OP-TOOL-2029-010', version: '1.0', fecha: '2029-04-08', responsable: 'corresponsal a cargo · cruce técnico por j. fiorella' }
     }
   };
 
@@ -657,6 +671,10 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
   useEffect(() => {
     try { localStorage.setItem('infobae:fuentes', JSON.stringify(fuentesRegistros)); } catch {}
   }, [fuentesRegistros]);
+
+  useEffect(() => {
+    try { localStorage.setItem('infobae:diario', JSON.stringify(diarioCampo)); } catch {}
+  }, [diarioCampo]);
 
   function toggleChecklistItem(id) {
     setChecklistTicks(prev => ({ ...prev, [id]: !prev[id] }));
@@ -739,6 +757,72 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     const editorResponsable = (r.nivel === 'deep_background' || r.nivel === 'anonimato_total') ? 'dirección editorial' : 'f. zelaya — editor de turno';
 
     return { canal, citabilidad, custodia, contactos, docs, editorResponsable };
+  }
+
+  const TIPO_ENTRADA_DIARIO = {
+    observacion: 'Observación',
+    incidente: 'Incidente',
+    contacto: 'Contacto con fuente',
+    movimiento: 'Movimiento',
+    anomalia: 'Anomalía técnica'
+  };
+  const URGENCIA_DIARIO = {
+    rutina: { label: 'Rutina', color: '#5a544c', bg: '#eceae4' },
+    atencion: { label: 'Atención', color: '#8a6d2b', bg: '#f5edd5' },
+    alerta: { label: 'Alerta', color: '#bd2828', bg: '#f5d5d5' }
+  };
+  const KEYWORDS_AMENAZA = {
+    'T-WPS': ['wifi', 'wi-fi', 'bssid', 'ssid', 'geolocalización', 'geolocalizacion', 'router', ' wps ', 'hotspot', 'red inalámbrica', 'red inalambrica', 'dirección mac', 'direccion mac'],
+    'T-RF': ['starlink', 'terminal satelital', 'satelital', 'transmisión rf', 'transmision rf', 'emisión rf', 'emision rf', ' leo ', 'señal satelital', 'senal satelital', 'detector rf', 'rf pasivo'],
+    'T-SPY': ['spyware', 'pegasus', 'zero-click', 'zero click', 'implante', 'adjunto sospechoso', 'mensaje sospechoso', 'dispositivo comprometido', 'comportamiento anómalo', 'comportamiento anomalo', 'batería cae', 'bateria cae', 'pdf sospechoso', 'link sospechoso', 'sms no solicitado', 'mensaje no solicitado', 'sesión no reconocida', 'sesion no reconocida'],
+    'T-SYNTH': ['deepfake', 'sintético', 'sintetico', 'generado por modelo', 'contenido fabricado', 'manipulado digitalmente', ' c2pa ', 'verificación de origen', 'verificacion de origen'],
+    'T-CKP': ['checkpoint', 'reconocimiento facial', 'cámara biométrica', 'camara biometrica', 'requisa', 'aduana', 'control migratorio', 'retén', 'reten', 'control vehicular'],
+    'T-PHYS': [' dron ', 'drones', 'seguimiento físico', 'seguimiento fisico', 'escolta armada', 'intimidación', 'intimidacion', 'agresión', 'agresion', 'vehículo sospechoso', 'vehiculo sospechoso', 'me sigue', 'me siguen', 'amenaza directa', 'disparos', 'arma exhibida'],
+    'T-DOM': [' side ', 'inteligencia estatal', 'inteligencia argentina', 'gps en vehículo', 'gps en vehiculo', 'gps colocado', 'intervención telefónica', 'intervencion telefonica', 'teléfono pinchado', 'telefono pinchado', 'hackeo post', 'espionaje estatal', 'legajo anaconda']
+  };
+  const DOC_POR_AMENAZA = {
+    'T-WPS': { key: 'main', codigo: 'OP-SEC-2029-004', titulo: 'Higiene RF · sección T-WPS' },
+    'T-RF': { key: 'main', codigo: 'OP-SEC-2029-004', titulo: 'Higiene RF · sección T-RF' },
+    'T-SPY': { key: 'compromiso_dispositivo', codigo: 'OP-SEC-2029-003', titulo: 'Procedimiento ante compromiso de dispositivo' },
+    'T-SYNTH': { key: 'verificacion_c2pa', codigo: 'OP-SEC-2029-001', titulo: 'Verificación C2PA en redacción' },
+    'T-CKP': { key: 'vigilancia_destino', codigo: 'OP-SEC-2028-009', titulo: 'Protocolo de vigilancia en destino' },
+    'T-PHYS': { key: 'vigilancia_destino', codigo: 'OP-SEC-2028-009', titulo: 'Protocolo de vigilancia en destino' },
+    'T-DOM': { key: 'contravigilancia', codigo: 'OP-INV-2028-004', titulo: 'Contra-vigilancia doméstica' }
+  };
+
+  function detectarAmenazasEnTexto(texto) {
+    const t = ' ' + texto.toLowerCase().replace(/\s+/g, ' ') + ' ';
+    const codigos = [];
+    for (const [codigo, keywords] of Object.entries(KEYWORDS_AMENAZA)) {
+      if (keywords.some(kw => t.includes(kw.toLowerCase()))) codigos.push(codigo);
+    }
+    return codigos;
+  }
+
+  function alertasDiario(entradas, referencia) {
+    const cutoff = referencia.getTime() - 7 * 24 * 60 * 60 * 1000;
+    const counts = {};
+    entradas.forEach(e => {
+      const ts = new Date(e.fecha).getTime();
+      if (ts >= cutoff && Array.isArray(e.amenazas)) {
+        e.amenazas.forEach(a => { counts[a] = (counts[a] || 0) + 1; });
+      }
+    });
+    return Object.entries(counts).filter(([, n]) => n >= 3).map(([codigo, count]) => ({ codigo, count }));
+  }
+
+  function guardarEntradaDiario() {
+    const { teatro, tipo, urgencia, texto } = diarioForm;
+    if (!texto.trim() || !tipo) return;
+    const baseMs = diarioCampo.length > 0
+      ? new Date(diarioCampo[0].fecha).getTime() + 60 * 1000
+      : now.getTime();
+    const fecha = new Date(baseMs).toISOString();
+    const id = `DIA-2029-${String(diarioCampo.length + 1).padStart(4, '0')}`;
+    const amenazas = detectarAmenazasEnTexto(texto);
+    const entrada = { id, fecha, teatro, tipo, urgencia, texto: texto.trim(), amenazas, operador: 'mondini.l' };
+    setDiarioCampo(prev => [entrada, ...prev]);
+    setDiarioForm({ teatro: 'ninguno', tipo: '', urgencia: 'rutina', texto: '' });
   }
 
   function emitirRegistroFuente() {
@@ -861,7 +945,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     'legales': ['anmac_enacom', 'exportacion_equip', 'seguros_riesgo', 'folder_legales'],
     'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'onboarding', 'folder_rrhh'],
     'investigacion': ['docs_filtrados', 'osint_investigacion', 'redes_internacionales', 'contravigilancia', 'narco_cobertura', 'inteligencia_investigacion', 'folder_investigacion'],
-    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'evaluacion_teatros', 'checklist_predespliegue', 'simulador_compromiso', 'editor_fuentes', 'folder_herramientas']
+    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'evaluacion_teatros', 'checklist_predespliegue', 'simulador_compromiso', 'editor_fuentes', 'diario_campo', 'folder_herramientas']
   };
   const isFolderActive = (key) => {
     if (key === 'seg-digital' && !activeView && !showLanding) return true;
@@ -874,7 +958,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
     jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'], onboarding: ['RRHH', 'folder_rrhh'],
     docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'], narco_cobertura: ['Investigación', 'folder_investigacion'], inteligencia_investigacion: ['Investigación', 'folder_investigacion'],
-    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'], evaluacion_teatros: ['Herramientas', 'folder_herramientas'], checklist_predespliegue: ['Herramientas', 'folder_herramientas'], simulador_compromiso: ['Herramientas', 'folder_herramientas'], editor_fuentes: ['Herramientas', 'folder_herramientas'],
+    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'], evaluacion_teatros: ['Herramientas', 'folder_herramientas'], checklist_predespliegue: ['Herramientas', 'folder_herramientas'], simulador_compromiso: ['Herramientas', 'folder_herramientas'], editor_fuentes: ['Herramientas', 'folder_herramientas'], diario_campo: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
   const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'panorama'];
@@ -1310,6 +1394,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
                 <div role="button" tabIndex={0} onClick={() => setActiveView('editor_fuentes')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'editor_fuentes' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'editor_fuentes' ? 500 : 400, backgroundColor: activeView === 'editor_fuentes' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'editor_fuentes' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Registro de fuentes
+                </div>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('diario_campo')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'diario_campo' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'diario_campo' ? 500 : 400, backgroundColor: activeView === 'diario_campo' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'diario_campo' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Diario de campo
                 </div>
               </div>
             )}
@@ -2722,6 +2809,213 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     {fuentesRegistros.length === 0 && !registroView && (
                       <div className="serif" style={{ fontSize: '13px', color: '#5a544c', fontStyle: 'italic', padding: '20px 0' }}>
                         No hay fuentes registradas aún. Completar el formulario para emitir el primer parte.
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
+              {/* Diario de campo */}
+              {activeView === 'diario_campo' && (() => {
+                const teatrosOpciones = [...teatrosData.map(t => ({ codigo: t.codigo, nombre: t.nombre })), { codigo: 'ninguno', nombre: 'Ninguno / doméstico' }];
+                const form = diarioForm;
+                const formCompleto = form.texto.trim() && form.tipo;
+                const updateForm = (campo, valor) => setDiarioForm(prev => ({ ...prev, [campo]: valor }));
+                const pillStyle = (activo) => ({ cursor: 'pointer', padding: '7px 12px', fontSize: '11.5px', border: '1px solid ' + (activo ? '#1f1f1f' : '#d9d4c2'), backgroundColor: activo ? '#f0ecde' : '#f8f5ec', color: '#1f1f1f', fontWeight: activo ? 500 : 400 });
+                const entradasFiltradas = diarioCampo.filter(e => {
+                  if (diarioFiltroTeatro !== 'todos' && e.teatro !== diarioFiltroTeatro) return false;
+                  if (diarioFiltroTipo !== 'todos' && e.tipo !== diarioFiltroTipo) return false;
+                  return true;
+                });
+                const alertas = alertasDiario(diarioCampo, now);
+                const proximaFechaPreview = diarioCampo.length > 0
+                  ? new Date(new Date(diarioCampo[0].fecha).getTime() + 60 * 1000)
+                  : now;
+                const fmtFecha = (d) => {
+                  const date = typeof d === 'string' ? new Date(d) : d;
+                  const yyyy = date.getUTCFullYear();
+                  const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
+                  const dd = String(date.getUTCDate()).padStart(2, '0');
+                  const hh = String(date.getUTCHours()).padStart(2, '0');
+                  const mi = String(date.getUTCMinutes()).padStart(2, '0');
+                  return `${yyyy}-${mm}-${dd} · ${hh}:${mi} UTC`;
+                };
+                const navegarADoc = (key) => {
+                  if (key === 'main') { setActiveView(null); setShowLanding(false); scrollToTop(); } else { setActiveView(key); }
+                };
+                return (
+                  <div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · HERRAMIENTAS · OP-TOOL-2029-010</div>
+                    <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Diario de campo</h1>
+                    <div className="serif" style={{ fontSize: '14.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '20px' }}>Bitácora personal del corresponsal. Cada entrada se cruza contra el glosario T-* y queda archivada en el dispositivo. Si una misma amenaza aparece en tres entradas o más dentro de una ventana de siete días, el sistema sugiere revisión del protocolo asociado.</div>
+
+                    <div style={{ padding: '10px 14px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c', marginBottom: '20px' }}>
+                      <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                        El diario es de uso personal — no circula por el equipo. El cruce de amenazas es orientativo y no reemplaza el reporte formal en OP-SEC-LOG. Entradas con urgencia "alerta" se recomienda duplicarlas en el log auditable.
+                      </div>
+                    </div>
+
+                    {alertas.length > 0 && (
+                      <div style={{ marginBottom: '22px' }}>
+                        {alertas.map(a => {
+                          const ref = DOC_POR_AMENAZA[a.codigo];
+                          return (
+                            <div key={a.codigo} style={{ padding: '14px 16px', backgroundColor: '#f5d5d5', borderLeft: '3px solid #bd2828', marginBottom: '8px' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '12px', flexWrap: 'wrap', marginBottom: '6px' }}>
+                                <div className="mono" style={{ fontSize: '11.5px', color: '#bd2828', fontWeight: 500, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                                  Recurrencia {a.codigo} · {a.count} entradas en los últimos 7 días
+                                </div>
+                                {ref && (
+                                  <div role="button" tabIndex={0} onClick={() => navegarADoc(ref.key)} className="mono doc-link" style={{ cursor: 'pointer', fontSize: '10.5px', color: '#1f1f1f' }}>
+                                    ver {ref.codigo} →
+                                  </div>
+                                )}
+                              </div>
+                              <div className="serif" style={{ fontSize: '13px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                                Se sugiere revisión del protocolo {ref?.titulo || a.codigo} y, si corresponde, escalamiento a seguridad digital.
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '20px 24px', marginBottom: '24px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '12px', flexWrap: 'wrap', marginBottom: '14px' }}>
+                        <div className="mono micro" style={{ color: '#5a544c' }}>Nueva entrada</div>
+                        <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>
+                          Timestamp auto: {fmtFecha(proximaFechaPreview)} · operador mondini.l
+                        </div>
+                      </div>
+
+                      <div style={{ marginBottom: '14px' }}>
+                        <label className="mono" style={{ display: 'block', fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '6px' }}>Teatro asociado</label>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                          {teatrosOpciones.map(t => (
+                            <div key={t.codigo} role="button" tabIndex={0} onClick={() => updateForm('teatro', t.codigo)} className="mono" style={pillStyle(form.teatro === t.codigo)}>
+                              {t.codigo === 'ninguno' ? 'Ninguno' : `${t.codigo} · ${t.nombre}`}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div style={{ marginBottom: '14px' }}>
+                        <label className="mono" style={{ display: 'block', fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '6px' }}>Tipo de entrada</label>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                          {Object.entries(TIPO_ENTRADA_DIARIO).map(([k, label]) => (
+                            <div key={k} role="button" tabIndex={0} onClick={() => updateForm('tipo', k)} className="mono" style={pillStyle(form.tipo === k)}>{label}</div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div style={{ marginBottom: '14px' }}>
+                        <label className="mono" style={{ display: 'block', fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '6px' }}>Nivel de urgencia</label>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                          {Object.entries(URGENCIA_DIARIO).map(([k, v]) => {
+                            const activo = form.urgencia === k;
+                            return (
+                              <div key={k} role="button" tabIndex={0} onClick={() => updateForm('urgencia', k)} className="mono" style={{ cursor: 'pointer', padding: '7px 12px', fontSize: '11.5px', border: '1px solid ' + (activo ? v.color : '#d9d4c2'), backgroundColor: activo ? v.bg : '#f8f5ec', color: activo ? v.color : '#1f1f1f', fontWeight: activo ? 500 : 400 }}>{v.label}</div>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      <div style={{ marginBottom: '14px' }}>
+                        <label className="mono" style={{ display: 'block', fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '6px' }}>Texto de la entrada</label>
+                        <textarea value={form.texto} onChange={(e) => updateForm('texto', e.target.value)} placeholder="Registrar observación con el detalle operativo relevante. El sistema cruza el texto contra el glosario T-* al guardar." rows={5} className="serif" style={{ width: '100%', padding: '10px 12px', fontSize: '13px', lineHeight: 1.55, border: '1px solid #d9d4c2', backgroundColor: '#f0ecde', color: '#1f1f1f', outline: 'none', resize: 'vertical', fontFamily: 'inherit' }} />
+                      </div>
+
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <div role="button" tabIndex={formCompleto ? 0 : -1} onClick={() => formCompleto && guardarEntradaDiario()} className="mono" style={{ cursor: formCompleto ? 'pointer' : 'not-allowed', padding: '8px 14px', fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase', border: '1px solid ' + (formCompleto ? '#1f1f1f' : '#d9d4c2'), backgroundColor: formCompleto ? '#1f1f1f' : '#eceae4', color: formCompleto ? '#f0ede4' : '#8a8472', opacity: formCompleto ? 1 : 0.6 }}>
+                          Guardar entrada
+                        </div>
+                        <div role="button" tabIndex={0} onClick={() => setDiarioForm({ teatro: 'ninguno', tipo: '', urgencia: 'rutina', texto: '' })} className="mono" style={{ cursor: 'pointer', padding: '8px 14px', fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase', border: '1px solid #d9d4c2', backgroundColor: 'transparent', color: '#5a544c' }}>
+                          Limpiar
+                        </div>
+                      </div>
+                    </div>
+
+                    {diarioCampo.length > 0 && (
+                      <div style={{ marginBottom: '14px', display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'baseline' }}>
+                        <div className="mono micro" style={{ color: '#5a544c' }}>Filtros</div>
+                        <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', alignItems: 'center' }}>
+                          <span className="mono" style={{ fontSize: '10px', color: '#8a8472', marginRight: '4px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>teatro</span>
+                          {[{ codigo: 'todos', nombre: 'Todos' }, ...teatrosOpciones].map(t => {
+                            const activo = diarioFiltroTeatro === t.codigo;
+                            return (
+                              <div key={t.codigo} role="button" tabIndex={0} onClick={() => setDiarioFiltroTeatro(t.codigo)} className="mono" style={{ cursor: 'pointer', padding: '3px 8px', fontSize: '10.5px', border: '1px solid ' + (activo ? '#1f1f1f' : '#d9d4c2'), backgroundColor: activo ? '#f0ecde' : 'transparent', color: '#1f1f1f' }}>
+                                {t.codigo === 'todos' ? 'Todos' : (t.codigo === 'ninguno' ? 'Ninguno' : t.codigo)}
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', alignItems: 'center' }}>
+                          <span className="mono" style={{ fontSize: '10px', color: '#8a8472', marginRight: '4px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>tipo</span>
+                          {[['todos', 'Todos'], ...Object.entries(TIPO_ENTRADA_DIARIO)].map(([k, label]) => {
+                            const activo = diarioFiltroTipo === k;
+                            return (
+                              <div key={k} role="button" tabIndex={0} onClick={() => setDiarioFiltroTipo(k)} className="mono" style={{ cursor: 'pointer', padding: '3px 8px', fontSize: '10.5px', border: '1px solid ' + (activo ? '#1f1f1f' : '#d9d4c2'), backgroundColor: activo ? '#f0ecde' : 'transparent', color: '#1f1f1f' }}>
+                                {label}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {diarioCampo.length === 0 && (
+                      <div className="serif" style={{ fontSize: '13px', color: '#5a544c', fontStyle: 'italic', padding: '20px 0' }}>
+                        Diario vacío. La primera entrada abre el timeline.
+                      </div>
+                    )}
+
+                    {diarioCampo.length > 0 && entradasFiltradas.length === 0 && (
+                      <div className="serif" style={{ fontSize: '13px', color: '#5a544c', fontStyle: 'italic', padding: '20px 0' }}>
+                        Ninguna entrada coincide con los filtros actuales.
+                      </div>
+                    )}
+
+                    {entradasFiltradas.length > 0 && (
+                      <div style={{ position: 'relative', paddingLeft: '18px' }}>
+                        <div style={{ position: 'absolute', left: '4px', top: '4px', bottom: '4px', width: '1px', backgroundColor: '#d9d4c2' }} />
+                        {entradasFiltradas.map(e => {
+                          const urg = URGENCIA_DIARIO[e.urgencia] || URGENCIA_DIARIO.rutina;
+                          const teatroLabel = e.teatro === 'ninguno' ? 'doméstico' : e.teatro;
+                          return (
+                            <div key={e.id} style={{ position: 'relative', marginBottom: '14px' }}>
+                              <div style={{ position: 'absolute', left: '-18px', top: '16px', width: '9px', height: '9px', borderRadius: '50%', backgroundColor: urg.color, border: '1px solid #f8f5ec' }} />
+                              <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '14px 18px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '12px', flexWrap: 'wrap', marginBottom: '8px' }}>
+                                  <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>
+                                    {fmtFecha(e.fecha)} · {e.id}
+                                  </div>
+                                  <span className="mono" style={{ fontSize: '9.5px', padding: '2px 7px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: urg.bg, color: urg.color }}>{urg.label}</span>
+                                </div>
+                                <div style={{ display: 'flex', gap: '10px', alignItems: 'baseline', flexWrap: 'wrap', marginBottom: '8px' }}>
+                                  <span className="mono" style={{ fontSize: '10.5px', color: '#1f1f1f', fontWeight: 500 }}>{TIPO_ENTRADA_DIARIO[e.tipo] || e.tipo}</span>
+                                  <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>teatro {teatroLabel}</span>
+                                  <span className="mono" style={{ fontSize: '10.5px', color: '#8a8472' }}>operador {e.operador || 'mondini.l'}</span>
+                                </div>
+                                <div className="serif" style={{ fontSize: '13px', color: '#1f1f1f', lineHeight: 1.6, whiteSpace: 'pre-wrap', marginBottom: e.amenazas?.length ? '10px' : 0 }}>
+                                  {e.texto}
+                                </div>
+                                {Array.isArray(e.amenazas) && e.amenazas.length > 0 && (
+                                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', paddingTop: '8px', borderTop: '1px dashed #d9d4c2' }}>
+                                    <span className="mono" style={{ fontSize: '10px', color: '#8a8472', marginRight: '2px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>amenazas detectadas</span>
+                                    {e.amenazas.map(a => {
+                                      const ref = DOC_POR_AMENAZA[a];
+                                      return (
+                                        <span key={a} role={ref ? 'button' : undefined} tabIndex={ref ? 0 : undefined} onClick={ref ? () => navegarADoc(ref.key) : undefined} className="mono doc-link" style={{ fontSize: '10px', padding: '2px 7px', backgroundColor: '#f5d5d5', color: '#bd2828', fontWeight: 500, cursor: ref ? 'pointer' : 'default' }}>
+                                          {a}
+                                        </span>
+                                      );
+                                    })}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
