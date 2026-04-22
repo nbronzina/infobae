@@ -126,6 +126,20 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  jtsn_apoyo: {
+    area: 'INFOBAE · RECURSOS HUMANOS',
+    codigo: 'OP-HR-2027-012', version: '2.2', fecha: '2028-06-15',
+    responsable: 'rrhh + operaciones',
+    titulo: 'Apoyo psicológico para personal de campo (JTSN)',
+    subtitulo: 'Protocolo de activación y recursos disponibles',
+    secciones: [
+      { titulo: 'Qué es JTSN', texto: 'El Journalist Trauma Support Network (JTSN) es una red de apoyo lanzada en 2022 por el Dart Center for Journalism and Trauma (Columbia University) en alianza con IWMF. Ofrece sesiones de apoyo psicológico gratuitas y confidenciales para periodistas expuestos a eventos traumáticos. Infobae tiene acceso institucional.' },
+      { titulo: 'Criterio de activación', texto: 'El protocolo se activa automáticamente cuando: despliegue en zona activa > 10 días, exposición directa a violencia (presenciada o documentada), amenaza directa contra el periodista o su entorno, o solicitud voluntaria del periodista en cualquier momento. La activación no es opcional en los tres primeros casos — el editor de turno agenda la sesión.' },
+      { titulo: 'Confidencialidad', texto: 'El contenido de las sesiones es confidencial entre el profesional y el periodista. Ni el editor ni RRHH ni legales reciben información sobre el contenido. Lo único que se registra es: fecha de la sesión, nombre del profesional, y confirmación de asistencia. La no asistencia se reporta al editor como incumplimiento de protocolo, no como dato de salud.' }
+    ],
+    fuentes: 'Dart Center for Journalism and Trauma (dartcenter.org). IWMF, Journalist Trauma Support Network. Bruce Shapiro, director Dart Center.'
+  },
+
   seguros_riesgo: {
     area: 'INFOBAE · LEGALES',
     codigo: 'OP-LEG-2028-014', version: '2.0', fecha: '2028-08-30',
