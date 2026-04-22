@@ -245,6 +245,17 @@ export const DOCUMENTOS_CONTENIDO = {
           'Parámetros operativos. Ventana activa: máximo 5 minutos de transmisión continua. Silencio pre y post: el terminal debe permanecer apagado, no solo en reposo. No ejecutar ventana activa durante traslado. Definir coordenadas fijas antes de activar. Silencio RF de al menos 60 minutos entre ventanas consecutivas en la misma ubicación.',
           'Diagrama de ventana de transmisión: el manual impreso incluye un esquema temporal con las tres fases (silencio pre · ventana activa · silencio post). En esta versión digital queda como referencia textual; el esquema visual se reincorpora con la migración del cono SVG.'
         ]
+      },
+      {
+        titulo: 'Apéndice: dispositivos y mitigaciones',
+        texto: 'Listado curado de equipamiento con estado actual. Cualquier dispositivo fuera de esta lista requiere evaluación específica por Seguridad Digital antes de ser incorporado al kit de despliegue.',
+        items: [
+          'Starlink Mini (SpaceX) · firmware 2024.12+ · mitigación: randomización BSSID vigente, requiere verificación de versión pre-despliegue. Estado: aprobado condicional.',
+          'GL.iNet MT3000 / MT6000 (GL Technologies) · firmware post-advisory 2024-05 · mitigación: activar randomización de MAC manualmente — Settings > Advanced > Network > Wi-Fi. Estado: aprobado con configuración.',
+          'Iridium Certus 100 (Iridium) · firmware n/a · mitigación: no rastreable por WPS, verificar que el modelo comprado tenga inscripción RAMATEL vigente (responsabilidad del importador, no del usuario). Estado: aprobado.',
+          'Pixel + GrapheneOS (Google hw / comunidad sw) · firmware rolling release · mitigación: dispositivo secundario estándar, Signal como app única de llamadas sensibles. Estado: aprobado.',
+          'iPhone (Apple), cualquier modelo · iOS 17+ · mitigación: no recomendado como dispositivo secundario. Permitido como personal no asociado al despliegue. Estado: no recomendado.'
+        ]
       }
     ],
     fuentes: 'Rye & Levin, IEEE S&P 2024, arXiv:2405.14975 (WPS/Starlink). ANMaC: Ley 20.429, Decreto 395/75, Res. 83/2023, Disp. RENAR 883/11. ENACOM: Res. 955/2025 (Starlink), RAMATEL. RSF España: rsf-es.org/seguridad-para-periodistas. Dart Center / JTSN: dartcenter.org. FOPEA: fopea.org.'
