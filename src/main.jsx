@@ -65,6 +65,7 @@ function AboutModal({ onClose }) {
       style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(31,31,31,0.78)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '24px' }}
     >
       <div
+        className="bitacora-scroll"
         onClick={e => e.stopPropagation()}
         style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', maxWidth: '560px', width: '100%', maxHeight: 'calc(100vh - 48px)', overflowY: 'auto', padding: '36px 40px', fontFamily: "'IBM Plex Sans', system-ui, sans-serif", cursor: 'default' }}
       >
@@ -174,7 +175,7 @@ function BriefingView({ onSelect, onOpenAbout }) {
     { slug: 'inteligencia', label: 'Línea nacional · Inteligencia' }
   ];
   return (
-    <div style={{ height: '100%', overflowY: 'auto', color: '#1f1f1f', padding: '44px 32px 32px', fontFamily: "'Fraunces', Georgia, serif", boxSizing: 'border-box' }}>
+    <div className="bitacora-scroll" style={{ height: '100%', overflowY: 'auto', color: '#1f1f1f', padding: '44px 32px 32px', fontFamily: "'Fraunces', Georgia, serif", boxSizing: 'border-box' }}>
       <style>{`
         .brief-link { cursor: pointer; background: none; border: none; font: inherit; color: inherit; padding: 0; text-align: left; }
         .brief-link:focus-visible { outline: 2px solid #1f1f1f; outline-offset: 3px; }
