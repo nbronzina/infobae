@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import Checklist from './Checklist.jsx';
 import DiarioCampo from './DiarioCampo.jsx';
 import EvaluacionTeatro from './EvaluacionTeatro.jsx';
+import SimuladorCompromiso from './SimuladorCompromiso.jsx';
 import { themeFor, sizesFor, SERIF, MONO } from '../theme';
 
 const HERRAMIENTAS = [
   { id: 'evaluacion_teatro', codigo: 'OP-TOOL-2029-006', label: 'Evaluación por teatro', desc: 'Parte preliminar por destino — amenazas, protocolos, kit y contactos.', Component: EvaluacionTeatro },
   { id: 'checklist', codigo: 'OP-TOOL-2029-007', label: 'Checklist pre-despliegue', desc: 'Parte de aptitud operativa con firma conjunta al completar.', Component: Checklist },
+  { id: 'simulador_compromiso', codigo: 'OP-TOOL-2029-008', label: 'Simulador de compromiso', desc: 'Ejercicio HEFAT contra el protocolo OP-SEC-2029-003.', Component: SimuladorCompromiso },
   { id: 'diario_campo', codigo: 'OP-TOOL-2029-010', label: 'Diario de campo', desc: 'Bitácora personal con cruce automático contra el glosario T-*.', Component: DiarioCampo }
 ];
 
