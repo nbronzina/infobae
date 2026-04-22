@@ -268,6 +268,14 @@ export const DOCUMENTOS_CONTENIDO = {
           'Agendar sesión con Dart Center o equivalente bajo protocolo JTSN. Criterio automático: despliegue > 10 días en zona activa.',
           'Completar parte de despliegue con cadena de procedencia del material publicado. Archivado en OP-SEC-LOG.'
         ]
+      },
+      {
+        titulo: 'Consulta al analista de guardia',
+        parrafos: [
+          'Herramienta complementaria al manual para casos no cubiertos explícitamente. Asistencia orientativa — no sustituye consulta a Seguridad Digital ni decisión editorial humana. Cada consulta se registra en OP-SEC-LOG con timestamp, usuario y contenido.',
+          'El analista razona sobre el contenido de este manual, el glosario T-* y los protocolos asociados. Sus respuestas están limitadas por lo que el dispositivo sabe — no consulta nada externo. Útil para evaluar material entrante de fixer, decisiones de campo no documentadas, y cruce contra glosario antes de transmitir.',
+          'Acceso operativo: tab HERRAMIENTAS de Bitácora, entrada "Analista de guardia" (OP-TOOL-2029-003). El widget vive como herramienta del kit, no como sección de este manual — la separación responde al principio offline-first: el analista funciona sin internet, sin servidor, sin dependencia externa.'
+        ]
       }
     ],
     fuentes: 'Rye & Levin, IEEE S&P 2024, arXiv:2405.14975 (WPS/Starlink). ANMaC: Ley 20.429, Decreto 395/75, Res. 83/2023, Disp. RENAR 883/11. ENACOM: Res. 955/2025 (Starlink), RAMATEL. RSF España: rsf-es.org/seguridad-para-periodistas. Dart Center / JTSN: dartcenter.org. FOPEA: fopea.org.'
