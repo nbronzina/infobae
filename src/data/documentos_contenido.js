@@ -126,6 +126,81 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  anmac_enacom: {
+    area: 'INFOBAE · LEGALES',
+    codigo: 'OP-LEG-2028-007', version: '4.0', fecha: '2028-11-20',
+    responsable: 'l. pollastri (legales) · revisado por seg. digital y operaciones',
+    titulo: 'Requisitos ANMaC / ENACOM para material de despliegue',
+    subtitulo: 'Guía de referencia para personal que viaja con equipamiento controlado o de telecomunicaciones',
+    secciones: [
+      {
+        titulo: 'Equipamiento de protección balística',
+        parrafos: [
+          'Los chalecos antibalas, cascos balísticos y placas de blindaje están clasificados como materiales de usos especiales bajo la Ley Nacional de Armas y Explosivos 20.429 (1973). El Decreto Reglamentario 395/75, artículo 4, apartado 4, los equipara a "armas de guerra" a efectos regulatorios, incluyendo "cascos, chalecos, vestimentas y placas de blindaje a prueba de bala, cuando estén afectados a un uso específico de protección."',
+          'La agencia reguladora es la ANMaC (Agencia Nacional de Materiales Controlados), que reemplazó al RENAR. La norma técnica vigente es la Resolución ANMaC 83/2023 y su Anexo, que regula fabricación, importación, exportación y certificación de chalecos y protecciones corporales.'
+        ],
+        bloques: [
+          {
+            titulo: 'Requisitos para tenencia (persona física)',
+            parrafos: [
+              '1. Ser Legítimo Usuario de Materiales de Usos Especiales o Legítimo Usuario de Armas de Fuego de uso civil condicional (CLU vigente ante ANMaC).',
+              '2. Presentar Formularios Leyes 23.283 y 23.412.',
+              '3. Copia certificada de factura de compra con marca, modelo, nivel, número de certificación Norma MA.01-A1 y número de serie.',
+              '4. Tiempo estimado del trámite de tenencia: aproximadamente 30 días.',
+              '5. El chaleco solo puede ser recibido por el titular presentando DNI, CLU y credencial de tenencia.'
+            ]
+          },
+          {
+            titulo: 'Egreso del país',
+            parrafos: [
+              'Según Disposición RENAR 883/11, Anexo II: "Podrá egresarse hasta un máximo de UN (1) chaleco antibala por año calendario."',
+              'Requiere Formularios Leyes 23.283 y 23.412. La regulación no prohíbe el egreso — lo regula con cap anual y trámite previo. El mismo límite aplica al ingreso: máximo 1 chaleco por año calendario.'
+            ]
+          },
+          {
+            titulo: 'Alternativa operativa: préstamo RSF',
+            parrafos: [
+              'Reporteros Sin Fronteras (RSF España) presta chalecos antibalas y cascos de forma gratuita a reporteros independientes. Fianza reembolsable: 300€. Devolución: máximo 1 mes desde el retorno. Contacto: rsf-es.org/seguridad-para-periodistas.',
+              'Esta alternativa evita el trámite de egreso ANMaC y es la opción práctica para despliegues urgentes.'
+            ]
+          }
+        ]
+      },
+      {
+        titulo: 'Equipamiento de telecomunicaciones',
+        parrafos: [
+          'El ENACOM (Ente Nacional de Comunicaciones) regula la homologación de equipos de telecomunicaciones en Argentina mediante el registro RAMATEL. Todo equipo que use espectro radioeléctrico y se comercialice en el país debe estar inscripto.',
+          'La homologación es responsabilidad del fabricante o importador, no del usuario final. Si el equipo fue comprado en Argentina a través de un canal oficial, ya cuenta con inscripción RAMATEL vigente.'
+        ],
+        items: [
+          'Starlink Mini · Homologado (Res. 955/2025) · 750.000 abonados en Argentina (dato ENACOM, MWC 2026). Compra local sin trámite adicional.',
+          'Iridium Certus · Verificar modelo · la inscripción RAMATEL depende del importador. Verificar que el modelo específico figure en listado ENACOM antes de comprar.',
+          'GL.iNet (routers de viaje) · Verificar modelo · equipos de viaje comprados en el exterior pueden no estar inscriptos en RAMATEL. Uso personal tolerable; consultar legales si el equipo se usa en operación profesional.'
+        ],
+        bloques: [
+          {
+            titulo: 'Equipos comprados en el exterior',
+            parrafos: [
+              'Si el equipo fue adquirido fuera de Argentina y no tiene homologación local, el régimen ENACOM prevé autorizaciones para uso experimental o temporario (RESOL-2023-1133-APN-ENACOM). Este equipo no puede ser comercializado en el país.',
+              'Recomendación operativa: al viajar con equipo comprado localmente, llevar copia de factura y especificaciones como documentación de respaldo ante aduana. No es requisito legal verificado pero reduce fricciones.'
+            ]
+          }
+        ]
+      },
+      {
+        titulo: 'Otros ítems con posible regulación',
+        texto: 'Los siguientes ítems del kit de despliegue pueden tener regulación aplicable que varía según la pieza y el destino. Consultar con legales caso por caso.',
+        items: [
+          'Drones: ANAC regula bajo Res. 550/2025 con tres categorías. Pilotos extranjeros pueden usar autorización de país de origen (traducida y apostillada). Doble regulación: país de origen + país de destino.',
+          'Kit médico (IFAK): componentes básicos (torniquete, gasa hemostática) sin regulación específica para egreso. Medicamentos controlados (analgésicos, antibióticos restringidos) cruzan aduana como medicamentos bajo régimen ANMAT.',
+          'Sprays defensivos: clasificados como materiales de usos especiales bajo la misma órbita ANMaC que los chalecos. Consultar antes de incluir en kit de viaje.',
+          'Efectivo en divisas: declaración obligatoria ante AFIP/Aduana para montos superiores al tope vigente (verificar al momento del viaje — el tope cambia). Rendición de viáticos en moneda extranjera según régimen AFIP aplicable.'
+        ]
+      }
+    ],
+    fuentes: 'Ley 20.429 (1973). Decreto 395/75. Resolución ANMaC 83/2023. Disposición RENAR 883/11. Resolución ENACOM 955/2025. Resolución ANAC 550/2025. RESOL-2023-1133-APN-ENACOM. RSF España, programa de préstamo de equipamiento. Última verificación de vigencia: 2029-03.'
+  },
+
   fopea_protocolo: {
     area: 'DOCUMENTO EXTERNO · REFERENCIA',
     codigo: 'EXT-FOPEA-2028', version: 'ext.', fecha: '2028',
