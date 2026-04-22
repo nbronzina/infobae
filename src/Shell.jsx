@@ -160,19 +160,18 @@ function ViewSwitch({ activeView, modo, onOpenDoc, onOpenPerfil, docRequest }) {
 }
 
 function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpenPerfil, docRequest }) {
-  // Wordmark mínimo arriba como ancla visual (no chrome, no
-  // separador). Tabs fijos al pie, compactos. Long-press en la
-  // barra de tabs para togglear modo.
   const tabsLongPress = useLongPress(onToggleModo, 700);
   return (
     <div
       style={{
-        minHeight: '100vh', backgroundColor: '#0d0d0d', color: '#e8e4db',
+        height: '100%',
+        backgroundColor: '#0d0d0d', color: '#e8e4db',
         display: 'flex', flexDirection: 'column',
-        fontFamily: "'IBM Plex Sans', system-ui, sans-serif"
+        fontFamily: "'IBM Plex Sans', system-ui, sans-serif",
+        overflow: 'hidden'
       }}
     >
-      <div style={{ padding: '14px 16px 4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div style={{ padding: '14px 16px 4px', display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
         <img src="/infobae-logo.png" alt="infobae" draggable={false}
           style={{ height: '16px', width: 'auto', display: 'block', pointerEvents: 'none' }} />
         <span style={{
@@ -183,13 +182,13 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
           Bitácora
         </span>
       </div>
-      <main style={{ flex: 1, padding: '8px 16px 92px', overflowY: 'auto' }}>
+      <main style={{ flex: 1, padding: '8px 16px 16px', overflowY: 'auto', minHeight: 0 }}>
         <ViewSwitch activeView={activeView} modo="campo" onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} docRequest={docRequest} />
       </main>
       <nav
         {...tabsLongPress.handlers}
         style={{
-          position: 'fixed', left: 0, right: 0, bottom: 0,
+          flexShrink: 0,
           backgroundColor: '#0d0d0d', borderTop: '1px solid #262626',
           display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)',
           paddingBottom: 'env(safe-area-inset-bottom, 0px)',
@@ -226,7 +225,9 @@ function RedaccionShell({ activeView, setActiveView, onToggleModo, onOpenDoc, on
   return (
     <div
       style={{
-        minHeight: '100vh', backgroundColor: '#f8f5ec', color: '#1f1f1f',
+        height: '100%',
+        overflowY: 'auto',
+        backgroundColor: '#f8f5ec', color: '#1f1f1f',
         fontFamily: "'Fraunces', Georgia, serif"
       }}
     >
@@ -300,7 +301,116 @@ export default function Shell({ scenario }) {
 
   const sharedProps = { activeView, setActiveView, onToggleModo: toggle, onOpenDoc: openDoc, onOpenPerfil: openPerfil, docRequest };
 
-  return modo === 'campo'
+  const shell = modo === 'campo'
     ? <CampoShell {...sharedProps} />
     : <RedaccionShell {...sharedProps} />;
+
+  return <DeviceFrame modo={modo}>{shell}</DeviceFrame>;
+}
+
+// Frame de dispositivo para visualización en laptop. En viewports
+// angostos (< 900px, phone/tablet real) se salta el frame y se
+// entrega el shell plano — la app está pensada para correr en
+// campo o en redacción, no en el mockup.
+function DeviceFrame({ modo, children }) {
+  const [isLaptop, setIsLaptop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 900px)').matches);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(min-width: 900px)');
+    const handler = (e) => setIsLaptop(e.matches);
+    if (mq.addEventListener) mq.addEventListener('change', handler);
+    else mq.addListener(handler);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener('change', handler);
+      else mq.removeListener(handler);
+    };
+  }, []);
+
+  if (!isLaptop) {
+    // Sin frame: el shell fill the viewport como en un dispositivo real.
+    return <div style={{ height: '100vh', overflow: 'hidden' }}>{children}</div>;
+  }
+
+  if (modo === 'campo') return <PixelFrame>{children}</PixelFrame>;
+  return <BooxFrame>{children}</BooxFrame>;
+}
+
+function PixelFrame({ children }) {
+  // Pixel 8 aproximado: ~2.17:1. Inner 390 × 844.
+  return (
+    <div style={{
+      minHeight: '100vh', backgroundColor: '#1a1a1a',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: '32px 24px', boxSizing: 'border-box'
+    }}>
+      <div style={{
+        width: '414px', height: '868px',
+        backgroundColor: '#111',
+        borderRadius: '44px',
+        padding: '12px',
+        position: 'relative',
+        boxShadow: '0 40px 80px rgba(0,0,0,0.55), 0 0 0 2px #1a1a1a, 0 0 0 3px rgba(255,255,255,0.04) inset',
+        boxSizing: 'border-box'
+      }}>
+        {/* Notch (pill centrado arriba, dentro del área de pantalla) */}
+        <div style={{
+          position: 'absolute', top: '22px', left: '50%', transform: 'translateX(-50%)',
+          width: '92px', height: '26px',
+          backgroundColor: '#050505', borderRadius: '14px',
+          zIndex: 3, pointerEvents: 'none'
+        }} />
+        {/* Screen interior */}
+        <div style={{
+          width: '100%', height: '100%',
+          borderRadius: '34px',
+          overflow: 'hidden',
+          position: 'relative',
+          backgroundColor: '#0d0d0d'
+        }}>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BooxFrame({ children }) {
+  // Boox Go 10.3 aproximado: relación cerca de 4:3 en landscape o
+  // cerca de 3:4 en portrait. Elegimos portrait 820 × 1060.
+  return (
+    <div style={{
+      minHeight: '100vh', backgroundColor: '#1a1a1a',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: '40px 24px', boxSizing: 'border-box'
+    }}>
+      <div style={{
+        width: '820px', height: '1060px',
+        backgroundColor: '#e8e5dc',
+        borderRadius: '14px',
+        padding: '22px 20px 22px',
+        position: 'relative',
+        boxShadow: '0 20px 50px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.08)',
+        boxSizing: 'border-box'
+      }}>
+        {/* Punto de cámara arriba, centrado, en el bisel */}
+        <div style={{
+          position: 'absolute', top: '8px', left: '50%', transform: 'translateX(-50%)',
+          width: '6px', height: '6px',
+          backgroundColor: '#5a5650', borderRadius: '50%',
+          pointerEvents: 'none'
+        }} />
+        {/* Screen interior — e-ink paper */}
+        <div style={{
+          width: '100%', height: '100%',
+          borderRadius: '2px',
+          overflow: 'hidden',
+          position: 'relative',
+          backgroundColor: '#f8f5ec',
+          boxShadow: '0 0 0 1px rgba(0,0,0,0.06) inset'
+        }}>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
 }
