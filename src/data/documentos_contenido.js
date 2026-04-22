@@ -126,6 +126,20 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  pipeline_verificacion: {
+    area: 'INFOBAE · HERRAMIENTAS',
+    codigo: 'OP-TOOL-2029-001', version: '1.0', fecha: '2029-03-01',
+    responsable: 'd. roca (verificación)',
+    titulo: 'Pipeline de verificación',
+    subtitulo: 'Flujo de trabajo para material entrante de zona activa',
+    secciones: [
+      { titulo: 'Flujo estándar', texto: 'Material entrante → registro en cola (timestamp, fixer, tipo, tamaño) → verificación de origen (¿quién envió, desde dónde?) → verificación de contenido (geolocalización, análisis visual, detector de síntesis) → evaluación de riesgo (impacto sobre fuentes) → decisión editorial (publicar / condiciones / reserva / no publicar) → registro en OP-SEC-LOG con cadena completa.' },
+      { titulo: 'Herramientas integradas', texto: 'Detector de síntesis (Reality Defender API, activo desde 05.2029). Verificador C2PA (IPTC Origin Verifier). Analista de guardia (módulo de consulta operacional, sección 07 de OP-SEC-2029-004). Imágenes satelitales: Sentinel Hub, Planet Labs (sujeto a disponibilidad regional). Geolocalización: Google Earth Pro, QGIS.' },
+      { titulo: 'Tiempos', texto: 'Material urgente (breaking): verificación mínima en < 30 minutos. Material estándar: verificación completa en < 4 horas. Material de investigación: sin límite temporal, verificación exhaustiva. El nivel de verificación se define al ingreso y se registra en el log.' }
+    ],
+    fuentes: 'Documento interno. Referencia: Bellingcat Online Investigation Toolkit, BBC Verify workflow, First Draft Verification Handbook.'
+  },
+
   inteligencia_investigacion: {
     area: 'INFOBAE · INVESTIGACIÓN',
     codigo: 'OP-INV-2029-007', version: '1.0', fecha: '2029-03-10',
