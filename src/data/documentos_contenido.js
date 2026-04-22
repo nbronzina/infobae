@@ -126,6 +126,21 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  osint_investigacion: {
+    area: 'INFOBAE · INVESTIGACIÓN',
+    codigo: 'OP-INV-2029-002', version: '1.0', fecha: '2029-02-01',
+    responsable: 'd. roca (verificación) + j. fiorella',
+    titulo: 'Metodología OSINT para investigaciones',
+    subtitulo: 'Fuentes abiertas, herramientas, límites éticos y documentación del proceso',
+    secciones: [
+      { titulo: 'Principio general', texto: 'OSINT (Open Source Intelligence) usa información públicamente accesible: registros oficiales, redes sociales, imágenes satelitales, bases de datos abiertas, registros corporativos y judiciales. No es hacking. No implica acceso no autorizado a sistemas. Si requiere una contraseña, no es OSINT.' },
+      { titulo: 'Herramientas estándar', texto: 'Geolocalización: Google Earth Pro, Sentinel Hub, Mapillary. Verificación de imagen/video: TinEye, búsqueda inversa Google/Yandex, InVID/WeVerify. Registros corporativos: boletines oficiales, AFIP (Argentina), Registro Público de Comercio, OpenCorporates. Redes sociales: CrowdTangle (Meta), Wayback Machine, captura con Hunchly o ArchiveBox. Vuelos: FlightRadar24, ADS-B Exchange. Embarcaciones: MarineTraffic, VesselFinder.' },
+      { titulo: 'Documentación del proceso', texto: 'Toda investigación OSINT se documenta paso a paso: qué se buscó, cuándo, en qué plataforma, qué se encontró, y capturas de pantalla con timestamp. Esta documentación se archiva en OP-SEC-LOG y sirve como evidencia del proceso en caso de cuestionamiento legal o editorial.' },
+      { titulo: 'Límites éticos', texto: 'No se crean perfiles falsos para obtener información de fuentes sin su conocimiento (catfishing). No se accede a información que la fuente retiró del dominio público. No se publican datos personales de civiles no involucrados. Doxing está prohibido. Ante duda sobre el límite ético de una técnica, consultar con editor en jefe.' }
+    ],
+    fuentes: 'Bellingcat, Online Investigation Toolkit (2024). First Draft, Verification Handbook. Berkeley Protocol on Digital Open Source Investigations (ONU/ACNUDH, 2022). Henk van Ess, OSINT training methodology.'
+  },
+
   docs_filtrados: {
     area: 'INFOBAE · INVESTIGACIÓN',
     codigo: 'OP-INV-2028-001', version: '2.0', fecha: '2028-07-15',
