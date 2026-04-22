@@ -179,3 +179,24 @@ en la redacción, tiene tiempo, cruza datos.
 
 **Tono visual:** Spotlight. Papeles sobre un escritorio. Parece un
 libro de trabajo, no una app.
+
+## Transiciones entre modos
+
+- El modo se puede cambiar manualmente (toggle en settings o
+  long-press en wordmark).
+- Al cambiar de modo, la pantalla se re-renderiza. No se pierde
+  estado.
+- La sync entre dispositivos transfiere: estado de misión (flags,
+  objetivo actual), entradas de diario, registros de fuentes,
+  estado mental. **No** transfiere preferencias de UI.
+- Cada dispositivo recuerda su modo preferido.
+
+## Orden de implementación
+
+Empezá por el modo campo. Es la interfaz más restrictiva — si
+funciona en un Pixel de noche en Arauca, funciona en todos lados.
+El modo redacción se construye después como extensión.
+
+No toques el contenido de las misiones (MISSIONS.md), los JSON de
+datos, ni la lógica de las herramientas. Solo la capa de
+presentación.
