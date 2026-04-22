@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import HerramientasView from './herramientas/index.jsx';
 
 const TABS = [
   { id: 'mision', label: 'MISIÓN' },
@@ -143,6 +144,13 @@ function Placeholder({ tabId, modo }) {
   );
 }
 
+function ViewSwitch({ activeView, modo, onOpenDoc, onOpenPerfil }) {
+  if (activeView === 'herramientas') {
+    return <HerramientasView modo={modo} onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} />;
+  }
+  return <Placeholder tabId={activeView} modo={modo} />;
+}
+
 function CampoShell({ activeView, setActiveView, onToggleModo }) {
   return (
     <div
@@ -156,7 +164,7 @@ function CampoShell({ activeView, setActiveView, onToggleModo }) {
         <Wordmark onLongPress={onToggleModo} darkBg />
       </header>
       <main style={{ flex: 1, padding: '14px 20px 92px', overflowY: 'auto' }}>
-        <Placeholder tabId={activeView} modo="campo" />
+        <ViewSwitch activeView={activeView} modo="campo" onOpenDoc={() => {}} onOpenPerfil={() => {}} />
       </main>
       <nav
         style={{
@@ -233,7 +241,7 @@ function RedaccionShell({ activeView, setActiveView, onToggleModo }) {
         </nav>
       </header>
       <main style={{ maxWidth: '680px', margin: '0 auto', padding: '32px 32px 72px' }}>
-        <Placeholder tabId={activeView} modo="redaccion" />
+        <ViewSwitch activeView={activeView} modo="redaccion" onOpenDoc={() => {}} onOpenPerfil={() => {}} />
       </main>
     </div>
   );
