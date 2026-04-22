@@ -7,6 +7,7 @@ import agendaData from './data/agenda.json';
 import directorioData from './data/directorio.json';
 import gabineteData from './data/gabinete.json';
 import teatrosData from './data/teatros.json';
+import checklistData from './data/checklist_predespliegue.json';
 import escenariosData from './data/escenarios.json';
 
 import intAlertas from './data/escenarios/internacional/alertas.json';
@@ -198,6 +199,11 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
   });
   const [panoramaTab, setPanoramaTab] = useState('mapa');
   const [teatroSeleccionado, setTeatroSeleccionado] = useState(null);
+  const [checklistTicks, setChecklistTicks] = useState(() => {
+    if (typeof localStorage === 'undefined') return {};
+    try { return JSON.parse(localStorage.getItem('infobae:checklist') || '{}'); } catch { return {}; }
+  });
+  const [parteAptitudEmitido, setParteAptitudEmitido] = useState(false);
   const escenarioActivo = escenariosData.find(s => s.slug === scenario) || escenariosData[0];
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -540,6 +546,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     ]},
     folder_herramientas: { folder: true, titulo: 'Herramientas', subtitulo: 'Sistemas operativos, flujos de verificación y bitácoras', docs: [
       { key: 'evaluacion_teatros', codigo: 'OP-TOOL-2029-006', titulo: 'Evaluación por teatro', version: '1.0', estado: 'vigente' },
+      { key: 'checklist_predespliegue', codigo: 'OP-TOOL-2029-007', titulo: 'Checklist pre-despliegue', version: '1.0', estado: 'vigente' },
       { key: 'pipeline_verificacion', codigo: 'OP-TOOL-2029-001', titulo: 'Pipeline de verificación', version: '1.0', estado: 'vigente' },
       { key: 'opsec_log', codigo: 'OP-TOOL-2029-002', titulo: 'OP-SEC-LOG: bitácora auditable', version: '1.0', estado: 'vigente' },
       { key: 'analista_auto', codigo: 'OP-TOOL-2029-003', titulo: 'Analista de guardia', version: '1.0', estado: 'vigente' },
@@ -557,6 +564,12 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       titulo: 'Evaluación por teatro',
       subtitulo: 'Parte de evaluación preliminar · amenazas, protocolos y equipamiento por destino',
       meta: { codigo: 'OP-TOOL-2029-006', version: '1.0', fecha: '2029-03-20', responsable: 'j. fiorella + m. villafañe + l. pollastri' }
+    },
+    checklist_predespliegue: {
+      checklist: true,
+      titulo: 'Checklist pre-despliegue',
+      subtitulo: 'Parte de aptitud operativa · items tickeables firmados al completar',
+      meta: { codigo: 'OP-TOOL-2029-007', version: '1.0', fecha: '2029-03-22', responsable: 'm. villafañe + j. fiorella + l. pollastri' }
     }
   };
 
@@ -612,6 +625,19 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
   useEffect(() => {
     try { localStorage.setItem('infobae:recent', JSON.stringify(recent)); } catch {}
   }, [recent]);
+
+  useEffect(() => {
+    try { localStorage.setItem('infobae:checklist', JSON.stringify(checklistTicks)); } catch {}
+  }, [checklistTicks]);
+
+  function toggleChecklistItem(id) {
+    setChecklistTicks(prev => ({ ...prev, [id]: !prev[id] }));
+  }
+
+  function resetChecklist() {
+    setChecklistTicks({});
+    setParteAptitudEmitido(false);
+  }
 
 
   useEffect(() => {
@@ -716,7 +742,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     'legales': ['anmac_enacom', 'exportacion_equip', 'seguros_riesgo', 'folder_legales'],
     'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'onboarding', 'folder_rrhh'],
     'investigacion': ['docs_filtrados', 'osint_investigacion', 'redes_internacionales', 'contravigilancia', 'narco_cobertura', 'inteligencia_investigacion', 'folder_investigacion'],
-    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'evaluacion_teatros', 'folder_herramientas']
+    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'evaluacion_teatros', 'checklist_predespliegue', 'folder_herramientas']
   };
   const isFolderActive = (key) => {
     if (key === 'seg-digital' && !activeView && !showLanding) return true;
@@ -729,7 +755,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
     jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'], onboarding: ['RRHH', 'folder_rrhh'],
     docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'], narco_cobertura: ['Investigación', 'folder_investigacion'], inteligencia_investigacion: ['Investigación', 'folder_investigacion'],
-    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'], evaluacion_teatros: ['Herramientas', 'folder_herramientas'],
+    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'], evaluacion_teatros: ['Herramientas', 'folder_herramientas'], checklist_predespliegue: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
   const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'panorama'];
@@ -1156,6 +1182,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
                 <div role="button" tabIndex={0} onClick={() => setActiveView('evaluacion_teatros')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'evaluacion_teatros' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'evaluacion_teatros' ? 500 : 400, backgroundColor: activeView === 'evaluacion_teatros' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'evaluacion_teatros' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Evaluación por teatro
+                </div>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('checklist_predespliegue')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'checklist_predespliegue' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'checklist_predespliegue' ? 500 : 400, backgroundColor: activeView === 'checklist_predespliegue' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'checklist_predespliegue' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Checklist pre-despliegue
                 </div>
               </div>
             )}
@@ -1965,6 +1994,109 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
 
               {/* ANMaC / ENACOM — documento completo */}
               {/* Registro de correcciones */}
+              {/* Checklist pre-despliegue */}
+              {activeView === 'checklist_predespliegue' && (() => {
+                const items = checklistData;
+                const porArea = items.reduce((acc, it) => { (acc[it.area] = acc[it.area] || []).push(it); return acc; }, {});
+                const obligatorios = items.filter(i => i.obligatorio);
+                const opcionales = items.filter(i => !i.obligatorio);
+                const obligatoriosHechos = obligatorios.filter(i => checklistTicks[i.id]).length;
+                const totalHechos = items.filter(i => checklistTicks[i.id]).length;
+                const opcionalesHechos = opcionales.filter(i => checklistTicks[i.id]).length;
+                const listo = obligatoriosHechos === obligatorios.length;
+                return (
+                  <div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · HERRAMIENTAS · OP-TOOL-2029-007</div>
+                    <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Checklist pre-despliegue</h1>
+                    <div className="serif" style={{ fontSize: '14.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '20px' }}>Parte de aptitud operativa para salida internacional. El parte se emite con firma conjunta cuando todos los obligatorios están marcados. Items opcionales quedan registrados con nota.</div>
+
+                    <div style={{ padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid ' + (listo ? '#5a6e3c' : '#8a6d2b'), marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+                      <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f' }}>
+                        {totalHechos} de {items.length} items marcados · <span style={{ color: listo ? '#5a6e3c' : '#8a6d2b', fontWeight: 500 }}>{listo ? 'obligatorios completos' : `${obligatorios.length - obligatoriosHechos} obligatorios pendientes`}</span>
+                        {opcionales.length > 0 && <span style={{ color: '#5a544c' }}> · {opcionalesHechos}/{opcionales.length} opcionales</span>}
+                      </div>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <div role="button" tabIndex={0} onClick={resetChecklist} className="mono" style={{ cursor: 'pointer', padding: '6px 12px', fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase', border: '1px solid #d9d4c2', backgroundColor: 'transparent', color: '#5a544c' }}>
+                          Reset
+                        </div>
+                        <div role="button" tabIndex={listo ? 0 : -1} onClick={() => listo && setParteAptitudEmitido(true)} className="mono" style={{ cursor: listo ? 'pointer' : 'not-allowed', padding: '6px 12px', fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase', border: '1px solid ' + (listo ? '#1f1f1f' : '#d9d4c2'), backgroundColor: listo ? '#1f1f1f' : '#eceae4', color: listo ? '#f0ede4' : '#8a8472', opacity: listo ? 1 : 0.6 }}>
+                          Emitir parte de aptitud
+                        </div>
+                      </div>
+                    </div>
+
+                    {Object.entries(porArea).map(([area, arr]) => (
+                      <section key={area} style={{ marginBottom: '20px' }}>
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>{area} ({arr.filter(i => checklistTicks[i.id]).length}/{arr.length})</div>
+                        <div style={{ border: '1px solid #d9d4c2' }}>
+                          {arr.map((it, idx) => {
+                            const done = !!checklistTicks[it.id];
+                            return (
+                              <div key={it.id} style={{ padding: '14px 16px', borderBottom: idx < arr.length - 1 ? '1px solid #d9d4c2' : 'none', backgroundColor: done ? '#e8f0de' : '#f8f5ec', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+                                <div role="button" tabIndex={0} onClick={() => toggleChecklistItem(it.id)} style={{ cursor: 'pointer', flexShrink: 0, width: '20px', height: '20px', border: '1.5px solid ' + (done ? '#5a6e3c' : '#5a544c'), backgroundColor: done ? '#5a6e3c' : 'transparent', color: '#f0ede4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: 600, marginTop: '1px' }}>
+                                  {done ? '✓' : ''}
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px', gap: '12px', flexWrap: 'wrap' }}>
+                                    <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline' }}>
+                                      <span className="mono" style={{ fontSize: '10px', color: '#5a544c' }}>{it.id.toUpperCase()}</span>
+                                      <span className="serif" style={{ fontSize: '14px', fontWeight: 500 }}>{it.titulo}</span>
+                                      {!it.obligatorio && <span className="mono" style={{ fontSize: '9.5px', color: '#5a544c', padding: '1px 6px', backgroundColor: '#eceae4', letterSpacing: '0.04em', textTransform: 'uppercase' }}>opcional</span>}
+                                    </div>
+                                    <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{it.responsable}</span>
+                                  </div>
+                                  <div className="serif" style={{ fontSize: '12.5px', color: '#3d3931', lineHeight: 1.55, marginBottom: '6px' }}>{it.detalle}</div>
+                                  {it.doc_ref && (
+                                    <div role="button" tabIndex={0} onClick={(e) => { e.stopPropagation(); if (it.doc_ref.key === 'main') { setActiveView(null); setShowLanding(false); scrollToTop(); } else { setActiveView(it.doc_ref.key); } }} className="mono doc-link" style={{ fontSize: '10.5px', color: '#5a544c', cursor: 'pointer', display: 'inline-block' }}>
+                                      ver {it.doc_ref.codigo} →
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </section>
+                    ))}
+
+                    {parteAptitudEmitido && listo && (
+                      <div style={{ marginTop: '32px', padding: '28px 32px', backgroundColor: '#f8f5ec', border: '2px solid #1f1f1f' }}>
+                        <div className="mono micro" style={{ color: '#5a6e3c', marginBottom: '8px' }}>Parte de aptitud · emitido</div>
+                        <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Apto para despliegue internacional</h2>
+
+                        <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.7, marginBottom: '18px' }}>
+                          Fecha emisión: 2029-04-17 14:30 ART<br/>
+                          Corresponsal: mondini.l<br/>
+                          Checklist completado: {obligatoriosHechos}/{obligatorios.length} obligatorios {opcionalesHechos > 0 && `· ${opcionalesHechos}/${opcionales.length} opcionales`}<br/>
+                          Código parte: OP-TOOL-2029-007 · instancia 2029-04-17-01
+                        </div>
+
+                        <div style={{ padding: '14px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a6e3c', marginBottom: '18px' }}>
+                          <div className="serif" style={{ fontSize: '13px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                            El corresponsal cumple con los requisitos de seguridad digital, legales, operacionales y de recursos humanos para despliegue internacional en zona activa. El parte se archiva en OP-SEC-LOG y vence a los 14 días desde la emisión o al ingresar a territorio de despliegue, lo primero que ocurra.
+                          </div>
+                        </div>
+
+                        <div className="mono" style={{ fontSize: '11px', color: '#5a544c', lineHeight: 1.7 }}>
+                          Firmas:<br/>
+                          m. villafañe — operaciones<br/>
+                          j. fiorella — seguridad digital<br/>
+                          l. pollastri — legales
+                        </div>
+                      </div>
+                    )}
+
+                    {parteAptitudEmitido && !listo && (
+                      <div style={{ marginTop: '20px', padding: '12px 16px', backgroundColor: '#f5d5d5', borderLeft: '2px solid #bd2828' }}>
+                        <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f' }}>
+                          Parte de aptitud cancelado — hay items obligatorios pendientes. Completar y volver a emitir.
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
               {/* Evaluación por teatro */}
               {activeView === 'evaluacion_teatros' && (() => {
                 const teatro = teatrosData.find(t => t.codigo === teatroSeleccionado);

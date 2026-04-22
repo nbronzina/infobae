@@ -1,0 +1,92 @@
+[
+  {
+    "id": "cl-01",
+    "area": "Seguridad digital",
+    "responsable": "j. fiorella",
+    "obligatorio": true,
+    "titulo": "Firmware del router de viaje",
+    "detalle": "Release 2024 o posterior con randomización BSSID vigente. SSID sufijo _nomap para evitar harvesting WPS.",
+    "doc_ref": { "codigo": "OP-SEC-2029-004", "key": "main" }
+  },
+  {
+    "id": "cl-02",
+    "area": "Legales",
+    "responsable": "l. pollastri",
+    "obligatorio": true,
+    "titulo": "Terminal satelital homologado",
+    "detalle": "Starlink Mini: verificar inclusión en RAMATEL-ENACOM (Res. 955/2025). Llevar factura y especificaciones como respaldo aduanero. Si se adquirió en el exterior sin homologación local, consultar a legales antes de reingreso.",
+    "doc_ref": { "codigo": "OP-LEG-2028-007", "key": "anmac_enacom" }
+  },
+  {
+    "id": "cl-03",
+    "area": "Legales",
+    "responsable": "l. pollastri",
+    "obligatorio": true,
+    "titulo": "Egreso de equipamiento balístico",
+    "detalle": "Chaleco NIJ IIIA y casco balístico: material de usos especiales (Ley 20.429, Decreto 395/75). CLU ANMaC vigente. Egreso limitado a 1 chaleco por año calendario. Alternativa: préstamo gratuito RSF en destino (fianza 300€).",
+    "doc_ref": { "codigo": "OP-LEG-2029-002", "key": "exportacion_equip" }
+  },
+  {
+    "id": "cl-04",
+    "area": "Legales",
+    "responsable": "l. pollastri",
+    "obligatorio": true,
+    "titulo": "Seguro de alto riesgo confirmado",
+    "detalle": "ART doméstica no cubre zona activa. Póliza específica para despliegue internacional debe estar activa antes del egreso. Confirmar cobertura extendida al fixer designado durante el período del despliegue.",
+    "doc_ref": { "codigo": "OP-LEG-2028-014", "key": "seguros_riesgo" }
+  },
+  {
+    "id": "cl-05",
+    "area": "Operaciones",
+    "responsable": "m. villafañe",
+    "obligatorio": true,
+    "titulo": "Parte de despliegue registrado",
+    "detalle": "Itinerario tentativo en sistema de despliegues. Puntos de contacto, fixer designado, protocolo de check-in cada 6 horas, plan de extracción.",
+    "doc_ref": { "codigo": "OP-TOOL-2029-004", "key": "parte_despliegue" }
+  },
+  {
+    "id": "cl-06",
+    "area": "Seguridad digital",
+    "responsable": "j. fiorella",
+    "obligatorio": true,
+    "titulo": "Dispositivo secundario preparado",
+    "detalle": "Pixel con GrapheneOS sin cuenta, solo Signal y Briar. Storage cifrado. Dispositivo principal permanece en Buenos Aires bajo custodia de seg. digital.",
+    "doc_ref": { "codigo": "OP-SEC-2028-011", "key": "comunicacion_cifrada" }
+  },
+  {
+    "id": "cl-07",
+    "area": "Seguridad digital",
+    "responsable": "j. fiorella",
+    "obligatorio": true,
+    "titulo": "Limpieza de metadatos públicos",
+    "detalle": "Revisar perfiles públicos (X, Instagram, LinkedIn) por información que facilite identificación en destino. Limitar archivo fotográfico accesible. Especial foco en fotos con fixer o fuentes.",
+    "doc_ref": { "codigo": "OP-SEC-2028-009", "key": "vigilancia_destino" }
+  },
+  {
+    "id": "cl-08",
+    "area": "Operaciones",
+    "responsable": "m. villafañe",
+    "obligatorio": true,
+    "titulo": "Primera ventana de transmisión",
+    "detalle": "Coordinar con redacción ventana operativa post-arribo (2-5 min Starlink). Definir fallback comms (Signal vía VPN de fixer, Iridium SBD, etc.).",
+    "doc_ref": { "codigo": "OP-SEC-2029-004", "key": "main" }
+  },
+  {
+    "id": "cl-09",
+    "area": "RRHH",
+    "responsable": "rrhh + operaciones",
+    "obligatorio": true,
+    "titulo": "Contactos de emergencia verificados",
+    "detalle": "Tres contactos actualizados por región (FLIP Colombia, SNTP Venezuela, etc.). Persona designada en familia/círculo cercano con briefing de protocolo. Cobertura JTSN agendada para retorno.",
+    "doc_ref": { "codigo": "OP-HR-2029-001", "key": "contactos_emergencia" }
+  },
+  {
+    "id": "cl-10",
+    "area": "Formación",
+    "responsable": "s. peralta",
+    "obligatorio": false,
+    "titulo": "HEFAT vigente",
+    "detalle": "Certificado HEFAT vigente (máximo 3 años desde última edición). Si vencido y el despliegue no es urgente: inscribir en próxima edición RISC Training antes de salir. No obligatorio en despliegue urgente con autorización de editor de turno.",
+    "doc_ref": { "codigo": "OP-HR-2028-003", "key": "politica_despliegue" }
+  }
+]
