@@ -705,3 +705,32 @@ Pollastri + Fiorella):
 - **Sesión JTSN:** estado mental. Todos los hombres del
   presidente: Woodward y Bernstein no durmieron durante meses.
   Mondini tampoco.
+
+## Mecánicas transversales a las tres líneas
+
+**Estado mental acumulativo.** Si jugás las tres líneas, el estado
+mental de Mondini arrastra. Si terminaste Internacional "agotada" y
+no hiciste JTSN, entrás a Rosario con opciones reducidas. A Private
+War: el costo se acumula.
+
+**Documentos como llaves.** Si leíste el manual RF, tenés opciones
+en Internacional que otros no tienen. Si leíste contra-vigilancia,
+tenés opciones en Rosario que otros no tienen. Si leíste documentos
+filtrados, tenés opciones en Inteligencia que otros no tienen. Los
+documentos no son lectura — son acceso.
+
+**El diario de campo es la memoria.** Lo que registraste es lo que
+Bitácora sabe. Si no registraste el auto sospechoso, el sistema no
+puede cruzar el patrón. Si no registraste la fuente, no tenés canal
+de respaldo. Tu diligencia como jugador es la diligencia de Mondini
+como corresponsal.
+
+**La sync como decisión.** En cada línea hay al menos un momento
+donde conectar es una decisión con consecuencias. Conectar = emitir.
+En Internacional es el Starlink. En Rosario es el teléfono. En
+Inteligencia es la red de la redacción. La misma mecánica, tres
+manifestaciones.
+
+**Debriefing sin juicio.** El parte de cierre nunca dice "bien" o
+"mal". Dice lo que hiciste, lo que pasó, y lo que quedó. El jugador
+juzga solo. Como en Papers Please: el mundo recuerda quién sos.
