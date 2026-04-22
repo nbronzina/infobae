@@ -126,6 +126,20 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  exportacion_equip: {
+    area: 'INFOBAE · LEGALES',
+    codigo: 'OP-LEG-2029-002', version: '1.1', fecha: '2029-01-20',
+    responsable: 'l. pollastri',
+    titulo: 'Régimen de exportación de equipamiento de protección',
+    subtitulo: 'Procedimiento para egreso de material controlado del territorio argentino',
+    secciones: [
+      { titulo: 'Alcance', texto: 'Este documento complementa OP-LEG-2028-007 con detalle procedimental para el egreso de materiales de usos especiales clasificados bajo Ley 20.429. Aplica a chalecos antibalas, cascos balísticos y placas de blindaje. No aplica a equipos de telecomunicaciones (ver sección ENACOM de OP-LEG-2028-007).' },
+      { titulo: 'Procedimiento de egreso', texto: 'Según Disposición RENAR 883/11, Anexo II: máximo 1 chaleco por año calendario. Requiere Formularios Leyes 23.283 y 23.412, credencial de tenencia vigente, y declaración de destino. El trámite se realiza ante ANMaC. No se encontró plazo publicado para resolución del trámite de egreso. Recomendación: iniciar con al menos 45 días de anticipación.' },
+      { titulo: 'Alternativa operativa', texto: 'Para despliegues urgentes donde el trámite de egreso no es viable: préstamo de chaleco y casco vía RSF España (rsf-es.org/seguridad-para-periodistas). Fianza reembolsable: 300€. Devolución: máximo 1 mes. Esta alternativa es la vía utilizada en los despliegues recientes de Infobae con ventana menor a 30 días.' }
+    ],
+    fuentes: 'Ley 20.429 (1973). Decreto 395/75. Disposición RENAR 883/11. RSF España, programa de préstamo de equipamiento.'
+  },
+
   // Manual operativo principal. Key 'main' preservada para no romper
   // cross-refs en checklist_predespliegue.json, teatros.json,
   // escenarios.json y DiarioCampo.jsx (DOC_POR_AMENAZA). Las 8
