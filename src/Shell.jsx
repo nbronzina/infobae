@@ -308,61 +308,48 @@ export default function Shell({ scenario }) {
   return <DeviceFrame modo={modo}>{shell}</DeviceFrame>;
 }
 
-// Frame de dispositivo para visualización en laptop. En viewports
-// angostos (< 900px, phone/tablet real) se salta el frame y se
-// entrega el shell plano — la app está pensada para correr en
-// campo o en redacción, no en el mockup.
+// Frame de dispositivo. Siempre visible: el contenido vive adentro
+// del dispositivo en todos los contextos de visualización. En
+// viewports chicos el frame se adapta por aspect-ratio.
 function DeviceFrame({ modo, children }) {
-  const [isLaptop, setIsLaptop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 900px)').matches);
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const mq = window.matchMedia('(min-width: 900px)');
-    const handler = (e) => setIsLaptop(e.matches);
-    if (mq.addEventListener) mq.addEventListener('change', handler);
-    else mq.addListener(handler);
-    return () => {
-      if (mq.removeEventListener) mq.removeEventListener('change', handler);
-      else mq.removeListener(handler);
-    };
-  }, []);
-
-  if (!isLaptop) {
-    // Sin frame: el shell fill the viewport como en un dispositivo real.
-    return <div style={{ height: '100vh', overflow: 'hidden' }}>{children}</div>;
-  }
-
   if (modo === 'campo') return <PixelFrame>{children}</PixelFrame>;
   return <BooxFrame>{children}</BooxFrame>;
 }
 
 function PixelFrame({ children }) {
-  // Pixel 8 aproximado: ~2.17:1. Inner 390 × 844.
+  // Proporción Pixel aprox. 414 × 870. El contenedor mantiene
+  // aspect-ratio y se escala al viewport disponible (ancho limitado
+  // a 414, alto limitado a calc(100vh - 48px), el que sea más
+  // restrictivo manda).
   return (
     <div style={{
       minHeight: '100vh', backgroundColor: '#1a1a1a',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: '32px 24px', boxSizing: 'border-box'
+      padding: '24px 16px', boxSizing: 'border-box'
     }}>
       <div style={{
-        width: '414px', height: '868px',
+        width: 'min(414px, calc(100vw - 32px))',
+        maxHeight: 'calc(100vh - 48px)',
+        aspectRatio: '414 / 870',
         backgroundColor: '#111',
-        borderRadius: '44px',
-        padding: '12px',
+        borderRadius: '28px',
+        padding: '14px 12px 20px',
         position: 'relative',
-        boxShadow: '0 40px 80px rgba(0,0,0,0.55), 0 0 0 2px #1a1a1a, 0 0 0 3px rgba(255,255,255,0.04) inset',
-        boxSizing: 'border-box'
+        boxShadow: '0 30px 60px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.04) inset',
+        boxSizing: 'border-box',
+        display: 'flex', flexDirection: 'column'
       }}>
-        {/* Notch (pill centrado arriba, dentro del área de pantalla) */}
+        {/* Notch (pill centrado arriba, sobre el bisel) */}
         <div style={{
-          position: 'absolute', top: '22px', left: '50%', transform: 'translateX(-50%)',
-          width: '92px', height: '26px',
-          backgroundColor: '#050505', borderRadius: '14px',
+          position: 'absolute', top: '6px', left: '50%', transform: 'translateX(-50%)',
+          width: '104px', height: '22px',
+          backgroundColor: '#050505', borderRadius: '12px',
           zIndex: 3, pointerEvents: 'none'
         }} />
         {/* Screen interior */}
         <div style={{
-          width: '100%', height: '100%',
-          borderRadius: '34px',
+          flex: 1,
+          borderRadius: '18px',
           overflow: 'hidden',
           position: 'relative',
           backgroundColor: '#0d0d0d'
@@ -375,22 +362,25 @@ function PixelFrame({ children }) {
 }
 
 function BooxFrame({ children }) {
-  // Boox Go 10.3 aproximado: relación cerca de 4:3 en landscape o
-  // cerca de 3:4 en portrait. Elegimos portrait 820 × 1060.
+  // Proporción Boox portrait aprox. 820 × 1060. Mismo principio de
+  // aspect-ratio + cap vertical.
   return (
     <div style={{
       minHeight: '100vh', backgroundColor: '#1a1a1a',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: '40px 24px', boxSizing: 'border-box'
+      padding: '24px 16px', boxSizing: 'border-box'
     }}>
       <div style={{
-        width: '820px', height: '1060px',
+        width: 'min(820px, calc(100vw - 32px))',
+        maxHeight: 'calc(100vh - 48px)',
+        aspectRatio: '820 / 1060',
         backgroundColor: '#e8e5dc',
         borderRadius: '14px',
         padding: '22px 20px 22px',
         position: 'relative',
         boxShadow: '0 20px 50px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.08)',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        display: 'flex', flexDirection: 'column'
       }}>
         {/* Punto de cámara arriba, centrado, en el bisel */}
         <div style={{
@@ -401,7 +391,7 @@ function BooxFrame({ children }) {
         }} />
         {/* Screen interior — e-ink paper */}
         <div style={{
-          width: '100%', height: '100%',
+          flex: 1,
           borderRadius: '2px',
           overflow: 'hidden',
           position: 'relative',
