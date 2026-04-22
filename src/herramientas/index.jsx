@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Checklist from './Checklist.jsx';
+import DiarioCampo from './DiarioCampo.jsx';
 import { themeFor, sizesFor, SERIF, MONO } from '../theme';
 
 const HERRAMIENTAS = [
-  { id: 'checklist', codigo: 'OP-TOOL-2029-007', label: 'Checklist pre-despliegue', desc: 'Parte de aptitud operativa con firma conjunta al completar.', Component: Checklist }
+  { id: 'checklist', codigo: 'OP-TOOL-2029-007', label: 'Checklist pre-despliegue', desc: 'Parte de aptitud operativa con firma conjunta al completar.', Component: Checklist },
+  { id: 'diario_campo', codigo: 'OP-TOOL-2029-010', label: 'Diario de campo', desc: 'Bitácora personal con cruce automático contra el glosario T-*.', Component: DiarioCampo }
 ];
 
 export default function HerramientasView({ modo, onOpenDoc, onOpenPerfil }) {
