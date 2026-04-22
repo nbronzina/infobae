@@ -11,14 +11,21 @@ export default function DocumentoView({ docKey, modo, onBack }) {
 
   return (
     <div>
-      <button type="button" onClick={onBack} style={{
-        background: 'none', border: '1px solid ' + t.border, cursor: 'pointer',
-        padding: isCampo ? '10px 14px' : '6px 12px',
-        fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase',
-        color: t.textSecondary, marginBottom: '20px', minHeight: s.touchMin
-      }}>
-        ← Volver al índice
-      </button>
+      {isCampo ? (
+        <button type="button" onClick={onBack} style={{
+          background: 'none', border: '1px solid ' + t.border, cursor: 'pointer',
+          padding: '10px 14px',
+          fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase',
+          color: t.textSecondary, marginBottom: '20px', minHeight: s.touchMin
+        }}>← Volver al índice</button>
+      ) : (
+        <button type="button" onClick={onBack} style={{
+          background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+          fontFamily: SERIF, fontSize: '13px', fontStyle: 'italic',
+          color: t.textSecondary, marginBottom: '32px',
+          borderBottom: '1px dotted ' + t.border, paddingBottom: '2px'
+        }}>← volver al índice</button>
+      )}
 
       {!doc && (
         <div style={{ padding: '24px', backgroundColor: t.bgAccent, borderLeft: '2px solid ' + t.revision }}>
@@ -32,11 +39,7 @@ export default function DocumentoView({ docKey, modo, onBack }) {
       )}
 
       {doc && (
-        <article style={{
-          backgroundColor: t.bgCard,
-          border: isCampo ? 'none' : '1px solid ' + t.border,
-          padding: isCampo ? 0 : '40px 48px'
-        }}>
+        <article style={{ background: 'transparent', border: 'none', padding: 0 }}>
           <DocHeader doc={doc} modo={modo} />
           <DocSecciones secciones={doc.secciones} modo={modo} />
           {doc.fuentes && <DocFuentes fuentes={doc.fuentes} modo={modo} />}
@@ -48,27 +51,54 @@ export default function DocumentoView({ docKey, modo, onBack }) {
 
 function DocHeader({ doc, modo }) {
   const t = themeFor(modo);
-  const s = sizesFor(modo);
   const isCampo = modo === 'campo';
+  if (!isCampo) {
+    // Redacción: portada editorial. Área + código en italic
+    // serif arriba (no mono uppercase). Título grande tipo
+    // capítulo. Subtítulo italic. Meta de edición serif al pie.
+    return (
+      <header style={{ marginBottom: '40px' }}>
+        <div style={{ fontFamily: SERIF, fontSize: '12.5px', fontStyle: 'italic', color: t.textMeta, marginBottom: '14px' }}>
+          {doc.area.toLowerCase()} · {doc.codigo}
+        </div>
+        <h1 style={{
+          fontFamily: SERIF, fontSize: '36px', fontWeight: 500,
+          margin: '0 0 14px', letterSpacing: '-0.02em', lineHeight: 1.1, color: t.text
+        }}>
+          {doc.titulo}
+        </h1>
+        <div style={{
+          fontFamily: SERIF, fontSize: '17px',
+          color: t.textSecondary, fontStyle: 'italic', lineHeight: 1.45,
+          marginBottom: '24px', maxWidth: '34em'
+        }}>
+          {doc.subtitulo}
+        </div>
+        <div style={{ borderTop: '1px solid ' + t.border, paddingTop: '14px' }}>
+          <div style={{ fontFamily: SERIF, fontSize: '13px', color: t.textMeta, lineHeight: 1.7, fontStyle: 'italic' }}>
+            Edición {doc.version} · publicada {doc.fecha} · {doc.responsable}
+          </div>
+        </div>
+      </header>
+    );
+  }
+  // Campo: header operativo. Mono chrome, denso, con border-bottom.
   return (
     <header style={{
       borderBottom: '1px solid ' + t.border,
-      paddingBottom: isCampo ? '20px' : '24px',
-      marginBottom: isCampo ? '24px' : '32px'
+      paddingBottom: '20px', marginBottom: '24px'
     }}>
       <div style={{ fontFamily: MONO, fontSize: '11px', letterSpacing: '0.06em', color: t.textMeta, marginBottom: '10px' }}>
         {doc.area} · DOCUMENTO OPERATIVO · {doc.codigo}
       </div>
       <h1 style={{
-        fontFamily: SERIF,
-        fontSize: isCampo ? '24px' : '28px',
-        fontWeight: 500, margin: '0 0 8px',
+        fontFamily: SERIF, fontSize: '24px', fontWeight: 500, margin: '0 0 8px',
         letterSpacing: '-0.01em', lineHeight: 1.25, color: t.text
       }}>
         {doc.titulo}
       </h1>
       <div style={{
-        fontFamily: SERIF, fontSize: isCampo ? '14.5px' : '15.5px',
+        fontFamily: SERIF, fontSize: '14.5px',
         color: t.textSecondary, fontStyle: 'italic', lineHeight: 1.5,
         marginBottom: '16px'
       }}>
@@ -92,15 +122,22 @@ function DocSecciones({ secciones, modo }) {
       {secciones.map((sec, idx) => {
         const num = String(idx + 1).padStart(2, '0');
         return (
-          <section key={idx} style={{ marginBottom: isCampo ? '28px' : '36px' }}>
-            <div style={{ fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.08em', color: t.textMeta, marginBottom: '6px' }}>
-              {num}
-            </div>
+          <section key={idx} style={{ marginBottom: isCampo ? '28px' : '44px' }}>
+            {isCampo ? (
+              <div style={{ fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.08em', color: t.textMeta, marginBottom: '6px' }}>
+                {num}
+              </div>
+            ) : (
+              <div style={{ fontFamily: SERIF, fontSize: '13px', fontStyle: 'italic', color: t.textMeta, marginBottom: '4px' }}>
+                {num} ·
+              </div>
+            )}
             <h2 style={{
               fontFamily: SERIF,
-              fontSize: isCampo ? '18px' : '20px',
-              fontWeight: 500, margin: '0 0 14px',
-              letterSpacing: '-0.005em', color: t.text, lineHeight: 1.3
+              fontSize: isCampo ? '18px' : '22px',
+              fontWeight: 500, margin: '0 0 16px',
+              letterSpacing: isCampo ? '-0.005em' : '-0.01em',
+              color: t.text, lineHeight: 1.25
             }}>
               {sec.titulo}
             </h2>
@@ -184,16 +221,22 @@ function DocFuentes({ fuentes, modo }) {
   const isCampo = modo === 'campo';
   return (
     <footer style={{
-      paddingTop: isCampo ? '20px' : '24px',
+      paddingTop: isCampo ? '20px' : '32px',
       borderTop: '1px solid ' + t.border,
-      marginTop: isCampo ? '20px' : '8px'
+      marginTop: isCampo ? '20px' : '20px'
     }}>
-      <div style={{ fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
-        Fuentes
-      </div>
+      {isCampo ? (
+        <div style={{ fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
+          Fuentes
+        </div>
+      ) : (
+        <div style={{ fontFamily: SERIF, fontSize: '13px', fontStyle: 'italic', color: t.textMeta, marginBottom: '8px' }}>
+          Fuentes —
+        </div>
+      )}
       <div style={{
         fontFamily: SERIF, fontSize: isCampo ? '13px' : '13.5px',
-        color: t.textSecondary, lineHeight: 1.6, fontStyle: 'italic',
+        color: t.textSecondary, lineHeight: 1.65, fontStyle: 'italic',
         maxWidth: isCampo ? 'none' : '38em'
       }}>
         {fuentes}
