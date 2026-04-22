@@ -145,17 +145,17 @@ function Placeholder({ tabId, modo }) {
   );
 }
 
-function ViewSwitch({ activeView, modo, onOpenDoc, onOpenPerfil }) {
+function ViewSwitch({ activeView, modo, onOpenDoc, onOpenPerfil, docRequest }) {
   if (activeView === 'herramientas') {
     return <HerramientasView modo={modo} onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} />;
   }
   if (activeView === 'docs') {
-    return <DocsView modo={modo} />;
+    return <DocsView modo={modo} request={docRequest} />;
   }
   return <Placeholder tabId={activeView} modo={modo} />;
 }
 
-function CampoShell({ activeView, setActiveView, onToggleModo }) {
+function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpenPerfil, docRequest }) {
   return (
     <div
       style={{
@@ -168,7 +168,7 @@ function CampoShell({ activeView, setActiveView, onToggleModo }) {
         <Wordmark onLongPress={onToggleModo} darkBg />
       </header>
       <main style={{ flex: 1, padding: '14px 20px 92px', overflowY: 'auto' }}>
-        <ViewSwitch activeView={activeView} modo="campo" onOpenDoc={() => {}} onOpenPerfil={() => {}} />
+        <ViewSwitch activeView={activeView} modo="campo" onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} docRequest={docRequest} />
       </main>
       <nav
         style={{
@@ -204,7 +204,7 @@ function CampoShell({ activeView, setActiveView, onToggleModo }) {
   );
 }
 
-function RedaccionShell({ activeView, setActiveView, onToggleModo }) {
+function RedaccionShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpenPerfil, docRequest }) {
   return (
     <div
       style={{
@@ -245,7 +245,7 @@ function RedaccionShell({ activeView, setActiveView, onToggleModo }) {
         </nav>
       </header>
       <main style={{ maxWidth: '680px', margin: '0 auto', padding: '32px 32px 72px' }}>
-        <ViewSwitch activeView={activeView} modo="redaccion" onOpenDoc={() => {}} onOpenPerfil={() => {}} />
+        <ViewSwitch activeView={activeView} modo="redaccion" onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} docRequest={docRequest} />
       </main>
     </div>
   );
@@ -254,6 +254,18 @@ function RedaccionShell({ activeView, setActiveView, onToggleModo }) {
 export default function Shell({ scenario }) {
   const { modo, toggle } = useModo();
   const [activeView, setActiveView] = useState('mision');
+  const [docRequest, setDocRequest] = useState(null);
+
+  const openDoc = (key) => {
+    if (!key) return;
+    setActiveView('docs');
+    setDocRequest({ type: 'doc', key, t: Date.now() });
+  };
+  const openPerfil = (key) => {
+    if (!key) return;
+    setActiveView('docs');
+    setDocRequest({ type: 'perfil', key, t: Date.now() });
+  };
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -263,7 +275,9 @@ export default function Shell({ scenario }) {
     return () => { try { document.head.removeChild(link); } catch { /* noop */ } };
   }, []);
 
+  const sharedProps = { activeView, setActiveView, onToggleModo: toggle, onOpenDoc: openDoc, onOpenPerfil: openPerfil, docRequest };
+
   return modo === 'campo'
-    ? <CampoShell activeView={activeView} setActiveView={setActiveView} onToggleModo={toggle} />
-    : <RedaccionShell activeView={activeView} setActiveView={setActiveView} onToggleModo={toggle} />;
+    ? <CampoShell {...sharedProps} />
+    : <RedaccionShell {...sharedProps} />;
 }
