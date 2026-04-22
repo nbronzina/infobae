@@ -8,6 +8,7 @@ import directorioData from './data/directorio.json';
 import gabineteData from './data/gabinete.json';
 import teatrosData from './data/teatros.json';
 import checklistData from './data/checklist_predespliegue.json';
+import simuladorData from './data/simulador_compromiso.json';
 import escenariosData from './data/escenarios.json';
 
 import intAlertas from './data/escenarios/internacional/alertas.json';
@@ -204,6 +205,9 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     try { return JSON.parse(localStorage.getItem('infobae:checklist') || '{}'); } catch { return {}; }
   });
   const [parteAptitudEmitido, setParteAptitudEmitido] = useState(false);
+  const [simulacroScenario, setSimulacroScenario] = useState(null);
+  const [simulacroRespuestas, setSimulacroRespuestas] = useState({});
+  const [simulacroEmitido, setSimulacroEmitido] = useState(false);
   const escenarioActivo = escenariosData.find(s => s.slug === scenario) || escenariosData[0];
   const articleRef = React.useRef(null);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -547,6 +551,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     folder_herramientas: { folder: true, titulo: 'Herramientas', subtitulo: 'Sistemas operativos, flujos de verificación y bitácoras', docs: [
       { key: 'evaluacion_teatros', codigo: 'OP-TOOL-2029-006', titulo: 'Evaluación por teatro', version: '1.0', estado: 'vigente' },
       { key: 'checklist_predespliegue', codigo: 'OP-TOOL-2029-007', titulo: 'Checklist pre-despliegue', version: '1.0', estado: 'vigente' },
+      { key: 'simulador_compromiso', codigo: 'OP-TOOL-2029-008', titulo: 'Simulador de compromiso de dispositivo', version: '1.0', estado: 'vigente' },
       { key: 'pipeline_verificacion', codigo: 'OP-TOOL-2029-001', titulo: 'Pipeline de verificación', version: '1.0', estado: 'vigente' },
       { key: 'opsec_log', codigo: 'OP-TOOL-2029-002', titulo: 'OP-SEC-LOG: bitácora auditable', version: '1.0', estado: 'vigente' },
       { key: 'analista_auto', codigo: 'OP-TOOL-2029-003', titulo: 'Analista de guardia', version: '1.0', estado: 'vigente' },
@@ -570,6 +575,12 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       titulo: 'Checklist pre-despliegue',
       subtitulo: 'Parte de aptitud operativa · items tickeables firmados al completar',
       meta: { codigo: 'OP-TOOL-2029-007', version: '1.0', fecha: '2029-03-22', responsable: 'm. villafañe + j. fiorella + l. pollastri' }
+    },
+    simulador_compromiso: {
+      simulador: true,
+      titulo: 'Simulador de compromiso de dispositivo',
+      subtitulo: 'Ejercicio HEFAT · escenarios de respuesta contra el protocolo OP-SEC-2029-003',
+      meta: { codigo: 'OP-TOOL-2029-008', version: '1.0', fecha: '2029-03-28', responsable: 'j. fiorella + s. peralta' }
     }
   };
 
@@ -742,7 +753,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     'legales': ['anmac_enacom', 'exportacion_equip', 'seguros_riesgo', 'folder_legales'],
     'rrhh': ['jtsn_apoyo', 'politica_despliegue', 'contactos_emergencia', 'onboarding', 'folder_rrhh'],
     'investigacion': ['docs_filtrados', 'osint_investigacion', 'redes_internacionales', 'contravigilancia', 'narco_cobertura', 'inteligencia_investigacion', 'folder_investigacion'],
-    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'evaluacion_teatros', 'checklist_predespliegue', 'folder_herramientas']
+    'herramientas': ['analista_auto', 'parte_despliegue', 'pipeline_verificacion', 'opsec_log', 'gabinete_campo', 'evaluacion_teatros', 'checklist_predespliegue', 'simulador_compromiso', 'folder_herramientas']
   };
   const isFolderActive = (key) => {
     if (key === 'seg-digital' && !activeView && !showLanding) return true;
@@ -755,7 +766,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
     anmac_enacom: ['Legales', 'folder_legales'], exportacion_equip: ['Legales', 'folder_legales'], seguros_riesgo: ['Legales', 'folder_legales'],
     jtsn_apoyo: ['RRHH', 'folder_rrhh'], politica_despliegue: ['RRHH', 'folder_rrhh'], contactos_emergencia: ['RRHH', 'folder_rrhh'], onboarding: ['RRHH', 'folder_rrhh'],
     docs_filtrados: ['Investigación', 'folder_investigacion'], osint_investigacion: ['Investigación', 'folder_investigacion'], redes_internacionales: ['Investigación', 'folder_investigacion'], contravigilancia: ['Investigación', 'folder_investigacion'], narco_cobertura: ['Investigación', 'folder_investigacion'], inteligencia_investigacion: ['Investigación', 'folder_investigacion'],
-    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'], evaluacion_teatros: ['Herramientas', 'folder_herramientas'], checklist_predespliegue: ['Herramientas', 'folder_herramientas'],
+    pipeline_verificacion: ['Herramientas', 'folder_herramientas'], opsec_log: ['Herramientas', 'folder_herramientas'], analista_auto: ['Herramientas', 'folder_herramientas'], parte_despliegue: ['Herramientas', 'folder_herramientas'], gabinete_campo: ['Herramientas', 'folder_herramientas'], evaluacion_teatros: ['Herramientas', 'folder_herramientas'], checklist_predespliegue: ['Herramientas', 'folder_herramientas'], simulador_compromiso: ['Herramientas', 'folder_herramientas'],
     fopea_protocolo: ['Seguridad Digital', 'folder_segdigital']
   };
   const pageKeys = ['noticias', 'directorio', 'agenda', 'redaccion', 'soporte', 'sistemas_estado', 'senales_seguimiento', 'diario_turno', 'panorama'];
@@ -1185,6 +1196,9 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
                 <div role="button" tabIndex={0} onClick={() => setActiveView('checklist_predespliegue')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'checklist_predespliegue' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'checklist_predespliegue' ? 500 : 400, backgroundColor: activeView === 'checklist_predespliegue' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'checklist_predespliegue' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Checklist pre-despliegue
+                </div>
+                <div role="button" tabIndex={0} onClick={() => setActiveView('simulador_compromiso')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'simulador_compromiso' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'simulador_compromiso' ? 500 : 400, backgroundColor: activeView === 'simulador_compromiso' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'simulador_compromiso' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
+                  Simulador de compromiso
                 </div>
               </div>
             )}
@@ -2213,6 +2227,194 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                     {!teatro && (
                       <div className="serif" style={{ fontSize: '13px', color: '#5a544c', fontStyle: 'italic', padding: '20px 0' }}>
                         Seleccionar un teatro arriba para emitir el parte de evaluación.
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
+              {/* Simulador de compromiso de dispositivo */}
+              {activeView === 'simulador_compromiso' && (() => {
+                const escenario = simuladorData.find(s => s.codigo === simulacroScenario);
+                const respuestas = simulacroRespuestas[simulacroScenario] || {};
+                const decisionesCompletas = escenario ? escenario.decisiones.every(d => respuestas[d.id]) : false;
+                const aciertos = escenario ? escenario.decisiones.filter(d => {
+                  const opt = d.opciones.find(o => o.id === respuestas[d.id]);
+                  return opt && opt.correcta;
+                }).length : 0;
+                const total = escenario ? escenario.decisiones.length : 0;
+                const resultadoNivel = aciertos === total ? 'apto' : aciertos >= total - 1 ? 'observaciones' : 'repaso';
+                const resultadoColor = resultadoNivel === 'apto' ? '#5a6e3c' : resultadoNivel === 'observaciones' ? '#8a6d2b' : '#bd2828';
+                const resultadoBg = resultadoNivel === 'apto' ? '#e8f0de' : resultadoNivel === 'observaciones' ? '#f5edd5' : '#f5d5d5';
+                const resultadoLabel = resultadoNivel === 'apto' ? 'Apto' : resultadoNivel === 'observaciones' ? 'Apto con observaciones' : 'Requiere repaso';
+                const elegirOpcion = (decisionId, opcionId) => {
+                  setSimulacroRespuestas(prev => ({ ...prev, [simulacroScenario]: { ...(prev[simulacroScenario] || {}), [decisionId]: opcionId } }));
+                };
+                const resetEjercicio = () => {
+                  setSimulacroRespuestas(prev => ({ ...prev, [simulacroScenario]: {} }));
+                  setSimulacroEmitido(false);
+                };
+                const cambiarEscenario = (codigo) => {
+                  setSimulacroScenario(codigo);
+                  setSimulacroEmitido(false);
+                };
+                return (
+                  <div>
+                    <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>INFOBAE · HERRAMIENTAS · OP-TOOL-2029-008</div>
+                    <h1 className="serif" style={{ fontSize: '28px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em' }}>Simulador de compromiso de dispositivo</h1>
+                    <div className="serif" style={{ fontSize: '14.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '20px' }}>Ejercicio de respuesta frente a un compromiso simulado. La evaluación contrasta cada decisión con el protocolo OP-SEC-2029-003 y el glosario T-SPY / T-CKP. El parte se firma por seguridad digital y formación al cierre del ejercicio.</div>
+
+                    <div style={{ padding: '10px 14px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c', marginBottom: '20px' }}>
+                      <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                        Elegir un escenario. Cada escenario plantea tres puntos de decisión. Las respuestas pueden revisarse antes de emitir el parte. Una vez emitido, queda registrado en OP-SEC-LOG como ejercicio de formación — no como incidente operativo.
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '10px', marginBottom: escenario ? '32px' : '0' }}>
+                      {simuladorData.map(s => {
+                        const sel = s.codigo === simulacroScenario;
+                        return (
+                          <div key={s.codigo} role="button" tabIndex={0} onClick={() => cambiarEscenario(s.codigo)} style={{ padding: '14px 16px', border: '1px solid ' + (sel ? '#1f1f1f' : '#d9d4c2'), backgroundColor: sel ? '#f0ecde' : '#f8f5ec', cursor: 'pointer' }}>
+                            <div className="mono" style={{ fontSize: '10px', letterSpacing: '0.06em', textTransform: 'uppercase', color: sel ? '#1f1f1f' : '#5a544c', marginBottom: '4px' }}>{s.codigo} · {s.amenaza_asociada}</div>
+                            <div className="serif" style={{ fontSize: '14px', fontWeight: 500, marginBottom: '3px', lineHeight: 1.35 }}>{s.titulo}</div>
+                            <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{s.teatro}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {escenario && (
+                      <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '24px 28px', marginBottom: '20px' }}>
+                        <div style={{ borderBottom: '1px solid #d9d4c2', paddingBottom: '14px', marginBottom: '20px' }}>
+                          <div className="mono micro" style={{ color: '#5a544c', marginBottom: '4px' }}>Escenario · {escenario.codigo}</div>
+                          <h2 className="serif" style={{ fontSize: '21px', fontWeight: 500, margin: '0 0 4px', letterSpacing: '-0.01em', lineHeight: 1.3 }}>{escenario.titulo}</h2>
+                          <div className="mono" style={{ fontSize: '11.5px', color: '#5a544c', lineHeight: 1.6, marginBottom: '10px' }}>
+                            {escenario.teatro} · amenaza asociada {escenario.amenaza_asociada} · protocolo de referencia {escenario.protocolo_ref.codigo}
+                          </div>
+                          <div className="serif" style={{ fontSize: '13.5px', color: '#1f1f1f', lineHeight: 1.6, padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #1f1f1f' }}>
+                            {escenario.contexto}
+                          </div>
+                        </div>
+
+                        {escenario.decisiones.map((d, idx) => {
+                          const elegida = respuestas[d.id];
+                          return (
+                            <section key={d.id} style={{ marginBottom: '22px' }}>
+                              <div className="mono micro" style={{ color: '#5a544c', marginBottom: '8px' }}>{d.id} · decisión {idx + 1} de {escenario.decisiones.length}</div>
+                              <div className="serif" style={{ fontSize: '15px', fontWeight: 500, marginBottom: '12px' }}>{d.titulo}</div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                {d.opciones.map(o => {
+                                  const sel = elegida === o.id;
+                                  return (
+                                    <div key={o.id} role="button" tabIndex={0} onClick={() => elegirOpcion(d.id, o.id)} style={{ cursor: 'pointer', padding: '10px 14px', border: '1px solid ' + (sel ? '#1f1f1f' : '#d9d4c2'), backgroundColor: sel ? '#f0ecde' : '#f8f5ec', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                                      <span className="mono" style={{ fontSize: '11px', color: sel ? '#1f1f1f' : '#5a544c', fontWeight: sel ? 500 : 400, minWidth: '18px' }}>{o.id}</span>
+                                      <span className="serif" style={{ fontSize: '13px', color: '#1f1f1f', lineHeight: 1.5, flex: 1 }}>{o.texto}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </section>
+                          );
+                        })}
+
+                        <div style={{ padding: '12px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid ' + (decisionesCompletas ? '#5a6e3c' : '#8a6d2b'), display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+                          <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f' }}>
+                            {Object.keys(respuestas).length} de {escenario.decisiones.length} decisiones tomadas {decisionesCompletas ? '· listo para emitir' : '· pendientes para emitir el parte'}
+                          </div>
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <div role="button" tabIndex={0} onClick={resetEjercicio} className="mono" style={{ cursor: 'pointer', padding: '6px 12px', fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase', border: '1px solid #d9d4c2', backgroundColor: 'transparent', color: '#5a544c' }}>
+                              Reset
+                            </div>
+                            <div role="button" tabIndex={decisionesCompletas ? 0 : -1} onClick={() => decisionesCompletas && setSimulacroEmitido(true)} className="mono" style={{ cursor: decisionesCompletas ? 'pointer' : 'not-allowed', padding: '6px 12px', fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase', border: '1px solid ' + (decisionesCompletas ? '#1f1f1f' : '#d9d4c2'), backgroundColor: decisionesCompletas ? '#1f1f1f' : '#eceae4', color: decisionesCompletas ? '#f0ede4' : '#8a8472', opacity: decisionesCompletas ? 1 : 0.6 }}>
+                              Emitir parte de ejercicio
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {escenario && simulacroEmitido && decisionesCompletas && (
+                      <div style={{ padding: '28px 32px', backgroundColor: '#f8f5ec', border: '2px solid #1f1f1f' }}>
+                        <div className="mono micro" style={{ color: resultadoColor, marginBottom: '8px' }}>Parte de ejercicio · emitido</div>
+                        <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 6px' }}>{resultadoLabel}</h2>
+                        <div className="serif" style={{ fontSize: '13.5px', color: '#5a544c', fontStyle: 'italic', marginBottom: '18px' }}>
+                          {aciertos} de {total} decisiones alineadas al protocolo OP-SEC-2029-003.
+                        </div>
+
+                        <div className="mono" style={{ fontSize: '11.5px', color: '#1f1f1f', lineHeight: 1.7, marginBottom: '18px' }}>
+                          Fecha emisión: 2029-04-17 14:30 ART<br/>
+                          Operador: mondini.l<br/>
+                          Escenario: {escenario.codigo} — {escenario.titulo}<br/>
+                          Teatro de referencia: {escenario.teatro}<br/>
+                          Amenaza asociada: {escenario.amenaza_asociada}<br/>
+                          Código parte: OP-TOOL-2029-008 · instancia 2029-04-17-{escenario.codigo.slice(-3)}
+                        </div>
+
+                        <div style={{ padding: '14px 16px', backgroundColor: resultadoBg, borderLeft: '2px solid ' + resultadoColor, marginBottom: '20px' }}>
+                          <div className="serif" style={{ fontSize: '13px', color: '#1f1f1f', lineHeight: 1.55 }}>
+                            {resultadoNivel === 'apto' && 'El operador responde de manera consistente con el protocolo de referencia en los tres puntos de decisión. Queda registrado como ejercicio cerrado sin observaciones.'}
+                            {resultadoNivel === 'observaciones' && 'El operador responde de manera mayormente alineada al protocolo. Queda registrada la desviación puntual para revisión cruzada con formación antes del próximo despliegue.'}
+                            {resultadoNivel === 'repaso' && 'El operador presenta desvíos sostenidos respecto del protocolo de referencia. Se coordina sesión de repaso con formación (s. peralta) antes de habilitar próximo despliegue en teatro con amenaza T-SPY o T-CKP.'}
+                          </div>
+                        </div>
+
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Revisión por decisión</div>
+                        <div style={{ marginBottom: '20px' }}>
+                          {escenario.decisiones.map((d, idx) => {
+                            const opt = d.opciones.find(o => o.id === respuestas[d.id]);
+                            if (!opt) return null;
+                            const ok = opt.correcta;
+                            const correctaRef = d.opciones.find(o => o.correcta);
+                            return (
+                              <div key={d.id} style={{ padding: '14px 16px', borderLeft: '3px solid ' + (ok ? '#5a6e3c' : '#bd2828'), backgroundColor: ok ? '#f3f6ea' : '#faeeee', marginBottom: '8px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '6px', gap: '10px', flexWrap: 'wrap' }}>
+                                  <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c' }}>{d.id} · decisión {idx + 1} — {d.titulo}</span>
+                                  <span className="mono" style={{ fontSize: '9.5px', padding: '2px 7px', letterSpacing: '0.04em', textTransform: 'uppercase', backgroundColor: ok ? '#e8f0de' : '#f5d5d5', color: ok ? '#5a6e3c' : '#bd2828' }}>
+                                    {ok ? 'Alineada al protocolo' : 'No alineada al protocolo'}
+                                  </span>
+                                </div>
+                                <div className="serif" style={{ fontSize: '12.5px', color: '#1f1f1f', lineHeight: 1.55, marginBottom: '6px' }}>
+                                  <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c', marginRight: '6px' }}>elegida ({opt.id}):</span>
+                                  {opt.texto}
+                                </div>
+                                <div className="serif" style={{ fontSize: '12px', color: '#3d3931', lineHeight: 1.55, marginBottom: ok ? 0 : '6px' }}>
+                                  <span className="mono" style={{ fontSize: '10px', color: '#5a544c', marginRight: '6px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>motivo:</span>
+                                  {opt.motivo}
+                                </div>
+                                {!ok && correctaRef && (
+                                  <div className="serif" style={{ fontSize: '12px', color: '#3d3931', lineHeight: 1.55, paddingTop: '6px', borderTop: '1px dashed #d9d4c2' }}>
+                                    <span className="mono" style={{ fontSize: '10px', color: '#5a6e3c', marginRight: '6px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>respuesta alineada ({correctaRef.id}):</span>
+                                    {correctaRef.texto}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        <div className="mono micro" style={{ color: '#5a544c', marginBottom: '10px' }}>Doctrina aplicable</div>
+                        <div style={{ marginBottom: '20px' }}>
+                          {escenario.referencias_doctrina.map(r => (
+                            <div key={r.codigo} role="button" tabIndex={0} onClick={() => setActiveView(r.key)} className="doc-link" style={{ cursor: 'pointer', padding: '8px 0', borderBottom: '1px solid #d9d4c2' }}>
+                              <div style={{ display: 'flex', gap: '12px', alignItems: 'baseline' }}>
+                                <span className="mono" style={{ fontSize: '10.5px', color: '#5a544c', minWidth: '140px' }}>{r.codigo}</span>
+                                <span className="serif" style={{ fontSize: '13px', color: '#1f1f1f', flex: 1 }}>{r.motivo}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="mono" style={{ fontSize: '11px', color: '#5a544c', lineHeight: 1.7 }}>
+                          Firmas:<br/>
+                          j. fiorella — seguridad digital<br/>
+                          s. peralta — formación y capacitación
+                        </div>
+                      </div>
+                    )}
+
+                    {!escenario && (
+                      <div className="serif" style={{ fontSize: '13px', color: '#5a544c', fontStyle: 'italic', padding: '20px 0' }}>
+                        Seleccionar un escenario arriba para iniciar el ejercicio.
                       </div>
                     )}
                   </div>

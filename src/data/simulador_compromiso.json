@@ -1,0 +1,314 @@
+[
+  {
+    "codigo": "SIM-ANM-001",
+    "titulo": "Comportamiento anómalo en dispositivo primario en campo",
+    "teatro": "ARQ-042 · Arauca / Apure",
+    "contexto": "Despliegue día 7. El dispositivo primario de trabajo (GrapheneOS) se calienta en reposo. La batería cae 28 % en dos horas sin uso activo. El dashboard de Signal registra dos sesiones vinculadas que no reconocés. Estás a 40 minutos del punto de extracción, 3 horas por tierra de Bogotá.",
+    "amenaza_asociada": "T-SPY",
+    "protocolo_ref": { "codigo": "OP-SEC-2029-003", "key": "compromiso_dispositivo" },
+    "referencias_doctrina": [
+      { "codigo": "OP-SEC-2029-003", "key": "compromiso_dispositivo", "motivo": "Protocolo de referencia — respuesta inmediata, contención y notificación." },
+      { "codigo": "OP-SEC-2028-011", "key": "comunicacion_cifrada", "motivo": "Canales aprobados y escalera de fallback en situación de sospecha de compromiso." }
+    ],
+    "decisiones": [
+      {
+        "id": "D1",
+        "titulo": "Respuesta inmediata sobre el dispositivo",
+        "opciones": [
+          {
+            "id": "A",
+            "texto": "Abrir Signal y revisar la lista de dispositivos vinculados. Cerrar las sesiones desconocidas desde ahí.",
+            "correcta": false,
+            "motivo": "Interactuar con el dispositivo comprometido deja huella en el adversario y puede activar ramas del implante. El protocolo prohíbe el diagnóstico en caliente."
+          },
+          {
+            "id": "B",
+            "texto": "Instalar una herramienta de análisis (MVT, iVerify) para identificar el implante.",
+            "correcta": false,
+            "motivo": "No se instalan herramientas de escaneo sobre un dispositivo en sospecha. El análisis forense se hace en bench, no en campo, y requiere entrega física a seg. digital."
+          },
+          {
+            "id": "C",
+            "texto": "Apagar el dispositivo. No volverlo a encender. Comunicar al equipo desde otro dispositivo.",
+            "correcta": true,
+            "motivo": "Respuesta estándar del protocolo OP-SEC-2029-003. Apagar detiene la exfiltración activa sin borrar evidencia. No reencender preserva la cadena forense."
+          },
+          {
+            "id": "D",
+            "texto": "Reiniciar en modo seguro y observar qué procesos arrancan.",
+            "correcta": false,
+            "motivo": "El modo seguro en Android no neutraliza implantes modernos y el reencendido habilita persistencia. Además interfiere con el análisis forense posterior."
+          }
+        ]
+      },
+      {
+        "id": "D2",
+        "titulo": "Canal de notificación al equipo",
+        "opciones": [
+          {
+            "id": "A",
+            "texto": "Mandar un correo desde tu cuenta personal al equipo de seguridad digital detallando la situación.",
+            "correcta": false,
+            "motivo": "La cuenta personal puede haber sido accedida desde el dispositivo comprometido. Se asume expuesta hasta la rotación de credenciales."
+          },
+          {
+            "id": "B",
+            "texto": "Llamar al número público de Infobae desde cualquier teléfono disponible en la zona.",
+            "correcta": false,
+            "motivo": "La línea pública no tiene cifrado de canal, queda registrada en las redes locales y no garantiza llegar a guardia de seg. digital."
+          },
+          {
+            "id": "C",
+            "texto": "Signal desde el dispositivo personal al número de guardia de seguridad digital.",
+            "correcta": true,
+            "motivo": "Canal aprobado en OP-SEC-2028-011. El dispositivo personal queda fuera del perímetro del dispositivo de trabajo por política de separación."
+          },
+          {
+            "id": "D",
+            "texto": "Publicar un aviso en el canal interno del equipo en el portal para que lo vean todos los turnos.",
+            "correcta": false,
+            "motivo": "Ampliar la superficie de difusión del incidente antes de la contención incrementa el riesgo sobre fuentes y fixer. La notificación inicial es acotada: seg. digital primero, editor después."
+          }
+        ]
+      },
+      {
+        "id": "D3",
+        "titulo": "Tratamiento del material y las credenciales",
+        "opciones": [
+          {
+            "id": "A",
+            "texto": "Reenviar por Signal la última fotografía del material sensible al editor antes de perderla.",
+            "correcta": false,
+            "motivo": "No se reenvía información desde el dispositivo comprometido. Copiar el archivo puede propagar marcas de exfiltración y contamina el canal receptor."
+          },
+          {
+            "id": "B",
+            "texto": "Cambiar las contraseñas de las cuentas críticas desde el dispositivo antes de apagarlo.",
+            "correcta": false,
+            "motivo": "Cambiar credenciales desde el dispositivo sospechoso expone las nuevas credenciales al mismo implante. La rotación se hace desde dispositivo limpio."
+          },
+          {
+            "id": "C",
+            "texto": "No reenviar nada desde el dispositivo. Listar por memoria las cuentas accedidas desde el equipo para que seg. digital coordine rotación desde canal limpio.",
+            "correcta": true,
+            "motivo": "Alineado con el bloque de contención del protocolo. Permite rotación ordenada sin propagar la amenaza."
+          },
+          {
+            "id": "D",
+            "texto": "Borrar las cuentas del dispositivo para minimizar superficie antes de entregarlo a seg. digital.",
+            "correcta": false,
+            "motivo": "Borrar destruye evidencia necesaria para el análisis forense y no revoca los tokens que ya fueron extraídos."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "codigo": "SIM-ANM-002",
+    "titulo": "Adjunto PDF no solicitado por WhatsApp desde número desconocido",
+    "teatro": "Buenos Aires · redacción",
+    "contexto": "Recibís un mensaje de WhatsApp desde un número no guardado. Adjunto PDF llamado \"informe_confidencial_farc_abril2029.pdf\". Texto del mensaje: \"el material que pediste — mandalo a tu editor urgente\". No pediste el material. El dispositivo es el primario de trabajo.",
+    "amenaza_asociada": "T-SPY",
+    "protocolo_ref": { "codigo": "OP-SEC-2029-003", "key": "compromiso_dispositivo" },
+    "referencias_doctrina": [
+      { "codigo": "OP-SEC-2029-003", "key": "compromiso_dispositivo", "motivo": "Respuesta ante compromiso confirmado o sospechado del dispositivo." },
+      { "codigo": "OP-SEC-2028-011", "key": "comunicacion_cifrada", "motivo": "WhatsApp como vector — alcance y políticas de uso en campo y redacción." }
+    ],
+    "decisiones": [
+      {
+        "id": "D1",
+        "titulo": "Tratamiento del mensaje",
+        "opciones": [
+          {
+            "id": "A",
+            "texto": "Abrir el PDF para evaluar si el contenido justifica mover el caso a seg. digital.",
+            "correcta": false,
+            "motivo": "El vector de spyware comercial documentado en la región es el adjunto. Abrir el archivo ejecuta la cadena. El criterio es no abrir hasta descarte."
+          },
+          {
+            "id": "B",
+            "texto": "Reenviar el archivo a seg. digital por WhatsApp para que lo abran ellos en bench.",
+            "correcta": false,
+            "motivo": "Reenviar propaga el vector a otro dispositivo y deja una copia fuera de la cadena de custodia. El análisis se coordina sin mover el archivo."
+          },
+          {
+            "id": "C",
+            "texto": "Sin abrir el adjunto: captura del encabezado del mensaje y del número origen. Reporte a seg. digital por canal interno.",
+            "correcta": true,
+            "motivo": "Preserva el vector sin detonarlo, documenta el incidente para el log y deja a seg. digital decidir la ruta de análisis."
+          },
+          {
+            "id": "D",
+            "texto": "Bloquear el número y borrar la conversación para reducir superficie.",
+            "correcta": false,
+            "motivo": "Borrar destruye la evidencia necesaria para correlacionar el número con campañas conocidas. Bloquear no neutraliza el intento documentado."
+          }
+        ]
+      },
+      {
+        "id": "D2",
+        "titulo": "Acción sobre el dispositivo tras identificación de la amenaza",
+        "opciones": [
+          {
+            "id": "A",
+            "texto": "El adjunto no se abrió: cerrar el caso y seguir operando con el mismo dispositivo.",
+            "correcta": false,
+            "motivo": "El vector activó el protocolo por llegada, no por detonación. Hasta confirmación de seg. digital se opera como si el dispositivo estuviera en cuarentena."
+          },
+          {
+            "id": "B",
+            "texto": "Mantener el dispositivo encendido y en uso normal a la espera del análisis.",
+            "correcta": false,
+            "motivo": "Uso normal durante una cuarentena técnica mezcla tráfico legítimo con posible actividad residual. Rompe la ventana de análisis limpio."
+          },
+          {
+            "id": "C",
+            "texto": "Aislar el dispositivo según OP-SEC-2029-003. Apagar, entregar a seg. digital para análisis forense, iniciar rotación de contraseñas desde equipo limpio.",
+            "correcta": true,
+            "motivo": "La llegada de un vector de spyware documentado activa el protocolo completo, independientemente de si el archivo se abrió."
+          },
+          {
+            "id": "D",
+            "texto": "Resetear el dispositivo a fábrica y seguir trabajando una vez reinstalado.",
+            "correcta": false,
+            "motivo": "El reset destruye evidencia forense y no garantiza limpieza frente a implantes con persistencia a nivel de firmware."
+          }
+        ]
+      },
+      {
+        "id": "D3",
+        "titulo": "Rotación de credenciales y notificación",
+        "opciones": [
+          {
+            "id": "A",
+            "texto": "Rotar sólo la contraseña del correo laboral — el resto queda para después del análisis.",
+            "correcta": false,
+            "motivo": "La rotación parcial deja vivos tokens y sesiones en servicios críticos. La política es rotación completa de cuentas accedidas desde el dispositivo."
+          },
+          {
+            "id": "B",
+            "texto": "Rotar todas las contraseñas de cuentas accedidas desde el dispositivo, desde equipo limpio. Notificar a fuentes que hayan tenido contacto por esa vía.",
+            "correcta": true,
+            "motivo": "Bloque de contención del protocolo. Protege primero a las fuentes, luego a la operación."
+          },
+          {
+            "id": "C",
+            "texto": "Esperar el resultado del análisis forense antes de rotar cualquier credencial o notificar a fuentes.",
+            "correcta": false,
+            "motivo": "El análisis puede demorar días. La rotación es inmediata por criterio precautorio — no se negocia por tiempo de laboratorio."
+          },
+          {
+            "id": "D",
+            "texto": "Notificar sólo a las fuentes con material más sensible para no alarmar al resto.",
+            "correcta": false,
+            "motivo": "La selectividad introduce sesgo del operador y deja fuera contactos cuyo riesgo no es evidente en el momento. Notificación completa."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "codigo": "SIM-ANM-003",
+    "titulo": "Dispositivo secundario fuera de vista en checkpoint",
+    "teatro": "Frontera COL-VEN · checkpoint Puerto Páez",
+    "contexto": "Cruce en checkpoint con el dispositivo secundario (GrapheneOS, cuenta segregada). Te piden desbloquearlo y lo retiran del campo visual por 42 minutos. Te lo devuelven aparentemente intacto. Al encenderlo notás actividad de datos en reposo que no se corresponde con la configuración conocida. Estás a 6 horas del punto de alojamiento.",
+    "amenaza_asociada": "T-CKP",
+    "protocolo_ref": { "codigo": "OP-SEC-2029-003", "key": "compromiso_dispositivo" },
+    "referencias_doctrina": [
+      { "codigo": "OP-SEC-2029-003", "key": "compromiso_dispositivo", "motivo": "Protocolo de referencia — el dispositivo requisado se trata como comprometido hasta descarte forense." },
+      { "codigo": "OP-SEC-2028-009", "key": "vigilancia_destino", "motivo": "Vigilancia en destino: checkpoint con capacidad de inserción de implantes mientras el dispositivo está fuera de vista." }
+    ],
+    "decisiones": [
+      {
+        "id": "D1",
+        "titulo": "Estado del dispositivo tras el retiro de vista",
+        "opciones": [
+          {
+            "id": "A",
+            "texto": "El dispositivo secundario cumple su función: absorber la requisa. Seguir operando con él hasta el retorno y revisar ahí.",
+            "correcta": false,
+            "motivo": "El secundario absorbe el riesgo de la requisa pero no lo neutraliza. Operar con un dispositivo potencialmente alterado expone toda la línea posterior."
+          },
+          {
+            "id": "B",
+            "texto": "Apagar el dispositivo. Extraer la SIM. Aislarlo en bolsa Faraday. Pasar a dispositivo de reserva.",
+            "correcta": true,
+            "motivo": "Tratamiento estándar de dispositivo requisado — se asume compromiso hasta análisis forense físico en Buenos Aires."
+          },
+          {
+            "id": "C",
+            "texto": "Resetear a fábrica sobre el mismo dispositivo y continuar con él.",
+            "correcta": false,
+            "motivo": "El reset no garantiza limpieza frente a implantes a nivel de firmware o bootloader. Además elimina la evidencia forense."
+          },
+          {
+            "id": "D",
+            "texto": "Seguir usándolo sólo para tareas no sensibles y reservar el primario para todo lo demás.",
+            "correcta": false,
+            "motivo": "La segmentación por sensibilidad post-compromiso no es practicable en campo — el implante no distingue entre tareas del operador."
+          }
+        ]
+      },
+      {
+        "id": "D2",
+        "titulo": "Comunicación a las fuentes que tuvieron contacto por el dispositivo",
+        "opciones": [
+          {
+            "id": "A",
+            "texto": "No notificar hasta volver para no generar alarma innecesaria con datos parciales.",
+            "correcta": false,
+            "motivo": "El criterio del protocolo es proteger primero, explicar después. El silencio puede costarle a la fuente la ventana para moverse."
+          },
+          {
+            "id": "B",
+            "texto": "Notificar a todas las fuentes que tuvieron contacto por el dispositivo en los últimos 30 días.",
+            "correcta": true,
+            "motivo": "Bloque de contención — notificación completa por ventana móvil, no sólo a las que parecen más expuestas."
+          },
+          {
+            "id": "C",
+            "texto": "Notificar sólo a las fuentes del caso en curso y dejar el resto para cuando se termine el análisis forense.",
+            "correcta": false,
+            "motivo": "El implante no respeta el perímetro del caso. La selectividad por criterio editorial no aplica al perímetro de seguridad."
+          },
+          {
+            "id": "D",
+            "texto": "Esperar el análisis forense para notificar con información precisa del alcance.",
+            "correcta": false,
+            "motivo": "Análisis forense puede llevar de 3 a 10 días. La ventana de riesgo para la fuente se abre en el minuto uno."
+          }
+        ]
+      },
+      {
+        "id": "D3",
+        "titulo": "Tratamiento de la evidencia",
+        "opciones": [
+          {
+            "id": "A",
+            "texto": "Anotar en el OP-SEC-LOG lo ocurrido y seguir. El dispositivo se guarda junto al resto del equipaje.",
+            "correcta": false,
+            "motivo": "El registro en log es correcto pero incompleto. El dispositivo requiere cadena de custodia declarada y aislamiento físico específico."
+          },
+          {
+            "id": "B",
+            "texto": "Borrar todas las cuentas del dispositivo antes de archivarlo para no exponerlas si se pierde en tránsito.",
+            "correcta": false,
+            "motivo": "Borrar destruye la evidencia — es exactamente lo contrario de lo que necesita el análisis forense."
+          },
+          {
+            "id": "C",
+            "texto": "Registrar en OP-SEC-LOG con hora, lugar, operador de checkpoint y tiempo fuera de vista. Aislar el dispositivo en Faraday con etiqueta de cadena de custodia. Entregar a seg. digital en Buenos Aires sin reencender en tránsito.",
+            "correcta": true,
+            "motivo": "Tratamiento que preserva la cadena forense completa y deja auditable el incidente para correlación con otros casos de la región."
+          },
+          {
+            "id": "D",
+            "texto": "Fotografiar el dispositivo por fuera, subir las fotos a la nube por si se pierde, y guardarlo en la mochila.",
+            "correcta": false,
+            "motivo": "Subir material de un posible dispositivo comprometido a la nube propaga metadata del incidente a servicios externos. La evidencia se transporta en físico."
+          }
+        ]
+      }
+    ]
+  }
+]
