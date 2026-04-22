@@ -44,20 +44,32 @@ export default function DocsView({ modo, request }) {
 
   return (
     <div>
-      <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
-        INFOBAE · DOCUMENTACIÓN · {total} documentos
-      </div>
-      <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
-        Doctrina y protocolos
-      </h1>
-      <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '24px', lineHeight: 1.5 }}>
-        Archivo operativo completo. Los documentos se consultan por carpeta; el contenido se abre al seleccionar uno.
-      </div>
-
       {isCampo ? (
-        <CampoIndex seccs={DOCUMENTOS_SECCIONES} activo={activo} setActivo={setActivo} t={t} s={s} />
+        <>
+          <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
+            INFOBAE · DOCUMENTACIÓN · {total} documentos
+          </div>
+          <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
+            Doctrina y protocolos
+          </h1>
+          <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '24px', lineHeight: 1.5 }}>
+            Archivo operativo completo. Los documentos se consultan por carpeta; el contenido se abre al seleccionar uno.
+          </div>
+          <CampoIndex seccs={DOCUMENTOS_SECCIONES} activo={activo} setActivo={setActivo} t={t} s={s} />
+        </>
       ) : (
-        <RedaccionIndex seccs={DOCUMENTOS_SECCIONES} activo={activo} setActivo={setActivo} t={t} s={s} />
+        <>
+          <h1 style={{ fontFamily: SERIF, fontSize: '32px', fontWeight: 500, margin: '0 0 12px', letterSpacing: '-0.015em', color: t.text, lineHeight: 1.15 }}>
+            Doctrina y protocolos
+          </h1>
+          <div style={{ fontFamily: SERIF, fontSize: 15, color: t.textSecondary, fontStyle: 'italic', marginBottom: '12px', lineHeight: 1.6, maxWidth: '38em' }}>
+            Índice general del archivo operativo. {total} documentos en siete carpetas. La pieza completa se abre al seleccionar un título.
+          </div>
+          <div style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta, letterSpacing: '0.04em', marginBottom: '36px' }}>
+            edición {new Date().getUTCFullYear()} · uso interno · l. mondini
+          </div>
+          <RedaccionIndex seccs={DOCUMENTOS_SECCIONES} activo={activo} setActivo={setActivo} t={t} s={s} />
+        </>
       )}
     </div>
   );
@@ -117,21 +129,19 @@ function CampoIndex({ seccs, activo, setActivo, t, s }) {
   );
 }
 
-function RedaccionIndex({ seccs, activo, setActivo, t, s }) {
+function RedaccionIndex({ seccs, activo, setActivo, t }) {
   return (
     <div>
-      {seccs.map(sec => (
-        <section key={sec.key} style={{ marginBottom: '30px' }}>
-          <header style={{ marginBottom: '12px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px solid ' + t.borderStrong, paddingBottom: '6px', marginBottom: '4px', gap: '10px', flexWrap: 'wrap' }}>
-              <h2 style={{ fontFamily: SERIF, fontSize: '18px', fontWeight: 500, margin: 0, letterSpacing: '-0.01em', color: t.text }}>
-                {sec.titulo}
-              </h2>
-              <span style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta }}>
-                {sec.docs.length} {sec.docs.length === 1 ? 'documento' : 'documentos'}
-              </span>
+      {seccs.map((sec, sIdx) => (
+        <section key={sec.key} style={{ marginBottom: '40px' }}>
+          <header style={{ marginBottom: '18px' }}>
+            <div style={{ fontFamily: SERIF, fontSize: '12px', fontStyle: 'italic', color: t.textMeta, marginBottom: '4px' }}>
+              parte {String(sIdx + 1).padStart(2, '0')}
             </div>
-            <div style={{ fontFamily: SERIF, fontSize: '12.5px', color: t.textSecondary, fontStyle: 'italic' }}>
+            <h2 style={{ fontFamily: SERIF, fontSize: '24px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text, lineHeight: 1.2 }}>
+              {sec.titulo}
+            </h2>
+            <div style={{ fontFamily: SERIF, fontSize: '13.5px', color: t.textSecondary, fontStyle: 'italic', maxWidth: '38em', lineHeight: 1.55 }}>
               {sec.subtitulo}
             </div>
           </header>
@@ -139,34 +149,26 @@ function RedaccionIndex({ seccs, activo, setActivo, t, s }) {
           <ol style={{ listStyle: 'none', margin: 0, padding: 0 }}>
             {sec.docs.map(d => {
               const sel = activo === d.key;
-              const chip = estadoChipColors(d.estado, t);
               return (
-                <li key={d.key} style={{ borderBottom: '1px dotted ' + t.border }}>
+                <li key={d.key}>
                   <button type="button" onClick={() => setActivo(d.key)} style={{
                     width: '100%', textAlign: 'left', cursor: 'pointer',
-                    background: sel ? t.bgAccent : 'transparent', border: 'none',
-                    padding: '10px 6px',
-                    color: t.text,
-                    display: 'grid',
-                    gridTemplateColumns: '160px 1fr 110px 60px',
-                    gap: '14px', alignItems: 'baseline'
+                    background: 'transparent', border: 'none',
+                    padding: '10px 0', color: t.text,
+                    display: 'flex', alignItems: 'baseline', gap: '12px'
                   }}>
-                    <span style={{ fontFamily: MONO, fontSize: '11px', color: sel ? t.text : t.textMeta, fontWeight: sel ? 500 : 400, letterSpacing: '0.03em' }}>
-                      {d.codigo}
-                    </span>
-                    <span style={{ fontFamily: SERIF, fontSize: '14.5px', fontWeight: sel ? 500 : 400, lineHeight: 1.4 }}>
+                    <span style={{ fontFamily: SERIF, fontSize: '15.5px', fontWeight: sel ? 500 : 400, fontStyle: sel ? 'normal' : 'italic', color: t.text, lineHeight: 1.45, flex: '0 1 auto' }}>
                       {d.titulo}
                     </span>
-                    <span style={{
-                      fontFamily: MONO, fontSize: '9.5px', letterSpacing: '0.04em', textTransform: 'uppercase',
-                      padding: '2px 7px', backgroundColor: chip.bg, color: chip.fg,
-                      justifySelf: 'start', alignSelf: 'center'
-                    }}>
-                      {ESTADO_LABEL[d.estado]}
+                    <span style={{ flex: '1 1 auto', borderBottom: '1px dotted ' + t.border, transform: 'translateY(-4px)', minWidth: '20px' }} />
+                    <span style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, letterSpacing: '0.03em', flex: '0 0 auto' }}>
+                      {d.codigo}
                     </span>
-                    <span style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta, justifySelf: 'end' }}>
-                      v{d.version}
-                    </span>
+                    {d.estado !== 'vigente' && (
+                      <span style={{ fontFamily: SERIF, fontSize: '11px', fontStyle: 'italic', color: d.estado === 'en_revision' ? t.revision : t.textMeta, flex: '0 0 auto' }}>
+                        {d.estado === 'en_revision' ? 'en revisión' : 'borrador'}
+                      </span>
+                    )}
                   </button>
                 </li>
               );
