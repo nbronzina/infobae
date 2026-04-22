@@ -276,9 +276,18 @@ export const DOCUMENTOS_CONTENIDO = {
           'El analista razona sobre el contenido de este manual, el glosario T-* y los protocolos asociados. Sus respuestas están limitadas por lo que el dispositivo sabe — no consulta nada externo. Útil para evaluar material entrante de fixer, decisiones de campo no documentadas, y cruce contra glosario antes de transmitir.',
           'Acceso operativo: tab HERRAMIENTAS de Bitácora, entrada "Analista de guardia" (OP-TOOL-2029-003). El widget vive como herramienta del kit, no como sección de este manual — la separación responde al principio offline-first: el analista funciona sin internet, sin servidor, sin dependencia externa.'
         ]
+      },
+      {
+        titulo: 'Nota sobre alcance institucional y vacío ecosistémico',
+        parrafos: [
+          'Este manual es un documento interno de un medio. No es un estándar sectorial, no tiene fuerza normativa fuera de Infobae, y no fue validado por ningún organismo de seguridad para periodistas ni por ninguna institución de defensa.',
+          'A la fecha de publicación no se registra doctrina operativa equivalente sobre localización pasiva por WPS o detección RF de terminales satelitales en ACOS Alliance, CPJ, RSF ni UNESCO. La investigación técnica que sustenta T-WPS y T-RF (Rye & Levin, IEEE S&P 2024) fue publicada hace cinco años sin traducción institucional a protocolo de campo.',
+          'La pregunta que este documento no puede responder por sí solo es quién debería estandarizar el protocolo a escala. Un manual de un medio argentino no sustituye un marco compartido entre medios, organizaciones de formación HEFAT, proveedores de equipamiento, y agencias de seguridad digital. Ese marco no existe. Este documento funciona mientras tanto.',
+          'Si este manual llega a manos de personal de otras organizaciones y resulta útil, puede ser reproducido y adaptado sin autorización previa. Citar como: Infobae, OP-SEC-2029-004, edición 4.2. Errores y omisiones: seg.digital@infobae.interna.'
+        ]
       }
     ],
-    fuentes: 'Rye & Levin, IEEE S&P 2024, arXiv:2405.14975 (WPS/Starlink). ANMaC: Ley 20.429, Decreto 395/75, Res. 83/2023, Disp. RENAR 883/11. ENACOM: Res. 955/2025 (Starlink), RAMATEL. RSF España: rsf-es.org/seguridad-para-periodistas. Dart Center / JTSN: dartcenter.org. FOPEA: fopea.org.'
+    fuentes: 'Rye & Levin, IEEE S&P 2024, arXiv:2405.14975 (WPS/Starlink). ANMaC: Ley 20.429, Decreto 395/75, Res. 83/2023, Disp. RENAR 883/11. ENACOM: Res. 955/2025 (Starlink), RAMATEL. Sam Gregory, Journalism Practice 2022 (C2PA/deepfakes). IPTC Origin Verifier: originverify.iptc.org. RSF España: rsf-es.org/seguridad-para-periodistas. Dart Center / JTSN: dartcenter.org. FOPEA: fopea.org. Citizen Lab y Access Now (T-SPY). FLIP Colombia, SNTP Venezuela. ACOS Alliance, CPJ Safety Kit. Para versiones anteriores y aviso WPS-2029-04: archivo Seguridad Digital.'
   }
 };
 
