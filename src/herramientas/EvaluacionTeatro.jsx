@@ -3,6 +3,7 @@ import teatrosData from '../data/teatros.json';
 import gabineteData from '../data/gabinete.json';
 import directorioData from '../data/directorio.json';
 import { themeFor, sizesFor, SERIF, MONO } from '../theme';
+import { ToolHeader, ToolCallout } from './_shared.jsx';
 
 export default function EvaluacionTeatro({ modo, onOpenDoc, onOpenPerfil }) {
   const t = themeFor(modo);
@@ -21,21 +22,15 @@ export default function EvaluacionTeatro({ modo, onOpenDoc, onOpenPerfil }) {
 
   return (
     <div>
-      <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
-        INFOBAE · HERRAMIENTAS · OP-TOOL-2029-006
-      </div>
-      <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
-        Evaluación por teatro
-      </h1>
-      <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '20px', lineHeight: 1.5 }}>
-        Parte preliminar de evaluación operativa · amenazas aplicables, protocolos obligatorios, equipamiento requerido y contactos clave por destino.
-      </div>
-
-      <div style={{ padding: '10px 14px', backgroundColor: t.bgAccent, borderLeft: '2px solid ' + t.borderStrong, marginBottom: '20px' }}>
-        <div style={{ fontFamily: MONO, fontSize: '11.5px', color: t.text, lineHeight: 1.55 }}>
-          Elegir teatro. La evaluación cruza el glosario T-* con la doctrina aplicable y el gabinete de campo. El parte se entrega firmado por seg. digital + operaciones + legales antes de cada despliegue.
-        </div>
-      </div>
+      <ToolHeader
+        codigo="OP-TOOL-2029-006"
+        titulo="Evaluación por teatro"
+        subtitulo="Parte preliminar de evaluación operativa · amenazas aplicables, protocolos obligatorios, equipamiento requerido y contactos clave por destino."
+        modo={modo}
+      />
+      <ToolCallout modo={modo}>
+        Elegir teatro. La evaluación cruza el glosario T-* con la doctrina aplicable y el gabinete de campo. El parte se entrega firmado por seg. digital + operaciones + legales antes de cada despliegue.
+      </ToolCallout>
 
       <div style={{
         display: 'grid',

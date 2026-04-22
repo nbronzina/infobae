@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { themeFor, sizesFor, SERIF, MONO } from '../theme';
+import { ToolHeader, ToolCallout } from './_shared.jsx';
 
 const SYSTEM_PROMPT_TEMPLATE = (consulta) => `Sos el "analista de guardia" integrado al manual operativo OP-SEC-2029-004 de Infobae. Tu rol es asistir a corresponsales y personal de campo evaluando material de interés (video, audio, imagen, texto, testimonio) contra el glosario de amenazas vigente. El usuario consulta desde la sección 07 del manual.
 
@@ -62,21 +63,15 @@ export default function Analista({ modo }) {
 
   return (
     <div>
-      <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
-        INFOBAE · HERRAMIENTAS · OP-TOOL-2029-003
-      </div>
-      <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
-        Analista de guardia
-      </h1>
-      <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '20px', lineHeight: 1.5 }}>
-        Módulo de consulta operacional para casos no cubiertos explícitamente por el manual. Asistencia orientativa — no sustituye consulta a Seguridad Digital ni decisión editorial humana.
-      </div>
-
-      <div style={{ padding: '10px 14px', backgroundColor: t.bgAccent, borderLeft: '2px solid ' + t.borderStrong, marginBottom: '20px' }}>
-        <div style={{ fontFamily: MONO, fontSize: '11.5px', color: t.text, lineHeight: 1.55 }}>
-          Cada consulta queda registrada en OP-SEC-LOG con timestamp, usuario y contenido. La respuesta evalúa contra el glosario T-* y los protocolos vigentes — no consulta nada externo.
-        </div>
-      </div>
+      <ToolHeader
+        codigo="OP-TOOL-2029-003"
+        titulo="Analista de guardia"
+        subtitulo="Módulo de consulta operacional para casos no cubiertos explícitamente por el manual. Asistencia orientativa — no sustituye consulta a Seguridad Digital ni decisión editorial humana."
+        modo={modo}
+      />
+      <ToolCallout modo={modo}>
+        Cada consulta queda registrada en OP-SEC-LOG con timestamp, usuario y contenido. La respuesta evalúa contra el glosario T-* y los protocolos vigentes — no consulta nada externo.
+      </ToolCallout>
 
       <div style={{ backgroundColor: t.bgCard, border: '1px solid ' + t.border, padding: isCampo ? '18px 16px' : '20px 24px', marginBottom: '20px' }}>
         <label style={{ display: 'block', fontFamily: MONO, fontSize: '10.5px', color: t.textMeta, letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '8px' }}>

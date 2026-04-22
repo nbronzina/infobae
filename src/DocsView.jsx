@@ -44,20 +44,32 @@ export default function DocsView({ modo, request }) {
 
   return (
     <div>
-      <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
-        INFOBAE · DOCUMENTACIÓN · {total} documentos
-      </div>
-      <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
-        Doctrina y protocolos
-      </h1>
-      <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '24px', lineHeight: 1.5 }}>
-        Archivo operativo completo. Los documentos se consultan por carpeta; el contenido se abre al seleccionar uno.
-      </div>
-
       {isCampo ? (
-        <CampoIndex seccs={DOCUMENTOS_SECCIONES} activo={activo} setActivo={setActivo} t={t} s={s} />
+        <>
+          <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
+            INFOBAE · DOCUMENTACIÓN · {total} documentos
+          </div>
+          <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
+            Doctrina y protocolos
+          </h1>
+          <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '24px', lineHeight: 1.5 }}>
+            Archivo operativo completo. Los documentos se consultan por carpeta; el contenido se abre al seleccionar uno.
+          </div>
+          <CampoIndex seccs={DOCUMENTOS_SECCIONES} activo={activo} setActivo={setActivo} t={t} s={s} />
+        </>
       ) : (
-        <RedaccionIndex seccs={DOCUMENTOS_SECCIONES} activo={activo} setActivo={setActivo} t={t} s={s} />
+        <>
+          <h1 style={{ fontFamily: SERIF, fontSize: '32px', fontWeight: 500, margin: '0 0 12px', letterSpacing: '-0.015em', color: t.text, lineHeight: 1.15 }}>
+            Doctrina y protocolos
+          </h1>
+          <div style={{ fontFamily: SERIF, fontSize: 15, color: t.textSecondary, fontStyle: 'italic', marginBottom: '12px', lineHeight: 1.6, maxWidth: '38em' }}>
+            Índice general del archivo operativo. {total} documentos en siete carpetas. La pieza completa se abre al seleccionar un título.
+          </div>
+          <div style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta, letterSpacing: '0.04em', marginBottom: '36px' }}>
+            edición {new Date().getUTCFullYear()} · uso interno · l. mondini
+          </div>
+          <RedaccionIndex seccs={DOCUMENTOS_SECCIONES} activo={activo} setActivo={setActivo} t={t} s={s} />
+        </>
       )}
     </div>
   );
@@ -117,21 +129,19 @@ function CampoIndex({ seccs, activo, setActivo, t, s }) {
   );
 }
 
-function RedaccionIndex({ seccs, activo, setActivo, t, s }) {
+function RedaccionIndex({ seccs, activo, setActivo, t }) {
   return (
     <div>
-      {seccs.map(sec => (
-        <section key={sec.key} style={{ marginBottom: '30px' }}>
-          <header style={{ marginBottom: '12px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px solid ' + t.borderStrong, paddingBottom: '6px', marginBottom: '4px', gap: '10px', flexWrap: 'wrap' }}>
-              <h2 style={{ fontFamily: SERIF, fontSize: '18px', fontWeight: 500, margin: 0, letterSpacing: '-0.01em', color: t.text }}>
-                {sec.titulo}
-              </h2>
-              <span style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta }}>
-                {sec.docs.length} {sec.docs.length === 1 ? 'documento' : 'documentos'}
-              </span>
+      {seccs.map((sec, sIdx) => (
+        <section key={sec.key} style={{ marginBottom: '40px' }}>
+          <header style={{ marginBottom: '18px' }}>
+            <div style={{ fontFamily: SERIF, fontSize: '12px', fontStyle: 'italic', color: t.textMeta, marginBottom: '4px' }}>
+              parte {String(sIdx + 1).padStart(2, '0')}
             </div>
-            <div style={{ fontFamily: SERIF, fontSize: '12.5px', color: t.textSecondary, fontStyle: 'italic' }}>
+            <h2 style={{ fontFamily: SERIF, fontSize: '24px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text, lineHeight: 1.2 }}>
+              {sec.titulo}
+            </h2>
+            <div style={{ fontFamily: SERIF, fontSize: '13.5px', color: t.textSecondary, fontStyle: 'italic', maxWidth: '38em', lineHeight: 1.55 }}>
               {sec.subtitulo}
             </div>
           </header>
@@ -139,34 +149,26 @@ function RedaccionIndex({ seccs, activo, setActivo, t, s }) {
           <ol style={{ listStyle: 'none', margin: 0, padding: 0 }}>
             {sec.docs.map(d => {
               const sel = activo === d.key;
-              const chip = estadoChipColors(d.estado, t);
               return (
-                <li key={d.key} style={{ borderBottom: '1px dotted ' + t.border }}>
+                <li key={d.key}>
                   <button type="button" onClick={() => setActivo(d.key)} style={{
                     width: '100%', textAlign: 'left', cursor: 'pointer',
-                    background: sel ? t.bgAccent : 'transparent', border: 'none',
-                    padding: '10px 6px',
-                    color: t.text,
-                    display: 'grid',
-                    gridTemplateColumns: '160px 1fr 110px 60px',
-                    gap: '14px', alignItems: 'baseline'
+                    background: 'transparent', border: 'none',
+                    padding: '10px 0', color: t.text,
+                    display: 'flex', alignItems: 'baseline', gap: '12px'
                   }}>
-                    <span style={{ fontFamily: MONO, fontSize: '11px', color: sel ? t.text : t.textMeta, fontWeight: sel ? 500 : 400, letterSpacing: '0.03em' }}>
-                      {d.codigo}
-                    </span>
-                    <span style={{ fontFamily: SERIF, fontSize: '14.5px', fontWeight: sel ? 500 : 400, lineHeight: 1.4 }}>
+                    <span style={{ fontFamily: SERIF, fontSize: '15.5px', fontWeight: sel ? 500 : 400, fontStyle: sel ? 'normal' : 'italic', color: t.text, lineHeight: 1.45, flex: '0 1 auto' }}>
                       {d.titulo}
                     </span>
-                    <span style={{
-                      fontFamily: MONO, fontSize: '9.5px', letterSpacing: '0.04em', textTransform: 'uppercase',
-                      padding: '2px 7px', backgroundColor: chip.bg, color: chip.fg,
-                      justifySelf: 'start', alignSelf: 'center'
-                    }}>
-                      {ESTADO_LABEL[d.estado]}
+                    <span style={{ flex: '1 1 auto', borderBottom: '1px dotted ' + t.border, transform: 'translateY(-4px)', minWidth: '20px' }} />
+                    <span style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, letterSpacing: '0.03em', flex: '0 0 auto' }}>
+                      {d.codigo}
                     </span>
-                    <span style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta, justifySelf: 'end' }}>
-                      v{d.version}
-                    </span>
+                    {d.estado !== 'vigente' && (
+                      <span style={{ fontFamily: SERIF, fontSize: '11px', fontStyle: 'italic', color: d.estado === 'en_revision' ? t.revision : t.textMeta, flex: '0 0 auto' }}>
+                        {d.estado === 'en_revision' ? 'en revisión' : 'borrador'}
+                      </span>
+                    )}
                   </button>
                 </li>
               );
@@ -186,14 +188,21 @@ function PerfilView({ personaKey, modo, onBack }) {
 
   return (
     <div>
-      <button type="button" onClick={onBack} style={{
-        background: 'none', border: '1px solid ' + t.border, cursor: 'pointer',
-        padding: isCampo ? '10px 14px' : '6px 12px',
-        fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase',
-        color: t.textSecondary, marginBottom: '20px', minHeight: s.touchMin
-      }}>
-        ← Volver al índice
-      </button>
+      {isCampo ? (
+        <button type="button" onClick={onBack} style={{
+          background: 'none', border: '1px solid ' + t.border, cursor: 'pointer',
+          padding: '10px 14px',
+          fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.04em', textTransform: 'uppercase',
+          color: t.textSecondary, marginBottom: '20px', minHeight: s.touchMin
+        }}>← Volver al índice</button>
+      ) : (
+        <button type="button" onClick={onBack} style={{
+          background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+          fontFamily: SERIF, fontSize: '13px', fontStyle: 'italic',
+          color: t.textSecondary, marginBottom: '32px',
+          borderBottom: '1px dotted ' + t.border, paddingBottom: '2px'
+        }}>← volver al índice</button>
+      )}
 
       {!persona && (
         <div style={{ padding: '24px', backgroundColor: t.bgAccent, borderLeft: '2px solid ' + t.revision }}>
@@ -207,29 +216,45 @@ function PerfilView({ personaKey, modo, onBack }) {
       )}
 
       {persona && (
-        <article style={{
-          backgroundColor: t.bgCard,
-          border: isCampo ? 'none' : '1px solid ' + t.border,
-          padding: isCampo ? 0 : '40px 48px'
-        }}>
-          <header style={{ borderBottom: '1px solid ' + t.border, paddingBottom: isCampo ? '20px' : '24px', marginBottom: isCampo ? '24px' : '32px' }}>
-            <div style={{ fontFamily: MONO, fontSize: '11px', letterSpacing: '0.06em', color: t.textMeta, marginBottom: '10px', textTransform: 'uppercase' }}>
-              INFOBAE · DIRECTORIO INTERNO · {persona.key}
-            </div>
-            <h1 style={{ fontFamily: SERIF, fontSize: isCampo ? '24px' : '28px', fontWeight: 500, margin: '0 0 8px', letterSpacing: '-0.01em', color: t.text }}>
-              {persona.nombre}
-            </h1>
-            <div style={{ fontFamily: SERIF, fontSize: isCampo ? '14.5px' : '15.5px', color: t.textSecondary, fontStyle: 'italic', marginBottom: '12px', lineHeight: 1.5 }}>
-              {persona.rol}
-            </div>
-            <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, lineHeight: 1.7 }}>
-              Base: {persona.base}<br/>
-              Contacto: {persona.contacto}
-              {Array.isArray(persona.aliases) && persona.aliases.length > 0 && (
-                <><br/>Aliases: {persona.aliases.join(' · ')}</>
-              )}
-            </div>
-          </header>
+        <article style={{ background: 'transparent', border: 'none', padding: 0 }}>
+          {isCampo ? (
+            <header style={{ borderBottom: '1px solid ' + t.border, paddingBottom: '20px', marginBottom: '24px' }}>
+              <div style={{ fontFamily: MONO, fontSize: '11px', letterSpacing: '0.06em', color: t.textMeta, marginBottom: '10px', textTransform: 'uppercase' }}>
+                INFOBAE · DIRECTORIO INTERNO · {persona.key}
+              </div>
+              <h1 style={{ fontFamily: SERIF, fontSize: '24px', fontWeight: 500, margin: '0 0 8px', letterSpacing: '-0.01em', color: t.text }}>
+                {persona.nombre}
+              </h1>
+              <div style={{ fontFamily: SERIF, fontSize: '14.5px', color: t.textSecondary, fontStyle: 'italic', marginBottom: '12px', lineHeight: 1.5 }}>
+                {persona.rol}
+              </div>
+              <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, lineHeight: 1.7 }}>
+                Base: {persona.base}<br/>
+                Contacto: {persona.contacto}
+                {Array.isArray(persona.aliases) && persona.aliases.length > 0 && (
+                  <><br/>Aliases: {persona.aliases.join(' · ')}</>
+                )}
+              </div>
+            </header>
+          ) : (
+            <header style={{ marginBottom: '40px' }}>
+              <div style={{ fontFamily: SERIF, fontSize: '12.5px', fontStyle: 'italic', color: t.textMeta, marginBottom: '14px' }}>
+                directorio interno · {persona.key}
+              </div>
+              <h1 style={{ fontFamily: SERIF, fontSize: '36px', fontWeight: 500, margin: '0 0 14px', letterSpacing: '-0.02em', lineHeight: 1.1, color: t.text }}>
+                {persona.nombre}
+              </h1>
+              <div style={{ fontFamily: SERIF, fontSize: '17px', color: t.textSecondary, fontStyle: 'italic', marginBottom: '24px', lineHeight: 1.45, maxWidth: '34em' }}>
+                {persona.rol}
+              </div>
+              <div style={{ borderTop: '1px solid ' + t.border, paddingTop: '14px', fontFamily: SERIF, fontSize: '13px', color: t.textMeta, lineHeight: 1.8, fontStyle: 'italic' }}>
+                Base: {persona.base} · Contacto: {persona.contacto}
+                {Array.isArray(persona.aliases) && persona.aliases.length > 0 && (
+                  <><br/>Aliases: {persona.aliases.join(' · ')}</>
+                )}
+              </div>
+            </header>
+          )}
 
           {persona.libreta && <PerfilLibreta libreta={persona.libreta} modo={modo} />}
         </article>
@@ -252,17 +277,28 @@ function PerfilLibreta({ libreta, modo }) {
   return (
     <>
       {libreta.ingreso && (
-        <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, marginBottom: isCampo ? '20px' : '24px' }}>
+        <div style={{
+          fontFamily: isCampo ? MONO : SERIF,
+          fontStyle: isCampo ? 'normal' : 'italic',
+          fontSize: isCampo ? '11px' : '13px',
+          color: t.textMeta, marginBottom: isCampo ? '20px' : '28px'
+        }}>
           Ingreso al equipo: {libreta.ingreso}
         </div>
       )}
 
       {SECCIONES.map(sec => (
-        <section key={sec.key} style={{ marginBottom: isCampo ? '22px' : '28px' }}>
-          <div style={{ fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
-            {sec.titulo}
-          </div>
-          <ul style={{ fontFamily: SERIF, fontSize: '14.5px', lineHeight: 1.6, color: t.text, margin: 0, paddingLeft: '20px', maxWidth: isCampo ? 'none' : '38em' }}>
+        <section key={sec.key} style={{ marginBottom: isCampo ? '22px' : '32px' }}>
+          {isCampo ? (
+            <div style={{ fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
+              {sec.titulo}
+            </div>
+          ) : (
+            <h2 style={{ fontFamily: SERIF, fontSize: '17px', fontWeight: 500, fontStyle: 'italic', margin: '0 0 10px', color: t.text, letterSpacing: '-0.005em' }}>
+              {sec.titulo}
+            </h2>
+          )}
+          <ul style={{ fontFamily: SERIF, fontSize: '14.5px', lineHeight: 1.65, color: t.text, margin: 0, paddingLeft: '20px', maxWidth: isCampo ? 'none' : '38em' }}>
             {sec.valores.map((v, i) => (<li key={i} style={{ marginBottom: '4px' }}>{v}</li>))}
           </ul>
         </section>
@@ -270,9 +306,15 @@ function PerfilLibreta({ libreta, modo }) {
 
       {Array.isArray(libreta.despliegues) && libreta.despliegues.length > 0 && (
         <section>
-          <div style={{ fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
-            Despliegues
-          </div>
+          {isCampo ? (
+            <div style={{ fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
+              Despliegues
+            </div>
+          ) : (
+            <h2 style={{ fontFamily: SERIF, fontSize: '17px', fontWeight: 500, fontStyle: 'italic', margin: '0 0 10px', color: t.text, letterSpacing: '-0.005em' }}>
+              Despliegues
+            </h2>
+          )}
           <div style={{ border: '1px solid ' + t.border }}>
             {libreta.despliegues.map((d, i) => (
               <div key={i} style={{

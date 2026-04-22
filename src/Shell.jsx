@@ -160,6 +160,11 @@ function ViewSwitch({ activeView, modo, onOpenDoc, onOpenPerfil, docRequest }) {
 }
 
 function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpenPerfil, docRequest }) {
+  // Sin header. Sin chrome arriba. Pantalla completa con tabs fijos
+  // al borde inferior. Long-press en cualquier tab activa el toggle
+  // de modo — se aprovecha el único elemento de UI presente en el
+  // chrome para no romper la promesa visual de "sin header".
+  const tabsLongPress = useLongPress(onToggleModo, 700);
   return (
     <div
       style={{
@@ -168,18 +173,17 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
         fontFamily: "'IBM Plex Sans', system-ui, sans-serif"
       }}
     >
-      <header style={{ padding: '22px 20px 10px' }}>
-        <Wordmark onLongPress={onToggleModo} darkBg />
-      </header>
-      <main style={{ flex: 1, padding: '14px 20px 92px', overflowY: 'auto' }}>
+      <main style={{ flex: 1, padding: '20px 16px 92px', overflowY: 'auto' }}>
         <ViewSwitch activeView={activeView} modo="campo" onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} docRequest={docRequest} />
       </main>
       <nav
+        {...tabsLongPress.handlers}
         style={{
           position: 'fixed', left: 0, right: 0, bottom: 0,
-          backgroundColor: '#0d0d0d', borderTop: '1px solid #1f1f1f',
+          backgroundColor: '#0d0d0d', borderTop: '1px solid #262626',
           display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)',
-          paddingBottom: 'env(safe-area-inset-bottom, 0px)'
+          paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+          userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none'
         }}
       >
         {TABS.map(t => {
@@ -191,10 +195,10 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
               onClick={() => setActiveView(t.id)}
               style={{
                 border: 'none', background: 'transparent', cursor: 'pointer',
-                padding: '14px 6px', minHeight: '56px',
+                padding: '14px 6px', minHeight: '60px',
                 color: active ? '#f18b1e' : '#8a8472',
                 fontFamily: "'JetBrains Mono', Consolas, monospace",
-                fontSize: '10px', letterSpacing: '0.08em', fontWeight: active ? 600 : 400,
+                fontSize: '9.5px', letterSpacing: '0.1em', fontWeight: active ? 600 : 400,
                 borderTop: active ? '1px solid #f18b1e' : '1px solid transparent',
                 marginTop: '-1px'
               }}
@@ -213,18 +217,18 @@ function RedaccionShell({ activeView, setActiveView, onToggleModo, onOpenDoc, on
     <div
       style={{
         minHeight: '100vh', backgroundColor: '#f8f5ec', color: '#1f1f1f',
-        fontFamily: "'IBM Plex Sans', system-ui, sans-serif"
+        fontFamily: "'Fraunces', Georgia, serif"
       }}
     >
       <header
         style={{
-          maxWidth: '680px', margin: '0 auto', padding: '28px 32px 18px',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          flexWrap: 'wrap', gap: '16px', borderBottom: '1px solid #d9d4c2'
+          maxWidth: '680px', margin: '0 auto', padding: '32px 36px 14px',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+          flexWrap: 'wrap', gap: '14px'
         }}
       >
         <Wordmark onLongPress={onToggleModo} />
-        <nav style={{ display: 'flex', gap: '18px' }}>
+        <nav style={{ display: 'flex', gap: '20px', alignItems: 'baseline' }}>
           {TABS.map(t => {
             const active = activeView === t.id;
             return (
@@ -234,21 +238,26 @@ function RedaccionShell({ activeView, setActiveView, onToggleModo, onOpenDoc, on
                 onClick={() => setActiveView(t.id)}
                 style={{
                   border: 'none', background: 'transparent', cursor: 'pointer',
-                  padding: '6px 2px',
-                  color: active ? '#1f1f1f' : '#6b6454',
-                  fontFamily: "'JetBrains Mono', Consolas, monospace",
-                  fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase',
-                  fontWeight: active ? 600 : 400,
+                  padding: '4px 0',
+                  color: active ? '#1f1f1f' : '#8a8472',
+                  fontFamily: "'Fraunces', Georgia, serif",
+                  fontSize: '13px', letterSpacing: '0.01em',
+                  fontStyle: active ? 'normal' : 'italic',
+                  fontWeight: active ? 500 : 400,
+                  textTransform: 'lowercase',
                   borderBottom: active ? '1px solid #1f1f1f' : '1px solid transparent'
                 }}
               >
-                {t.label}
+                {t.label.toLowerCase()}
               </button>
             );
           })}
         </nav>
       </header>
-      <main style={{ maxWidth: '680px', margin: '0 auto', padding: '32px 32px 72px' }}>
+      <div style={{ maxWidth: '680px', margin: '0 auto', padding: '0 36px' }}>
+        <div style={{ borderTop: '1px solid #c9c1ab', height: '1px' }} />
+      </div>
+      <main style={{ maxWidth: '680px', margin: '0 auto', padding: '36px 36px 72px' }}>
         <ViewSwitch activeView={activeView} modo="redaccion" onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} docRequest={docRequest} />
       </main>
     </div>

@@ -32,25 +32,24 @@ export default function EstadoView({ modo }) {
 
   const flags = computeFlags(snapshot);
 
-  return (
-    <div>
-      <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
-        INFOBAE · ESTADO OPERACIONAL · MONDINI.L
-      </div>
-      <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
-        Estado del operador
-      </h1>
-      <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '24px', lineHeight: 1.5 }}>
-        Lectura local de variables de operación. Lo que el dispositivo sabe sobre la condición actual del corresponsal y el estado de los partes en curso.
-      </div>
-
-      {isCampo ? (
+  if (isCampo) {
+    return (
+      <div>
+        <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
+          INFOBAE · ESTADO OPERACIONAL · MONDINI.L
+        </div>
+        <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
+          Estado del operador
+        </h1>
+        <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '24px', lineHeight: 1.5 }}>
+          Lectura local de variables de operación. Lo que el dispositivo sabe sobre la condición actual.
+        </div>
         <CampoLayout snapshot={snapshot} flags={flags} t={t} s={s} />
-      ) : (
-        <RedaccionLayout snapshot={snapshot} flags={flags} t={t} s={s} />
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
+
+  return <RedaccionLayout snapshot={snapshot} flags={flags} t={t} s={s} />;
 }
 
 function readSnapshot() {
@@ -137,43 +136,52 @@ function CampoLayout({ snapshot, flags, t, s }) {
 // MODO REDACCIÓN — panel tipo informe
 // ============================================================
 
-function RedaccionLayout({ snapshot, flags, t, s }) {
+function RedaccionLayout({ snapshot, flags, t }) {
   const filas = buildFilas(flags);
+  const fechaLectura = '2029-04-17';
   return (
-    <article style={{ backgroundColor: t.bgCard, border: '1px solid ' + t.border, padding: '32px 36px', marginBottom: '20px' }}>
-      <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, letterSpacing: '0.06em', marginBottom: '20px' }}>
-        Snapshot del estado operacional · lectura local
+    <article>
+      <h1 style={{ fontFamily: SERIF, fontSize: '32px', fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.015em', color: t.text, lineHeight: 1.15 }}>
+        Estado del operador
+      </h1>
+      <div style={{ fontFamily: SERIF, fontSize: 15, color: t.textSecondary, fontStyle: 'italic', marginBottom: '32px', lineHeight: 1.6, maxWidth: '38em' }}>
+        Lectura local de variables de operación al momento de abrir esta vista.
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr 110px', gap: '14px 20px', borderTop: '1px solid ' + t.border }}>
-        {filas.map(f => (
-          <React.Fragment key={f.label}>
-            <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, letterSpacing: '0.04em', textTransform: 'uppercase', paddingTop: '12px' }}>
-              {f.label}
-            </div>
-            <div style={{ paddingTop: '12px' }}>
-              <div style={{ fontFamily: SERIF, fontSize: '14.5px', color: t.text, lineHeight: 1.55 }}>
-                {f.valor}
-              </div>
-              {f.detalle && (
-                <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, lineHeight: 1.6, marginTop: '4px' }}>
-                  {f.detalle}
-                </div>
-              )}
-            </div>
-            <div style={{ paddingTop: '14px', justifySelf: 'end' }}>
-              {f.chip && (
-                <span style={{ fontFamily: MONO, fontSize: '9.5px', padding: '2px 7px', letterSpacing: '0.04em', textTransform: 'uppercase', color: f.color || t.textMeta, backgroundColor: f.chipBg || t.bgElevated }}>
-                  {f.chip}
-                </span>
-              )}
-            </div>
-            <div style={{ gridColumn: '1 / -1', borderBottom: '1px solid ' + t.border }} />
-          </React.Fragment>
-        ))}
+      <div style={{ fontFamily: SERIF, fontSize: '13.5px', color: t.text, lineHeight: 1.8, marginBottom: '32px' }}>
+        <div><span style={{ color: t.textMeta }}>Fecha de lectura:</span> {fechaLectura}</div>
+        <div><span style={{ color: t.textMeta }}>Operador:</span> l. mondini · base Buenos Aires</div>
+        <div><span style={{ color: t.textMeta }}>Origen:</span> snapshot local · sin sync registrada</div>
       </div>
 
-      <FooterMeta t={t} s={s} redaccion />
+      <div style={{ borderTop: '1px solid ' + t.border, marginBottom: '24px' }} />
+
+      {filas.map(f => (
+        <section key={f.label} style={{ marginBottom: '26px', maxWidth: '38em' }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: '17px', fontWeight: 500, fontStyle: 'italic', margin: '0 0 6px', color: t.text, letterSpacing: '-0.005em' }}>
+            {f.label}
+          </h2>
+          <p style={{ fontFamily: SERIF, fontSize: '15px', lineHeight: 1.7, color: t.text, margin: '0 0 4px' }}>
+            {f.valor}
+            {f.chip && f.chip !== '—' && (
+              <span style={{ fontFamily: SERIF, fontSize: '13px', fontStyle: 'italic', color: f.color || t.textMeta, marginLeft: '8px' }}>
+                — {f.chip}
+              </span>
+            )}
+          </p>
+          {f.detalle && (
+            <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, lineHeight: 1.6 }}>
+              {f.detalle}
+            </div>
+          )}
+        </section>
+      ))}
+
+      <div style={{ borderTop: '1px solid ' + t.border, paddingTop: '20px', marginTop: '12px' }}>
+        <div style={{ fontFamily: SERIF, fontSize: '12.5px', color: t.textMeta, lineHeight: 1.7, fontStyle: 'italic', maxWidth: '38em' }}>
+          Las variables marcadas como placeholder se conectan en futuras iteraciones — estado mental al sistema de misiones, nivel de preparación al checklist + manual de teatro, última sync al kit de transferencia.
+        </div>
+      </div>
     </article>
   );
 }
