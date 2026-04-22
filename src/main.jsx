@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
+import Shell from './Shell.jsx';
 import escenariosData from './data/escenarios.json';
 
 const VALID_SCENARIOS = escenariosData.map(e => e.slug);
@@ -294,7 +294,7 @@ function Router() {
   }, []);
 
   if (!scenario) return <ScenarioIndex />;
-  return <App scenario={scenario} />;
+  return <Shell scenario={scenario} />;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
