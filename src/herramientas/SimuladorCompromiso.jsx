@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import simuladorData from '../data/simulador_compromiso.json';
 import { themeFor, sizesFor, SERIF, MONO } from '../theme';
+import { ToolHeader, ToolCallout } from './_shared.jsx';
 
 export default function SimuladorCompromiso({ modo, onOpenDoc }) {
   const t = themeFor(modo);
@@ -36,21 +37,15 @@ export default function SimuladorCompromiso({ modo, onOpenDoc }) {
 
   return (
     <div>
-      <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
-        INFOBAE · HERRAMIENTAS · OP-TOOL-2029-008
-      </div>
-      <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
-        Simulador de compromiso de dispositivo
-      </h1>
-      <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '20px', lineHeight: 1.5 }}>
-        Ejercicio de respuesta frente a un compromiso simulado. La evaluación contrasta cada decisión con el protocolo OP-SEC-2029-003 y el glosario T-SPY / T-CKP. El parte se firma por seguridad digital y formación al cierre del ejercicio.
-      </div>
-
-      <div style={{ padding: '10px 14px', backgroundColor: t.bgAccent, borderLeft: '2px solid ' + t.borderStrong, marginBottom: '20px' }}>
-        <div style={{ fontFamily: MONO, fontSize: '11.5px', color: t.text, lineHeight: 1.55 }}>
-          Elegir un escenario. Cada escenario plantea tres puntos de decisión. Las respuestas pueden revisarse antes de emitir el parte. Una vez emitido, queda registrado en OP-SEC-LOG como ejercicio de formación — no como incidente operativo.
-        </div>
-      </div>
+      <ToolHeader
+        codigo="OP-TOOL-2029-008"
+        titulo="Simulador de compromiso de dispositivo"
+        subtitulo="Ejercicio de respuesta frente a un compromiso simulado. La evaluación contrasta cada decisión con el protocolo OP-SEC-2029-003 y el glosario T-SPY / T-CKP. El parte se firma por seguridad digital y formación al cierre del ejercicio."
+        modo={modo}
+      />
+      <ToolCallout modo={modo}>
+        Elegir un escenario. Cada escenario plantea tres puntos de decisión. Las respuestas pueden revisarse antes de emitir el parte. Una vez emitido, queda registrado en OP-SEC-LOG como ejercicio de formación — no como incidente operativo.
+      </ToolCallout>
 
       {/* En campo: si no hay escenario seleccionado, solo lista. Si hay uno, solo ese + botón volver.
           En redacción: lista arriba siempre visible, escenario abajo. */}

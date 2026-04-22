@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import checklistData from '../data/checklist_predespliegue.json';
 import { themeFor, sizesFor, SERIF, SANS, MONO } from '../theme';
+import { ToolHeader, ToolCallout } from './_shared.jsx';
 
 export default function Checklist({ modo, onOpenDoc }) {
   const t = themeFor(modo);
@@ -35,15 +36,12 @@ export default function Checklist({ modo, onOpenDoc }) {
 
   return (
     <div>
-      <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
-        INFOBAE · HERRAMIENTAS · OP-TOOL-2029-007
-      </div>
-      <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
-        Checklist pre-despliegue
-      </h1>
-      <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '20px', lineHeight: 1.5 }}>
-        Parte de aptitud operativa para salida internacional. El parte se emite con firma conjunta cuando todos los obligatorios están marcados. Items opcionales quedan registrados con nota.
-      </div>
+      <ToolHeader
+        codigo="OP-TOOL-2029-007"
+        titulo="Checklist pre-despliegue"
+        subtitulo="Parte de aptitud operativa para salida internacional. El parte se emite con firma conjunta cuando todos los obligatorios están marcados. Items opcionales quedan registrados con nota."
+        modo={modo}
+      />
 
       <div style={{
         padding: '12px 16px', backgroundColor: t.bgAccent, borderLeft: '2px solid ' + (listo ? t.vigente : t.revision),

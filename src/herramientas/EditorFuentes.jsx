@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import teatrosData from '../data/teatros.json';
 import directorioData from '../data/directorio.json';
 import { themeFor, sizesFor, SERIF, MONO } from '../theme';
+import { ToolHeader, ToolCallout } from './_shared.jsx';
 
 const NIVEL_PROTECCION = {
   background: { label: 'Background', glosa: 'Atribuible al rol o sector sin identificación específica.' },
@@ -136,18 +137,20 @@ export default function EditorFuentes({ modo, onOpenDoc, onOpenPerfil }) {
 
   return (
     <div>
-      <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
-        INFOBAE · HERRAMIENTAS · OP-TOOL-2029-009
-      </div>
-      <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
-        Registro de fuentes anónimas
-      </h1>
-      <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '20px', lineHeight: 1.5 }}>
-        Alta de fuente con parte firmado. La identidad real no se registra aquí — sólo el alias.
-      </div>
-
-      <div style={{ padding: '10px 14px', backgroundColor: t.alertBg, borderLeft: '2px solid ' + t.alert, marginBottom: '20px' }}>
-        <div style={{ fontFamily: MONO, fontSize: '11.5px', color: t.text, lineHeight: 1.55 }}>
+      <ToolHeader
+        codigo="OP-TOOL-2029-009"
+        titulo="Registro de fuentes anónimas"
+        subtitulo="Alta de fuente con parte firmado. La identidad real no se registra aquí — sólo el alias."
+        modo={modo}
+      />
+      <div style={{
+        padding: isCampo ? '10px 14px' : '14px 18px',
+        backgroundColor: t.alertBg,
+        borderLeft: '2px solid ' + t.alert,
+        marginBottom: '20px',
+        maxWidth: isCampo ? 'none' : '38em'
+      }}>
+        <div style={{ fontFamily: isCampo ? MONO : SERIF, fontSize: isCampo ? '11.5px' : '13.5px', color: t.text, lineHeight: 1.55, fontStyle: isCampo ? 'normal' : 'italic' }}>
           El alias es un código operativo — nunca el nombre real de la fuente, ni un seudónimo vinculable. La identidad real queda en custodia del periodista a cargo según el protocolo OP-RED-2028-003.
         </div>
       </div>

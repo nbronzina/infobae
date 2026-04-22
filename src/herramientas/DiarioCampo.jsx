@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import teatrosData from '../data/teatros.json';
 import { themeFor, sizesFor, SERIF, MONO } from '../theme';
+import { ToolHeader, ToolCallout } from './_shared.jsx';
 
 const TIPO_ENTRADA = {
   observacion: 'Observación',
@@ -125,21 +126,15 @@ export default function DiarioCampo({ modo, onOpenDoc }) {
 
   return (
     <div>
-      <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
-        INFOBAE · HERRAMIENTAS · OP-TOOL-2029-010
-      </div>
-      <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
-        Diario de campo
-      </h1>
-      <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '20px', lineHeight: 1.5 }}>
-        Bitácora personal del corresponsal. Cada entrada se cruza contra el glosario T-* y queda archivada en el dispositivo. Si una misma amenaza aparece en tres entradas o más dentro de una ventana de siete días, el sistema sugiere revisión del protocolo asociado.
-      </div>
-
-      <div style={{ padding: '10px 14px', backgroundColor: t.bgAccent, borderLeft: '2px solid ' + t.borderStrong, marginBottom: '20px' }}>
-        <div style={{ fontFamily: MONO, fontSize: '11.5px', color: t.text, lineHeight: 1.55 }}>
-          El diario es de uso personal — no circula por el equipo. El cruce de amenazas es orientativo y no reemplaza el reporte formal en OP-SEC-LOG. Entradas con urgencia "alerta" se recomienda duplicarlas en el log auditable.
-        </div>
-      </div>
+      <ToolHeader
+        codigo="OP-TOOL-2029-010"
+        titulo="Diario de campo"
+        subtitulo="Bitácora personal del corresponsal. Cada entrada se cruza contra el glosario T-* y queda archivada en el dispositivo. Si una misma amenaza aparece en tres entradas o más dentro de una ventana de siete días, el sistema sugiere revisión del protocolo asociado."
+        modo={modo}
+      />
+      <ToolCallout modo={modo}>
+        El diario es de uso personal — no circula por el equipo. El cruce de amenazas es orientativo y no reemplaza el reporte formal en OP-SEC-LOG. Entradas con urgencia "alerta" se recomienda duplicarlas en el log auditable.
+      </ToolCallout>
 
       {alertas.length > 0 && (
         <div style={{ marginBottom: '22px' }}>
