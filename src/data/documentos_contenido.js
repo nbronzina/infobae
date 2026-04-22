@@ -160,6 +160,82 @@ export const DOCUMENTOS_CONTENIDO = {
           'Limpiar metadatos de perfiles públicos relevantes al despliegue. Revisar archivo fotográfico accesible.',
           'Coordinar primera ventana de transmisión con redacción. Definir fallback comms.'
         ]
+      },
+      {
+        titulo: 'Glosario de amenazas',
+        texto: 'Las siete categorías documentadas como vigentes en zona primaria de aplicación y territorio doméstico. Actualización continua por el equipo de Seguridad Digital.',
+        bloques: [
+          {
+            codigo: 'T-WPS',
+            titulo: 'Harvesting de geolocalización por Wi-Fi',
+            parrafos: [
+              'Sistemas de posicionamiento Wi-Fi de proveedores comerciales (principalmente Apple WPS) mantienen bases de datos globales de BSSIDs con coordenadas asociadas. Cualquier actor con acceso a esa API puede rastrear la posición histórica y actual de un router o terminal satelital con resolución aproximada de 8 metros.',
+              'Implicación operacional: terminales Starlink con firmware anterior a 2024 y routers de viaje sin randomización de MAC quedan inscriptos en la base como presencia persistente del operador.',
+              'Mitigación: bagging (bolsa Faraday) del router durante traslados. Firmware 2024+ en terminal principal. Añadir _nomap al SSID de cualquier red operada.',
+              'Implicancias estratégicas: regulatoria — presión institucional sobre ENACOM para incluir requisitos de firmware en RAMATEL. Formativa — higiene de MAC y bagging Faraday como módulo base del HEFAT. Operacional — verificación de firmware 2024+ obligatoria en checklist pre-despliegue.'
+            ]
+          },
+          {
+            codigo: 'T-RF',
+            titulo: 'Detección pasiva de emisión RF',
+            parrafos: [
+              'Sensores pasivos de detección de terminales Starlink — caso de referencia reportado: StarLock / Excem Technologies, presentación en FEINDEF Madrid 2025, sin verificación independiente por terceros — permitirían detectar y triangular terminales activos a varios kilómetros sin requerir acceso al sistema de comunicaciones del objetivo. El vector no se resuelve con randomización de BSSID.',
+              'Implicación operacional: el terminal emite mientras transmite. Si la transmisión es continua o prolongada, la presencia es detectable por cualquier actor con el hardware disponible comercialmente.',
+              'Mitigación: ventanas de transmisión cortas (2-5 min). Silencio RF de al menos 60 min entre ventanas. No transmitir en movimiento. Apagar terminal fuera de ventana.',
+              'Implicancias estratégicas: regulatoria — vacío normativo, ningún Estado regula la detección pasiva de terminales LEO. Formativa — ventanas cortas y silencio RF como práctica estándar del corresponsal, no opcional. Operacional — revisión de doctrina de campo cada 12 meses mientras el costo del hardware detector siga bajando.'
+            ]
+          },
+          {
+            codigo: 'T-SPY',
+            titulo: 'Spyware comercial sin interacción',
+            parrafos: [
+              'Herramientas tipo Pegasus y derivados permiten compromiso de dispositivos móviles sin acción del usuario (zero-click). El ecosistema de inteligencia post-transición venezolana combina herramientas heredadas del chavismo con proveedores externos no identificados.',
+              'Implicación operacional: ataques documentados contra periodistas en la región desde 2022. La higiene de uso (no abrir links, no aceptar mensajes) no alcanza.',
+              'Mitigación: dispositivo secundario con GrapheneOS. Signal como única aplicación de llamadas. Separación física entre dispositivo de trabajo y dispositivo personal.',
+              'Implicancias estratégicas: regulatoria — trabajo de Citizen Lab y Access Now como única vía de contención pública del mercado de spyware comercial. Formativa — dispositivo secundario GrapheneOS obligatorio para investigación sensible. Operacional — política sin excepciones de separación dispositivo-trabajo / dispositivo-personal.'
+            ]
+          },
+          {
+            codigo: 'T-SYNTH',
+            titulo: 'Contenido sintético en circulación',
+            parrafos: [
+              'Desde 2027 el volumen de deepfakes de voceros conocidos y audios falsos atribuidos a fuentes reales supera la capacidad de verificación manual. El ecosistema de actores con capacidad de síntesis incluye grupos armados, actores estatales y particulares.',
+              'Implicación operacional: material entrante vía canales abiertos (WhatsApp, redes sociales) puede ser íntegramente sintético. Firma C2PA ausente no es prueba de falsedad pero sí señal de alerta.',
+              'Mitigación: verificación cruzada mínima de dos fuentes independientes. Detector de síntesis antes de publicar. Consulta al analista de guardia ante material de alto impacto.',
+              'Implicancias estratégicas: regulatoria — adopción de C2PA como requisito editorial, discusión pendiente en redacciones LATAM. Formativa — verificación cruzada de dos fuentes como mínimo no negociable. Operacional — pipeline Reality Defender + IPTC Origin Verifier pre-publicación para material de zona activa.'
+            ]
+          },
+          {
+            codigo: 'T-CKP',
+            titulo: 'Reconocimiento facial en puntos de control',
+            parrafos: [
+              'Fuerzas armadas venezolanas y colombianas despliegan sistemas de reconocimiento facial de proveedores externos en puntos de control fronterizos. Las bases de datos probablemente incorporan datos de redes sociales públicas.',
+              'Implicación operacional: fixers y fuentes con presencia pública online son identificables en checkpoints. La afiliación a un medio internacional puede ser detectada por el sistema antes que por el operador humano.',
+              'Mitigación: no publicar imágenes del fixer con rostro visible. Cubrir cara en desplazamientos por zona. No mencionar nombre completo del fixer en material público.',
+              'Implicancias estratégicas: regulatoria — ausencia de marco internacional de protección de identidad de colaboradores locales frente a reconocimiento facial. Formativa — briefing OPSEC al fixer antes de cada despliegue, no solo al corresponsal. Operacional — no identificar fixers en material publicado; revisión editorial específica sobre esto antes de publicar.'
+            ]
+          },
+          {
+            codigo: 'T-PHYS',
+            titulo: 'Amenaza física directa y presión sobre periodistas locales',
+            parrafos: [
+              'El vector que más periodistas mata en la región no es tecnológico. Grupos armados en Arauca y Apure ejercen presión directa sobre periodistas locales mediante amenazas por WhatsApp, seguimiento físico, y represalias contra familiares. El patrón documentado desde 2022 incluye exigencia de publicar material favorable bajo amenaza explícita.',
+              'Implicación operacional: el fixer y los periodistas locales están expuestos a este vector de manera permanente, no solo durante el despliegue del corresponsal. La presencia del corresponsal internacional puede intensificar la presión sobre el fixer después de la publicación.',
+              'Mitigación: no identificar al fixer en material publicado. Protocolo de check-in cada 6 horas durante despliegue. Plan de extracción documentado. Línea directa con FLIP (Colombia) y SNTP (Venezuela). Post-publicación: seguimiento de seguridad del fixer durante 30 días mínimo.',
+              'Implicancias estratégicas: regulatoria — marco de protección de periodistas bajo Convención de Ginebra no alcanza a civiles que operan como fixers. Formativa — módulo específico de amenaza física en el HEFAT institucional, ineludible. Operacional — cobertura del fixer extendida 30 días post-publicación como política, no como excepción.'
+            ]
+          },
+          {
+            codigo: 'T-DOM',
+            titulo: 'Vigilancia estatal doméstica (territorio argentino)',
+            parrafos: [
+              'Periodistas de investigación argentinos operan bajo vigilancia estatal de intensidad variable pero persistente. Casos documentados incluyen seguimiento físico, colocación de GPS en vehículos, intervención telefónica, e intentos coordinados de hackeo de cuentas (WhatsApp, X) post-publicación. La Secretaría de Inteligencia del Estado (SIDE) mantiene capacidad operativa sobre periodistas bajo marcos legales ambiguos.',
+              'Implicación operacional: la vigilancia doméstica no se limita al período de despliegue. Un corresponsal que investiga temas sensibles (corrupción, inteligencia, narco transnacional) puede estar bajo observación antes, durante y después de cualquier viaje. Familiares y entorno cercano pueden ser incluidos en el perímetro de vigilancia.',
+              'Mitigación: protocolo de contra-vigilancia urbana — variación de rutas, inspección periódica de vehículo, monitoreo de actividad anómala en cuentas. Red de colegas con protocolo de aviso mutuo (modelo FOPEA). Documentar incidentes ante CPJ y FOPEA. Ver OP-SEC-2028-011 para comunicación cifrada doméstica.',
+              'Implicancias estratégicas: regulatoria — ambigüedad del marco de inteligencia estatal pendiente de litigio y reforma. Formativa — protocolo de contra-vigilancia doméstica obligatorio en onboarding para personal de investigación. Operacional — asumir vigilancia hasta prueba en contrario; nunca hablar de investigaciones en curso por teléfono ni en redacción con sospecha de intervención ambiental.'
+            ]
+          }
+        ]
       }
     ],
     fuentes: 'Rye & Levin, IEEE S&P 2024, arXiv:2405.14975 (WPS/Starlink). ANMaC: Ley 20.429, Decreto 395/75, Res. 83/2023, Disp. RENAR 883/11. ENACOM: Res. 955/2025 (Starlink), RAMATEL. RSF España: rsf-es.org/seguridad-para-periodistas. Dart Center / JTSN: dartcenter.org. FOPEA: fopea.org.'
