@@ -29,15 +29,15 @@ export function ToolHeader({ codigo, titulo, subtitulo, modo }) {
   }
 
   return (
-    <header style={{ marginBottom: '20px' }}>
-      <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
-        INFOBAE · HERRAMIENTAS · {codigo}
+    <header style={{ marginBottom: '16px' }}>
+      <div style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '4px' }}>
+        {codigo}
       </div>
-      <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
+      <h1 style={{ fontFamily: SERIF, fontSize: '20px', fontWeight: 500, margin: '0 0 4px', letterSpacing: '-0.01em', color: t.text, lineHeight: 1.25 }}>
         {titulo}
       </h1>
       {subtitulo && (
-        <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', lineHeight: 1.5 }}>
+        <div style={{ fontFamily: SERIF, fontSize: '13px', color: t.textSecondary, fontStyle: 'italic', lineHeight: 1.45 }}>
           {subtitulo}
         </div>
       )}
