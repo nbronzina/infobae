@@ -126,6 +126,20 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  seguros_riesgo: {
+    area: 'INFOBAE · LEGALES',
+    codigo: 'OP-LEG-2028-014', version: '2.0', fecha: '2028-08-30',
+    responsable: 'l. pollastri + operaciones',
+    titulo: 'Seguros de alto riesgo: guía de contratación',
+    subtitulo: 'Cobertura para personal desplegado en zona activa',
+    secciones: [
+      { titulo: 'Qué cubre la ART argentina', texto: 'La Aseguradora de Riesgos del Trabajo (ART) cubre accidentes y enfermedades laborales en territorio argentino bajo condiciones normales de trabajo. No cubre despliegue en zona de conflicto internacional ni actividades clasificadas como de riesgo bélico. El personal de Infobae desplegado en zona activa NO está cubierto por la ART doméstica durante el despliegue.' },
+      { titulo: 'Cobertura complementaria', texto: 'Infobae contrata póliza de alto riesgo específica para cada despliegue internacional. La póliza cubre: accidente, enfermedad, evacuación médica, repatriación, y asistencia legal en destino. El corresponsal debe confirmar cobertura activa antes de salir (ver checklist pre-despliegue, OP-SEC-2029-004). Fixers bajo contrato: cobertura extendida al fixer designado durante el período de despliegue.' },
+      { titulo: 'Freelancers', texto: 'Periodistas freelance que operan bajo encargo de Infobae reciben cobertura equivalente durante el despliegue (estándar ACOS Alliance). Si no hay contrato de encargo, el freelance es responsable de su propia cobertura. RSF ofrece microseguros para freelancers en zona de conflicto — consultar rsf-es.org.' }
+    ],
+    fuentes: 'Ley 24.557 (ART). ACOS Alliance Freelance Journalist Safety Principles. RSF, programa de seguros para periodistas.'
+  },
+
   exportacion_equip: {
     area: 'INFOBAE · LEGALES',
     codigo: 'OP-LEG-2029-002', version: '1.1', fecha: '2029-01-20',
