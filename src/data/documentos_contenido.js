@@ -256,6 +256,18 @@ export const DOCUMENTOS_CONTENIDO = {
           'Pixel + GrapheneOS (Google hw / comunidad sw) · firmware rolling release · mitigación: dispositivo secundario estándar, Signal como app única de llamadas sensibles. Estado: aprobado.',
           'iPhone (Apple), cualquier modelo · iOS 17+ · mitigación: no recomendado como dispositivo secundario. Permitido como personal no asociado al despliegue. Estado: no recomendado.'
         ]
+      },
+      {
+        titulo: 'Protocolo post-despliegue',
+        texto: 'Completar dentro de las 72 horas del retorno. El incumplimiento dentro de este plazo activa alerta al editor de seguridad y al responsable del despliegue.',
+        items: [
+          'Rotar SSID del router de viaje. El dispositivo permanece inscripto como presencia del operador en la zona por hasta 14 días post-despliegue.',
+          'Subir material crudo a servidor seguro y borrar del kit local. Conservar copia offline en dispositivo aislado.',
+          'Cerrar check-in con fixer designado. No dejar canales abiertos sin cierre formal.',
+          'Rotar contraseñas de cuentas accedidas desde el campo.',
+          'Agendar sesión con Dart Center o equivalente bajo protocolo JTSN. Criterio automático: despliegue > 10 días en zona activa.',
+          'Completar parte de despliegue con cadena de procedencia del material publicado. Archivado en OP-SEC-LOG.'
+        ]
       }
     ],
     fuentes: 'Rye & Levin, IEEE S&P 2024, arXiv:2405.14975 (WPS/Starlink). ANMaC: Ley 20.429, Decreto 395/75, Res. 83/2023, Disp. RENAR 883/11. ENACOM: Res. 955/2025 (Starlink), RAMATEL. RSF España: rsf-es.org/seguridad-para-periodistas. Dart Center / JTSN: dartcenter.org. FOPEA: fopea.org.'
