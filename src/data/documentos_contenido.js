@@ -126,6 +126,20 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  politica_despliegue: {
+    area: 'INFOBAE · RECURSOS HUMANOS',
+    codigo: 'OP-HR-2028-003', version: '1.5', fecha: '2028-04-20',
+    responsable: 'rrhh + dirección editorial',
+    titulo: 'Política de despliegue y tiempos de descanso',
+    subtitulo: 'Duración máxima, rotación y descanso obligatorio',
+    secciones: [
+      { titulo: 'Duración máxima', texto: 'Despliegue en zona activa: máximo 21 días consecutivos. Extensión excepcional: hasta 30 días con autorización del director editorial y confirmación de cobertura de seguro vigente. No se autorizan extensiones más allá de 30 días bajo ninguna circunstancia.' },
+      { titulo: 'Descanso obligatorio', texto: 'Después de cada despliegue en zona activa: mínimo 14 días sin despliegue antes de la siguiente salida. Este período incluye el cumplimiento del checklist post-despliegue (OP-SEC-2029-004, sección 06) y la sesión JTSN si el criterio de activación se cumple. El descanso no es negociable por urgencia editorial.' },
+      { titulo: 'Notificación familiar', texto: 'Antes de cada despliegue, el periodista informa a su contacto de emergencia designado: fechas, destino general (no ubicación exacta), y frecuencia esperada de comunicación. El contacto de emergencia tiene línea directa con operaciones de campo (m. villafañe).' }
+    ],
+    fuentes: 'Documento interno. Referencia: ACOS Alliance, CPJ Safety Guidelines, BBC High Risk Team protocols.'
+  },
+
   jtsn_apoyo: {
     area: 'INFOBAE · RECURSOS HUMANOS',
     codigo: 'OP-HR-2027-012', version: '2.2', fecha: '2028-06-15',
