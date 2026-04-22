@@ -100,7 +100,7 @@ const THREAT_GLOSSARY = [
     nombre: 'Contenido sintético en circulación',
     cuerpo: 'Desde 2027 el volumen de deepfakes de voceros conocidos y audios falsos atribuidos a fuentes reales supera la capacidad de verificación manual. El ecosistema de actores con capacidad de síntesis incluye grupos armados, actores estatales y particulares.',
     vectorPractico: 'Material entrante vía canales abiertos (WhatsApp, redes sociales) puede ser íntegramente sintético. Firma C2PA ausente no es prueba de falsedad pero sí señal de alerta.',
-    mitigacion: 'Verificación cruzada mínima: dos fuentes independientes. Detector de síntesis automatizado antes de publicar. Consulta al analista automatizado ante material de alto impacto.',
+    mitigacion: 'Verificación cruzada mínima: dos fuentes independientes. Detector de síntesis antes de publicar. Consulta al analista de guardia ante material de alto impacto.',
     implicancias: 'Regulatoria: adopción de C2PA como requisito editorial — discusión pendiente en redacciones LATAM. Formativa: verificación cruzada de dos fuentes como mínimo no negociable. Operacional: pipeline Reality Defender + IPTC Origin Verifier pre-publicación para material de zona activa.'
   },
   {
@@ -251,7 +251,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
         { area: 'Operaciones de campo', contacto: 'operaciones@infobae.interna', desc: 'Logística de despliegue, seguros, equipamiento, partes de viaje, coordinación con fixers.' },
         { area: 'Legales', contacto: 'legales@infobae.interna', desc: 'Regulación ANMaC/ENACOM, exportación de material, contratos con fixers y freelancers, seguros.' },
         { area: 'Formación y capacitación', contacto: 'peralta.s@infobae.interna', desc: 'HEFAT, seguridad digital, onboarding de freelancers, actualizaciones de protocolos, coordinación con RISC Training y Dart Center.' },
-        { area: 'Mesa de ayuda IT', contacto: 'it@infobae.interna', desc: 'Acceso a sistemas, intranet, VPN, dispositivos, GrapheneOS, configuración de equipamiento.' }
+        { area: 'Mesa de ayuda IT', contacto: 'it@infobae.interna', desc: 'Acceso a sistemas, kit operativo, VPN, dispositivos, GrapheneOS, configuración de equipamiento.' }
       ]
     },
     anmac_enacom: {
@@ -391,8 +391,8 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       ], fuentes: 'Diseño del programa: s. peralta y rrhh. Coordinación operativa con seg. digital (j. fiorella) y formación externa (RISC Training, Dart Center, FOPEA).'
     }},
     analista_auto: { tool: true,
-      titulo: 'Analista automatizado',
-      subtitulo: 'Consulta al modelo de IA para evaluación de material, amenazas y decisiones operativas',
+      titulo: 'Analista de guardia',
+      subtitulo: 'Módulo de consulta operacional — evaluación de material, amenazas y decisiones de campo',
       descripcion: 'Herramienta complementaria a los manuales operativos para casos no cubiertos explícitamente. Cada consulta se registra en OP-SEC-LOG con timestamp, usuario y contenido. No sustituye consulta a Seguridad Digital ni decisión editorial humana.',
       contexto: 'El modelo tiene acceso al contenido del manual OP-SEC-2029-004 (Higiene RF), el glosario de amenazas vigentes (T-WPS, T-RF, T-SPY, T-SYNTH, T-CKP, T-PHYS, T-DOM), y los protocolos operativos asociados. Respuestas orientativas — no vinculantes.',
       meta: { codigo: 'OP-TOOL-2029-003', version: '1.0', fecha: '2029-03-01', responsable: 'j. fiorella + d. roca' }
@@ -420,14 +420,14 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       titulo: 'Pipeline de verificación', subtitulo: 'Flujo de trabajo para material entrante de zona activa',
       secciones: [
         { titulo: 'Flujo estándar', texto: 'Material entrante → registro en cola (timestamp, fixer, tipo, tamaño) → verificación de origen (¿quién envió, desde dónde?) → verificación de contenido (geolocalización, análisis visual, detector de síntesis) → evaluación de riesgo (impacto sobre fuentes) → decisión editorial (publicar / condiciones / reserva / no publicar) → registro en OP-SEC-LOG con cadena completa.' },
-        { titulo: 'Herramientas integradas', texto: 'Detector de síntesis automatizado (Reality Defender API, activo desde 05.2029). Verificador C2PA (IPTC Origin Verifier). Analista automatizado (IA, sección 07 de OP-SEC-2029-004). Imágenes satelitales: Sentinel Hub, Planet Labs (sujeto a disponibilidad regional). Geolocalización: Google Earth Pro, QGIS.' },
+        { titulo: 'Herramientas integradas', texto: 'Detector de síntesis (Reality Defender API, activo desde 05.2029). Verificador C2PA (IPTC Origin Verifier). Analista de guardia (módulo de consulta operacional, sección 07 de OP-SEC-2029-004). Imágenes satelitales: Sentinel Hub, Planet Labs (sujeto a disponibilidad regional). Geolocalización: Google Earth Pro, QGIS.' },
         { titulo: 'Tiempos', texto: 'Material urgente (breaking): verificación mínima en < 30 minutos. Material estándar: verificación completa en < 4 horas. Material de investigación: sin límite temporal, verificación exhaustiva. El nivel de verificación se define al ingreso y se registra en el log.' }
       ], fuentes: 'Documento interno. Referencia: Bellingcat Online Investigation Toolkit, BBC Verify workflow, First Draft Verification Handbook.' }},
     opsec_log: { doc: {
       area: 'INFOBAE · HERRAMIENTAS', codigo: 'OP-TOOL-2029-002', version: '1.0', fecha: '2029-03-01', responsable: 'j. fiorella + d. roca',
       titulo: 'OP-SEC-LOG: bitácora auditable', subtitulo: 'Sistema de registro de decisiones editoriales con cadena de procedencia',
       secciones: [
-        { titulo: 'Qué se registra', texto: 'Cada decisión editorial sobre material de zona activa queda registrada con: timestamp, identificador del material, fixer de origen, resultado de verificación (automatizada y humana), decisión editorial (publicar / condiciones / reserva / no publicar), responsable de la decisión, y modelo de IA usado si aplica.' },
+        { titulo: 'Qué se registra', texto: 'Cada decisión editorial sobre material de zona activa queda registrada con: timestamp, identificador del material, fixer de origen, resultado de verificación (automática y humana), decisión editorial (publicar / condiciones / reserva / no publicar), responsable de la decisión, y módulo de consulta usado si aplica.' },
         { titulo: 'Por qué', texto: 'La bitácora permite reconstruir la cadena completa de procedencia de cualquier publicación: desde quién capturó el material hasta quién decidió publicarlo y con qué nivel de verificación. En caso de cuestionamiento post-publicación, la bitácora es la evidencia de due diligence editorial.' },
         { titulo: 'Acceso', texto: 'Lectura: editor de turno, seguridad digital, legales, dirección editorial. Escritura: corresponsal que registra la decisión. Modificación post-registro: no permitida. Las entradas son append-only. Retención: 5 años desde la fecha de registro.' }
       ], fuentes: 'Documento interno.' }},
@@ -479,7 +479,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
       secciones: [
         { titulo: 'Recepción segura', texto: 'Todo material filtrado se recibe exclusivamente por canales cifrados (SecureDrop, Signal, entrega física). No se recibe material por email corporativo, WhatsApp ni redes sociales. El periodista receptor no copia el material a dispositivos personales. Se registra fecha, hora y canal de recepción sin identificar a la fuente.' },
         { titulo: 'Cadena de custodia', texto: 'El material se almacena en dispositivo aislado (air-gapped) asignado por seguridad digital. No se conecta a red. Las copias de trabajo se hacen en dispositivo secundario dedicado. Cada copia se registra con hash SHA-256 para verificar integridad. El original permanece intacto.' },
-        { titulo: 'Verificación de autenticidad', texto: 'Antes de publicar: verificar metadatos del documento (fecha de creación, autor, historial de modificaciones). Contrastar contenido con fuentes independientes. Evaluar posibilidad de material fabricado o alterado (documentos plantados como operación de inteligencia). Consultar al analista automatizado para evaluación de riesgo.' },
+        { titulo: 'Verificación de autenticidad', texto: 'Antes de publicar: verificar metadatos del documento (fecha de creación, autor, historial de modificaciones). Contrastar contenido con fuentes independientes. Evaluar posibilidad de material fabricado o alterado (documentos plantados como operación de inteligencia). Consultar al analista de guardia para evaluación de riesgo.' },
         { titulo: 'Protección legal', texto: 'Argentina: la jurisprudencia del caso Campillay (CSJN, 1986) establece estándares de protección para periodistas que publican información de terceros. No exime de verificación. Ante requerimiento judicial: se activa protocolo con legales (l. pollastri). La identidad de la fuente se protege bajo doctrina de secreto profesional. Consultar OP-RED-2028-003 (fuentes anónimas) para procedimiento de otorgamiento de anonimato.' }
       ], fuentes: 'CSJN, "Campillay c/ La Razón", 1986. Freedom of the Press Foundation, SecureDrop documentation. ICIJ, protocolo de recepción de material (referencia pública). CPJ, "Journalist Security Guide", capítulo sobre documentos sensibles.' }},
     osint_investigacion: { doc: {
@@ -539,7 +539,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     folder_herramientas: { folder: true, titulo: 'Herramientas', subtitulo: 'Sistemas operativos, flujos de verificación y bitácoras', docs: [
       { key: 'pipeline_verificacion', codigo: 'OP-TOOL-2029-001', titulo: 'Pipeline de verificación', version: '1.0', estado: 'vigente' },
       { key: 'opsec_log', codigo: 'OP-TOOL-2029-002', titulo: 'OP-SEC-LOG: bitácora auditable', version: '1.0', estado: 'vigente' },
-      { key: 'analista_auto', codigo: 'OP-TOOL-2029-003', titulo: 'Analista automatizado', version: '1.0', estado: 'vigente' },
+      { key: 'analista_auto', codigo: 'OP-TOOL-2029-003', titulo: 'Analista de guardia', version: '1.0', estado: 'vigente' },
       { key: 'parte_despliegue', codigo: 'OP-TOOL-2029-004', titulo: 'Parte de despliegue', version: '1.0', estado: 'vigente' },
       { key: 'gabinete_campo', codigo: 'OP-TOOL-2029-005', titulo: 'Gabinete de campo', version: '1.0', estado: 'vigente' }
     ]},
@@ -657,7 +657,7 @@ export default function IntranetInfobae({ scenario = 'internacional' }) {
     if (!consultaInput.trim()) return;
     setConsultaResult({ loading: true, text: null, error: null });
 
-    const prompt = `Sos el "analista automatizado" integrado al manual operativo OP-SEC-2029-004 de Infobae. Tu rol es asistir a corresponsales y personal de campo evaluando material de interés (video, audio, imagen, texto, testimonio) contra el glosario de amenazas vigente. El usuario consulta desde la sección 07 del manual.
+    const prompt = `Sos el "analista de guardia" integrado al manual operativo OP-SEC-2029-004 de Infobae. Tu rol es asistir a corresponsales y personal de campo evaluando material de interés (video, audio, imagen, texto, testimonio) contra el glosario de amenazas vigente. El usuario consulta desde la sección 07 del manual.
 
 Contexto operacional del manual:
 - Zona primaria de aplicación: frontera Arauca (COL) / Apure (VEN) post-transición venezolana 2026
@@ -920,7 +920,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter') executeSearch(searchQuery); if (e.key === 'Escape') { setSearchOpen(false); setSearchQuery(''); } }}
-            placeholder="Buscar en la intranet..."
+            placeholder="Buscar en el kit operativo..."
             className="mono"
             style={{ flex: 1, border: 'none', backgroundColor: 'transparent', fontSize: '12.5px', color: '#1f1f1f', outline: 'none', fontFamily: "'JetBrains Mono', monospace" }}
           />
@@ -1137,7 +1137,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   OP-SEC-LOG
                 </div>
                 <div role="button" tabIndex={0} onClick={() => setActiveView('analista_auto')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'analista_auto' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'analista_auto' ? 500 : 400, backgroundColor: activeView === 'analista_auto' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'analista_auto' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
-                  Analista automatizado
+                  Analista de guardia
                 </div>
                 <div role="button" tabIndex={0} onClick={() => setActiveView('parte_despliegue')} className="sidebar-item" style={{ padding: '5px 20px', cursor: 'pointer', fontSize: '12.5px', color: activeView === 'parte_despliegue' ? '#1f1f1f' : '#5a544c', fontWeight: activeView === 'parte_despliegue' ? 500 : 400, backgroundColor: activeView === 'parte_despliegue' ? '#e5e1d3' : 'transparent', borderLeft: activeView === 'parte_despliegue' ? '2px solid #1f1f1f' : '2px solid transparent' }}>
                   Parte de despliegue
@@ -1248,7 +1248,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               {/* Accesos rápidos */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '12px', marginBottom: '20px' }}>
                 {[
-                  { label: 'Analista IA', icon: '◆', onClick: () => { setActiveView('analista_auto'); setShowLanding(false); } },
+                  { label: 'Analista guardia', icon: '◆', onClick: () => { setActiveView('analista_auto'); setShowLanding(false); } },
                   { label: 'Parte despliegue', icon: '◇', onClick: () => { setActiveView('parte_despliegue'); setShowLanding(false); } },
                   { label: 'Contactos emerg.', icon: '◈', onClick: () => { setActiveView('contactos_emergencia'); setShowLanding(false); } },
                   { label: 'Pipeline verif.', icon: '◉', onClick: () => { setActiveView('pipeline_verificacion'); setShowLanding(false); } }
@@ -2212,7 +2212,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                 </div>
               )}
 
-              {/* Renderizador de herramienta: Analista automatizado */}
+              {/* Renderizador de herramienta: Analista de guardia */}
               {activeView === 'analista_auto' && (
                 <div style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '40px 48px' }}>
                   <div className="mono" style={{ fontSize: '11px', color: '#5a544c', letterSpacing: '0.06em', marginBottom: '8px' }}>
@@ -2341,7 +2341,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
                   ['sec-04', 'Cono de silencio RF'],
                   ['sec-05', 'Apéndice: dispositivos y mitigaciones'],
                   ['sec-06', 'Protocolo post-despliegue'],
-                  ['sec-07', 'Consulta al analista automatizado'],
+                  ['sec-07', 'Consulta al analista de guardia'],
                   ['sec-08', 'Nota sobre alcance institucional y vacío ecosistémico']
                 ].map(([id, label]) => (
                   <li key={id} onClick={() => scrollTo(id)} style={{ cursor: 'pointer' }}>
@@ -2517,7 +2517,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
             {/* SECCIÓN 07 — Widget Claudeception */}
             <section id="sec-07" style={{ marginBottom: '20px' }}>
               <div className="mono micro" style={{ color: '#5a544c', marginBottom: '6px' }}>Sección 07</div>
-              <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Consulta al analista automatizado</h2>
+              <h2 className="serif" style={{ fontSize: '22px', fontWeight: 500, margin: '0 0 16px' }}>Consulta al analista de guardia</h2>
               <div className="serif" style={{ fontSize: '15px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '20px' }}>
                 Herramienta complementaria al manual para casos no cubiertos explícitamente. Asistencia orientativa — no sustituye consulta a Seguridad Digital ni decisión editorial humana. Cada consulta se registra en OP-SEC-LOG con timestamp, usuario y contenido.
               </div>
@@ -2826,7 +2826,7 @@ ESCALAMIENTO: a quién consultar si la consulta excede el manual (legales, segur
               Sobre este artefacto
             </h2>
             <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
-              <strong>Infobae · Bitácora</strong> es una obra de ficción que explora el futuro cercano del periodismo de investigación y la corresponsalía internacional argentina a través de la intranet operativa de uno de sus medios icónicos —Infobae— en 2029. Un trabajo liderado por Nicolás Bronzina.
+              <strong>Infobae · Bitácora</strong> es una obra de ficción que explora el futuro cercano del periodismo de investigación y la corresponsalía internacional argentina a través del kit operativo de uno de sus medios icónicos —Infobae— en 2029. Un trabajo liderado por Nicolás Bronzina.
             </div>
             <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
               Es un <em>diegetic prototype</em>: la ficción está en que el sistema existe, no en lo que dice. Pregunta cómo podría organizarse una redacción argentina para cubrir investigación doméstica y corresponsalía internacional en un contexto donde la vigilancia, la autenticidad del contenido y la seguridad operativa de periodistas se volvieron condiciones cotidianas del trabajo.

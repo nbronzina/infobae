@@ -61,37 +61,43 @@ function ScenarioIndex() {
       <style>{`
         .serif { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; }
         .mono { font-family: 'JetBrains Mono', monospace; }
-        .esc-card { background-color: #2a2a2a; border: 1px solid #3d3931; padding: 28px 26px; cursor: pointer; transition: border-color 0.15s, background-color 0.15s; text-decoration: none; color: inherit; display: block; }
+        .esc-card { background-color: #2a2a2a; border: 1px solid #3d3931; padding: 22px 24px; cursor: pointer; transition: border-color 0.15s, background-color 0.15s; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 14px; }
         .esc-card:hover { border-color: #f18b1e; background-color: #2f2f2f; }
         .esc-card:focus-visible { outline: 2px solid #f18b1e; outline-offset: 2px; }
         .esc-link-foot { color: #8a8472; text-decoration: none; border-bottom: 1px dotted #5a544c; padding-bottom: 1px; }
         .esc-link-foot:hover { color: #f0ede4; }
       `}</style>
-      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-        <div style={{ marginBottom: '48px' }}>
-          <img src="/infobae-logo.png" alt="infobae" style={{ height: '40px', width: 'auto', display: 'block', marginBottom: '24px' }} />
-          <div className="mono" style={{ fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#f18b1e', marginBottom: '14px' }}>
+      <div style={{ maxWidth: '920px', margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '56px' }}>
+          <img src="/infobae-logo.png" alt="infobae" style={{ height: '34px', width: 'auto', display: 'block' }} />
+          <span className="mono" style={{ fontSize: '14px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#f0ede4', fontWeight: 500 }}>
             Bitácora
-          </div>
-          <h1 className="serif" style={{ fontSize: '34px', fontWeight: 500, margin: '0 0 16px', letterSpacing: '-0.01em', color: '#f0ede4' }}>
-            Tres líneas de planificación
+          </span>
+        </div>
+
+        <div style={{ marginBottom: '44px', maxWidth: '720px' }}>
+          <h1 style={{ fontFamily: 'Georgia, "Fraunces", serif', fontStyle: 'italic', fontSize: '32px', fontWeight: 400, margin: '0 0 28px', letterSpacing: '-0.005em', color: '#f0ede4', lineHeight: 1.3 }}>
+            ¿Cómo se organizarían los periodistas de investigación y corresponsales para entrenarse, informarse, prepararse y trabajar — tanto en campo internacional como en investigación doméstica?
           </h1>
-          <div className="serif" style={{ fontSize: '15.5px', lineHeight: 1.6, color: '#d9d4c2', maxWidth: '660px' }}>
-            Cada línea es una versión coherente del mismo universo. La línea vigente es el escenario operativo actual y se actualiza semanalmente. Las dos contrafactuales son probes congelados en el tiempo: ejercicios de foresight para estresar el artefacto desde un ángulo distinto.
+          <div className="mono" style={{ fontSize: '12px', letterSpacing: '0.04em', color: '#8a8472', lineHeight: 1.6 }}>
+            Una obra de ficción ambientada en 2029. Tres escenarios. Todo el research es real.
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px', marginBottom: '48px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '14px', marginBottom: '56px' }}>
           {escenariosData.map(esc => (
             <a key={esc.id} href={'/' + esc.slug} className="esc-card">
-              <div style={{ marginBottom: '12px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                <span className="mono" style={{ fontSize: '10px', letterSpacing: '0.06em', textTransform: 'uppercase', color: '#8a8472' }}>
+                  {esc.teatro_codigo}
+                </span>
                 <span
                   className="mono"
                   style={{
-                    fontSize: '9.5px',
+                    fontSize: '9px',
                     letterSpacing: '0.06em',
                     textTransform: 'uppercase',
-                    padding: '3px 8px',
+                    padding: '2px 7px',
                     border: '1px solid ' + (esc.congelado ? '#3d3931' : '#f18b1e'),
                     color: esc.congelado ? '#8a8472' : '#f18b1e',
                     backgroundColor: esc.congelado ? 'transparent' : 'rgba(241,139,30,0.08)'
@@ -100,28 +106,28 @@ function ScenarioIndex() {
                   {esc.estado}
                 </span>
               </div>
-              <div className="serif" style={{ fontSize: '20px', fontWeight: 500, color: '#f0ede4', marginBottom: '8px', letterSpacing: '-0.01em' }}>
+              <div className="serif" style={{ fontSize: '17px', fontWeight: 500, color: '#f0ede4', letterSpacing: '-0.01em', lineHeight: 1.25 }}>
                 {esc.nombre}
               </div>
-              <div className="serif" style={{ fontSize: '13px', color: '#d9d4c2', fontStyle: 'italic', marginBottom: '14px', lineHeight: 1.55 }}>
-                {esc.subtitulo}
+              <div style={{ fontFamily: 'Georgia, "Fraunces", serif', fontStyle: 'italic', fontSize: '14.5px', color: '#d9d4c2', lineHeight: 1.45, flex: 1 }}>
+                {esc.frase_tension}
               </div>
-              <div className="mono" style={{ fontSize: '11.5px', color: '#8a8472', lineHeight: 1.6 }}>
-                {esc.descripcion}
-              </div>
-              <div className="mono" style={{ fontSize: '10.5px', color: '#f18b1e', marginTop: '18px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                Entrar a la intranet →
+              <div className="mono" style={{ fontSize: '10.5px', color: '#f18b1e', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 500 }}>
+                Entrar →
               </div>
             </a>
           ))}
         </div>
 
-        <div style={{ paddingTop: '28px', borderTop: '1px solid #3d3931', maxWidth: '660px' }}>
+        <div style={{ paddingTop: '28px', borderTop: '1px solid #3d3931', maxWidth: '680px' }}>
           <div className="mono" style={{ fontSize: '11px', color: '#8a8472', lineHeight: 1.7 }}>
-            <strong style={{ color: '#d9d4c2' }}>Infobae · Bitácora</strong> es una obra de ficción que explora el futuro cercano del periodismo de investigación y la corresponsalía internacional argentina a través de la intranet operativa de uno de sus medios icónicos —Infobae— en 2029. Un trabajo liderado por <a href="https://www.nicolasbronzina.com/" target="_blank" rel="noreferrer" className="esc-link-foot">Nicolás Bronzina</a>.
+            Cada protocolo, norma y herramienta que aparece adentro es extensión plausible de algo que existe hoy. Los personajes y los despliegues son ficticios. Las fuentes externas, las regulaciones y los papers citados — Rye &amp; Levin 2024, ANMaC, ENACOM, FOPEA, CPJ, Berkeley Protocol, C2PA — son reales.
           </div>
           <div className="mono" style={{ fontSize: '11px', color: '#8a8472', marginTop: '14px', lineHeight: 1.7 }}>
-            Diegetic prototype: la ficción está en que el sistema existe, no en lo que dice. Cada protocolo, norma y herramienta es extensión plausible de algo que existe hoy. Los personajes y los despliegues son ficticios; las fuentes externas, las regulaciones y los papers citados son reales.
+            La línea vigente se actualiza sola los lunes con señales del mundo real. Las dos congeladas son probes fijos en el tiempo.
+          </div>
+          <div className="mono" style={{ fontSize: '11px', color: '#8a8472', marginTop: '18px', lineHeight: 1.7 }}>
+            Un trabajo liderado por <a href="https://www.nicolasbronzina.com/" target="_blank" rel="noreferrer" className="esc-link-foot">Nicolás Bronzina</a>.
           </div>
         </div>
       </div>
