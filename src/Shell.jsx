@@ -10,7 +10,10 @@ const TABS = [
   { id: 'estado', label: 'ESTADO', labelCampo: 'ESTADO' }
 ];
 
-function useModo() {
+function useModo(defaultModo = 'redaccion') {
+  // El default lo decide el contexto narrativo (qué línea abrió la
+  // corresponsal). El override manual vía long-press en wordmark o
+  // en la barra de tabs queda persistido en localStorage.
   const [modoForzado, setModoForzadoState] = useState(() => {
     if (typeof localStorage === 'undefined') return null;
     try {
@@ -18,22 +21,6 @@ function useModo() {
       return v === 'campo' || v === 'redaccion' ? v : null;
     } catch { return null; }
   });
-  const [autoModo, setAutoModo] = useState(() => {
-    if (typeof window === 'undefined') return 'redaccion';
-    return window.matchMedia('(min-width: 768px)').matches ? 'redaccion' : 'campo';
-  });
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const mq = window.matchMedia('(min-width: 768px)');
-    const handler = (e) => setAutoModo(e.matches ? 'redaccion' : 'campo');
-    if (mq.addEventListener) mq.addEventListener('change', handler);
-    else mq.addListener(handler);
-    return () => {
-      if (mq.removeEventListener) mq.removeEventListener('change', handler);
-      else mq.removeListener(handler);
-    };
-  }, []);
 
   const setModoForzado = (value) => {
     setModoForzadoState(value);
@@ -43,7 +30,7 @@ function useModo() {
     } catch {}
   };
 
-  const modo = modoForzado ?? autoModo;
+  const modo = modoForzado ?? defaultModo;
   const toggle = () => setModoForzado(modo === 'campo' ? 'redaccion' : 'campo');
   const reset = () => setModoForzado(null);
   return { modo, modoForzado, toggle, reset };
@@ -275,8 +262,18 @@ function RedaccionShell({ activeView, setActiveView, onToggleModo, onOpenDoc, on
   );
 }
 
+// Mapa narrativo escenario → dispositivo default. Internacional
+// abre en campo (Pixel en Arauca). Las dos líneas domésticas abren
+// en redacción (Boox en Buenos Aires).
+const DEFAULT_MODO_POR_ESCENARIO = {
+  internacional: 'campo',
+  rosario: 'redaccion',
+  inteligencia: 'redaccion'
+};
+
 export default function Shell({ scenario }) {
-  const { modo, toggle } = useModo();
+  const defaultModo = DEFAULT_MODO_POR_ESCENARIO[scenario] || 'redaccion';
+  const { modo, toggle } = useModo(defaultModo);
   const [activeView, setActiveView] = useState('mision');
   const [docRequest, setDocRequest] = useState(null);
 
@@ -311,7 +308,7 @@ export default function Shell({ scenario }) {
 // Frame de dispositivo. Siempre visible: el contenido vive adentro
 // del dispositivo en todos los contextos de visualización. En
 // viewports chicos el frame se adapta por aspect-ratio.
-function DeviceFrame({ modo, children }) {
+export function DeviceFrame({ modo, children }) {
   if (modo === 'campo') return <PixelFrame>{children}</PixelFrame>;
   return <BooxFrame>{children}</BooxFrame>;
 }
