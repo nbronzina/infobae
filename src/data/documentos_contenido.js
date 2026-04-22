@@ -126,6 +126,22 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  inteligencia_investigacion: {
+    area: 'INFOBAE · INVESTIGACIÓN',
+    codigo: 'OP-INV-2029-007', version: '1.0', fecha: '2029-03-10',
+    responsable: 'dirección editorial + l. pollastri + j. fiorella',
+    titulo: 'Investigación sobre servicios de inteligencia y zonas grises del Estado',
+    subtitulo: 'Criterios editoriales, protocolo legal y OPSEC para cobertura del aparato de inteligencia argentino',
+    secciones: [
+      { titulo: 'Qué abarca', texto: 'Investigaciones que tengan como objeto operaciones, presupuestos reservados, escuchas con orden judicial ambigua, legajos abiertos sobre periodistas y políticos, y articulaciones entre servicios estatales y actores privados. Incluye tanto la SIDE como organismos provinciales y fuerzas federales que cumplen funciones de inteligencia de facto.' },
+      { titulo: 'Lectura del caso Anaconda (2016-2020, real)', texto: 'El caso Anaconda — legajo SIDE abierto sobre Hugo Alconada Mon entre 2016 y 2020 — es el antecedente doméstico más documentado de vigilancia estatal sobre un periodista de investigación en Argentina en el siglo XXI. La existencia del legajo se confirmó judicialmente. El caso define el piso de riesgo: cualquier investigación sobre el aparato de inteligencia asume que es posible replicarse. Criterio operativo: si Alconada Mon fue vigilado durante cuatro años por el servicio de inteligencia argentino, el supuesto por defecto es que un periodista actual investigando material análogo también puede estarlo.' },
+      { titulo: 'Custodia legal del material', texto: 'Material obtenido de expedientes o filtraciones relativas a servicios de inteligencia se custodia fuera de infraestructura Infobae. Estudio jurídico externo con secreto profesional (convenio Pollastri & Asoc.). Lectura solo en sala sin conectividad. No se digitaliza material original hasta decisión editorial final. Copia forense bajo custodia legal separada de la copia de trabajo.' },
+      { titulo: 'Contra-vigilancia elevada', texto: 'Además de las medidas de OP-INV-2028-004: dispositivo aire (Pixel con GrapheneOS sin cuenta) para contactos con fuentes del expediente, exclusivo para esa investigación. No se conecta nunca a red corporativa. Rotación de clave cada 14 días. Si hay sospecha de compromiso, destrucción física del dispositivo y emisión de nuevo.' },
+      { titulo: 'Criterio editorial de publicación', texto: 'La publicación requiere: doble fuente con acceso directo al material; verificación cruzada con otra investigación independiente si es posible; revisión legal completa con cálculo de exposición a denuncia penal por violación del secreto; y plan de respuesta ante eventual amparo o intento de censura previa. Publicación coordinada con socio internacional (ICIJ, OCCRP) como medida de protección cuando el material lo permita.' }
+    ],
+    fuentes: 'Hugo Alconada Mon, descripción pública del caso Anaconda (GIJN 2024, CPJ 2023). Citizen Lab, reportes sobre Pegasus y otras herramientas comerciales en América Latina. CELE - Universidad de Palermo, publicaciones sobre inteligencia y libertad de expresión. Ley 25.520 de Inteligencia Nacional (texto ordenado).'
+  },
+
   narco_cobertura: {
     area: 'INFOBAE · INVESTIGACIÓN',
     codigo: 'OP-INV-2029-005', version: '1.0', fecha: '2029-02-18',
