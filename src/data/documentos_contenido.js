@@ -126,6 +126,36 @@ export const DOCUMENTOS_CONTENIDO = {
     fuentes: 'Resumen de OP-SEC-2029-004 ed. 4.2. Versión en español colombiano/venezolano.'
   },
 
+  contactos_emergencia: {
+    area: 'INFOBAE · RECURSOS HUMANOS',
+    codigo: 'OP-HR-2029-001', version: '1.0', fecha: '2029-01-10',
+    responsable: 'm. villafañe (operaciones)',
+    titulo: 'Contactos de emergencia por región',
+    subtitulo: 'Líneas directas para personal en campo — actualización trimestral',
+    secciones: [
+      { titulo: 'Infobae — contactos internos', items: [
+        'Operaciones de campo: m. villafañe · operaciones@infobae.interna',
+        'Seguridad digital (24h): seg.digital@infobae.interna',
+        'Legales: l. pollastri · legales@infobae.interna',
+        'Editor guardia (turno noche): f. zelaya · Madrid'
+      ] },
+      { titulo: 'Organizaciones externas — LATAM', items: [
+        'FLIP Colombia (Fundación para la Libertad de Prensa): flip.org.co',
+        'SNTP Venezuela (Sindicato Nal. Trabajadores de la Prensa): sntp.org.ve',
+        'FOPEA Argentina: fopea.org',
+        'CPJ Emergencias: cpj.org/campaigns/assistance',
+        'RSF (Reporteros Sin Fronteras): rsf.org/es'
+      ] },
+      { titulo: 'Organizaciones externas — Internacional', items: [
+        'Access Now Digital Security Helpline: accessnow.org/help (respuesta 24-72h)',
+        'Dart Center / JTSN: dartcenter.org',
+        'IWMF (Int. Women\'s Media Foundation): iwmf.org',
+        'Rory Peck Trust (freelancers): rorypecktrust.org'
+      ] }
+    ],
+    fuentes: 'Verificación de vigencia: enero 2029. Próxima actualización: abril 2029. Reportar cambios a operaciones@infobae.interna.'
+  },
+
   politica_despliegue: {
     area: 'INFOBAE · RECURSOS HUMANOS',
     codigo: 'OP-HR-2028-003', version: '1.5', fecha: '2028-04-20',
