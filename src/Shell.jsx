@@ -4,10 +4,10 @@ import DocsView from './DocsView.jsx';
 import EstadoView from './EstadoView.jsx';
 
 const TABS = [
-  { id: 'mision', label: 'MISIÓN' },
-  { id: 'herramientas', label: 'HERRAMIENTAS' },
-  { id: 'docs', label: 'DOCS' },
-  { id: 'estado', label: 'ESTADO' }
+  { id: 'mision', label: 'MISIÓN', labelCampo: 'MISIÓN' },
+  { id: 'herramientas', label: 'HERRAMIENTAS', labelCampo: 'HERRAM.' },
+  { id: 'docs', label: 'DOCS', labelCampo: 'DOCS' },
+  { id: 'estado', label: 'ESTADO', labelCampo: 'ESTADO' }
 ];
 
 function useModo() {
@@ -160,10 +160,9 @@ function ViewSwitch({ activeView, modo, onOpenDoc, onOpenPerfil, docRequest }) {
 }
 
 function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpenPerfil, docRequest }) {
-  // Sin header. Sin chrome arriba. Pantalla completa con tabs fijos
-  // al borde inferior. Long-press en cualquier tab activa el toggle
-  // de modo — se aprovecha el único elemento de UI presente en el
-  // chrome para no romper la promesa visual de "sin header".
+  // Wordmark mínimo arriba como ancla visual (no chrome, no
+  // separador). Tabs fijos al pie, compactos. Long-press en la
+  // barra de tabs para togglear modo.
   const tabsLongPress = useLongPress(onToggleModo, 700);
   return (
     <div
@@ -173,7 +172,18 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
         fontFamily: "'IBM Plex Sans', system-ui, sans-serif"
       }}
     >
-      <main style={{ flex: 1, padding: '20px 16px 92px', overflowY: 'auto' }}>
+      <div style={{ padding: '14px 16px 4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <img src="/infobae-logo.png" alt="infobae" draggable={false}
+          style={{ height: '16px', width: 'auto', display: 'block', pointerEvents: 'none' }} />
+        <span style={{
+          fontFamily: "'JetBrains Mono', Consolas, monospace",
+          fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase',
+          color: '#8a8472', fontWeight: 500
+        }}>
+          Bitácora
+        </span>
+      </div>
+      <main style={{ flex: 1, padding: '8px 16px 92px', overflowY: 'auto' }}>
         <ViewSwitch activeView={activeView} modo="campo" onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} docRequest={docRequest} />
       </main>
       <nav
@@ -195,15 +205,15 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
               onClick={() => setActiveView(t.id)}
               style={{
                 border: 'none', background: 'transparent', cursor: 'pointer',
-                padding: '14px 6px', minHeight: '60px',
+                padding: '10px 4px', minHeight: '48px',
                 color: active ? '#f18b1e' : '#8a8472',
                 fontFamily: "'JetBrains Mono', Consolas, monospace",
-                fontSize: '9.5px', letterSpacing: '0.1em', fontWeight: active ? 600 : 400,
+                fontSize: '8.5px', letterSpacing: '0.12em', fontWeight: active ? 600 : 400,
                 borderTop: active ? '1px solid #f18b1e' : '1px solid transparent',
                 marginTop: '-1px'
               }}
             >
-              {t.label}
+              {t.labelCampo}
             </button>
           );
         })}
@@ -243,7 +253,7 @@ function RedaccionShell({ activeView, setActiveView, onToggleModo, onOpenDoc, on
                   fontFamily: "'Fraunces', Georgia, serif",
                   fontSize: '13px', letterSpacing: '0.01em',
                   fontStyle: active ? 'normal' : 'italic',
-                  fontWeight: active ? 500 : 400,
+                  fontWeight: 400,
                   textTransform: 'lowercase',
                   borderBottom: active ? '1px solid #1f1f1f' : '1px solid transparent'
                 }}

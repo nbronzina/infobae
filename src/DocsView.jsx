@@ -46,15 +46,9 @@ export default function DocsView({ modo, request }) {
     <div>
       {isCampo ? (
         <>
-          <div style={{ fontFamily: MONO, fontSize: s.fsMicro, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
-            INFOBAE · DOCUMENTACIÓN · {total} documentos
-          </div>
-          <h1 style={{ fontFamily: SERIF, fontSize: s.fsTitle + 2, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text }}>
-            Doctrina y protocolos
+          <h1 style={{ fontFamily: SERIF, fontSize: '22px', fontWeight: 500, margin: '0 0 16px', letterSpacing: '-0.01em', color: t.text, lineHeight: 1.2 }}>
+            Doctrina
           </h1>
-          <div style={{ fontFamily: SERIF, fontSize: 14.5, color: t.textSecondary, fontStyle: 'italic', marginBottom: '24px', lineHeight: 1.5 }}>
-            Archivo operativo completo. Los documentos se consultan por carpeta; el contenido se abre al seleccionar uno.
-          </div>
           <CampoIndex seccs={DOCUMENTOS_SECCIONES} activo={activo} setActivo={setActivo} t={t} s={s} />
         </>
       ) : (
@@ -77,47 +71,43 @@ export default function DocsView({ modo, request }) {
 
 function CampoIndex({ seccs, activo, setActivo, t, s }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
       {seccs.map(sec => (
         <section key={sec.key}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '10px', gap: '8px', flexWrap: 'wrap' }}>
-            <div style={{ fontFamily: MONO, fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta }}>
-              {sec.titulo}
-            </div>
-            <div style={{ fontFamily: MONO, fontSize: '10px', color: t.textMeta }}>
-              {sec.docs.length} {sec.docs.length === 1 ? 'doc' : 'docs'}
-            </div>
+          <div style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '6px' }}>
+            {sec.titulo}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {sec.docs.map((d, idx) => {
               const sel = activo === d.key;
               const chip = estadoChipColors(d.estado, t);
+              const showChip = d.estado !== 'vigente';
               return (
                 <button key={d.key} type="button" onClick={() => setActivo(d.key)} style={{
                   textAlign: 'left', cursor: 'pointer',
-                  padding: '14px 16px',
+                  padding: '10px 12px',
                   border: '1px solid ' + (sel ? t.borderStrong : t.border),
                   borderTop: idx === 0 ? '1px solid ' + (sel ? t.borderStrong : t.border) : 'none',
                   backgroundColor: sel ? t.bgAccent : t.bgCard,
                   color: t.text, minHeight: s.touchMin,
-                  marginTop: idx === 0 ? 0 : '-1px'
+                  marginTop: idx === 0 ? 0 : '-1px',
+                  display: 'flex', flexDirection: 'column', gap: '2px'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '10px', marginBottom: '4px', flexWrap: 'wrap' }}>
-                    <span style={{ fontFamily: MONO, fontSize: '10.5px', color: sel ? t.text : t.textMeta, fontWeight: sel ? 500 : 400, letterSpacing: '0.04em' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '8px' }}>
+                    <span style={{ fontFamily: MONO, fontSize: '9.5px', color: sel ? t.text : t.textMeta, letterSpacing: '0.04em' }}>
                       {d.codigo}
                     </span>
-                    <span style={{
-                      fontFamily: MONO, fontSize: '9.5px', letterSpacing: '0.04em', textTransform: 'uppercase',
-                      padding: '2px 7px', backgroundColor: chip.bg, color: chip.fg
-                    }}>
-                      {ESTADO_LABEL[d.estado]}
-                    </span>
+                    {showChip && (
+                      <span style={{
+                        fontFamily: MONO, fontSize: '8.5px', letterSpacing: '0.04em', textTransform: 'uppercase',
+                        padding: '1px 5px', backgroundColor: chip.bg, color: chip.fg
+                      }}>
+                        {ESTADO_LABEL[d.estado]}
+                      </span>
+                    )}
                   </div>
-                  <div style={{ fontFamily: SERIF, fontSize: '15px', fontWeight: 500, lineHeight: 1.35, marginBottom: '2px' }}>
+                  <div style={{ fontFamily: SERIF, fontSize: '14px', fontWeight: 500, lineHeight: 1.3 }}>
                     {d.titulo}
-                  </div>
-                  <div style={{ fontFamily: MONO, fontSize: '10px', color: t.textMeta }}>
-                    v{d.version}
                   </div>
                 </button>
               );
@@ -218,22 +208,18 @@ function PerfilView({ personaKey, modo, onBack }) {
       {persona && (
         <article style={{ background: 'transparent', border: 'none', padding: 0 }}>
           {isCampo ? (
-            <header style={{ borderBottom: '1px solid ' + t.border, paddingBottom: '20px', marginBottom: '24px' }}>
-              <div style={{ fontFamily: MONO, fontSize: '11px', letterSpacing: '0.06em', color: t.textMeta, marginBottom: '10px', textTransform: 'uppercase' }}>
-                INFOBAE · DIRECTORIO INTERNO · {persona.key}
+            <header style={{ borderBottom: '1px solid ' + t.border, paddingBottom: '14px', marginBottom: '18px' }}>
+              <div style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.06em', color: t.textMeta, marginBottom: '6px', textTransform: 'uppercase' }}>
+                {persona.key}
               </div>
-              <h1 style={{ fontFamily: SERIF, fontSize: '24px', fontWeight: 500, margin: '0 0 8px', letterSpacing: '-0.01em', color: t.text }}>
+              <h1 style={{ fontFamily: SERIF, fontSize: '20px', fontWeight: 500, margin: '0 0 4px', letterSpacing: '-0.01em', color: t.text, lineHeight: 1.25 }}>
                 {persona.nombre}
               </h1>
-              <div style={{ fontFamily: SERIF, fontSize: '14.5px', color: t.textSecondary, fontStyle: 'italic', marginBottom: '12px', lineHeight: 1.5 }}>
+              <div style={{ fontFamily: SERIF, fontSize: '13px', color: t.textSecondary, fontStyle: 'italic', marginBottom: '8px', lineHeight: 1.45 }}>
                 {persona.rol}
               </div>
-              <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, lineHeight: 1.7 }}>
-                Base: {persona.base}<br/>
-                Contacto: {persona.contacto}
-                {Array.isArray(persona.aliases) && persona.aliases.length > 0 && (
-                  <><br/>Aliases: {persona.aliases.join(' · ')}</>
-                )}
+              <div style={{ fontFamily: MONO, fontSize: '10.5px', color: t.textMeta, lineHeight: 1.6 }}>
+                {persona.base} · {persona.contacto}
               </div>
             </header>
           ) : (
