@@ -394,6 +394,84 @@ Externos (3): frontend-design (Anthropic), web-artifacts-builder
 - Sync manual
 - Vercel queda como demo pública
 
+## Marco teórico: Near Future Laboratory, "The Manual of Design Fiction" (2022)
+
+### El what-if de Bitácora
+
+> "At its heart, design fiction is a means of creative discovery
+> driven by asking a simple question — 'What if?' Landing on the
+> right what-if to ask can be harder than it might first appear."
+
+El what-if de este proyecto: ¿Qué pasaría si una redacción
+argentina tuviera que construir el sistema operativo que sus
+corresponsales necesitan y nadie les dio?
+
+No es "¿cómo sería el periodismo en 2029?" — eso es genérico. Es
+específica, incómoda, y verificable contra la realidad.
+
+### El artefacto como respuesta material
+
+> "The answer to the what-if is materially embodied by the design
+> fiction artifact that you produce, not some starched white paper.
+> It's an open invitation to inquiry, not some impossibly
+> predictive report. Instead of 'let me tell you,' design fiction
+> says 'let me show you.'"
+
+Bitácora no es un paper sobre seguridad periodística. Es el
+sistema que usarías. El jugador no lee la respuesta — la opera.
+
+### Criterios de validación del what-if (NfL checklist)
+
+Del capítulo "The Elements of a Good What-If":
+
+- **"Does it provoke and challenge existing, unspoken
+  assumptions?"**
+  Sí: la asunción de que las redacciones argentinas no necesitan
+  este nivel de protocolo. Que eso es solo para BBC o Al Jazeera.
+
+- **"Does it have the capacity to stop everyone in their tracks?"**
+  La sección 08 del manual RF: "Este documento no debería ser
+  ficción."
+
+- **"Is it constructive, not destructive?"**
+  No dice "el periodismo argentino está mal". Dice "así se vería
+  si estuviera bien".
+
+- **"Does it lead to interesting questions of 'then what'?"**
+  Si esto existiera: ¿quién lo mantiene? ¿Quién lo paga? ¿FOPEA?
+  ¿Los medios? ¿El Estado — que también es el adversario en la
+  línea de Inteligencia?
+
+### Anticipar uso, no tecnología
+
+> "Don't overfocus on enabling technology or instrumentalities at
+> the expense of the rituals and social practices aroused by its
+> adoption. We can only learn anything useful if we start by
+> paying attention to the vagaries of how things are truly used."
+
+Bitácora no inventa herramientas nuevas. Signal ya existe.
+Starlink ya existe. ANMaC ya existe. Lo que no existe es el
+sistema que los conecta y el protocolo que los organiza. El
+prototipo es de uso, no de tecnología.
+
+### Recontextualizar lo familiar
+
+Del ejercicio "Recontextualize the familiar": "Pick a common
+object or ritual of everyday life. Then pick a new and changed
+context."
+
+Bitácora toma objetos familiares (un checklist, un directorio, un
+diario de campo, un analista) y los pone en un contexto cambiado
+(corresponsalía argentina bajo vigilancia estatal en 2029). El
+objeto es el mismo. El contexto lo transforma.
+
+### Fuente
+
+Near Future Laboratory, "The Manual of Design Fiction" (2022),
+capítulo 22: "How to create a what-if scenario", pp. 154-159.
+Ejercicios 2 y 3: "Developing your what-if muscles" y "Anticipate
+usage, not technology".
+
 ## Sobre Infobae
 
 El medio digital más leído de Argentina, más de 100 millones de
