@@ -466,3 +466,242 @@ Pollastri + Fiorella):
   custodia legal" hasta "indicios sin verificar".
 - **Sesión JTSN:** estado mental. Civil War: no podés irte de tu
   propia ciudad.
+
+## Línea Nacional Inteligencia — ANA-047 · Anaconda-2
+
+**Tono:** Todos los hombres del presidente + The French Connection
++ The Spy. The Conversation como atmósfera permanente.
+
+**Premisa:** investigación sobre operaciones de inteligencia
+estatal argentina. Legajo referenciado internamente como
+Anaconda-2: vigilancia documentada sobre periodistas, operaciones
+de recolección de información, zonas grises legales. La SIDE (o su
+derivado actual) es el objeto de investigación y al mismo tiempo el
+adversario con capacidad técnica de grado militar. Mondini
+investiga lo que investiga Alconada Mon. La diferencia: en la
+ficción, el sistema que la investiga sabe que ella los investiga.
+
+**Variables de estado:** `nivel_acceso` (0-10), `estado_mental`
+(hereda de líneas anteriores si se jugaron). **Flags:**
+`fuente_inteligencia_activa`, `material_airgapped`,
+`custodia_legal_activa`, `intermediario_establecido`,
+`dispositivo_limpio`, `patron_digital_detectado`,
+`publicacion_coordinada`.
+
+### Objetivo 1 — Onboarding: "El legajo que no deberías tener."
+
+**Situación:** Mondini abre Bitácora. En el diario de campo hay
+una entrada vieja, de hace meses: "Fuente no identificada dejó
+sobre con documentos en el buzón de la redacción. Sin remitente.
+Contenido: hojas impresas con lo que parecen reportes internos de
+monitoreo de periodistas. Código de referencia en el margen:
+ANC-2." Los documentos físicos están en un cajón. Nadie en la
+redacción sabe excepto dirección editorial.
+
+The Conversation: tenés material que no pediste, no sabés quién te
+lo dio ni por qué, y el acto de investigarlo puede ser el acto que
+te expone.
+
+**Decisión 1.1 — Los documentos están en tu cajón. ¿Qué hacés
+primero?**
+- **(A)** Abrís Bitácora y leés el protocolo de documentos
+  filtrados (OP-INV-2028-001) → aprendés la herramienta: cadena de
+  custodia, hash SHA-256, verificación de autenticidad.
+  `+1 nivel_acceso`.
+- **(B)** Escaneás los documentos con tu teléfono personal para
+  tener copia digital → tenés copia pero en dispositivo conectado
+  a red. Flag `material_en_dispositivo_personal`.
+- **(C)** Le llevás los documentos a Pollastri (legales)
+  directamente → Pollastri te dice que primero hay que documentar
+  la recepción. Te manda de vuelta al protocolo. Ruta más larga
+  pero con respaldo legal desde el inicio.
+
+**Decisión 1.2 — Los documentos mencionan nombres de periodistas
+bajo monitoreo. Uno es un colega de la redacción. ¿Se lo decís?**
+- **(A)** Sí, en persona, fuera de la redacción → lo alertás pero
+  ampliás el círculo de conocimiento. Si el colega habla, la
+  investigación se compromete.
+- **(B)** No, todavía no — primero verificás autenticidad →
+  protocolo correcto. El colega sigue sin saber.
+- **(C)** Se lo decís a dirección editorial y dejás que ellos
+  decidan → delegás la decisión ética. La herramienta no te dice
+  qué hacer.
+
+**Convergencia:** los documentos están (o no) en cadena de
+custodia correcta. Bitácora tiene (o no) registro de la recepción.
+El colega sabe (o no).
+
+### Objetivo 2 — Preparación: "Verificar sin exponerse"
+
+**Situación:** hay que verificar si los documentos son auténticos
+o plantados. Un documento filtrado de inteligencia puede ser
+genuino — o puede ser una operación para identificar quién lo
+recibe y qué hace con él. The Spy: cada paso de verificación es un
+paso de exposición.
+
+**Decisión 2.1 — ¿Cómo verificás la autenticidad?**
+- **(A)** Cruzás metadata de los documentos con registros públicos
+  (fechas, formato, numeración) → OSINT puro, sin contactar a
+  nadie. Lento, parcial, pero seguro.
+- **(B)** Contactás a un ex-funcionario de inteligencia que
+  conocés como fuente → verificación rápida pero le revelás que
+  tenés el material. Si él está comprometido, acabás de
+  confirmarle a la SIDE que los documentos llegaron.
+- **(C)** Le pedís al analista de guardia que evalúe los
+  documentos contra patrones conocidos → el analista opera con lo
+  que tiene localmente. Puede detectar inconsistencias formales
+  pero no puede verificar contenido clasificado.
+
+**Decisión 2.2 — Pollastri te dice:** "Si esto es real, necesitás
+custodia legal desde ahora. Recomiendo intermediario — un abogado
+externo con secreto profesional."
+- **(A)** Establecés intermediario legal → flag
+  `intermediario_establecido`, `custodia_legal_activa`. El material
+  pasa a estar bajo doble protección: secreto profesional del
+  abogado + protección de fuente periodística.
+- **(B)** Mantenés custodia interna en la redacción → más
+  accesible pero menos protegido ante requerimiento judicial.
+- **(C)** No establecés custodia formal todavía → el material está
+  en tu cajón. Si hay allanamiento, no hay protección.
+
+**Decisión 2.3 — Necesitás un dispositivo limpio para trabajar el
+material digital.** Fiorella te ofrece configurar un air-gapped.
+- **(A)** Aceptás → dispositivo sin conexión a red, dedicado a
+  Anaconda-2. Flag `dispositivo_limpio`. Todo el material vive ahí.
+- **(B)** Usás tu dispositivo secundario (el de despliegues) → no
+  es air-gapped pero está configurado con GrapheneOS. Riesgo
+  intermedio.
+- **(C)** Usás tu computadora de la redacción → conectada a red
+  corporativa. Si la SIDE tiene acceso a la red (probable), el
+  material está expuesto.
+
+**Convergencia:** tenés (o no) custodia legal, dispositivo limpio,
+y una evaluación de autenticidad. La investigación puede avanzar o
+está comprometida desde el origen.
+
+### Objetivo 3 — Operación: "La fuente que sabe demasiado"
+
+**Situación:** la verificación sugiere que los documentos son
+auténticos. Ahora necesitás una fuente interna que confirme y
+amplíe. A través de un contacto indirecto, alguien dentro del
+aparato de inteligencia acepta reunirse. Una sola vez, en un lugar
+sin cámaras, sin dispositivos.
+
+Deep Throat en el estacionamiento. Todos los hombres del
+presidente.
+
+**Decisión 3.1 — Preparación para la reunión.**
+- **(A)** Dejás todos tus dispositivos en la redacción, incluyendo
+  Bitácora → vas sin herramientas. Todo lo que recordés de la
+  reunión lo registrás después.
+- **(B)** Llevás un grabador analógico oculto → tenés registro
+  pero violás la condición de la fuente.
+- **(C)** Llevás solo un cuaderno → registro manual. Tenés notas
+  pero no audio.
+
+**Decisión 3.2 — La fuente te confirma que Anaconda-2 es un
+programa activo de monitoreo de periodistas.** Te da un nombre: un
+oficial que coordina la operación. Pero te pide algo a cambio:
+quiere saber qué tenés vos. The Spy: el intercambio de información
+como moneda.
+- **(A)** Le mostrás una parte de lo que tenés (sin revelar la
+  fuente original de los documentos) → intercambio parcial. La
+  fuente te da más contexto. Pero ahora ella sabe qué sabés.
+- **(B)** No le mostrás nada — solo escuchás → la fuente se siente
+  no correspondida. Puede no volver a reunirse.
+- **(C)** Le mentís sobre lo que tenés → la relación se construye
+  sobre una mentira. Si lo descubre, perdés la fuente y tu
+  credibilidad.
+
+**Decisión 3.3 — Al volver a la redacción, abrís Bitácora y
+registrás todo.** Mientras escribís en el diario de campo, corrés
+un diagnóstico de tu dispositivo. El resultado: "Patrón de conexión
+anómalo detectado en red de la redacción. Posible monitoreo." El
+adversario tiene las mismas herramientas que vos, o mejores.
+- **(A)** Desconectás el dispositivo de la red y pasás todo al
+  air-gapped → perdés acceso a herramientas que necesitan red
+  interna. Pero el material está seguro.
+- **(B)** Reportás a Fiorella y esperás diagnóstico → flag
+  `patron_digital_detectado`. Fiorella investiga pero pasó tiempo.
+- **(C)** Ignorás y seguís trabajando → si el monitoreo es real,
+  todo lo que escribas desde ahora está comprometido.
+
+**Convergencia:** la fuente de inteligencia está (o no) activa. El
+material está (o no) en dispositivo limpio. La red de la redacción
+está (o no) comprometida.
+
+### Objetivo 4 — Complicación: "El sistema se protege."
+
+**Situación:** Bitácora muestra acumulado: diario de campo con
+múltiples entradas T-DOM y T-SPY. El cruce automático genera banner
+rojo. Al mismo tiempo, Pollastri registra en el sistema: "Recibimos
+notificación del juzgado. Requerimiento de información sobre
+periodistas de la redacción en relación a una causa de seguridad
+nacional." Y la fuente interna manda un último mensaje por canal de
+emergencia: "Saben. No me contactes más."
+
+Todos los hombres del presidente: el sistema se protege cuando lo
+investigás.
+
+**Decisión 4.1 — El requerimiento judicial. ¿Cómo respondés?**
+- **(A)** Activás protocolo legal completo: Pollastri responde con
+  doctrina de secreto profesional periodístico (Campillay, CSJN
+  1986) → la respuesta es legal pero confirma que hay investigación.
+- **(B)** Publicás inmediatamente lo que tenés como medida de
+  protección → la visibilidad protege, pero el material puede
+  estar incompleto. "La publicación es el chaleco antibalas del
+  periodista de investigación."
+- **(C)** Coordinás publicación simultánea con otro medio (ICIJ,
+  OCCRP) → máxima protección por visibilidad internacional, pero
+  perdés exclusividad y control del timing.
+
+**Decisión 4.2 — La fuente cortó comunicación. ¿La buscás?**
+- **(A)** Respetás su pedido. No la contactás más → perdés la
+  fuente pero la protegés.
+- **(B)** Intentás un último contacto por canal de emergencia → si
+  funciona, tenés confirmación final. Si no, quedó registro del
+  intento.
+- **(C)** Publicás sin la confirmación de la fuente interna → el
+  material original (los documentos del buzón) más tu verificación
+  OSINT, sin la fuente humana. Más débil pero publicable.
+
+**Decisión 4.3 — Bitácora muestra diagnóstico:** "3 indicadores de
+compromiso digital en 14 días. Se sugiere rotación de dispositivos
+y revisión de seguridad perimetral de la redacción."
+- **(A)** Rotación completa: dispositivos nuevos, cambio de
+  rutinas, mudanza temporal de la operación → máxima seguridad,
+  máxima disrupción.
+- **(B)** Rotación parcial: solo dispositivos, no rutinas → mitiga
+  lo digital, no lo físico.
+- **(C)** No rotás — publicás lo antes posible y que la
+  publicación sea la protección → apostás todo a que la
+  visibilidad es más efectiva que la seguridad operacional.
+
+**Convergencia:** la investigación llega al punto de publicar o
+abortar.
+
+### Objetivo 5 — Resolución: "Bitácora abierta. La misma mesa."
+
+No hay decisiones. Debriefing.
+
+**Parte de cierre ANA-047 — firmado** (dirección editorial +
+Pollastri + Fiorella):
+
+- **Ruta de decisiones:** las 12-15 decisiones en el árbol.
+- **Nivel de acceso alcanzado:** qué profundidad de investigación
+  lograste.
+- **Estado de las fuentes:** fuente anónima original
+  (activa/desconocida), fuente interna (cortada/protegida/expuesta),
+  colega (alertado/no alertado).
+- **Custodia del material:** con intermediario / en redacción /
+  sin custodia formal.
+- **Integridad digital:** dispositivo limpio / comprometido /
+  parcialmente comprometido.
+- **Publicación:** coordinada internacionalmente / exclusiva /
+  abortada / parcial.
+- **Nota final:** "Esta investigación no tiene cierre. Anaconda-2
+  sigue activo. El monitoreo no se detuvo porque publicaste. Se
+  detuvo (o no) porque cambiaron de objetivo."
+- **Sesión JTSN:** estado mental. Todos los hombres del
+  presidente: Woodward y Bernstein no durmieron durante meses.
+  Mondini tampoco.
