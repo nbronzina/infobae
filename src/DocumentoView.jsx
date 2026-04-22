@@ -115,13 +115,25 @@ function DocSecciones({ secciones, modo }) {
                 {sec.texto}
               </p>
             )}
+            {Array.isArray(sec.parrafos) && sec.parrafos.map((p, i) => (
+              <p key={i} style={{
+                fontFamily: SERIF,
+                fontSize: isCampo ? '15px' : '15px',
+                lineHeight: isCampo ? 1.6 : 1.7,
+                color: t.text,
+                margin: i === sec.parrafos.length - 1 ? 0 : '0 0 14px',
+                maxWidth: isCampo ? 'none' : '38em'
+              }}>
+                {p}
+              </p>
+            ))}
             {Array.isArray(sec.items) && (
               <ul style={{
                 fontFamily: SERIF,
                 fontSize: isCampo ? '14.5px' : '14.5px',
                 lineHeight: isCampo ? 1.6 : 1.7,
                 color: t.text,
-                margin: 0, paddingLeft: '20px',
+                margin: sec.parrafos || sec.texto ? '14px 0 0' : 0, paddingLeft: '20px',
                 maxWidth: isCampo ? 'none' : '38em'
               }}>
                 {sec.items.map((it, i) => (
