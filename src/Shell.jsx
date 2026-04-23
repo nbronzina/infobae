@@ -5,7 +5,7 @@ import EstadoView from './EstadoView.jsx';
 import MisionView from './MisionView.jsx';
 
 const TABS = [
-  { id: 'mision', label: 'MISIÓN', labelCampo: 'MISIÓN' },
+  { id: 'mision', label: 'CANAL', labelCampo: 'CANAL' },
   { id: 'herramientas', label: 'HERRAMIENTAS', labelCampo: 'HERRAM.' },
   { id: 'docs', label: 'DOCS', labelCampo: 'DOCS' },
   { id: 'estado', label: 'ESTADO', labelCampo: 'ESTADO' }
@@ -162,7 +162,7 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
         overflow: 'hidden'
       }}
     >
-      <div style={{ padding: '14px 16px 4px', display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+      <div style={{ padding: '18px 16px 10px', display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
         <img src="/infobae-logo.png" alt="infobae" draggable={false}
           style={{ height: '16px', width: 'auto', display: 'block', pointerEvents: 'none' }} />
         <span style={{
@@ -173,7 +173,7 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
           Bitácora
         </span>
       </div>
-      <main className="bitacora-scroll" style={{ flex: 1, padding: '8px 16px 16px', overflowY: 'auto', minHeight: 0 }}>
+      <main className="bitacora-scroll" style={{ flex: 1, padding: '10px 16px 18px', overflowY: 'auto', minHeight: 0 }}>
         <ViewSwitch activeView={activeView} modo="campo" scenario={scenario} onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} docRequest={docRequest} onMisionBadgesChange={onMisionBadgesChange} />
       </main>
       <nav
