@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import teatrosData from '../data/teatros.json';
 import gabineteData from '../data/gabinete.json';
 import directorioData from '../data/directorio.json';
@@ -10,7 +10,20 @@ export default function EvaluacionTeatro({ modo, onOpenDoc, onOpenPerfil }) {
   const s = sizesFor(modo);
   const isCampo = modo === 'campo';
 
-  const [seleccionado, setSeleccionado] = useState(null);
+  // La selección persiste en localStorage para que la misión
+  // pueda detectar si el jugador realmente evaluó Arauca (u otro
+  // teatro) desde la herramienta — no solo pasó por la decisión.
+  const [seleccionado, setSeleccionadoState] = useState(() => {
+    if (typeof localStorage === 'undefined') return null;
+    try { return localStorage.getItem('infobae:teatro_seleccionado') || null; } catch { return null; }
+  });
+  const setSeleccionado = (codigo) => {
+    setSeleccionadoState(codigo);
+    try {
+      if (codigo) localStorage.setItem('infobae:teatro_seleccionado', codigo);
+      else localStorage.removeItem('infobae:teatro_seleccionado');
+    } catch {}
+  };
 
   const teatro = teatrosData.find(x => x.codigo === seleccionado);
   const levelColor = (n) => n === 'crítico' ? t.alert : n === 'alto' ? t.revision : n === 'medio' ? t.textSecondary : t.vigente;

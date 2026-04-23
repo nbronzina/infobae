@@ -350,7 +350,19 @@ function ScenarioIndex() {
   }, [aboutOpen]);
 
   const goToScenario = (slug) => {
-    if (typeof window !== 'undefined') window.location.href = '/' + slug;
+    if (typeof window === 'undefined') return;
+    // Al entrar a una línea, limpiar toda la partida previa de ese
+    // escenario. Cada línea empieza de cero — sin checklist
+    // arrastrado, sin fuentes pegadas, sin diario heredado.
+    try {
+      localStorage.removeItem('infobae:checklist');
+      localStorage.removeItem('infobae:fuentes');
+      localStorage.removeItem('infobae:diario');
+      localStorage.removeItem(`infobae:mision_${slug}`);
+      localStorage.removeItem('infobae:teatro_seleccionado');
+      localStorage.removeItem('infobae:docs_leidos');
+    } catch {}
+    window.location.href = '/' + slug;
   };
 
   return (

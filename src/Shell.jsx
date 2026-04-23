@@ -145,7 +145,7 @@ function ViewSwitch({ activeView, modo, scenario, onOpenDoc, onOpenPerfil, docRe
     return <DocsView modo={modo} request={docRequest} />;
   }
   if (activeView === 'estado') {
-    return <EstadoView modo={modo} />;
+    return <EstadoView modo={modo} scenario={scenario} />;
   }
   return <Placeholder tabId={activeView} modo={modo} />;
 }

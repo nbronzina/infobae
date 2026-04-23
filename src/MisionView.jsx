@@ -6,6 +6,46 @@ const MISIONES = {
   internacional: misionInternacional
 };
 
+// Flags derivados de localStorage: reflejan en tiempo real el uso
+// de herramientas reales y la lectura de documentos. Se suman a los
+// flags que la partida acumula por decisiones. Esto hace que
+// "evaluacion_leida" sólo aplique si la persona realmente abrió la
+// herramienta y no si sólo clickeó la opción.
+function derivarFlagsExternos() {
+  const flags = [];
+  if (typeof localStorage === 'undefined') return flags;
+
+  try {
+    const teatroSel = localStorage.getItem('infobae:teatro_seleccionado');
+    if (teatroSel === 'ARQ-042') flags.push('evaluacion_arauca_abierta');
+    if (teatroSel) flags.push('teatro_abierto');
+  } catch {}
+
+  try {
+    const checklistRaw = localStorage.getItem('infobae:checklist');
+    if (checklistRaw) {
+      const ticks = JSON.parse(checklistRaw);
+      const marcados = Object.values(ticks || {}).filter(v => v === true).length;
+      if (marcados >= 1) flags.push('checklist_tocado');
+      if (marcados >= 3) flags.push('checklist_tres_items');
+      if (marcados >= 9) flags.push('checklist_completo');
+    }
+  } catch {}
+
+  try {
+    const docsRaw = localStorage.getItem('infobae:docs_leidos');
+    if (docsRaw) {
+      const arr = JSON.parse(docsRaw);
+      if (Array.isArray(arr)) {
+        if (arr.includes('main')) flags.push('manual_rf_leido');
+        for (const k of arr) flags.push('doc_' + k + '_leido');
+      }
+    }
+  } catch {}
+
+  return flags;
+}
+
 const ESTADO_INICIAL_PARTIDA = {
   nodoActual: null,
   flags: [],
@@ -65,6 +105,17 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
 
   const nodoActual = useMemo(() => mision ? nodoPorId(mision, partida.nodoActual) : null, [mision, partida.nodoActual]);
 
+  // Tick simple para refrescar flags derivados cuando el usuario
+  // vuelve al tab MISIÓN después de usar una herramienta.
+  const [derivadosTick, setDerivadosTick] = useState(0);
+  useEffect(() => {
+    const handler = () => setDerivadosTick(t => t + 1);
+    window.addEventListener('focus', handler);
+    return () => window.removeEventListener('focus', handler);
+  }, []);
+  const flagsDerivados = useMemo(() => derivarFlagsExternos(), [nodoActual, derivadosTick]);
+  const flagsCombinados = useMemo(() => Array.from(new Set([...(partida.flags || []), ...flagsDerivados])), [partida.flags, flagsDerivados]);
+
   // Comunica al Shell qué tabs deben mostrar badge.
   useEffect(() => {
     if (!onBadgesChange) return;
@@ -96,14 +147,38 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
     }));
   }
 
+  function resolverSiguiente(opcion, flagsActualizados) {
+    // siguiente_condicional permite que una misma opción derive a
+    // nodos distintos según flags acumulados de objetivos anteriores.
+    // El primer match del array gana; si ninguno matchea, usa el
+    // siguiente por defecto.
+    if (Array.isArray(opcion.siguiente_condicional)) {
+      for (const regla of opcion.siguiente_condicional) {
+        if (regla.flag && flagsActualizados.includes(regla.flag)) return regla.siguiente;
+        if (regla.sin_flag && !flagsActualizados.includes(regla.sin_flag)) return regla.siguiente;
+      }
+    }
+    return opcion.siguiente;
+  }
+
+  function opcionBloqueada(opcion, flags) {
+    if (opcion.requiere && !flags.includes(opcion.requiere)) return true;
+    if (opcion.requiere_sin && flags.includes(opcion.requiere_sin)) return true;
+    return false;
+  }
+
   function elegirOpcion(opcion) {
-    if (opcion.requiere && !partida.flags.includes(opcion.requiere)) return;
+    if (opcionBloqueada(opcion, flagsCombinados)) return;
     setPartida(prev => {
       const flags = Array.from(new Set([...(prev.flags || []), ...(opcion.flags_set || [])]));
       const preparacion = (prev.preparacion || 0) + (opcion.preparacion || 0);
       const estadoMental = opcion.estado_mental_set || prev.estadoMental;
       const visitados = prev.visitados.includes(prev.nodoActual) ? prev.visitados : [...prev.visitados, prev.nodoActual];
-      return { ...prev, nodoActual: opcion.siguiente, flags, preparacion, estadoMental, visitados };
+      // resolverSiguiente evalúa contra flags combinados (propios +
+      // derivados de localStorage), no sólo los de la partida.
+      const flagsParaRutear = Array.from(new Set([...flags, ...flagsDerivados]));
+      const nodoActual = resolverSiguiente(opcion, flagsParaRutear);
+      return { ...prev, nodoActual, flags, preparacion, estadoMental, visitados };
     });
   }
 
@@ -111,13 +186,96 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
     setPartida({ ...ESTADO_INICIAL_PARTIDA, nodoActual: primerNodoDeLaMision(mision) });
   }
 
+  if (nodoActual.tipo === 'debriefing') {
+    return <DebriefingNodo nodo={nodoActual} partida={partida} t={t} modo={modo} />;
+  }
+
+  return isCampo
+    ? <CampoNodo nodo={nodoActual} flags={flagsCombinados} onElegir={elegirOpcion} onAvanzar={avanzarA} t={t} s={s} />
+    : <RedaccionNodo nodo={nodoActual} flags={flagsCombinados} onElegir={elegirOpcion} onAvanzar={avanzarA} t={t} />;
+}
+
+// ============================================================
+// DEBRIEFING — parte de cierre compuesto desde partida
+// ============================================================
+
+function DebriefingNodo({ nodo, partida, t, modo }) {
+  const isCampo = modo === 'campo';
+  const flags = partida.flags || [];
+  const secciones = (nodo.secciones || []).map(sec => ({
+    ...sec,
+    fragmentos: (sec.fragmentos || []).filter(f => {
+      if (f.si_flag) return flags.includes(f.si_flag);
+      if (f.sin_flag) return !flags.includes(f.sin_flag);
+      return true;
+    })
+  })).filter(sec => sec.fragmentos.length > 0);
+
+  const tituloFs = isCampo ? '20px' : '28px';
+  const bodyFs = isCampo ? '14.5px' : '15.5px';
+  const maxW = isCampo ? 'none' : '38em';
+
   return (
-    <div>
-      {isCampo
-        ? <CampoNodo nodo={nodoActual} partida={partida} onElegir={elegirOpcion} onAvanzar={avanzarA} onReiniciar={reiniciar} t={t} s={s} />
-        : <RedaccionNodo nodo={nodoActual} partida={partida} onElegir={elegirOpcion} onAvanzar={avanzarA} onReiniciar={reiniciar} t={t} />
-      }
-    </div>
+    <article>
+      <div style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
+        Parte de cierre · despliegue {nodo.codigo_despliegue}
+      </div>
+      <h1 style={{ fontFamily: SERIF, fontSize: tituloFs, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text, lineHeight: 1.2 }}>
+        {nodo.fecha_cierre}
+      </h1>
+      {nodo.apertura && (
+        <p style={{ fontFamily: SERIF, fontSize: bodyFs, color: t.text, lineHeight: 1.7, maxWidth: maxW, margin: '18px 0 28px' }}>
+          {nodo.apertura}
+        </p>
+      )}
+
+      <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, lineHeight: 1.7, marginBottom: '28px' }}>
+        Preparación acumulada: {partida.preparacion || 0}<br/>
+        Estado mental: {partida.estadoMental || 'sin registro'}
+      </div>
+
+      {secciones.map((sec, i) => (
+        <section key={i} style={{ marginBottom: isCampo ? '24px' : '36px' }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: isCampo ? '16px' : '19px', fontWeight: 500, fontStyle: 'italic', margin: '0 0 10px', color: t.text, letterSpacing: '-0.005em' }}>
+            {sec.titulo}
+          </h2>
+          {sec.fragmentos.map((f, j) => (
+            <p key={j} style={{ fontFamily: SERIF, fontSize: bodyFs, color: t.text, lineHeight: 1.65, margin: '0 0 12px', maxWidth: maxW }}>
+              {f.texto}
+            </p>
+          ))}
+        </section>
+      ))}
+
+      {nodo.cierre && (
+        <section style={{ borderTop: '1px solid ' + t.border, paddingTop: isCampo ? '18px' : '24px', marginTop: isCampo ? '24px' : '32px' }}>
+          <p style={{ fontFamily: SERIF, fontSize: bodyFs, color: t.text, lineHeight: 1.7, maxWidth: maxW, margin: '0 0 14px' }}>
+            {nodo.cierre.texto_base}
+          </p>
+          {nodo.cierre.jtsn && (
+            <p style={{ fontFamily: SERIF, fontSize: isCampo ? '13px' : '14px', color: t.textSecondary, fontStyle: 'italic', lineHeight: 1.6, maxWidth: maxW, margin: '0 0 14px' }}>
+              {nodo.cierre.jtsn}
+            </p>
+          )}
+          {nodo.cierre.final && (
+            <p style={{ fontFamily: SERIF, fontSize: bodyFs, color: t.text, lineHeight: 1.7, maxWidth: maxW, margin: '20px 0 0' }}>
+              {nodo.cierre.final}
+            </p>
+          )}
+        </section>
+      )}
+
+      {Array.isArray(nodo.firmas) && nodo.firmas.length > 0 && (
+        <footer style={{ marginTop: isCampo ? '28px' : '40px', paddingTop: '18px', borderTop: '1px solid ' + t.border }}>
+          <div style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '10px' }}>
+            Firmado
+          </div>
+          <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textSecondary, lineHeight: 1.8 }}>
+            {nodo.firmas.map((f, i) => <div key={i}>{f}</div>)}
+          </div>
+        </footer>
+      )}
+    </article>
   );
 }
 
@@ -125,8 +283,9 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
 // CAMPO — situación arriba, opciones full-width 56px abajo
 // ============================================================
 
-function CampoNodo({ nodo, partida, onElegir, onAvanzar, onReiniciar, t, s }) {
+function CampoNodo({ nodo, flags, onElegir, onAvanzar, t, s }) {
   const esDecision = nodo.tipo === 'decision';
+  const avanceGate = avanceBloqueado(nodo, flags);
   return (
     <div>
       <EmisorLine nodo={nodo} t={t} modo="campo" />
@@ -145,28 +304,15 @@ function CampoNodo({ nodo, partida, onElegir, onAvanzar, onReiniciar, t, s }) {
             </div>
           )}
           {nodo.opciones.map(o => (
-            <OpcionButton key={o.id} opcion={o} partida={partida} onElegir={onElegir} t={t} modo="campo" />
+            <OpcionButton key={o.id} opcion={o} flags={flags} onElegir={onElegir} t={t} modo="campo" />
           ))}
         </div>
       )}
 
       {!esDecision && nodo.siguiente && (
-        <button type="button" onClick={() => onAvanzar(nodo.siguiente)} style={{
-          cursor: 'pointer', background: t.text, color: t.bg, border: 'none',
-          padding: '16px', width: '100%', minHeight: '56px', marginTop: '8px',
-          fontFamily: MONO, fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 500
-        }}>
-          seguir →
-        </button>
+        <AvanceLink onAvanzar={() => onAvanzar(nodo.siguiente)} gate={avanceGate} t={t} modo="campo" />
       )}
 
-      {!esDecision && !nodo.siguiente && (
-        <div style={{ padding: '14px 0', marginTop: '14px', borderTop: '1px solid ' + t.border, fontFamily: MONO, fontSize: '10px', color: t.textMeta, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-          fin del primer objetivo · preparación {partida.preparacion}
-        </div>
-      )}
-
-      <FooterReset onReiniciar={onReiniciar} t={t} modo="campo" />
     </div>
   );
 }
@@ -175,8 +321,9 @@ function CampoNodo({ nodo, partida, onElegir, onAvanzar, onReiniciar, t, s }) {
 // REDACCIÓN — livre-jeu editorial, opciones como links al final
 // ============================================================
 
-function RedaccionNodo({ nodo, partida, onElegir, onAvanzar, onReiniciar, t }) {
+function RedaccionNodo({ nodo, flags, onElegir, onAvanzar, t }) {
   const esDecision = nodo.tipo === 'decision';
+  const avanceGate = avanceBloqueado(nodo, flags);
   return (
     <div>
       <EmisorLine nodo={nodo} t={t} modo="redaccion" />
@@ -191,29 +338,15 @@ function RedaccionNodo({ nodo, partida, onElegir, onAvanzar, onReiniciar, t }) {
         <ol style={{ listStyle: 'none', margin: 0, padding: 0, maxWidth: '38em' }}>
           {nodo.opciones.map((o, i) => (
             <li key={o.id} style={{ borderTop: i === 0 ? '1px solid ' + t.border : 'none', borderBottom: '1px solid ' + t.border }}>
-              <OpcionButton opcion={o} partida={partida} onElegir={onElegir} t={t} modo="redaccion" />
+              <OpcionButton opcion={o} flags={flags} onElegir={onElegir} t={t} modo="redaccion" />
             </li>
           ))}
         </ol>
       )}
 
       {!esDecision && nodo.siguiente && (
-        <button type="button" onClick={() => onAvanzar(nodo.siguiente)} style={{
-          cursor: 'pointer', background: 'none', border: 'none', padding: 0,
-          fontFamily: SERIF, fontSize: '15px', fontStyle: 'italic', color: t.text,
-          borderBottom: '1px solid ' + t.text, paddingBottom: '1px', marginTop: '14px'
-        }}>
-          seguir →
-        </button>
+        <AvanceLink onAvanzar={() => onAvanzar(nodo.siguiente)} gate={avanceGate} t={t} modo="redaccion" />
       )}
-
-      {!esDecision && !nodo.siguiente && (
-        <div style={{ paddingTop: '18px', marginTop: '18px', borderTop: '1px solid ' + t.border, fontFamily: SERIF, fontSize: '13px', fontStyle: 'italic', color: t.textMeta, maxWidth: '38em' }}>
-          Fin del primer objetivo. Preparación acumulada: {partida.preparacion}.
-        </div>
-      )}
-
-      <FooterReset onReiniciar={onReiniciar} t={t} modo="redaccion" />
     </div>
   );
 }
@@ -239,9 +372,60 @@ function EmisorLine({ nodo, t, modo }) {
   );
 }
 
-function OpcionButton({ opcion, partida, onElegir, t, modo }) {
+function avanceBloqueado(nodo, flags) {
+  // Un nodo de narración o mensaje puede tener un gate de avance —
+  // típicamente porque Villafañe o algún NPC no "deja pasar" hasta
+  // que el jugador toque una herramienta real.
+  if (!nodo) return null;
+  if (nodo.avance_requiere && !flags.includes(nodo.avance_requiere)) {
+    return nodo.avance_requiere_texto || `necesitás ${nodo.avance_requiere}`;
+  }
+  if (nodo.avance_requiere_sin && flags.includes(nodo.avance_requiere_sin)) {
+    return nodo.avance_requiere_texto || `bloqueado por ${nodo.avance_requiere_sin}`;
+  }
+  return null;
+}
+
+function AvanceLink({ onAvanzar, gate, t, modo }) {
   const isCampo = modo === 'campo';
-  const bloqueada = opcion.requiere && !partida.flags.includes(opcion.requiere);
+  if (gate) {
+    return (
+      <div style={{ marginTop: isCampo ? '14px' : '18px', padding: '8px 0' }}>
+        <div style={{
+          fontFamily: MONO, fontSize: isCampo ? '10.5px' : '11px',
+          letterSpacing: '0.08em', color: t.textMeta,
+          cursor: 'not-allowed', opacity: 0.55
+        }}>
+          continuar ↓
+        </div>
+        <div style={{
+          fontFamily: isCampo ? MONO : SERIF,
+          fontSize: isCampo ? '10px' : '12.5px',
+          fontStyle: isCampo ? 'normal' : 'italic',
+          color: t.textMeta, marginTop: '4px',
+          letterSpacing: isCampo ? '0.04em' : '0'
+        }}>
+          {gate}
+        </div>
+      </div>
+    );
+  }
+  return (
+    <button type="button" onClick={onAvanzar} style={{
+      cursor: 'pointer', background: 'none', border: 'none', padding: '8px 0',
+      fontFamily: MONO, fontSize: isCampo ? '10.5px' : '11px',
+      letterSpacing: '0.08em', color: t.textMeta,
+      marginTop: isCampo ? '14px' : '18px'
+    }}>
+      continuar ↓
+    </button>
+  );
+}
+
+function OpcionButton({ opcion, flags, onElegir, t, modo }) {
+  const isCampo = modo === 'campo';
+  const bloqueada = (opcion.requiere && !flags.includes(opcion.requiere)) ||
+                    (opcion.requiere_sin && flags.includes(opcion.requiere_sin));
 
   if (isCampo) {
     return (
@@ -288,17 +472,3 @@ function OpcionButton({ opcion, partida, onElegir, t, modo }) {
   );
 }
 
-function FooterReset({ onReiniciar, t, modo }) {
-  const isCampo = modo === 'campo';
-  return (
-    <div style={{ marginTop: isCampo ? '32px' : '48px', paddingTop: '14px', borderTop: '1px dotted ' + t.border }}>
-      <button type="button" onClick={onReiniciar} style={{
-        background: 'none', border: 'none', padding: 0, cursor: 'pointer',
-        fontFamily: MONO, fontSize: '10px', letterSpacing: '0.06em', color: t.textMeta,
-        fontStyle: isCampo ? 'normal' : 'italic'
-      }}>
-        reiniciar partida desde el principio
-      </button>
-    </div>
-  );
-}

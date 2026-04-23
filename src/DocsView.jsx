@@ -20,9 +20,30 @@ export default function DocsView({ modo, request }) {
   const t = themeFor(modo);
   const s = sizesFor(modo);
   const isCampo = modo === 'campo';
-  const [activo, setActivo] = useState(null);
+  const [activoRaw, setActivoRaw] = useState(null);
   const [perfilActivo, setPerfilActivo] = useState(null);
   const total = totalDocumentos();
+
+  // Wrap de setActivo: al abrir un doc, registramos la key en
+  // localStorage (infobae:docs_leidos). Las misiones leen esta
+  // lista y derivan flags — p. ej. 'manual_rf_leido' cuando el
+  // jugador abre el documento 'main'. Esto hace que opciones
+  // gated por lectura (obj3 D3.3 opción C) se desbloqueen por la
+  // interacción real con el documento.
+  const setActivo = (key) => {
+    setActivoRaw(key);
+    if (!key || typeof localStorage === 'undefined') return;
+    try {
+      const raw = localStorage.getItem('infobae:docs_leidos');
+      const arr = raw ? JSON.parse(raw) : [];
+      if (Array.isArray(arr) && !arr.includes(key)) {
+        localStorage.setItem('infobae:docs_leidos', JSON.stringify([...arr, key]));
+      } else if (!Array.isArray(arr)) {
+        localStorage.setItem('infobae:docs_leidos', JSON.stringify([key]));
+      }
+    } catch {}
+  };
+  const activo = activoRaw;
 
   useEffect(() => {
     if (!request || !request.t) return;
@@ -31,7 +52,7 @@ export default function DocsView({ modo, request }) {
       setPerfilActivo(null);
     } else if (request.type === 'perfil') {
       setPerfilActivo(request.key);
-      setActivo(null);
+      setActivoRaw(null);
     }
   }, [request?.t]);
 
@@ -39,7 +60,7 @@ export default function DocsView({ modo, request }) {
     return <PerfilView personaKey={perfilActivo} modo={modo} onBack={() => setPerfilActivo(null)} />;
   }
   if (activo) {
-    return <DocumentoView docKey={activo} modo={modo} onBack={() => setActivo(null)} />;
+    return <DocumentoView docKey={activo} modo={modo} onBack={() => setActivoRaw(null)} />;
   }
 
   return (
