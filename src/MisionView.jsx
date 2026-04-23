@@ -110,8 +110,14 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
     return opcion.siguiente;
   }
 
+  function opcionBloqueada(opcion, flags) {
+    if (opcion.requiere && !flags.includes(opcion.requiere)) return true;
+    if (opcion.requiere_sin && flags.includes(opcion.requiere_sin)) return true;
+    return false;
+  }
+
   function elegirOpcion(opcion) {
-    if (opcion.requiere && !partida.flags.includes(opcion.requiere)) return;
+    if (opcionBloqueada(opcion, partida.flags)) return;
     setPartida(prev => {
       const flags = Array.from(new Set([...(prev.flags || []), ...(opcion.flags_set || [])]));
       const preparacion = (prev.preparacion || 0) + (opcion.preparacion || 0);
@@ -256,7 +262,8 @@ function EmisorLine({ nodo, t, modo }) {
 
 function OpcionButton({ opcion, partida, onElegir, t, modo }) {
   const isCampo = modo === 'campo';
-  const bloqueada = opcion.requiere && !partida.flags.includes(opcion.requiere);
+  const bloqueada = (opcion.requiere && !partida.flags.includes(opcion.requiere)) ||
+                    (opcion.requiere_sin && partida.flags.includes(opcion.requiere_sin));
 
   if (isCampo) {
     return (
