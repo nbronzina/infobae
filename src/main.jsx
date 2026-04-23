@@ -76,32 +76,41 @@ function AboutModal({ onClose }) {
           Sobre este artefacto
         </h2>
         <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
-          <strong>Infobae · Bitácora</strong> es una obra de ficción que explora el futuro cercano del periodismo de investigación y la corresponsalía internacional argentina a través del kit operativo de uno de sus medios icónicos —Infobae— en 2029. Un trabajo liderado por Nicolás Bronzina.
+          <strong>Infobae · Bitácora</strong> es una obra de ficción interactiva que explora el futuro cercano del periodismo de investigación y la corresponsalía internacional argentina a través del kit operativo de uno de sus medios icónicos — Infobae — en 2029.
         </div>
         <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
-          Es un <em>diegetic prototype</em>: la ficción está en que el sistema existe, no en lo que dice. Pregunta cómo podría organizarse una redacción argentina para cubrir investigación doméstica y corresponsalía internacional en un contexto donde la vigilancia, la autenticidad del contenido y la seguridad operativa de periodistas se volvieron condiciones cotidianas del trabajo.
+          Es un <em>diegetic prototype</em>: la ficción está en que el sistema existe, no en lo que dice. Cada protocolo, norma y herramienta es extensión plausible de algo que existe hoy. Los personajes y los despliegues son ficticios. Las fuentes externas, las regulaciones y los papers citados son reales.
+        </div>
+        <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '14px' }}>
+          El artefacto es un kit operativo local que corre offline en dos dispositivos: un GrapheneOS (Pixel) para campo y un e-ink (Boox) para redacción. El objeto real y el objeto ficticio son el mismo. La herramienta que el jugador usa es la herramienta que el personaje usa.
         </div>
         <div className="serif" style={{ fontSize: '14.5px', lineHeight: 1.6, color: '#1f1f1f', marginBottom: '18px' }}>
-          Cada protocolo, norma y herramienta es extensión plausible de algo que existe hoy. Los personajes y los despliegues son ficticios. Las fuentes externas, las regulaciones y los papers citados son reales.
+          Tres escenarios como livre-jeu interactivo: corresponsalía internacional en zona de conflicto (Arauca/Apure), investigación de narcotráfico doméstico (Rosario), y contra-vigilancia por inteligencia estatal (Buenos Aires). Cada escenario tiene 5 objetivos con decisiones que generan consecuencias demoradas.
         </div>
 
         <div style={{ padding: '14px 16px', backgroundColor: '#f0ecde', borderLeft: '2px solid #5a544c', marginBottom: '18px' }}>
-          <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '8px' }}>Preguntas que abre este artefacto</div>
+          <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '10px' }}>Preguntas que abre este artefacto</div>
           <ul className="serif" style={{ fontSize: '13px', lineHeight: 1.6, color: '#1f1f1f', margin: 0, paddingLeft: '18px' }}>
             <li>¿Qué responsabilidad tienen los medios de traducir investigación técnica sobre vigilancia a doctrina operativa cuando los organismos internacionales no lo hacen?</li>
             <li>¿Cómo se regula la detección pasiva de infraestructura satelital civil, si hoy no hay marco?</li>
-            <li>¿Qué protección concreta existe para fixers y colaboradores locales frente a reconocimiento facial en checkpoints?</li>
+            <li>¿Qué protección concreta existe para fixers y colaboradores locales frente a reconocimiento facial en checkpoints — y quién los protege cuando el corresponsal se va?</li>
             <li>¿Puede una redacción civil asumir la carga de OPSEC militar sin perder su función periodística?</li>
             <li>¿La vigilancia estatal doméstica sobre periodistas de investigación es un riesgo ocupacional asumible, o una condición que exige respuesta colectiva de la profesión?</li>
+            <li>¿Por qué el entrenamiento operacional de periodistas sigue siendo presencial cada 3 años cuando las fuerzas armadas ya tienen simuladores interactivos permanentes?</li>
+            <li>¿Quién construiría un sistema así en la realidad — el medio, FOPEA, CPJ, o el Estado que también es adversario en una de las líneas de investigación?</li>
+            <li>¿Tiene sentido seguir separando al corresponsal de guerra del periodista de investigación cuando enfrentan las mismas amenazas con las mismas herramientas?</li>
           </ul>
         </div>
 
         <div style={{ marginBottom: '18px', paddingTop: '14px', borderTop: '1px solid #d9d4c2' }}>
-          <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '12px' }}>
-            <strong>Método.</strong> Design fiction + rapid prototyping.
+          <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '10px' }}>
+            <strong>Método.</strong> Design fiction + rapid prototyping. Tradición Near Future Laboratory / Superflux / Nick Foster.
+          </div>
+          <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f', marginBottom: '10px' }}>
+            <strong>Referentes de juego.</strong> Soldier's Companion (DefTech/armasuisse), In 90 Days (Humanitarian Leadership Academy), Papers Please, This War of Mine.
           </div>
           <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f' }}>
-            <strong>Tecnología.</strong> React + Vite. Datos en JSON local. Function serverless en Vercel para el horizon scanning semanal con la API de Claude (web search → generación → validación → consolidación → commit vía GitHub Data API). Tres líneas de planificación servidas como rutas distintas (<em>/internacional</em>, <em>/rosario</em>, <em>/inteligencia</em>) sobre la misma codebase.
+            <strong>Fuentes verificadas.</strong> Rye &amp; Levin IEEE S&amp;P 2024, ANMaC, ENACOM, FOPEA, CPJ, Berkeley Protocol, C2PA, Dart Center, InSight Crime.
           </div>
         </div>
 
@@ -160,15 +169,11 @@ function HomeView({ onEnter, onOpenAbout }) {
           Sobre este artefacto
         </div>
       </div>
-
-      <div className="serif" style={{ fontSize: '11px', fontStyle: 'italic', color: '#8a8472', textAlign: 'center' }}>
-        Nicolás Bronzina · 2025
-      </div>
     </div>
   );
 }
 
-function BriefingView({ onSelect, onOpenAbout }) {
+function BriefingView({ onSelect }) {
   const opciones = [
     { slug: 'internacional', label: 'Línea internacional' },
     { slug: 'rosario', label: 'Línea nacional · Rosario' },
@@ -233,19 +238,6 @@ function BriefingView({ onSelect, onOpenAbout }) {
             ))}
           </div>
         </div>
-
-        <div style={{ textAlign: 'center' }}>
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={onOpenAbout}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpenAbout(); } }}
-            className="mono"
-            style={{ display: 'inline-block', cursor: 'pointer', fontSize: '11px', letterSpacing: '0.06em', color: '#5a544c', borderBottom: '1px dotted #8a8472', paddingBottom: '1px' }}
-          >
-            Sobre este artefacto
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -276,7 +268,7 @@ function ScenarioIndex() {
         <HomeView onEnter={() => setView('briefing')} onOpenAbout={() => setAboutOpen(true)} />
       )}
       {view === 'briefing' && (
-        <BriefingView onSelect={goToScenario} onOpenAbout={() => setAboutOpen(true)} />
+        <BriefingView onSelect={goToScenario} />
       )}
       {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} />}
     </div>
