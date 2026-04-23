@@ -225,8 +225,8 @@ function RedaccionNodo({ nodo, partida, onElegir, onAvanzar, onReiniciar, t }) {
 function EmisorLine({ nodo, t, modo }) {
   const isCampo = modo === 'campo';
   if (nodo.tipo === 'decision') return null;
-  const etiqueta = labelEmisor(nodo);
-  if (!etiqueta) return null;
+  // emisor null → narración pura, sin label.
+  if (!nodo.emisor) return null;
   return (
     <div style={{
       fontFamily: MONO,
@@ -234,15 +234,9 @@ function EmisorLine({ nodo, t, modo }) {
       letterSpacing: '0.08em', textTransform: 'uppercase',
       color: t.textMeta, marginBottom: '10px'
     }}>
-      {etiqueta}
+      mensaje · {nodo.emisor}
     </div>
   );
-}
-
-function labelEmisor(nodo) {
-  if (nodo.emisor === 'sistema') return nodo.tipo === 'situacion' ? 'situación' : 'sistema';
-  if (nodo.emisor) return `mensaje · ${nodo.emisor}`;
-  return null;
 }
 
 function OpcionButton({ opcion, partida, onElegir, t, modo }) {
