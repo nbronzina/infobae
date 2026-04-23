@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 import Shell, { DeviceFrame } from './Shell.jsx';
 import escenariosData from './data/escenarios.json';
+import checklistData from './data/checklist_predespliegue.json';
 
 const VALID_SCENARIOS = escenariosData.map(e => e.slug);
 
@@ -132,41 +133,114 @@ function AboutModal({ onClose }) {
   );
 }
 
+function readLS(key, fallback) {
+  if (typeof localStorage === 'undefined') return fallback;
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return fallback;
+    return JSON.parse(raw);
+  } catch {
+    return fallback;
+  }
+}
+
+function computeHomeStatus() {
+  const checklistTicks = readLS('infobae:checklist', {});
+  const obligatorios = checklistData.filter(i => i.obligatorio);
+  const obligHechos = obligatorios.filter(i => checklistTicks[i.id]).length;
+  const obligTotal = obligatorios.length;
+  // "Alertas activas" se computan como placeholder 0 hasta que el
+  // tab ESTADO defina la lógica concreta. El mensaje sin leer de
+  // Zelaya es diegético: siempre 1 porque el briefing existe como
+  // último mensaje descargado antes de desconectar.
+  return {
+    mensajesSinLeer: 1,
+    alertasActivas: 0,
+    obligHechos,
+    obligTotal
+  };
+}
+
 function HomeView({ onEnter, onOpenAbout }) {
+  const [status] = useState(() => computeHomeStatus());
+  const timerRef = useRef(null);
+  const cancel = () => { if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; } };
+  const wordmarkHandlers = {
+    onPointerDown: () => { cancel(); timerRef.current = setTimeout(() => { onOpenAbout(); timerRef.current = null; }, 700); },
+    onPointerUp: cancel,
+    onPointerLeave: cancel,
+    onPointerCancel: cancel,
+    onContextMenu: (e) => e.preventDefault()
+  };
+
+  const onEnterKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onEnter(); } };
+
+  const monoStack = "'JetBrains Mono', Consolas, monospace";
+  const textPrimary = '#1f1f1f';
+  const textMeta = '#5a544c';
+  const textDim = '#8a8472';
+
   return (
-    <div style={{ height: '100%', color: '#1f1f1f', display: 'flex', flexDirection: 'column', padding: '40px 32px', fontFamily: "'Fraunces', Georgia, serif", boxSizing: 'border-box' }}>
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px' }}>
-          <img src="/infobae-logo.png" alt="infobae" draggable={false} style={{ height: '28px', width: 'auto', display: 'block' }} />
-          <span className="mono" style={{ fontSize: '13px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#1f1f1f', fontWeight: 500 }}>
+    <div style={{
+      height: '100%',
+      color: textPrimary,
+      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+      padding: '40px 32px', boxSizing: 'border-box', fontFamily: monoStack
+    }}>
+      <div style={{ width: '100%', maxWidth: '360px' }}>
+        {/* Wordmark — long-press abre el modal */}
+        <div
+          {...wordmarkHandlers}
+          style={{
+            display: 'flex', alignItems: 'center', gap: '12px',
+            userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none',
+            cursor: 'pointer', marginBottom: '28px'
+          }}
+          title="Long-press para notas del proyecto"
+        >
+          <img src="/infobae-logo.png" alt="infobae" draggable={false}
+            style={{ height: '24px', width: 'auto', display: 'block', pointerEvents: 'none' }} />
+          <span style={{
+            fontSize: '12px', letterSpacing: '0.16em', textTransform: 'uppercase',
+            color: textPrimary, fontWeight: 500
+          }}>
             Bitácora
           </span>
         </div>
 
-        <div className="serif" style={{ fontSize: '15px', fontStyle: 'italic', color: '#5a544c', marginBottom: '48px', lineHeight: 1.5 }}>
-          Tres escenarios. Un corresponsal.
+        {/* Metadata del sistema */}
+        <div style={{ fontSize: '11.5px', color: textMeta, lineHeight: 1.9, marginBottom: '22px' }}>
+          <div>sistema operativo local · v4.2</div>
+          <div>última sync: 2029-04-14 · 09:17 ART</div>
+          <div>estado de red: <span style={{ color: textPrimary }}>sin conexión</span></div>
+          <div>dispositivo: <span style={{ color: textPrimary }}>verificado</span></div>
         </div>
 
+        <div style={{ color: textDim, fontSize: '11.5px', marginBottom: '22px', letterSpacing: '0.08em' }}>
+          —
+        </div>
+
+        {/* Inbox summary */}
+        <div style={{ fontSize: '11.5px', color: textPrimary, lineHeight: 1.9, marginBottom: '36px' }}>
+          <div>{status.mensajesSinLeer} {status.mensajesSinLeer === 1 ? 'mensaje sin leer' : 'mensajes sin leer'}</div>
+          <div style={{ color: textMeta }}>{status.alertasActivas} alertas activas</div>
+          <div style={{ color: textMeta }}>checklist: {status.obligHechos}/{status.obligTotal} completos</div>
+        </div>
+
+        {/* Único elemento interactivo */}
         <div
           role="button"
           tabIndex={0}
           onClick={onEnter}
-          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onEnter(); } }}
-          className="mono"
-          style={{ cursor: 'pointer', padding: '14px 36px', fontSize: '12px', letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 500, backgroundColor: '#1f1f1f', color: '#f8f5ec', border: '1px solid #1f1f1f', marginBottom: '18px' }}
+          onKeyDown={onEnterKey}
+          style={{
+            cursor: 'pointer', fontSize: '12px', letterSpacing: '0.12em',
+            color: textPrimary, fontWeight: 500,
+            textTransform: 'lowercase',
+            display: 'inline-block'
+          }}
         >
-          Entrar
-        </div>
-
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={onOpenAbout}
-          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpenAbout(); } }}
-          className="serif"
-          style={{ cursor: 'pointer', fontSize: '13px', fontStyle: 'italic', color: '#5a544c', borderBottom: '1px dotted #8a8472', paddingBottom: '1px' }}
-        >
-          Sobre este artefacto
+          abrir ↓
         </div>
       </div>
     </div>
