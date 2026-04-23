@@ -23,7 +23,8 @@
             {
               "id": "a",
               "texto": "Abrir la evaluación de zona para Arauca. Ver qué amenazas hay en la zona antes de armar nada.",
-              "requiere": null,
+              "requiere": "evaluacion_arauca_abierta",
+              "requiere_texto": "necesitás abrir la evaluación por teatro en HERRAM. y seleccionar Arauca/Apure",
               "flags_set": ["evaluacion_leida"],
               "preparacion": 1,
               "siguiente": "obj1_d1_a_resultado"
@@ -86,7 +87,8 @@
             {
               "id": "a",
               "texto": "Seguir los pasos. Armar el teléfono aparte, Signal, sin apps personales, sin cuentas del trabajo habitual.",
-              "requiere": null,
+              "requiere": "checklist_tocado",
+              "requiere_texto": "necesitás abrir el checklist en HERRAM. y marcar al menos un item",
               "flags_set": ["dispositivo_secundario"],
               "preparacion": 2,
               "siguiente": "obj1_d2_a_resultado"
@@ -140,7 +142,9 @@
           "emisor": "villafañe",
           "texto": "Mondini. Te armé el checklist de pre-despliegue, está adentro. Son nueve cosas obligatorias antes del vuelo — chaleco, seguro, dispositivos, la visa, el aviso a tu contacto de emergencia. Marcá lo que vayas cerrando. El parte de aptitud se emite cuando están todos. Sin parte, no hay despliegue.",
           "badges": ["herramientas"],
-          "siguiente": "obj1_cierre"
+          "siguiente": "obj1_cierre",
+          "avance_requiere": "checklist_tres_items",
+          "avance_requiere_texto": "faltan items obligatorios en el checklist — Villafañe no te pasa al día siguiente hasta que cierres al menos tres"
         },
         {
           "id": "obj1_cierre",

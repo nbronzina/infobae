@@ -6,6 +6,46 @@ const MISIONES = {
   internacional: misionInternacional
 };
 
+// Flags derivados de localStorage: reflejan en tiempo real el uso
+// de herramientas reales y la lectura de documentos. Se suman a los
+// flags que la partida acumula por decisiones. Esto hace que
+// "evaluacion_leida" sólo aplique si la persona realmente abrió la
+// herramienta y no si sólo clickeó la opción.
+function derivarFlagsExternos() {
+  const flags = [];
+  if (typeof localStorage === 'undefined') return flags;
+
+  try {
+    const teatroSel = localStorage.getItem('infobae:teatro_seleccionado');
+    if (teatroSel === 'ARQ-042') flags.push('evaluacion_arauca_abierta');
+    if (teatroSel) flags.push('teatro_abierto');
+  } catch {}
+
+  try {
+    const checklistRaw = localStorage.getItem('infobae:checklist');
+    if (checklistRaw) {
+      const ticks = JSON.parse(checklistRaw);
+      const marcados = Object.values(ticks || {}).filter(v => v === true).length;
+      if (marcados >= 1) flags.push('checklist_tocado');
+      if (marcados >= 3) flags.push('checklist_tres_items');
+      if (marcados >= 9) flags.push('checklist_completo');
+    }
+  } catch {}
+
+  try {
+    const docsRaw = localStorage.getItem('infobae:docs_leidos');
+    if (docsRaw) {
+      const arr = JSON.parse(docsRaw);
+      if (Array.isArray(arr)) {
+        if (arr.includes('main')) flags.push('manual_rf_leido');
+        for (const k of arr) flags.push('doc_' + k + '_leido');
+      }
+    }
+  } catch {}
+
+  return flags;
+}
+
 const ESTADO_INICIAL_PARTIDA = {
   nodoActual: null,
   flags: [],
@@ -65,6 +105,17 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
 
   const nodoActual = useMemo(() => mision ? nodoPorId(mision, partida.nodoActual) : null, [mision, partida.nodoActual]);
 
+  // Tick simple para refrescar flags derivados cuando el usuario
+  // vuelve al tab MISIÓN después de usar una herramienta.
+  const [derivadosTick, setDerivadosTick] = useState(0);
+  useEffect(() => {
+    const handler = () => setDerivadosTick(t => t + 1);
+    window.addEventListener('focus', handler);
+    return () => window.removeEventListener('focus', handler);
+  }, []);
+  const flagsDerivados = useMemo(() => derivarFlagsExternos(), [nodoActual, derivadosTick]);
+  const flagsCombinados = useMemo(() => Array.from(new Set([...(partida.flags || []), ...flagsDerivados])), [partida.flags, flagsDerivados]);
+
   // Comunica al Shell qué tabs deben mostrar badge.
   useEffect(() => {
     if (!onBadgesChange) return;
@@ -117,13 +168,16 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
   }
 
   function elegirOpcion(opcion) {
-    if (opcionBloqueada(opcion, partida.flags)) return;
+    if (opcionBloqueada(opcion, flagsCombinados)) return;
     setPartida(prev => {
       const flags = Array.from(new Set([...(prev.flags || []), ...(opcion.flags_set || [])]));
       const preparacion = (prev.preparacion || 0) + (opcion.preparacion || 0);
       const estadoMental = opcion.estado_mental_set || prev.estadoMental;
       const visitados = prev.visitados.includes(prev.nodoActual) ? prev.visitados : [...prev.visitados, prev.nodoActual];
-      const nodoActual = resolverSiguiente(opcion, flags);
+      // resolverSiguiente evalúa contra flags combinados (propios +
+      // derivados de localStorage), no sólo los de la partida.
+      const flagsParaRutear = Array.from(new Set([...flags, ...flagsDerivados]));
+      const nodoActual = resolverSiguiente(opcion, flagsParaRutear);
       return { ...prev, nodoActual, flags, preparacion, estadoMental, visitados };
     });
   }
@@ -137,8 +191,8 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
   }
 
   return isCampo
-    ? <CampoNodo nodo={nodoActual} partida={partida} onElegir={elegirOpcion} onAvanzar={avanzarA} t={t} s={s} />
-    : <RedaccionNodo nodo={nodoActual} partida={partida} onElegir={elegirOpcion} onAvanzar={avanzarA} t={t} />;
+    ? <CampoNodo nodo={nodoActual} flags={flagsCombinados} onElegir={elegirOpcion} onAvanzar={avanzarA} t={t} s={s} />
+    : <RedaccionNodo nodo={nodoActual} flags={flagsCombinados} onElegir={elegirOpcion} onAvanzar={avanzarA} t={t} />;
 }
 
 // ============================================================
@@ -229,8 +283,9 @@ function DebriefingNodo({ nodo, partida, t, modo }) {
 // CAMPO — situación arriba, opciones full-width 56px abajo
 // ============================================================
 
-function CampoNodo({ nodo, partida, onElegir, onAvanzar, t, s }) {
+function CampoNodo({ nodo, flags, onElegir, onAvanzar, t, s }) {
   const esDecision = nodo.tipo === 'decision';
+  const avanceGate = avanceBloqueado(nodo, flags);
   return (
     <div>
       <EmisorLine nodo={nodo} t={t} modo="campo" />
@@ -249,25 +304,13 @@ function CampoNodo({ nodo, partida, onElegir, onAvanzar, t, s }) {
             </div>
           )}
           {nodo.opciones.map(o => (
-            <OpcionButton key={o.id} opcion={o} partida={partida} onElegir={onElegir} t={t} modo="campo" />
+            <OpcionButton key={o.id} opcion={o} flags={flags} onElegir={onElegir} t={t} modo="campo" />
           ))}
         </div>
       )}
 
       {!esDecision && nodo.siguiente && (
-        <button type="button" onClick={() => onAvanzar(nodo.siguiente)} style={{
-          cursor: 'pointer', background: 'none', border: 'none', padding: '8px 0',
-          fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.08em',
-          color: t.textMeta, marginTop: '14px'
-        }}>
-          continuar ↓
-        </button>
-      )}
-
-      {!esDecision && !nodo.siguiente && (
-        <div style={{ padding: '14px 0', marginTop: '14px', borderTop: '1px solid ' + t.border, fontFamily: MONO, fontSize: '10px', color: t.textMeta, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-          fin del primer objetivo · preparación {partida.preparacion}
-        </div>
+        <AvanceLink onAvanzar={() => onAvanzar(nodo.siguiente)} gate={avanceGate} t={t} modo="campo" />
       )}
 
     </div>
@@ -278,8 +321,9 @@ function CampoNodo({ nodo, partida, onElegir, onAvanzar, t, s }) {
 // REDACCIÓN — livre-jeu editorial, opciones como links al final
 // ============================================================
 
-function RedaccionNodo({ nodo, partida, onElegir, onAvanzar, t }) {
+function RedaccionNodo({ nodo, flags, onElegir, onAvanzar, t }) {
   const esDecision = nodo.tipo === 'decision';
+  const avanceGate = avanceBloqueado(nodo, flags);
   return (
     <div>
       <EmisorLine nodo={nodo} t={t} modo="redaccion" />
@@ -294,28 +338,15 @@ function RedaccionNodo({ nodo, partida, onElegir, onAvanzar, t }) {
         <ol style={{ listStyle: 'none', margin: 0, padding: 0, maxWidth: '38em' }}>
           {nodo.opciones.map((o, i) => (
             <li key={o.id} style={{ borderTop: i === 0 ? '1px solid ' + t.border : 'none', borderBottom: '1px solid ' + t.border }}>
-              <OpcionButton opcion={o} partida={partida} onElegir={onElegir} t={t} modo="redaccion" />
+              <OpcionButton opcion={o} flags={flags} onElegir={onElegir} t={t} modo="redaccion" />
             </li>
           ))}
         </ol>
       )}
 
       {!esDecision && nodo.siguiente && (
-        <button type="button" onClick={() => onAvanzar(nodo.siguiente)} style={{
-          cursor: 'pointer', background: 'none', border: 'none', padding: '8px 0',
-          fontFamily: MONO, fontSize: '11px', letterSpacing: '0.08em',
-          color: t.textMeta, marginTop: '18px'
-        }}>
-          continuar ↓
-        </button>
+        <AvanceLink onAvanzar={() => onAvanzar(nodo.siguiente)} gate={avanceGate} t={t} modo="redaccion" />
       )}
-
-      {!esDecision && !nodo.siguiente && (
-        <div style={{ paddingTop: '18px', marginTop: '18px', borderTop: '1px solid ' + t.border, fontFamily: SERIF, fontSize: '13px', fontStyle: 'italic', color: t.textMeta, maxWidth: '38em' }}>
-          Fin del primer objetivo. Preparación acumulada: {partida.preparacion}.
-        </div>
-      )}
-
     </div>
   );
 }
@@ -341,10 +372,60 @@ function EmisorLine({ nodo, t, modo }) {
   );
 }
 
-function OpcionButton({ opcion, partida, onElegir, t, modo }) {
+function avanceBloqueado(nodo, flags) {
+  // Un nodo de narración o mensaje puede tener un gate de avance —
+  // típicamente porque Villafañe o algún NPC no "deja pasar" hasta
+  // que el jugador toque una herramienta real.
+  if (!nodo) return null;
+  if (nodo.avance_requiere && !flags.includes(nodo.avance_requiere)) {
+    return nodo.avance_requiere_texto || `necesitás ${nodo.avance_requiere}`;
+  }
+  if (nodo.avance_requiere_sin && flags.includes(nodo.avance_requiere_sin)) {
+    return nodo.avance_requiere_texto || `bloqueado por ${nodo.avance_requiere_sin}`;
+  }
+  return null;
+}
+
+function AvanceLink({ onAvanzar, gate, t, modo }) {
   const isCampo = modo === 'campo';
-  const bloqueada = (opcion.requiere && !partida.flags.includes(opcion.requiere)) ||
-                    (opcion.requiere_sin && partida.flags.includes(opcion.requiere_sin));
+  if (gate) {
+    return (
+      <div style={{ marginTop: isCampo ? '14px' : '18px', padding: '8px 0' }}>
+        <div style={{
+          fontFamily: MONO, fontSize: isCampo ? '10.5px' : '11px',
+          letterSpacing: '0.08em', color: t.textMeta,
+          cursor: 'not-allowed', opacity: 0.55
+        }}>
+          continuar ↓
+        </div>
+        <div style={{
+          fontFamily: isCampo ? MONO : SERIF,
+          fontSize: isCampo ? '10px' : '12.5px',
+          fontStyle: isCampo ? 'normal' : 'italic',
+          color: t.textMeta, marginTop: '4px',
+          letterSpacing: isCampo ? '0.04em' : '0'
+        }}>
+          {gate}
+        </div>
+      </div>
+    );
+  }
+  return (
+    <button type="button" onClick={onAvanzar} style={{
+      cursor: 'pointer', background: 'none', border: 'none', padding: '8px 0',
+      fontFamily: MONO, fontSize: isCampo ? '10.5px' : '11px',
+      letterSpacing: '0.08em', color: t.textMeta,
+      marginTop: isCampo ? '14px' : '18px'
+    }}>
+      continuar ↓
+    </button>
+  );
+}
+
+function OpcionButton({ opcion, flags, onElegir, t, modo }) {
+  const isCampo = modo === 'campo';
+  const bloqueada = (opcion.requiere && !flags.includes(opcion.requiere)) ||
+                    (opcion.requiere_sin && flags.includes(opcion.requiere_sin));
 
   if (isCampo) {
     return (
