@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import HerramientasView from './herramientas/index.jsx';
 import DocsView from './DocsView.jsx';
 import EstadoView from './EstadoView.jsx';
+import MisionView from './MisionView.jsx';
 
 const TABS = [
   { id: 'mision', label: 'MISIÓN', labelCampo: 'MISIÓN' },
@@ -133,7 +134,10 @@ function Placeholder({ tabId, modo }) {
   );
 }
 
-function ViewSwitch({ activeView, modo, onOpenDoc, onOpenPerfil, docRequest }) {
+function ViewSwitch({ activeView, modo, scenario, onOpenDoc, onOpenPerfil, docRequest, onMisionBadgesChange }) {
+  if (activeView === 'mision') {
+    return <MisionView modo={modo} scenario={scenario} onBadgesChange={onMisionBadgesChange} />;
+  }
   if (activeView === 'herramientas') {
     return <HerramientasView modo={modo} onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} />;
   }
@@ -146,7 +150,7 @@ function ViewSwitch({ activeView, modo, onOpenDoc, onOpenPerfil, docRequest }) {
   return <Placeholder tabId={activeView} modo={modo} />;
 }
 
-function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpenPerfil, docRequest }) {
+function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpenPerfil, docRequest, scenario, misionBadges, onMisionBadgesChange }) {
   const tabsLongPress = useLongPress(onToggleModo, 700);
   return (
     <div
@@ -170,7 +174,7 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
         </span>
       </div>
       <main className="bitacora-scroll" style={{ flex: 1, padding: '8px 16px 16px', overflowY: 'auto', minHeight: 0 }}>
-        <ViewSwitch activeView={activeView} modo="campo" onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} docRequest={docRequest} />
+        <ViewSwitch activeView={activeView} modo="campo" scenario={scenario} onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} docRequest={docRequest} onMisionBadgesChange={onMisionBadgesChange} />
       </main>
       <nav
         {...tabsLongPress.handlers}
@@ -184,6 +188,7 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
       >
         {TABS.map(t => {
           const active = activeView === t.id;
+          const showBadge = (misionBadges || []).includes(t.id) && !active;
           return (
             <button
               key={t.id}
@@ -196,10 +201,13 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
                 fontFamily: "'JetBrains Mono', Consolas, monospace",
                 fontSize: '8.5px', letterSpacing: '0.12em', fontWeight: active ? 600 : 400,
                 borderTop: active ? '1px solid #f18b1e' : '1px solid transparent',
-                marginTop: '-1px'
+                marginTop: '-1px', position: 'relative'
               }}
             >
-              {t.labelCampo}
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                {t.labelCampo}
+                {showBadge && <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#f18b1e', display: 'inline-block' }} />}
+              </span>
             </button>
           );
         })}
@@ -208,7 +216,7 @@ function CampoShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpen
   );
 }
 
-function RedaccionShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpenPerfil, docRequest }) {
+function RedaccionShell({ activeView, setActiveView, onToggleModo, onOpenDoc, onOpenPerfil, docRequest, scenario, misionBadges, onMisionBadgesChange }) {
   return (
     <div
       className="bitacora-scroll"
@@ -230,6 +238,7 @@ function RedaccionShell({ activeView, setActiveView, onToggleModo, onOpenDoc, on
         <nav style={{ display: 'flex', gap: '20px', alignItems: 'baseline' }}>
           {TABS.map(t => {
             const active = activeView === t.id;
+            const showBadge = (misionBadges || []).includes(t.id) && !active;
             return (
               <button
                 key={t.id}
@@ -244,10 +253,12 @@ function RedaccionShell({ activeView, setActiveView, onToggleModo, onOpenDoc, on
                   fontStyle: active ? 'normal' : 'italic',
                   fontWeight: 400,
                   textTransform: 'lowercase',
-                  borderBottom: active ? '1px solid #1f1f1f' : '1px solid transparent'
+                  borderBottom: active ? '1px solid #1f1f1f' : '1px solid transparent',
+                  display: 'inline-flex', alignItems: 'center', gap: '6px'
                 }}
               >
                 {t.label.toLowerCase()}
+                {showBadge && <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#f18b1e', display: 'inline-block' }} />}
               </button>
             );
           })}
@@ -257,7 +268,7 @@ function RedaccionShell({ activeView, setActiveView, onToggleModo, onOpenDoc, on
         <div style={{ borderTop: '1px solid #c9c1ab', height: '1px' }} />
       </div>
       <main style={{ maxWidth: '680px', margin: '0 auto', padding: '36px 36px 72px' }}>
-        <ViewSwitch activeView={activeView} modo="redaccion" onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} docRequest={docRequest} />
+        <ViewSwitch activeView={activeView} modo="redaccion" scenario={scenario} onOpenDoc={onOpenDoc} onOpenPerfil={onOpenPerfil} docRequest={docRequest} onMisionBadgesChange={onMisionBadgesChange} />
       </main>
     </div>
   );
@@ -275,8 +286,29 @@ const DEFAULT_MODO_POR_ESCENARIO = {
 export default function Shell({ scenario }) {
   const defaultModo = DEFAULT_MODO_POR_ESCENARIO[scenario] || 'redaccion';
   const { modo, toggle } = useModo(defaultModo);
-  const [activeView, setActiveView] = useState('mision');
+  const [activeView, setActiveViewRaw] = useState('mision');
   const [docRequest, setDocRequest] = useState(null);
+  // Badges que la misión pide mostrar en los tabs (["herramientas",
+  // "docs"]). Se limpia cuando el jugador abre la tab
+  // correspondiente — regla 3 del brief de misiones.
+  const [misionBadges, setMisionBadges] = useState([]);
+  const [badgesLimpiados, setBadgesLimpiados] = useState([]);
+
+  const setActiveView = (v) => {
+    setActiveViewRaw(v);
+    // Al abrir una tab que tiene badge activo, lo limpiamos para
+    // esta sesión del nodo.
+    if (misionBadges.includes(v) && !badgesLimpiados.includes(v)) {
+      setBadgesLimpiados(prev => [...prev, v]);
+    }
+  };
+
+  const onMisionBadgesChange = (badges) => {
+    setMisionBadges(badges || []);
+    setBadgesLimpiados([]); // reset al cambiar de nodo
+  };
+
+  const badgesActivos = misionBadges.filter(b => !badgesLimpiados.includes(b));
 
   const openDoc = (key) => {
     if (!key) return;
@@ -297,7 +329,11 @@ export default function Shell({ scenario }) {
     return () => { try { document.head.removeChild(link); } catch { /* noop */ } };
   }, []);
 
-  const sharedProps = { activeView, setActiveView, onToggleModo: toggle, onOpenDoc: openDoc, onOpenPerfil: openPerfil, docRequest };
+  const sharedProps = {
+    activeView, setActiveView, onToggleModo: toggle,
+    onOpenDoc: openDoc, onOpenPerfil: openPerfil, docRequest,
+    scenario, misionBadges: badgesActivos, onMisionBadgesChange
+  };
 
   const shell = modo === 'campo'
     ? <CampoShell {...sharedProps} />
