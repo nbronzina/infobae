@@ -132,6 +132,15 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
     setPartida({ ...ESTADO_INICIAL_PARTIDA, nodoActual: primerNodoDeLaMision(mision) });
   }
 
+  if (nodoActual.tipo === 'debriefing') {
+    return (
+      <div>
+        <DebriefingNodo nodo={nodoActual} partida={partida} t={t} modo={modo} />
+        <FooterReset onReiniciar={reiniciar} t={t} modo={modo} />
+      </div>
+    );
+  }
+
   return (
     <div>
       {isCampo
@@ -139,6 +148,90 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
         : <RedaccionNodo nodo={nodoActual} partida={partida} onElegir={elegirOpcion} onAvanzar={avanzarA} onReiniciar={reiniciar} t={t} />
       }
     </div>
+  );
+}
+
+// ============================================================
+// DEBRIEFING — parte de cierre compuesto desde partida
+// ============================================================
+
+function DebriefingNodo({ nodo, partida, t, modo }) {
+  const isCampo = modo === 'campo';
+  const flags = partida.flags || [];
+  const secciones = (nodo.secciones || []).map(sec => ({
+    ...sec,
+    fragmentos: (sec.fragmentos || []).filter(f => {
+      if (f.si_flag) return flags.includes(f.si_flag);
+      if (f.sin_flag) return !flags.includes(f.sin_flag);
+      return true;
+    })
+  })).filter(sec => sec.fragmentos.length > 0);
+
+  const tituloFs = isCampo ? '20px' : '28px';
+  const bodyFs = isCampo ? '14.5px' : '15.5px';
+  const maxW = isCampo ? 'none' : '38em';
+
+  return (
+    <article>
+      <div style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '8px' }}>
+        Parte de cierre · despliegue {nodo.codigo_despliegue}
+      </div>
+      <h1 style={{ fontFamily: SERIF, fontSize: tituloFs, fontWeight: 500, margin: '0 0 6px', letterSpacing: '-0.01em', color: t.text, lineHeight: 1.2 }}>
+        {nodo.fecha_cierre}
+      </h1>
+      {nodo.apertura && (
+        <p style={{ fontFamily: SERIF, fontSize: bodyFs, color: t.text, lineHeight: 1.7, maxWidth: maxW, margin: '18px 0 28px' }}>
+          {nodo.apertura}
+        </p>
+      )}
+
+      <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, lineHeight: 1.7, marginBottom: '28px' }}>
+        Preparación acumulada: {partida.preparacion || 0}<br/>
+        Estado mental: {partida.estadoMental || 'sin registro'}
+      </div>
+
+      {secciones.map((sec, i) => (
+        <section key={i} style={{ marginBottom: isCampo ? '24px' : '36px' }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: isCampo ? '16px' : '19px', fontWeight: 500, fontStyle: 'italic', margin: '0 0 10px', color: t.text, letterSpacing: '-0.005em' }}>
+            {sec.titulo}
+          </h2>
+          {sec.fragmentos.map((f, j) => (
+            <p key={j} style={{ fontFamily: SERIF, fontSize: bodyFs, color: t.text, lineHeight: 1.65, margin: '0 0 12px', maxWidth: maxW }}>
+              {f.texto}
+            </p>
+          ))}
+        </section>
+      ))}
+
+      {nodo.cierre && (
+        <section style={{ borderTop: '1px solid ' + t.border, paddingTop: isCampo ? '18px' : '24px', marginTop: isCampo ? '24px' : '32px' }}>
+          <p style={{ fontFamily: SERIF, fontSize: bodyFs, color: t.text, lineHeight: 1.7, maxWidth: maxW, margin: '0 0 14px' }}>
+            {nodo.cierre.texto_base}
+          </p>
+          {nodo.cierre.jtsn && (
+            <p style={{ fontFamily: SERIF, fontSize: isCampo ? '13px' : '14px', color: t.textSecondary, fontStyle: 'italic', lineHeight: 1.6, maxWidth: maxW, margin: '0 0 14px' }}>
+              {nodo.cierre.jtsn}
+            </p>
+          )}
+          {nodo.cierre.final && (
+            <p style={{ fontFamily: SERIF, fontSize: bodyFs, color: t.text, lineHeight: 1.7, maxWidth: maxW, margin: '20px 0 0' }}>
+              {nodo.cierre.final}
+            </p>
+          )}
+        </section>
+      )}
+
+      {Array.isArray(nodo.firmas) && nodo.firmas.length > 0 && (
+        <footer style={{ marginTop: isCampo ? '28px' : '40px', paddingTop: '18px', borderTop: '1px solid ' + t.border }}>
+          <div style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.08em', textTransform: 'uppercase', color: t.textMeta, marginBottom: '10px' }}>
+            Firmado
+          </div>
+          <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textSecondary, lineHeight: 1.8 }}>
+            {nodo.firmas.map((f, i) => <div key={i}>{f}</div>)}
+          </div>
+        </footer>
+      )}
+    </article>
   );
 }
 

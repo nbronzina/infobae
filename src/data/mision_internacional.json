@@ -866,7 +866,82 @@
           "emisor": null,
           "texto": "Cuatro de la tarde. Las decisiones se tomaron. La lluvia para, el aire queda pesado. Quedan cuatro días hasta el vuelo de vuelta pero lo importante del despliegue ya pasó. Lo que falta es salir.",
           "badges": [],
-          "siguiente": null
+          "siguiente": "obj5_debriefing"
+        }
+      ]
+    },
+    {
+      "id": "obj5",
+      "titulo_interno": "Buenos Aires. Bitácora abierta.",
+      "nodo_inicial": "obj5_debriefing",
+      "nodos": [
+        {
+          "id": "obj5_debriefing",
+          "tipo": "debriefing",
+          "codigo_despliegue": "ARQ-042",
+          "fecha_cierre": "día 14 · Buenos Aires",
+          "apertura": "Miércoles, 09:00. Volviste ayer. Abrís Bitácora en el departamento. Sola, como la primera noche. Villafañe, Fiorella y Pollastri cerraron el parte de despliegue — lo firmaron los tres. Está todo adentro. Sin juicio. Registro.",
+          "firmas": [
+            "m. villafañe — operaciones",
+            "j. fiorella — seguridad digital",
+            "l. pollastri — legales"
+          ],
+          "secciones": [
+            {
+              "titulo": "Preparación pre-despliegue",
+              "fragmentos": [
+                { "si_flag": "evaluacion_leida", "texto": "Abriste la evaluación de zona la primera noche. Llegaste a Arauca sabiendo qué había." },
+                { "si_flag": "fixer_contexto", "texto": "Revisaste los mensajes viejos con Velásquez antes de volar. Llegaste con contexto del terreno, aunque sin datos estructurados." },
+                { "si_flag": "preparacion_tardia", "texto": "Cerraste Bitácora la primera noche sin terminar. El agujero apareció el día 4: cuando el Starlink empezó a emitir y tuviste que apagar, no había plan B de comunicación." },
+                { "si_flag": "dispositivo_secundario", "texto": "Armaste el teléfono de trabajo separado del personal. Cuando el día 4 apareció material sensible, entró a un aparato compartimentado." },
+                { "si_flag": "dispositivo_unico", "texto": "Fuiste con un solo teléfono. El día 4 el material del campamento —si lo recibiste— terminó en el mismo aparato que tiene tu correo personal, tus contraseñas, tu familia." },
+                { "si_flag": "procedimiento_leido", "texto": "Leíste el procedimiento de qué hacer ante compromiso antes de configurar el teléfono. Cada paso tenía un porqué cuando los seguiste. Estado mental: estable desde el principio." },
+                { "si_flag": "hefat_vigente", "texto": "Hiciste el refresher con Peralta. En campo tuviste las opciones completas ante cualquier incidente." },
+                { "si_flag": "hefat_provisorio", "texto": "Saliste con certificado provisorio. Velásquez lo notó — el día 9, cuando fueron adentro, eligió ruta larga y reunión corta por vos." }
+              ]
+            },
+            {
+              "titulo": "Equipamiento y registro",
+              "fragmentos": [
+                { "si_flag": "destino_expuesto", "texto": "El trámite acelerado del chaleco dejó registro de tu destino en la agencia reguladora. El día 4 en el checkpoint los sensores te identificaron: ese papel circuló antes que vos." },
+                { "si_flag": "sin_chaleco", "texto": "Viajaste sin chaleco. Velásquez te limitó accesos a zonas activas. El día 9, cuando había que ir adentro hacia un contacto con información dura, no te llevó." },
+                { "si_flag": "chaleco_rsf", "texto": "Fuiste con el préstamo de RSF España. Chaleco en destino sin registro argentino. La salida del país fue un riesgo que habrá que documentar en Pollastri." },
+                { "si_flag": "informe_osint_leido", "texto": "Leíste el informe de Roca antes de salir. El día 4 sabías del checkpoint nuevo con sensores de rostro — evitaste exponer a Velásquez a los registros automáticos." }
+              ]
+            },
+            {
+              "titulo": "Operación en campo",
+              "fragmentos": [
+                { "si_flag": "ruta_con_velasquez", "texto": "El día 4 fuiste al campamento con Velásquez, ruta principal. Historia con contexto visual y relato local." },
+                { "si_flag": "ruta_sola", "texto": "Fuiste al campamento sola, transporte local. Menos visible para el sistema. Sin Velásquez cubriendo atrás." },
+                { "si_flag": "testimonio_indirecto", "texto": "Pediste que los ex-combatientes vinieran al pueblo. Material testimonial sin marco físico — la nota queda más corta pero vos no te expusiste." },
+                { "si_flag": "video_en_dispositivo", "texto": "Recibiste el video en tu dispositivo. Está en tu poder." },
+                { "si_flag": "video_por_signal", "texto": "Recibiste el video por Signal al número operativo. Hay rastro de que la conversación existió." },
+                { "si_flag": "video_filmado", "texto": "Filmaste la pantalla de ellos con tu cámara. Peor calidad, sin transferencia digital. El material es tuyo sin cadena que los ubique." },
+                { "si_flag": "video_rechazado", "texto": "Rechazaste el video por falta de verificación. Ventana cerrada — no es recuperable. No vas a saber si era legítimo o una operación de inteligencia." },
+                { "si_flag": "starlink_reubicado", "texto": "El día 4 reubicaste el terminal a dos cuadras de la pensión. La señal no coincidió nunca con dónde dormías." },
+                { "si_flag": "starlink_apagado", "texto": "El día 4 apagaste el Starlink cuando apareció la alerta. Perdiste una noche de comunicación pero cerraste la emisión desde tu ubicación." },
+                { "si_flag": "starlink_ventana", "texto": "El día 4 dejaste emitir quince minutos más para bajar mensajes. Treinta y dos minutos totales desde la pensión. Si alguien con el equipo correcto estaba cerca, tenés la coordenada de esa noche marcada en su mapa." }
+              ]
+            },
+            {
+              "titulo": "Complicación del día 9",
+              "fragmentos": [
+                { "si_flag": "mov_volver", "texto": "Volviste al pueblo con Velásquez. Cerraste con lo que tenías. Historia incompleta pero ambas vidas intactas." },
+                { "si_flag": "mov_adentro", "texto": "Fuiste con Velásquez hacia el contacto. Una hora de nombres concretos, cruces, coordinación documentada. La nota gana peso." },
+                { "si_flag": "mov_velasquez_solo", "texto": "Velásquez fue solo. Vos te quedaste en la pensión. Volvió esa tarde. La decisión fue rápida y los dos saben por qué." },
+                { "si_flag": "salida_activada", "texto": "Activaste protocolo de salida sin esperar confirmación. Perdiste días operativos. Zelaya tenía razón: la confirmación no iba a llegar." },
+                { "si_flag": "material_fisico", "texto": "Salís con el material en un aparato sin conexión, llevado físicamente. Sin rastro digital de qué traés." },
+                { "si_flag": "material_enviado", "texto": "Enviaste todo a Buenos Aires antes de moverte. El material está a salvo del otro lado. La señal de ese envío también." },
+                { "si_flag": "material_con_velasquez", "texto": "Dejaste copia con Velásquez como respaldo. Redundancia con riesgo delegado a alguien que no eligió ese riesgo como vos." }
+              ]
+            }
+          ],
+          "cierre": {
+            "texto_base": "Descanso obligatorio hasta mayo. Catorce días sin despliegue. Agenda mañana: sesión JTSN con el profesional del Dart Center — no es opcional, se activa automático por días en zona activa. Pollastri te va a llamar por dos cosas pendientes. Villafañe no.",
+            "jtsn": "La sesión JTSN está agendada para mañana. Si la ignorás, el estado mental arrastra al próximo despliegue.",
+            "final": "Ayer volviste. Hoy es el primer día del resto del trabajo."
+          }
         }
       ]
     }
