@@ -175,7 +175,8 @@
           "id": "obj2_inicio",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Jueves, 08:30. Dos días y medio al vuelo. En el checklist faltan nueve cosas. Villafañe ya empujó los papeles que le tocaban a operaciones — seguro de alto riesgo contratado, itinerario cargado, contacto de emergencia notificado. El resto depende de otras cabezas. Van a ir apareciendo durante el día.",
+          "texto": "Jueves, 08:30. Dos días y medio al vuelo. Faltan nueve items en el checklist.",
+          "contexto": "Villafañe ya empujó los papeles que le tocaban a operaciones — seguro de alto riesgo contratado, itinerario cargado, contacto de emergencia notificado. El resto depende de otras cabezas: Peralta (formación), Pollastri (legales), Roca (verificación, Bogotá). Van a ir apareciendo durante el día.",
           "badges": ["herramientas"],
           "siguiente": "obj2_peralta"
         },
@@ -183,7 +184,8 @@
           "id": "obj2_peralta",
           "tipo": "mensaje_npc",
           "emisor": "peralta",
-          "texto": "Mondini, me fijé: el curso de seguridad en zona de conflicto te venció hace dos meses. Sin eso vigente no hay parte de aptitud. Tengo dos opciones. Un refresher de cuatro horas mañana a la mañana, lo damos con el instructor que conocés. O te firmo un provisorio y listo — pero si te pasa algo en campo, la cobertura y las opciones se achican. Decidí vos.",
+          "texto": "Mondini, soy Peralta (formación). El curso de seguridad en zona de conflicto te venció hace dos meses. Sin eso vigente no sale el parte de aptitud. Dos opciones abajo.",
+          "contexto": "Opción rápida: refresher de cuatro horas mañana a la mañana con el instructor que ya conocés. Opción cómoda: te firmo un provisorio y listo, pero si te pasa algo en campo la cobertura médica y las opciones de respuesta se achican. Decidí vos.",
           "badges": ["herramientas"],
           "siguiente": "obj2_d_hefat"
         },
@@ -194,7 +196,7 @@
           "opciones": [
             {
               "id": "a",
-              "texto": "Hacer el refresher con Peralta mañana a la mañana. Cuatro horas menos de preparación, curso al día.",
+              "texto": "Hacer el refresher de cuatro horas mañana. Curso al día — medio día menos para el resto.",
               "requiere": null,
               "flags_set": ["hefat_vigente"],
               "preparacion": 1,
@@ -202,7 +204,7 @@
             },
             {
               "id": "b",
-              "texto": "Pedir el certificado provisorio. Ganás medio día pero vas sin el curso completo vigente.",
+              "texto": "Pedir el provisorio. Ganás medio día, vas sin curso completo.",
               "requiere": null,
               "flags_set": ["hefat_provisorio"],
               "preparacion": 0,
@@ -214,7 +216,8 @@
           "id": "obj2_d_hefat_a_res",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Marcás el refresher para mañana 09:00. Peralta te pasa el instructivo previo — repaso de primeros auxilios, evacuación, contacto bajo amenaza. Curso al día, el ítem del checklist cerrado.",
+          "texto": "Refresher marcado para mañana 09:00. Ítem del checklist cerrado.",
+          "contexto": "Peralta te pasa el instructivo previo: repaso de primeros auxilios, evacuación, contacto bajo amenaza.",
           "badges": [],
           "siguiente": "obj2_pollastri"
         },
@@ -222,7 +225,8 @@
           "id": "obj2_d_hefat_b_res",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Peralta te pasa el provisorio. Firmado. Queda en tu legajo con la nota 'curso completo en espera'. Si en campo hay que evacuar a alguien o responder a un trauma específico, las opciones que tenés son menos. Pero ganás medio día acá.",
+          "texto": "Provisorio firmado. Ítem del checklist cerrado con nota.",
+          "contexto": "Queda en tu legajo con la marca \"curso completo en espera\". Si en campo hay que evacuar a alguien o responder a un trauma específico, las opciones disponibles son menos. Ganás medio día acá.",
           "badges": [],
           "siguiente": "obj2_pollastri"
         },
@@ -230,7 +234,8 @@
           "id": "obj2_pollastri",
           "tipo": "mensaje_npc",
           "emisor": "pollastri",
-          "texto": "Mondini, el trámite del chaleco está trabado. La agencia que regula el equipamiento de protección no te da fecha — si seguimos por la ventanilla normal, no llega. Tengo tres caminos. Hablo con un contacto adentro y lo aceleran, pero entonces la agencia queda con registro de adónde vas. Te quedás sin chaleco y volás así. O pedimos el préstamo a RSF España desde destino — chaleco europeo, sin registro argentino, pero con riesgo si te revisan al salir del país. Decidí rápido, cualquiera de las tres toma un día.",
+          "texto": "Mondini, soy Pollastri (legales). El trámite del chaleco está trabado. Por ventanilla normal no llega a tiempo. Tres caminos abajo.",
+          "contexto": "Camino 1: hablo con un contacto adentro y lo aceleran. Efecto lateral: la agencia que regula el equipamiento queda con registro de tu destino. Camino 2: esperás la ventanilla normal. Efecto: no llega, volás sin chaleco. Camino 3: pido el préstamo a RSF España — chaleco europeo que retirás en Bogotá, sin registro argentino, pero con riesgo de que te revisen al salir de Ezeiza. Cualquiera de los tres toma un día. Decidí rápido.",
           "badges": ["herramientas"],
           "siguiente": "obj2_d_anmac"
         },
@@ -241,7 +246,7 @@
           "opciones": [
             {
               "id": "a",
-              "texto": "Que Pollastri acelere el trámite con su contacto. Chaleco a tiempo, pero la agencia registra tu destino.",
+              "texto": "Acelerar el trámite con el contacto de Pollastri. Chaleco sí, pero la agencia queda con tu destino anotado.",
               "requiere": null,
               "flags_set": ["destino_expuesto", "chaleco_tramitado"],
               "preparacion": 1,
@@ -249,7 +254,7 @@
             },
             {
               "id": "b",
-              "texto": "Esperar el trámite normal. No llega — vas sin chaleco.",
+              "texto": "Esperar la ventanilla normal. No llega — volás sin chaleco.",
               "requiere": null,
               "flags_set": ["sin_chaleco"],
               "preparacion": 0,
@@ -257,7 +262,7 @@
             },
             {
               "id": "c",
-              "texto": "Pedir el préstamo a RSF España. Chaleco europeo en destino, sin registro acá, con riesgo de que te revisen al salir.",
+              "texto": "Préstamo RSF España. Lo retirás en Bogotá, sin registro acá, con riesgo al salir de Ezeiza.",
               "requiere": null,
               "flags_set": ["chaleco_rsf"],
               "preparacion": 1,
@@ -269,7 +274,8 @@
           "id": "obj2_d_anmac_a_res",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Pollastri llama. Quince minutos después le confirman el trámite acelerado. Retirás el chaleco el viernes a la tarde. Queda un papel en la agencia con tu nombre, tu destino y la fecha de viaje. Pollastri no lo dice pero lo pensás vos: ese papel puede circular.",
+          "texto": "Trámite acelerado. Retirás el chaleco el viernes a la tarde.",
+          "contexto": "Quince minutos después de la llamada de Pollastri le confirman. Queda un papel en la agencia con tu nombre, destino y fecha de viaje. Pollastri no lo dice pero lo pensás vos: ese papel puede circular.",
           "badges": [],
           "siguiente": "obj2_roca"
         },
@@ -277,7 +283,8 @@
           "id": "obj2_d_anmac_b_res",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Pollastri te deja claro que sin movimiento extra no llega. Lo asumís. Vas sin chaleco. En Arauca vas a tener que operar con Velásquez en ubicaciones donde él mismo se cubra — las zonas calientes quedan afuera de tu alcance.",
+          "texto": "Sin chaleco. Lo asumís.",
+          "contexto": "Pollastri te deja claro que sin movimiento extra no llega. En Arauca vas a tener que operar con Velásquez en ubicaciones donde él mismo se cubra — las zonas calientes quedan afuera de tu alcance.",
           "badges": [],
           "siguiente": "obj2_roca"
         },
@@ -285,7 +292,8 @@
           "id": "obj2_d_anmac_c_res",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Pollastri coordina con RSF España. Te prestan chaleco y casco en Bogotá, los retirás al llegar. Fianza reembolsable de trescientos euros. No queda registro argentino. Queda el problema de la salida: si en Ezeiza alguien pregunta por el equipamiento, no podés mostrar el papel del trámite — no lo hiciste.",
+          "texto": "Pollastri coordina con RSF España. Chaleco y casco esperándote en Bogotá.",
+          "contexto": "Fianza reembolsable de trescientos euros. No queda registro argentino. Queda el problema de la salida: si en Ezeiza alguien pregunta por el equipamiento, no podés mostrar el papel del trámite — no lo hiciste.",
           "badges": [],
           "siguiente": "obj2_roca"
         },
@@ -293,7 +301,8 @@
           "id": "obj2_roca",
           "tipo": "mensaje_npc",
           "emisor": "roca",
-          "texto": "Mondini, desde Bogotá. Te dejé un informe con lo que cruzamos esta semana sobre la zona: movimientos de tropa, puntos de control, rutas que cambiaron. Datos abiertos, nada sensible, pero útiles. Si podés mirarlo antes de volar, mejor. Son cinco minutos.",
+          "texto": "Mondini, soy Roca (verificación, Bogotá). Te dejé un informe con lo que cruzamos esta semana sobre la zona. Si podés mirarlo antes de volar, mejor. Son cinco minutos.",
+          "contexto": "Movimientos de tropa, puntos de control, rutas que cambiaron. Todo de fuentes abiertas, nada sensible — pero útil para cruzarlo con la evaluación de zona que ya miraste.",
           "badges": [],
           "siguiente": "obj2_d_roca"
         },
@@ -304,7 +313,7 @@
           "opciones": [
             {
               "id": "a",
-              "texto": "Abrir el informe y cruzarlo con lo que viste en la evaluación de zona. Cinco minutos bien invertidos.",
+              "texto": "Abrir el informe ahora. Cinco minutos bien invertidos.",
               "requiere": null,
               "flags_set": ["informe_osint_leido"],
               "preparacion": 1,
@@ -312,7 +321,7 @@
             },
             {
               "id": "b",
-              "texto": "Dejarlo para después. Tenés mucho arriba, lo vas a mirar en el vuelo.",
+              "texto": "Dejarlo para el vuelo. Tenés mucho arriba ahora.",
               "requiere": null,
               "flags_set": [],
               "preparacion": 0,
@@ -324,7 +333,8 @@
           "id": "obj2_d_roca_a_res",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Abrís el informe. Hay un punto de control nuevo en la ruta entre Arauca ciudad y los campamentos del norte — los sensores de rostro que antes estaban en el puente ahora están también a cinco kilómetros, en una carretera secundaria. Si Velásquez te lleva por ahí, Velásquez aparece registrado. Lo anotás mentalmente. En campo vas a poder decidir la ruta con esto en la cabeza.",
+          "texto": "Hay un punto de control nuevo en la ruta al norte. Los sensores de rostro están también a cinco kilómetros del puente, en una carretera secundaria.",
+          "contexto": "Si Velásquez te lleva por ahí, Velásquez aparece registrado. Lo anotás mentalmente. En campo vas a poder decidir la ruta con esto en la cabeza.",
           "badges": [],
           "siguiente": "obj2_villafane"
         },
@@ -332,7 +342,8 @@
           "id": "obj2_d_roca_b_res",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Cerrás la notificación. Ya lo vas a mirar en el vuelo. Marcás mentalmente que está pendiente, pero con todo lo demás se te va a pasar.",
+          "texto": "Cerrás la notificación. Ya lo vas a mirar en el vuelo.",
+          "contexto": "Marcás mentalmente que está pendiente, pero con todo lo demás se te va a pasar.",
           "badges": [],
           "siguiente": "obj2_villafane"
         },
@@ -340,7 +351,8 @@
           "id": "obj2_villafane",
           "tipo": "mensaje_npc",
           "emisor": "villafañe",
-          "texto": "Mondini. Viernes 18:00. Llegaron las 72 horas. Emití el parte de aptitud con lo que está cerrado. Lo que no cerraste queda anotado. Firmamos igual — no hay tiempo. En seis horas estás en Ezeiza. Nos vemos a la vuelta.",
+          "texto": "Viernes 18:00. Emití el parte de aptitud con lo que está cerrado. En seis horas estás en Ezeiza. Nos vemos a la vuelta.",
+          "contexto": "Lo que no cerraste queda anotado. Firmamos igual — no hay tiempo.",
           "badges": [],
           "siguiente": "obj2_cierre"
         },
@@ -348,7 +360,8 @@
           "id": "obj2_cierre",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Viernes, 22:00. Aeropuerto. Vuelo a Bogotá, conexión a Arauca. El teléfono de trabajo, el chaleco —o la ausencia del chaleco—, el curso al día o el provisorio, lo que leíste de Roca y lo que no. Todo lo que cargaste es lo que tenés. A partir de acá, silencio de radio.",
+          "texto": "Viernes, 22:00. Aeropuerto. A partir de acá, silencio de radio.",
+          "contexto": "Vuelo a Bogotá, conexión a Arauca. El teléfono de trabajo, el chaleco —o la ausencia del chaleco—, el curso al día o el provisorio, lo que leíste de Roca y lo que no. Todo lo que cargaste es lo que tenés.",
           "badges": [],
           "siguiente": "obj3_inicio"
         }
