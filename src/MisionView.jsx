@@ -133,22 +133,12 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
   }
 
   if (nodoActual.tipo === 'debriefing') {
-    return (
-      <div>
-        <DebriefingNodo nodo={nodoActual} partida={partida} t={t} modo={modo} />
-        <FooterReset onReiniciar={reiniciar} t={t} modo={modo} />
-      </div>
-    );
+    return <DebriefingNodo nodo={nodoActual} partida={partida} t={t} modo={modo} />;
   }
 
-  return (
-    <div>
-      {isCampo
-        ? <CampoNodo nodo={nodoActual} partida={partida} onElegir={elegirOpcion} onAvanzar={avanzarA} onReiniciar={reiniciar} t={t} s={s} />
-        : <RedaccionNodo nodo={nodoActual} partida={partida} onElegir={elegirOpcion} onAvanzar={avanzarA} onReiniciar={reiniciar} t={t} />
-      }
-    </div>
-  );
+  return isCampo
+    ? <CampoNodo nodo={nodoActual} partida={partida} onElegir={elegirOpcion} onAvanzar={avanzarA} t={t} s={s} />
+    : <RedaccionNodo nodo={nodoActual} partida={partida} onElegir={elegirOpcion} onAvanzar={avanzarA} t={t} />;
 }
 
 // ============================================================
@@ -239,7 +229,7 @@ function DebriefingNodo({ nodo, partida, t, modo }) {
 // CAMPO — situación arriba, opciones full-width 56px abajo
 // ============================================================
 
-function CampoNodo({ nodo, partida, onElegir, onAvanzar, onReiniciar, t, s }) {
+function CampoNodo({ nodo, partida, onElegir, onAvanzar, t, s }) {
   const esDecision = nodo.tipo === 'decision';
   return (
     <div>
@@ -280,7 +270,6 @@ function CampoNodo({ nodo, partida, onElegir, onAvanzar, onReiniciar, t, s }) {
         </div>
       )}
 
-      <FooterReset onReiniciar={onReiniciar} t={t} modo="campo" />
     </div>
   );
 }
@@ -289,7 +278,7 @@ function CampoNodo({ nodo, partida, onElegir, onAvanzar, onReiniciar, t, s }) {
 // REDACCIÓN — livre-jeu editorial, opciones como links al final
 // ============================================================
 
-function RedaccionNodo({ nodo, partida, onElegir, onAvanzar, onReiniciar, t }) {
+function RedaccionNodo({ nodo, partida, onElegir, onAvanzar, t }) {
   const esDecision = nodo.tipo === 'decision';
   return (
     <div>
@@ -327,7 +316,6 @@ function RedaccionNodo({ nodo, partida, onElegir, onAvanzar, onReiniciar, t }) {
         </div>
       )}
 
-      <FooterReset onReiniciar={onReiniciar} t={t} modo="redaccion" />
     </div>
   );
 }
@@ -403,17 +391,3 @@ function OpcionButton({ opcion, partida, onElegir, t, modo }) {
   );
 }
 
-function FooterReset({ onReiniciar, t, modo }) {
-  const isCampo = modo === 'campo';
-  return (
-    <div style={{ marginTop: isCampo ? '32px' : '48px', paddingTop: '14px', borderTop: '1px dotted ' + t.border }}>
-      <button type="button" onClick={onReiniciar} style={{
-        background: 'none', border: 'none', padding: 0, cursor: 'pointer',
-        fontFamily: MONO, fontSize: '10px', letterSpacing: '0.06em', color: t.textMeta,
-        fontStyle: isCampo ? 'normal' : 'italic'
-      }}>
-        reiniciar partida desde el principio
-      </button>
-    </div>
-  );
-}

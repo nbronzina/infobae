@@ -21,7 +21,7 @@ const NIVEL_MENTAL_LABELS = {
   agotado: 'Agotado'
 };
 
-export default function EstadoView({ modo }) {
+export default function EstadoView({ modo, scenario }) {
   const t = themeFor(modo);
   const s = sizesFor(modo);
   const isCampo = modo === 'campo';
@@ -32,6 +32,21 @@ export default function EstadoView({ modo }) {
 
   const flags = computeFlags(snapshot);
 
+  const reiniciarLinea = () => {
+    if (typeof window === 'undefined') return;
+    const ok = window.confirm('¿Reiniciar la línea? Se van a borrar checklist, fuentes, diario y el progreso de la misión. No se puede deshacer.');
+    if (!ok) return;
+    try {
+      localStorage.removeItem('infobae:checklist');
+      localStorage.removeItem('infobae:fuentes');
+      localStorage.removeItem('infobae:diario');
+      if (scenario) localStorage.removeItem(`infobae:mision_${scenario}`);
+      localStorage.removeItem('infobae:teatro_seleccionado');
+      localStorage.removeItem('infobae:docs_leidos');
+    } catch {}
+    window.location.reload();
+  };
+
   if (isCampo) {
     return (
       <div>
@@ -39,11 +54,32 @@ export default function EstadoView({ modo }) {
           Estado · mondini.l
         </h1>
         <CampoLayout snapshot={snapshot} flags={flags} t={t} s={s} />
+        <ReiniciarLinea onReiniciar={reiniciarLinea} t={t} modo={modo} />
       </div>
     );
   }
 
-  return <RedaccionLayout snapshot={snapshot} flags={flags} t={t} s={s} />;
+  return (
+    <>
+      <RedaccionLayout snapshot={snapshot} flags={flags} t={t} s={s} />
+      <ReiniciarLinea onReiniciar={reiniciarLinea} t={t} modo={modo} />
+    </>
+  );
+}
+
+function ReiniciarLinea({ onReiniciar, t, modo }) {
+  const isCampo = modo === 'campo';
+  return (
+    <div style={{ marginTop: isCampo ? '28px' : '40px', paddingTop: '14px', borderTop: '1px dotted ' + t.border }}>
+      <button type="button" onClick={onReiniciar} style={{
+        background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+        fontFamily: MONO, fontSize: '10px', letterSpacing: '0.06em', color: t.textMeta,
+        fontStyle: isCampo ? 'normal' : 'italic'
+      }}>
+        reiniciar línea desde el principio
+      </button>
+    </div>
+  );
 }
 
 function readSnapshot() {
