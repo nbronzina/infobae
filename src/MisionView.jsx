@@ -256,11 +256,11 @@ function CampoNodo({ nodo, partida, onElegir, onAvanzar, t, s }) {
 
       {!esDecision && nodo.siguiente && (
         <button type="button" onClick={() => onAvanzar(nodo.siguiente)} style={{
-          cursor: 'pointer', background: t.text, color: t.bg, border: 'none',
-          padding: '16px', width: '100%', minHeight: '56px', marginTop: '8px',
-          fontFamily: MONO, fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 500
+          cursor: 'pointer', background: 'none', border: 'none', padding: '8px 0',
+          fontFamily: MONO, fontSize: '10.5px', letterSpacing: '0.08em',
+          color: t.textMeta, marginTop: '14px'
         }}>
-          seguir →
+          continuar ↓
         </button>
       )}
 
@@ -302,11 +302,11 @@ function RedaccionNodo({ nodo, partida, onElegir, onAvanzar, t }) {
 
       {!esDecision && nodo.siguiente && (
         <button type="button" onClick={() => onAvanzar(nodo.siguiente)} style={{
-          cursor: 'pointer', background: 'none', border: 'none', padding: 0,
-          fontFamily: SERIF, fontSize: '15px', fontStyle: 'italic', color: t.text,
-          borderBottom: '1px solid ' + t.text, paddingBottom: '1px', marginTop: '14px'
+          cursor: 'pointer', background: 'none', border: 'none', padding: '8px 0',
+          fontFamily: MONO, fontSize: '11px', letterSpacing: '0.08em',
+          color: t.textMeta, marginTop: '18px'
         }}>
-          seguir →
+          continuar ↓
         </button>
       )}
 
