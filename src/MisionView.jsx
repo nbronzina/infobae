@@ -96,6 +96,20 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
     }));
   }
 
+  function resolverSiguiente(opcion, flagsActualizados) {
+    // siguiente_condicional permite que una misma opción derive a
+    // nodos distintos según flags acumulados de objetivos anteriores.
+    // El primer match del array gana; si ninguno matchea, usa el
+    // siguiente por defecto.
+    if (Array.isArray(opcion.siguiente_condicional)) {
+      for (const regla of opcion.siguiente_condicional) {
+        if (regla.flag && flagsActualizados.includes(regla.flag)) return regla.siguiente;
+        if (regla.sin_flag && !flagsActualizados.includes(regla.sin_flag)) return regla.siguiente;
+      }
+    }
+    return opcion.siguiente;
+  }
+
   function elegirOpcion(opcion) {
     if (opcion.requiere && !partida.flags.includes(opcion.requiere)) return;
     setPartida(prev => {
@@ -103,7 +117,8 @@ export default function MisionView({ modo, scenario, onBadgesChange }) {
       const preparacion = (prev.preparacion || 0) + (opcion.preparacion || 0);
       const estadoMental = opcion.estado_mental_set || prev.estadoMental;
       const visitados = prev.visitados.includes(prev.nodoActual) ? prev.visitados : [...prev.visitados, prev.nodoActual];
-      return { ...prev, nodoActual: opcion.siguiente, flags, preparacion, estadoMental, visitados };
+      const nodoActual = resolverSiguiente(opcion, flags);
+      return { ...prev, nodoActual, flags, preparacion, estadoMental, visitados };
     });
   }
 
