@@ -247,73 +247,94 @@ function HomeView({ onEnter, onOpenAbout }) {
   );
 }
 
+const LINEAS = [
+  {
+    slug: 'internacional',
+    codigo: 'INT · ARQ-042 · arauca/apure',
+    estado: 'cerrada',
+    actividad: 'descanso obligatorio hasta mayo',
+    ultimaActividad: '2029-04-02',
+    notaZelaya: 'no insistas con villafañe.'
+  },
+  {
+    slug: 'rosario',
+    codigo: 'NAC · ROS-038 · rosario',
+    estado: 'activa',
+    actividad: 'osint en curso',
+    ultimaActividad: '2029-04-16',
+    notaZelaya: 'la amenaza al colega es real. fopea activó protocolo. coordiná contra-vigilancia antes de moverte.'
+  },
+  {
+    slug: 'inteligencia',
+    codigo: 'NAC · ANA-047 · anaconda-2',
+    estado: 'congelada',
+    actividad: 'sin movimiento desde 04-17',
+    ultimaActividad: '2029-03-28',
+    notaZelaya: 'dispositivo limpio y pollastri desde el minuto cero. ya sabés.'
+  }
+];
+
+const ESTADO_COLORES = {
+  cerrada: '#8a6d2b',
+  activa: '#5a6e3c',
+  congelada: '#bd2828'
+};
+
 function BriefingView({ onSelect }) {
-  const opciones = [
-    { slug: 'internacional', label: 'Línea internacional' },
-    { slug: 'rosario', label: 'Línea nacional · Rosario' },
-    { slug: 'inteligencia', label: 'Línea nacional · Inteligencia' }
-  ];
+  const monoStack = "'JetBrains Mono', Consolas, monospace";
+  const serifStack = "'Fraunces', Georgia, serif";
+  const textPrimary = '#1f1f1f';
+  const textMeta = '#5a544c';
+  const textDim = '#8a8472';
+  const accent = '#f18b1e';
+
   return (
-    <div className="bitacora-scroll" style={{ height: '100%', overflowY: 'auto', color: '#1f1f1f', padding: '44px 32px 32px', fontFamily: "'Fraunces', Georgia, serif", boxSizing: 'border-box' }}>
+    <div className="bitacora-scroll" style={{ height: '100%', overflowY: 'auto', color: textPrimary, padding: '44px 32px 48px', fontFamily: monoStack, boxSizing: 'border-box' }}>
       <style>{`
-        .brief-link { cursor: pointer; background: none; border: none; font: inherit; color: inherit; padding: 0; text-align: left; }
-        .brief-link:focus-visible { outline: 2px solid #1f1f1f; outline-offset: 3px; }
+        .linea-block { cursor: pointer; background: none; border: none; padding: 0; margin: 0; text-align: left; width: 100%; display: block; color: inherit; font: inherit; }
+        .linea-block:focus-visible { outline: 2px solid ${textPrimary}; outline-offset: 4px; }
       `}</style>
-      <div style={{ maxWidth: '640px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '48px' }}>
-          <img src="/infobae-logo.png" alt="infobae" style={{ height: '28px', width: 'auto', display: 'block' }} />
-          <span className="mono" style={{ fontSize: '12px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#1f1f1f', fontWeight: 500 }}>
-            Bitácora
-          </span>
+      <div style={{ maxWidth: '520px', margin: '0 auto' }}>
+        <div style={{ fontSize: '11.5px', letterSpacing: '0.08em', textTransform: 'uppercase', color: textMeta, marginBottom: '22px' }}>
+          Líneas activas · {LINEAS.length}
         </div>
 
-        <article style={{ backgroundColor: '#f8f5ec', border: '1px solid #d9d4c2', padding: '28px 32px', marginBottom: '28px' }}>
-          <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '16px' }}>
-            Último mensaje · Signal · canal redacción
-          </div>
-          <div className="mono" style={{ fontSize: '12px', color: '#1f1f1f', lineHeight: 1.9, marginBottom: '18px' }}>
-            <div>f. zelaya → mondini.l</div>
-            <div style={{ color: '#5a544c' }}>2029-04-17 · 08:42 ART</div>
-          </div>
-          <div style={{ height: '1px', backgroundColor: '#d9d4c2', marginBottom: '18px' }} />
-          <div className="serif" style={{ fontSize: '15px', lineHeight: 1.65, color: '#1f1f1f' }}>
-            <p style={{ margin: '0 0 14px' }}>Mondini.</p>
-            <p style={{ margin: '0 0 14px' }}>
-              Internacional cerrada hasta mayo. No insistas con villafañe, el descanso es obligatorio.
-            </p>
-            <p style={{ margin: '0 0 14px' }}>
-              Rosario se complicó. La amenaza al colega es real — fopea activó protocolo. Los registros inmobiliarios que cruzaste tienen patrón. Si retomás, coordiná contra-vigilancia antes de moverte.
-            </p>
-            <p style={{ margin: '0 0 14px' }}>
-              Inteligencia sin novedad visible. Anaconda-2 sigue donde lo dejamos. Si abrís eso, dispositivo limpio y pollastri desde el minuto cero. Ya sabés.
-            </p>
-            <p style={{ margin: '0 0 4px' }}>
-              Elegí. Después de esto, silencio de radio hasta que vos conectes.
-            </p>
-            <p className="mono" style={{ margin: '24px 0 0', fontSize: '11.5px', color: '#5a544c' }}>z.</p>
-          </div>
-        </article>
+        <Separador color={textDim} />
 
-        <div style={{ marginBottom: '36px' }}>
-          <div className="mono" style={{ fontSize: '10.5px', color: '#5a544c', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '14px' }}>
-            Elegir línea
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {opciones.map((o, idx) => (
-              <button
-                key={o.slug}
-                type="button"
-                onClick={() => onSelect(o.slug)}
-                className="brief-link serif"
-                style={{ fontSize: '17px', fontWeight: 500, color: '#1f1f1f', padding: '14px 0', borderTop: '1px solid #d9d4c2', borderBottom: idx === opciones.length - 1 ? '1px solid #d9d4c2' : 'none', letterSpacing: '-0.01em' }}
-              >
-                → {o.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        {LINEAS.map((l) => (
+          <React.Fragment key={l.slug}>
+            <button type="button" className="linea-block" onClick={() => onSelect(l.slug)}>
+              <div style={{ padding: '20px 0' }}>
+                <div style={{ fontSize: '11.5px', color: textMeta, letterSpacing: '0.04em', marginBottom: '8px' }}>
+                  {l.codigo}
+                </div>
+                <div style={{ fontSize: '12px', lineHeight: 1.6, marginBottom: '4px' }}>
+                  <span style={{ color: ESTADO_COLORES[l.estado], fontWeight: 500 }}>{l.estado}</span>
+                  <span style={{ color: textMeta }}> — {l.actividad}</span>
+                </div>
+                <div style={{ fontSize: '11px', color: textDim, marginBottom: '14px' }}>
+                  última actividad: {l.ultimaActividad}
+                </div>
+                <div style={{ fontFamily: serifStack, fontSize: '13.5px', fontStyle: 'italic', color: textPrimary, lineHeight: 1.5, marginBottom: '14px', maxWidth: '38em' }}>
+                  <span style={{ color: textMeta, fontStyle: 'normal', fontFamily: monoStack, fontSize: '11px', marginRight: '6px' }}>zelaya 04-17:</span>
+                  {l.notaZelaya}
+                </div>
+                <div style={{ fontSize: '12px', color: accent, letterSpacing: '0.06em', fontWeight: 500 }}>
+                  abrir →
+                </div>
+              </div>
+            </button>
+            <Separador color={textDim} />
+          </React.Fragment>
+        ))}
       </div>
     </div>
+  );
+}
+
+function Separador({ color }) {
+  return (
+    <div style={{ color, fontSize: '11.5px', letterSpacing: '0.08em' }}>—</div>
   );
 }
 
