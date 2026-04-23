@@ -309,6 +309,15 @@ function CampoNodo({ nodo, flags, onElegir, onAvanzar, t, s }) {
         </div>
       )}
 
+      {nodo.contexto && (
+        <div style={{
+          fontFamily: SERIF, fontSize: '13px', lineHeight: 1.6,
+          color: t.textSecondary, marginTop: '18px', whiteSpace: 'pre-wrap'
+        }}>
+          {nodo.contexto}
+        </div>
+      )}
+
       {!esDecision && nodo.siguiente && (
         <AvanceLink onAvanzar={() => onAvanzar(nodo.siguiente)} gate={avanceGate} t={t} modo="campo" />
       )}
@@ -342,6 +351,15 @@ function RedaccionNodo({ nodo, flags, onElegir, onAvanzar, t }) {
             </li>
           ))}
         </ol>
+      )}
+
+      {nodo.contexto && (
+        <div style={{
+          fontFamily: SERIF, fontSize: '14px', lineHeight: 1.7, fontStyle: 'italic',
+          color: t.textSecondary, marginTop: '28px', maxWidth: '38em', whiteSpace: 'pre-wrap'
+        }}>
+          {nodo.contexto}
+        </div>
       )}
 
       {!esDecision && nodo.siguiente && (
