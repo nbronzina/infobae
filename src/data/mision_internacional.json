@@ -432,7 +432,8 @@
           "id": "obj3_d1_a_limpio",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Velásquez maneja. En el checkpoint los dejan pasar con una pregunta rutinaria sobre el destino. Lo habitual. Llegás al campamento a media tarde.",
+          "texto": "Pasan el checkpoint con una pregunta rutinaria. Llegan al campamento a media tarde.",
+          "contexto": "Velásquez maneja. Lo habitual.",
           "badges": [],
           "siguiente": "obj3_d2_intro"
         },
@@ -440,7 +441,8 @@
           "id": "obj3_d1_a_desvio",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Velásquez maneja. Te acordás del informe de Roca — el checkpoint nuevo a cinco kilómetros, en la carretera secundaria. Le decís que agarre por el desvío viejo que conoce. Quince minutos más de camino, pero no pasan por los sensores de rostro. Velásquez no pregunta. Sabe lo que evitan.",
+          "texto": "Le pedís a Velásquez que agarre por el desvío viejo. Quince minutos más, sin pasar por los sensores de rostro.",
+          "contexto": "Te acordás del informe de Roca: el checkpoint nuevo a cinco kilómetros, en la carretera secundaria. Velásquez no pregunta. Sabe lo que evitan.",
           "badges": [],
           "siguiente": "obj3_d2_intro"
         },
@@ -448,7 +450,8 @@
           "id": "obj3_d1_a_identificados",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Velásquez maneja. En el checkpoint, el control de rostro te marca. Tu nombre figura en el registro de la agencia que te aceleró el trámite — ese papel viajó. Un oficial les pide papeles, revisa la camioneta, se queda con los datos de Velásquez. Los dejan pasar pero algo quedó anotado. Llegás al campamento con una hora de retraso y la sensación de que alguien arriba ya sabe dónde estás.",
+          "texto": "El control de rostro te marca. Tu nombre figura en el registro de la agencia que te aceleró el trámite.",
+          "contexto": "Ese papel viajó. Un oficial les pide papeles, revisa la camioneta, se queda con los datos de Velásquez. Los dejan pasar pero algo quedó anotado. Llegás al campamento con una hora de retraso y la sensación de que alguien arriba ya sabe dónde estás.",
           "badges": [],
           "siguiente": "obj3_d2_intro"
         },
@@ -456,7 +459,8 @@
           "id": "obj3_d1_b_preparada",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Tomás un colectivo de la zona. Sabés por el informe de Roca que hay un checkpoint nuevo — cuando el chofer se desvía por la carretera secundaria, vos pedís bajar dos kilómetros antes. Caminás el resto por un sendero que usa la gente del campamento. Llegás tarde pero sin registro.",
+          "texto": "Te bajás dos kilómetros antes del checkpoint nuevo. Caminás el resto por un sendero. Llegás tarde pero sin registro.",
+          "contexto": "Sabés por el informe de Roca que el checkpoint está en la carretera secundaria. El chofer del colectivo se desvía por ahí, vos pedís bajar antes. El sendero es el que usa la gente del campamento.",
           "badges": [],
           "siguiente": "obj3_d2_intro"
         },
@@ -464,7 +468,8 @@
           "id": "obj3_d1_b_sorpresa",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Tomás un colectivo de la zona. A mitad de camino el chofer se desvía por una ruta secundaria que no conocías. Un checkpoint nuevo — no figuraba en la evaluación que tenías. Te bajan, revisan documentos, sacan una foto. No es protocolo, es escaneo. Pasás, pero tu cara quedó en una base de datos que no podés nombrar.",
+          "texto": "El colectivo se desvía por una ruta secundaria. Checkpoint nuevo. Te sacan una foto. Tu cara queda en una base de datos.",
+          "contexto": "No figuraba en la evaluación que tenías. Te bajan, revisan documentos, escanean. No es protocolo, es archivo. Pasás, pero no podés nombrar dónde quedó tu rostro registrado.",
           "badges": [],
           "siguiente": "obj3_d2_intro"
         },
@@ -472,7 +477,8 @@
           "id": "obj3_d1_c",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Velásquez va solo y vuelve con los dos al pueblo. Los entrevistás en la pensión. Es más seguro para vos, pero no viste el campamento ni la relación del barrio con los que salen del conflicto. Material testimonial, sin marco visual ni contexto físico. La nota va a quedar más corta.",
+          "texto": "Velásquez va solo y vuelve con los dos al pueblo. Los entrevistás en la pensión.",
+          "contexto": "Más seguro para vos, pero no viste el campamento ni la relación del barrio con los que salen del conflicto. Material testimonial, sin marco visual ni contexto físico. La nota va a quedar más corta.",
           "badges": [],
           "siguiente": "obj3_d2_intro"
         },
@@ -480,7 +486,8 @@
           "id": "obj3_d2_intro",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Los dos ex-combatientes hablan poco. Al rato uno saca el teléfono. 'Esto lo filmamos hace dos semanas. Oficiales venezolanos cruzando el río, del lado colombiano. No es pelea, es coordinación.' El video no tiene metadatos — lo filmaron con una cámara vieja, después lo pasaron por WhatsApp varias veces. Te lo quieren dar ahora.",
+          "texto": "Uno saca el teléfono. \"Lo filmamos hace dos semanas. Oficiales venezolanos cruzando el río del lado colombiano. No es pelea, es coordinación.\" Te lo quieren dar ahora.",
+          "contexto": "El video no tiene metadatos — cámara vieja, pasado por WhatsApp varias veces. Lo que ves es lo que hay. Sin firma C2PA, sin fecha verificable, sin GPS. Verificación cruzada va a depender de lo que puedas hacer en redacción.",
           "badges": [],
           "siguiente": "obj3_d2"
         },
@@ -530,7 +537,8 @@
           "id": "obj3_d2_a_seguro",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Lo recibís en el teléfono de trabajo. Queda compartimentado del personal. Lo mirás ahí mismo — el material es lo que dicen, se ve coordinación, no enfrentamiento. Les pedís que te cuenten el contexto.",
+          "texto": "Lo recibís en el teléfono de trabajo. Compartimentado del personal.",
+          "contexto": "Lo mirás ahí mismo — el material es lo que dicen, se ve coordinación, no enfrentamiento. Les pedís que te cuenten el contexto.",
           "badges": [],
           "siguiente": "obj3_d3_intro"
         },
@@ -538,7 +546,8 @@
           "id": "obj3_d2_a_comprometido",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Lo recibís en tu teléfono. El único que tenés. Ahora tenés material sensible sobre fuerzas armadas en el mismo aparato donde entrás al correo personal, WhatsApp de tu familia, tus contraseñas. Si ese teléfono se compromete, todo lo que hay adentro se compromete con él.",
+          "texto": "Lo recibís en tu teléfono. El único que tenés. Material sensible mezclado con todo lo personal.",
+          "contexto": "Correo personal, WhatsApp de tu familia, tus contraseñas. Si ese teléfono se compromete, todo lo que hay adentro se compromete con él.",
           "badges": [],
           "siguiente": "obj3_d3_intro"
         },
@@ -546,7 +555,8 @@
           "id": "obj3_d2_b",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Uno de ellos te pasa un número de WhatsApp, vos le pasás el tuyo de Signal. Cinco minutos después entra el archivo. Compartimentado pero con huella: queda registro de que esa conversación existió. Si alguno de los dos termina en un interrogatorio, su teléfono muestra que se comunicó con vos.",
+          "texto": "Te pasa un número de WhatsApp, vos le pasás Signal. Cinco minutos después entra el archivo.",
+          "contexto": "Compartimentado pero con huella: queda registro de que esa conversación existió. Si alguno de los dos termina en un interrogatorio, su teléfono muestra que se comunicó con vos.",
           "badges": [],
           "siguiente": "obj3_d3_intro"
         },
@@ -554,7 +564,8 @@
           "id": "obj3_d2_c",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Sacás tu cámara y filmás la pantalla del teléfono de ellos mientras corre el video. Pierde definición, se ve el reflejo de la luz. Pero no hay archivo que viaje. Tu cámara, tu tarjeta, tu custodia. Verificación por lo visual, sin cadena digital que los ubique.",
+          "texto": "Sacás tu cámara y filmás la pantalla del teléfono de ellos mientras corre el video.",
+          "contexto": "Pierde definición, se ve el reflejo de la luz. Pero no hay archivo que viaje. Tu cámara, tu tarjeta, tu custodia. Verificación por lo visual, sin cadena digital que los ubique.",
           "badges": [],
           "siguiente": "obj3_d3_intro"
         },
@@ -562,7 +573,8 @@
           "id": "obj3_d2_d",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Les decís que no. Sin saber quiénes son, el material es irresponsable — para vos y para ellos. Uno asiente, el otro guarda el teléfono con cara de 'ya se va a arrepentir'. Se levantan. La ventana se cierra. No lo vas a poder pedir de nuevo. Quizás es una operación de inteligencia, quizás es un regalo que rechazaste.",
+          "texto": "Les decís que no. Sin saber quiénes son, el material es irresponsable — para vos y para ellos.",
+          "contexto": "Uno asiente, el otro guarda el teléfono con cara de \"ya se va a arrepentir\". Se levantan. La ventana se cierra. No lo vas a poder pedir de nuevo. Quizás es una operación de inteligencia, quizás es un regalo que rechazaste.",
           "badges": [],
           "siguiente": "obj3_d3_intro"
         },
@@ -570,7 +582,8 @@
           "id": "obj3_d3_intro",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Volvés a la pensión cerca de las once de la noche. Conectás el Starlink para bajar mensajes — cinco minutos, lo justo. Mientras transmite, Bitácora corre un chequeo automático del equipo. Rojo. El router está emitiendo la misma identificación que en Buenos Aires, sin cambiarla. Cualquiera con el sensor adecuado puede ubicar tu terminal en esta coordenada desde que prendió. Y lleva prendido diecisiete minutos.",
+          "texto": "Once de la noche, pensión. Bitácora marca rojo: el router del Starlink emite la misma identificación que en Buenos Aires y lleva diecisiete minutos prendido.",
+          "contexto": "Conectaste el Starlink para bajar mensajes — cinco minutos, lo justo. Mientras transmitía, Bitácora corrió un chequeo automático del equipo. Cualquiera con el sensor adecuado puede ubicar tu terminal en esta coordenada desde que prendió. Si nunca leíste el manual de higiene RF, andá a DOCS → Seguridad digital → Higiene RF en despliegue internacional. Hay una opción que se desbloquea con eso.",
           "badges": ["docs"],
           "siguiente": "obj3_d3"
         },
@@ -581,7 +594,7 @@
           "opciones": [
             {
               "id": "a",
-              "texto": "Apagar ya. Sin mensajes esta noche, sin comunicación con redacción hasta mañana.",
+              "texto": "Apagar ya. Sin mensajes esta noche, sin redacción hasta mañana.",
               "requiere": null,
               "flags_set": ["starlink_apagado"],
               "preparacion": 0,
@@ -592,7 +605,7 @@
             },
             {
               "id": "b",
-              "texto": "Bajar sólo lo urgente y apagar. Quince minutos más de exposición, con mensajes.",
+              "texto": "Bajar sólo lo urgente y apagar. Quince minutos más de exposición.",
               "requiere": null,
               "flags_set": ["starlink_ventana"],
               "preparacion": 0,
@@ -602,7 +615,7 @@
               "id": "c",
               "texto": "Apagar, mover el Starlink doscientos metros de la pensión, volver a prender. La señal ya no coincide con dónde dormís.",
               "requiere": "manual_rf_leido",
-              "requiere_texto": "necesitás haber leído el manual de higiene RF en DOCS",
+              "requiere_texto": "necesitás haber abierto el manual de higiene RF en DOCS → Seguridad digital → Higiene RF en despliegue internacional",
               "flags_set": ["starlink_reubicado"],
               "preparacion": 1,
               "siguiente": "obj3_d3_c"
@@ -613,7 +626,8 @@
           "id": "obj3_d3_a_ok",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Apagás. Bitácora cierra la sesión. Mañana temprano vas a tener que ir a un cibercafé o al municipio a chequear correo — inconveniente, no crítico. Lo importante es que la señal dejó de emitir desde donde dormís.",
+          "texto": "Apagás. La señal dejó de emitir desde donde dormís.",
+          "contexto": "Bitácora cierra la sesión. Mañana temprano vas a tener que ir a un cibercafé o al municipio a chequear correo. Inconveniente, no crítico.",
           "badges": [],
           "siguiente": "obj3_cierre"
         },
@@ -621,7 +635,8 @@
           "id": "obj3_d3_a_sin_plan",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Apagás. Te das cuenta de que no armaste plan B de comunicación antes de salir — la noche que cerraste Bitácora en Buenos Aires sin terminar la preparación, esta era una de las cosas que quedaron afuera. Sin correo, sin Signal, sin manera de avisar a Buenos Aires hasta mañana. Velásquez no sabe que estás offline. La redacción tampoco.",
+          "texto": "Apagás. Y te das cuenta de que no tenés plan B de comunicación.",
+          "contexto": "La noche que cerraste Bitácora en Buenos Aires sin terminar la preparación, esta era una de las cosas que quedaron afuera. Sin correo, sin Signal, sin manera de avisar a Buenos Aires hasta mañana. Velásquez no sabe que estás offline. La redacción tampoco.",
           "badges": [],
           "siguiente": "obj3_cierre"
         },
@@ -629,7 +644,8 @@
           "id": "obj3_d3_b",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Dejás correr quince minutos más. Bajan cuatro mensajes de la redacción, uno de Villafañe, un aviso de Fiorella sobre actualización pendiente. Apagás. Total: treinta y dos minutos de emisión desde esta ubicación. Si alguien estaba escuchando con el hardware correcto, tenés tu coordenada marcada en su mapa.",
+          "texto": "Treinta y dos minutos totales de emisión desde esta ubicación. Si alguien escuchaba, tenés tu coordenada marcada en su mapa.",
+          "contexto": "Bajan cuatro mensajes de la redacción, uno de Villafañe, un aviso de Fiorella sobre actualización pendiente. Apagás.",
           "badges": [],
           "siguiente": "obj3_cierre"
         },
@@ -637,7 +653,8 @@
           "id": "obj3_d3_c",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Apagás, desenchufás el terminal, bajás a la calle con él en la mochila. Caminás dos cuadras hacia una vereda vacía, lo dejás encendido sobre un muro bajo, volvés. Desde la pensión te conectás al wifi del Starlink — funciona a esa distancia. Bajás tus mensajes. La señal que emite el aparato ya no está donde dormís. Si alguien la siguió, llegó a un muro.",
+          "texto": "Movés el terminal a un muro a dos cuadras. Te conectás al wifi del Starlink desde la pensión. La señal ya no coincide con donde dormís.",
+          "contexto": "Apagás, desenchufás el terminal, bajás a la calle con él en la mochila. Caminás hacia una vereda vacía, lo dejás encendido sobre un muro bajo, volvés. Funciona a esa distancia. Bajás tus mensajes. Si alguien la siguió, llegó a un muro.",
           "badges": [],
           "siguiente": "obj3_cierre"
         },
@@ -645,7 +662,8 @@
           "id": "obj3_cierre",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Once y media de la noche. Cerrás Bitácora. Día 4 terminado. Tenés material —o la ausencia de material—, una ruta recorrida con o sin sombra, y una decisión tomada sobre una señal que estaba emitiendo. Mañana va a seguir. Falta la mitad del despliegue.",
+          "texto": "Once y media. Cerrás Bitácora. Día 4 terminado. Falta la mitad del despliegue.",
+          "contexto": "Tenés material —o la ausencia de material—, una ruta recorrida con o sin sombra, y una decisión tomada sobre una señal que estaba emitiendo. Mañana va a seguir.",
           "badges": [],
           "siguiente": "obj4_inicio"
         }
