@@ -376,7 +376,8 @@
           "id": "obj3_inicio",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Día 4 en Arauca. La última sync con Buenos Aires fue antes del vuelo — todo lo que pasó después de eso no llegó. Velásquez te movió a una pensión sobre la ruta que sale al oeste, a diez minutos del centro. Es temporada seca, hace calor, el aire huele a combustible quemado. Afuera hay chicos jugando y una camioneta de las fuerzas venezolanas pasa cada hora y media. Bitácora abierta sobre la cama. Lo que sabés es lo que cargaste antes de salir.",
+          "texto": "Día 4 en Arauca. Última sync con Buenos Aires: antes del vuelo. Lo que sabés es lo que cargaste.",
+          "contexto": "Velásquez te movió a una pensión sobre la ruta que sale al oeste, a diez minutos del centro. Temporada seca, calor, el aire huele a combustible quemado. Chicos jugando afuera y una camioneta de las fuerzas venezolanas que pasa cada hora y media. Bitácora abierta sobre la cama.",
           "badges": [],
           "siguiente": "obj3_velasquez"
         },
@@ -384,7 +385,8 @@
           "id": "obj3_velasquez",
           "tipo": "mensaje_npc",
           "emisor": "velasquez",
-          "texto": "Mondini. Un contacto mío del campamento de desplazados del norte me pasó que hay dos tipos que quieren hablar. Ex-combatientes, salieron hace tres meses. Tienen algo para mostrarte — material, no palabras. El campamento está a hora y media por la ruta vieja, pero ahora hay que decidir cómo llegamos. Avisame qué te parece.",
+          "texto": "Mondini. Dos ex-combatientes quieren hablar con vos. Tienen algo para mostrarte — material, no palabras. Hay que decidir cómo vamos al campamento.",
+          "contexto": "Un contacto mío del campamento de desplazados del norte los pasó. Salieron del grupo hace tres meses. El campamento está a hora y media por la ruta vieja.",
           "badges": [],
           "siguiente": "obj3_d1"
         },
