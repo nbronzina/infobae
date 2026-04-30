@@ -224,15 +224,10 @@ function DebriefingNodo({ nodo, partida, t, modo }) {
         {nodo.fecha_cierre}
       </h1>
       {nodo.apertura && (
-        <p style={{ fontFamily: SERIF, fontSize: bodyFs, color: t.text, lineHeight: 1.7, maxWidth: maxW, margin: '18px 0 28px' }}>
+        <p style={{ fontFamily: SERIF, fontSize: bodyFs, color: t.text, lineHeight: 1.7, maxWidth: maxW, margin: '18px 0 32px' }}>
           {nodo.apertura}
         </p>
       )}
-
-      <div style={{ fontFamily: MONO, fontSize: '11px', color: t.textMeta, lineHeight: 1.7, marginBottom: '28px' }}>
-        Preparación acumulada: {partida.preparacion || 0}<br/>
-        Estado mental: {partida.estadoMental || 'sin registro'}
-      </div>
 
       {secciones.map((sec, i) => (
         <section key={i} style={{ marginBottom: isCampo ? '24px' : '36px' }}>
@@ -309,6 +304,15 @@ function CampoNodo({ nodo, flags, onElegir, onAvanzar, t, s }) {
         </div>
       )}
 
+      {nodo.contexto && (
+        <div style={{
+          fontFamily: SERIF, fontSize: '13px', lineHeight: 1.6,
+          color: t.textSecondary, marginTop: '18px', whiteSpace: 'pre-wrap'
+        }}>
+          {nodo.contexto}
+        </div>
+      )}
+
       {!esDecision && nodo.siguiente && (
         <AvanceLink onAvanzar={() => onAvanzar(nodo.siguiente)} gate={avanceGate} t={t} modo="campo" />
       )}
@@ -342,6 +346,15 @@ function RedaccionNodo({ nodo, flags, onElegir, onAvanzar, t }) {
             </li>
           ))}
         </ol>
+      )}
+
+      {nodo.contexto && (
+        <div style={{
+          fontFamily: SERIF, fontSize: '14px', lineHeight: 1.7, fontStyle: 'italic',
+          color: t.textSecondary, marginTop: '28px', maxWidth: '38em', whiteSpace: 'pre-wrap'
+        }}>
+          {nodo.contexto}
+        </div>
       )}
 
       {!esDecision && nodo.siguiente && (

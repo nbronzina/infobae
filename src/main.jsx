@@ -111,7 +111,7 @@ function AboutModal({ onClose }) {
             <strong>Referentes de juego.</strong> Soldier's Companion (DefTech/armasuisse), In 90 Days (Humanitarian Leadership Academy), Papers Please, This War of Mine.
           </div>
           <div className="serif" style={{ fontSize: '13px', lineHeight: 1.55, color: '#1f1f1f' }}>
-            <strong>Fuentes verificadas.</strong> Rye &amp; Levin IEEE S&amp;P 2024, ANMaC, ENACOM, FOPEA, CPJ, Berkeley Protocol, C2PA, Dart Center, InSight Crime.
+            <strong>Fuentes verificadas.</strong> Rye &amp; Levin IEEE S&amp;P 2024, ANMaC, ENACOM, FOPEA, CPJ, Berkeley Protocol, C2PA, Dart Center, InSight Crime, RSF Round-Up 2025 (60 periodistas asesinados en actividad — Palestina 25, México 9, Iraq / Siria / Ucrania como teatros recurrentes).
           </div>
         </div>
 
