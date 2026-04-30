@@ -678,7 +678,8 @@
           "id": "obj4_inicio",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Día 9 de 13. 07:14. Tres cosas aparecen al mismo tiempo en Bitácora al abrir la pantalla.\n\nPrimero, el chequeo automático del equipo reporta una segunda señal no identificada cerca de la pensión. Patrón típico de dron de reconocimiento. Llegó en la noche.\n\nSegundo, el contacto del campamento tendría que haber confirmado un punto de encuentro hace treinta y seis horas. No respondió.\n\nTercero, en las notas que cargaste antes de salir hay una línea de Zelaya que nunca abriste. 'Si recibís indicadores de compromiso, activá protocolo de salida. No esperes confirmación.' Ayer no la viste. Hoy está ahí.\n\nAfuera empieza a llover. Velásquez duerme en la habitación de al lado. El día tiene que empezar.",
+          "texto": "Día 9 de 13. Tres alertas al abrir Bitácora: una segunda señal cerca de la pensión, el contacto del campamento sin responder hace 36 horas, y una nota vieja de Zelaya que nunca abriste.",
+          "contexto": "La segunda señal tiene patrón de dron de reconocimiento, llegó en la noche. El contacto del campamento tendría que haber confirmado un punto de encuentro. La nota de Zelaya dice: \"Si recibís indicadores de compromiso, activá protocolo de salida. No esperes confirmación.\" Afuera empieza a llover. Velásquez duerme en la habitación de al lado. El día tiene que empezar.",
           "badges": ["herramientas"],
           "siguiente": "obj4_d1"
         },
@@ -725,7 +726,8 @@
           "id": "obj4_d1_a_bajo_riesgo",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "El análisis cruza la señal nueva con la tuya. La tuya estuvo apagada las últimas noches, o emitiendo desde un muro a dos cuadras. La segunda señal se movió alrededor del pueblo pero no dio con vos — barrió la cuadrícula equivocada. Llegó al lugar incorrecto porque el dato que perseguía estaba desactualizado. Tenés tiempo, pero poco.",
+          "texto": "La señal nueva barrió la cuadrícula equivocada. Tenés tiempo, pero poco.",
+          "contexto": "El análisis cruza la señal nueva con la tuya. La tuya estuvo apagada las últimas noches, o emitiendo desde un muro a dos cuadras. La segunda se movió alrededor del pueblo pero no dio con vos. Llegó al lugar incorrecto porque el dato que perseguía estaba desactualizado.",
           "badges": [],
           "siguiente": "obj4_velasquez_msg"
         },
@@ -733,7 +735,8 @@
           "id": "obj4_d1_a_alto_riesgo",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "El análisis cruza las dos señales. La tuya estuvo emitiendo en coordenadas fijas desde el día 4. La segunda apareció el día 6 y viene acercándose. Te tienen ubicada en la pensión. No es si van a entrar — es cuándo. Velásquez tenía razón cuando te dijo que no duerme bien las últimas noches.",
+          "texto": "Te tienen ubicada en la pensión. No es si van a entrar — es cuándo.",
+          "contexto": "El análisis cruza las dos señales. La tuya estuvo emitiendo en coordenadas fijas desde el día 4. La segunda apareció el día 6 y viene acercándose. Velásquez tenía razón cuando te dijo que no duerme bien las últimas noches.",
           "badges": [],
           "siguiente": "obj4_velasquez_msg"
         },
@@ -741,7 +744,8 @@
           "id": "obj4_d1_b_rastro",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Vas al hilo de Signal que abriste con ellos el día 4. El último mensaje de ellos fue hace cuarenta y dos horas. Tus dos últimos quedaron en 'enviado', no 'leído'. O apagaron el teléfono o no pudieron mirarlo. Le escribís al otro número que también te pasaron — tampoco responde. Tenés rastro digital pero sin conexión.",
+          "texto": "Tus dos últimos mensajes en Signal quedaron en \"enviado\", no \"leído\". El otro número tampoco responde.",
+          "contexto": "Vas al hilo de Signal que abriste con ellos el día 4. El último mensaje de ellos fue hace cuarenta y dos horas. O apagaron el teléfono o no pudieron mirarlo. Tenés rastro digital pero sin conexión.",
           "badges": [],
           "siguiente": "obj4_velasquez_msg"
         },
@@ -749,7 +753,8 @@
           "id": "obj4_d1_b_velasquez",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "No tenés manera directa de contactarlos. Le pedís a Velásquez que use sus canales — va a tardar, va a exponer a gente del campamento que lo sabe, y la respuesta puede llegar tarde. Le escribe a un conocido que vive cerca del campamento. A esperar.",
+          "texto": "Le pedís a Velásquez que use sus canales. Le escribe a un conocido cerca del campamento. A esperar.",
+          "contexto": "No tenés manera directa de contactarlos. Va a tardar, va a exponer a gente del campamento que lo sabe, y la respuesta puede llegar tarde.",
           "badges": [],
           "siguiente": "obj4_velasquez_msg"
         },
@@ -757,7 +762,8 @@
           "id": "obj4_d1_b_sin_contacto",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Te das cuenta de que no tenés contacto. El día 4 rechazaste el material — no hubo intercambio, no hay número, no hay protocolo de verificación con ellos. El 'contacto pendiente' al que se refiere Bitácora es una ficha que creó el sistema por la reunión, pero está vacía del lado tuyo. No hay a quién llamar.",
+          "texto": "No hay a quién llamar. El día 4 rechazaste el material y no hubo intercambio.",
+          "contexto": "Sin número, sin protocolo de verificación con ellos. El \"contacto pendiente\" al que se refiere Bitácora es una ficha que creó el sistema por la reunión, pero está vacía del lado tuyo.",
           "badges": [],
           "siguiente": "obj4_velasquez_msg"
         },
@@ -765,7 +771,8 @@
           "id": "obj4_d1_c",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Abrís el procedimiento de salida. Son ocho pasos, ordenados. Aviso a Velásquez, destrucción de lo no publicado, ruta de extracción por Bogotá, señal de llegada a Buenos Aires. Dos o tres días operativos perdidos del despliegue, pero salís con el material que ya sacaste a salvo. Zelaya tenía razón: no esperaste confirmación porque no iba a llegar.",
+          "texto": "Activás el protocolo de salida. Salís con lo que ya sacaste a salvo.",
+          "contexto": "Ocho pasos, ordenados. Aviso a Velásquez, destrucción de lo no publicado, ruta de extracción por Bogotá, señal de llegada a Buenos Aires. Dos o tres días operativos perdidos del despliegue. Zelaya tenía razón: no esperaste confirmación porque no iba a llegar.",
           "badges": [],
           "siguiente": "obj4_velasquez_msg"
         },
@@ -773,7 +780,8 @@
           "id": "obj4_velasquez_msg",
           "tipo": "mensaje_npc",
           "emisor": "velasquez",
-          "texto": "Mondini. Hay que moverse. Dos opciones, vos decidís. Volvemos a la ciudad y cerramos acá lo que tenemos — seguro, corto, es lo que hay. O vamos más adentro, hay un tipo que conozco que maneja información de esos oficiales venezolanos, dos horas de ruta, riesgo alto. O me mandás a mí solo y te quedás. Pensalo pero no mucho, tenemos una hora antes de que llueva fuerte y no se pueda salir.",
+          "texto": "Mondini. Hay que moverse. Una hora antes de que llueva fuerte. Tres opciones, vos decidís.",
+          "contexto": "Volvemos a la ciudad y cerramos con lo que tenemos — seguro, corto. O vamos más adentro: conozco un tipo que maneja información de esos oficiales venezolanos, dos horas de ruta, riesgo alto. O me mandás a mí solo y te quedás. Pensalo pero no mucho.",
           "badges": [],
           "siguiente": "obj4_d2"
         },
@@ -816,7 +824,8 @@
           "id": "obj4_d2_a",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Armás la mochila en diez minutos. Velásquez maneja. Llegás al pueblo principal antes de que arranque la tormenta. La historia va a cerrar con lo que ya tenés — el campamento, los dos ex-combatientes, lo que hayas decidido hacer con el video. No es completa. Es lo que pudiste.",
+          "texto": "Vuelven al pueblo principal antes de la tormenta. La historia cierra con lo que ya tenés.",
+          "contexto": "El campamento, los dos ex-combatientes, lo que hayas decidido hacer con el video. No es completa. Es lo que pudiste.",
           "badges": [],
           "siguiente": "obj4_material_intro"
         },
@@ -824,7 +833,8 @@
           "id": "obj4_d2_b",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Velásquez carga la camioneta sin decir mucho. Dos horas por una ruta que no está en ningún mapa público. Llegan a una casa al borde del monte. Adentro hay un tipo que maneja un comercio chico y sabe nombres. Durante una hora te pasa detalles concretos: quién coordina del lado venezolano, cuándo cruzan, por qué. Cuando salen ya es de noche. Volver va a ser peor.",
+          "texto": "Una hora con un tipo que sabe nombres. Quién coordina del lado venezolano, cuándo cruzan, por qué.",
+          "contexto": "Velásquez carga la camioneta sin decir mucho. Dos horas por una ruta que no está en ningún mapa público. Llegan a una casa al borde del monte. Cuando salen ya es de noche. Volver va a ser peor.",
           "badges": [],
           "siguiente": "obj4_material_intro"
         },
@@ -832,7 +842,8 @@
           "id": "obj4_d2_b_duda",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Velásquez te mira un segundo de más antes de arrancar. Sabe que tu curso de seguridad está a medias. No dice nada pero maneja más despacio, elige la ruta más larga y segura en vez de la directa. Llegan tres horas después, con menos tiempo útil. La reunión es más corta de lo que hubieras querido. 'Si pasaba algo, vos no tenías lo que hay que tener.' Te lo dice con respeto. Tiene razón.",
+          "texto": "Velásquez maneja más despacio que de costumbre. Elige la ruta larga y segura. La reunión es más corta de lo que hubieras querido.",
+          "contexto": "Te miró un segundo de más antes de arrancar. Sabe que tu curso de seguridad está a medias. No dice nada hasta el final: \"si pasaba algo, vos no tenías lo que hay que tener.\" Te lo dice con respeto. Tiene razón.",
           "badges": [],
           "siguiente": "obj4_material_intro"
         },
@@ -840,7 +851,8 @@
           "id": "obj4_d2_c",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Velásquez asiente. 'Vuelvo antes de la noche.' Se va solo. Vos te quedás en la pensión mirando cómo cae la lluvia. Él no tiene tu protección institucional, no tiene tu pasaporte argentino, no tiene a Pollastri que lo saque si algo pasa. Vos estás cubierta porque te vas. Él vive acá. La decisión la tomaste rápido. Vas a pensar mucho en esto después.",
+          "texto": "Velásquez se va solo. Vos te quedás mirando cómo cae la lluvia.",
+          "contexto": "Él no tiene tu protección institucional, no tiene tu pasaporte argentino, no tiene a Pollastri que lo saque si algo pasa. Vos estás cubierta porque te vas. Él vive acá. La decisión la tomaste rápido. Vas a pensar mucho en esto después.",
           "badges": [],
           "siguiente": "obj4_material_intro"
         },
@@ -848,7 +860,8 @@
           "id": "obj4_material_intro",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Antes de moverte —o antes de que vuelva Velásquez— queda una cosa. Todo el material acumulado del despliegue está en tus dispositivos: fotos, audios, notas, lo que haya llegado desde el campamento. Si te revisan en un checkpoint, eso se va. Si el aparato se compromete, también. Bitácora te pregunta qué hacés.",
+          "texto": "Queda una decisión: qué hacer con todo el material acumulado del despliegue antes de moverte.",
+          "contexto": "Fotos, audios, notas, lo que haya llegado desde el campamento. Todo está en tus dispositivos. Si te revisan en un checkpoint, eso se va. Si el aparato se compromete, también.",
           "badges": [],
           "siguiente": "obj4_d3"
         },
@@ -887,7 +900,8 @@
           "id": "obj4_d3_a",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Pasás todo al aparato aislado. Lo metés en el bolsillo interno de la campera. No hay copia en red, no hay rastro digital. Si te paran, tenés el material encima y no podés explicar qué es. Si pasás, llega entero.",
+          "texto": "Material en el aparato aislado, en el bolsillo interno de la campera. Sin rastro digital.",
+          "contexto": "No hay copia en red. Si te paran, tenés el material encima y no podés explicar qué es. Si pasás, llega entero.",
           "badges": [],
           "siguiente": "obj4_cierre"
         },
@@ -895,7 +909,8 @@
           "id": "obj4_d3_b",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Conectás el Starlink por última vez desde la pensión. Diez minutos. Todo lo acumulado sube a la carpeta de la redacción. Villafañe confirma recepción con una línea: 'llegó'. Apagás. Vos emitiste — quien estuviera buscando la señal tiene el dato. Pero el material ya está a salvo del otro lado.",
+          "texto": "Material a salvo en Buenos Aires. Vos emitiste por última vez.",
+          "contexto": "Conectás el Starlink desde la pensión, diez minutos. Todo sube a la carpeta de la redacción. Villafañe confirma con una línea: \"llegó\". Apagás. Quien estuviera buscando la señal tiene el dato — pero el material ya está del otro lado.",
           "badges": [],
           "siguiente": "obj4_cierre"
         },
@@ -903,7 +918,8 @@
           "id": "obj4_d3_c",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Le pasás una copia a Velásquez por cable, no por aire. Él lo guarda en una memoria que mete en un libro. 'Si algo pasa del lado tuyo, llega igual.' Queda el matiz: material sensible en manos de alguien fuera de la estructura editorial, alguien que vive en la zona que el material puede agitar. Confianza, pero también riesgo delegado a alguien que no eligió ese riesgo como vos.",
+          "texto": "Le pasás una copia a Velásquez por cable. Él lo guarda en una memoria que mete en un libro.",
+          "contexto": "\"Si algo pasa del lado tuyo, llega igual.\" Queda el matiz: material sensible en manos de alguien fuera de la estructura editorial, alguien que vive en la zona que el material puede agitar. Confianza, pero también riesgo delegado a alguien que no eligió ese riesgo como vos.",
           "badges": [],
           "siguiente": "obj4_cierre"
         },
@@ -911,7 +927,8 @@
           "id": "obj4_cierre",
           "tipo": "situacion",
           "emisor": null,
-          "texto": "Cuatro de la tarde. Las decisiones se tomaron. La lluvia para, el aire queda pesado. Quedan cuatro días hasta el vuelo de vuelta pero lo importante del despliegue ya pasó. Lo que falta es salir.",
+          "texto": "Cuatro de la tarde. Lo importante del despliegue ya pasó. Lo que falta es salir.",
+          "contexto": "Las decisiones se tomaron. La lluvia para, el aire queda pesado. Quedan cuatro días hasta el vuelo de vuelta.",
           "badges": [],
           "siguiente": "obj5_debriefing"
         }
